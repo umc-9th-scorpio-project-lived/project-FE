@@ -1,1 +1,111 @@
-@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
+@reference "tailwindcss/theme";
+
+html {
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
+  height: auto;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  padding-bottom: 50px;
+  font-family: "suite";
+  min-width: 375px; /* iphone SE 기준 - 모바일 최소 너비 */
+  max-width: 500px; /* 모바일 최대 너비 */
+  min-height: 100vh;
+  height: auto;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  overflow-y: auto;
+  position: relative;
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+@media (min-width: 500px) {
+  html {
+    display: flex;
+    justify-content: center;
+  }
+
+  body {
+    min-width: 500px;
+    width: 500px;
+    max-width: 500px;
+  }
+}
+
+/* 모바일 스크롤바 관련 툴킷 옵션 설정 */
+::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-visible {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
+}
+
+.scrollbar-visible::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar-visible::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-visible::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.25);
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  background-clip: content-box;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+@layer utilities {
+  .typo-h1 {
+    @apply font-suite text-h1 font-bold;
+  }
+  .typo-h2 {
+    @apply font-suite text-h2 font-bold;
+  }
+  .typo-subtitle1 {
+    @apply font-suite text-subtitle1 font-semibold;
+  }
+  .typo-subtitle2 {
+    @apply font-suite text-subtitle2 font-semibold;
+  }
+  .typo-body1 {
+    @apply font-suite text-body1 font-medium;
+  }
+  .typo-body2 {
+    @apply font-suite text-body2 font-normal;
+  }
+  .typo-button {
+    @apply font-suite text-button font-normal;
+  }
+  .typo-caption1 {
+    @apply font-suite text-caption1 font-medium;
+  }
+  .typo-caption2 {
+    @apply font-suite text-caption2 font-normal;
+  }
+}
