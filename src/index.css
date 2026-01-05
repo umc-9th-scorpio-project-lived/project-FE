@@ -43,6 +43,7 @@ body::-webkit-scrollbar {
     min-width: 500px;
     width: 500px;
     max-width: 500px;
+    @apply shadow-2xl;
   }
 }
 
@@ -78,6 +79,12 @@ body::-webkit-scrollbar {
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
+}
+
+.limit-width {
+  min-width: 375px;
+  max-width: 500px;
+  /* margin-top: auto; */
 }
 
 @layer utilities {
