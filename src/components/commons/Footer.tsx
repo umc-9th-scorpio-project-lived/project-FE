@@ -7,15 +7,16 @@ const Footer = () => {
   const { pathname } = useLocation();
 
   const selectedFooterIndex = React.useMemo(() => {
-    if (pathname.includes("/notices")) {
-      return 0;
-    } else if (pathname.includes("/booths")) {
-      return 2;
-    } else if (pathname.includes("/reserve")) {
-      return 3;
-    }
+    const matches = ICON_URL_MAP.map((item, index) => {
+      const base = `/${item.router}`;
+      const isMatch = pathname === base || pathname.startsWith(`${base}/`);
+      return isMatch ? { index, len: base.length } : null;
+    }).filter(Boolean) as { index: number; len: number }[];
 
-    return ICON_URL_MAP.findIndex((item) => pathname === `/${item.router}`);
+    if (matches.length === 0) return 0;
+
+    matches.sort((a, b) => b.len - a.len);
+    return matches[0].index;
   }, [pathname]);
 
   const handleClickFooter = (index: number) => {
@@ -31,7 +32,7 @@ const Footer = () => {
 
           return (
             <div
-              key={index}
+              key={item.router}
               className="h-full flex flex-col items-center justify-center cursor-pointer gap-1 w-full"
               onClick={() => handleClickFooter(index)}
             >
