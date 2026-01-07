@@ -34,6 +34,9 @@ export default {
           50: "F2F4F6",
           0: "FFFFFF",
         },
+        screen: {
+          0: "FCFDFF",
+        },
       },
       fontSize: {
         h1: ["32px", { lineHeight: "140%" }],
