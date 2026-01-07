@@ -4,12 +4,20 @@ import HomePage from "./pages/homes/HomePage";
 import TreePage from "./pages/trees/TreePage";
 import CommunityPage from "./pages/communities/CommunityPage";
 import UserPage from "./pages/users/UserPage";
+import ModalPage from "./pages/commons/ModalPage";
+import SubLayout from "./layouts/SubLayout";
+import LoginPage from "./pages/onboardings/LoginPage";
 
 function App() {
   return (
     <BrowserRouter>
+      <ModalPage />
       <Routes>
-        <Route path="/" element={<MainLayout />}>
+        <Route element={<SubLayout />}>
+          <Route path="/" element={<LoginPage />} />
+        </Route>
+
+        <Route path="/lived" element={<MainLayout />}>
           {/* 홈 */}
           <Route index element={<HomePage />} />
 
