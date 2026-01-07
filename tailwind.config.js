@@ -22,16 +22,20 @@ export default {
           600: "#F6FCFF",
         },
         gray: {
-          900: "#080808",
-          800: "#373737",
-          700: "#494949",
-          600: "#626262",
-          500: "#868686",
-          400: "#A8A8A8",
-          300: "#CACACA",
-          200: "#E7E7E7",
-          100: "#F2F2F2",
+          900: "#1A1E22",
+          800: "#33373B",
+          700: "#4C5054",
+          600: "#65696D",
+          500: "#7E8286",
+          400: "#979B9F",
+          300: "#B0B4B8",
+          200: "#C9CDD1",
+          100: "#E7E7E7",
+          50: "F2F4F6",
           0: "FFFFFF",
+        },
+        screen: {
+          0: "FCFDFF",
         },
       },
       fontSize: {
@@ -57,6 +61,20 @@ export default {
       borderColor: (theme) => ({
         ...theme("colors"),
       }),
+      boxShadow: {
+        "footer-shadow": "0px -4px 10px rgba(183, 183, 183, 0.1)",
+      },
+      backgroundImage: {
+        // 아이콘
+        home: "url('/icons/home.svg')",
+        tree: "url('/icons/tree.svg')",
+        community: "url('/icons/community.svg')",
+        user: "url('/icons/user.svg')",
+        timer: "url('/icons/timer.svg')",
+        alarm: "url('/icons/alarm.svg')",
+        calender: "url('/icons/calendar.svg')",
+        write: "url('/icons/write.svg')",
+      },
     },
     screens: {
       xs: "405px",

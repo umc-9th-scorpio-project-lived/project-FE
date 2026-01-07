@@ -14,7 +14,7 @@ html {
 body {
   margin: 0px;
   padding: 0px;
-  padding-bottom: 50px;
+  /* padding-bottom: 100px; */
   font-family: "suite";
   min-width: 375px; /* iphone SE 기준 - 모바일 최소 너비 */
   max-width: 500px; /* 모바일 최대 너비 */
@@ -27,6 +27,7 @@ body {
   overflow-y: scroll;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE 10+ */
+  background-color: #fcfdff;
 }
 
 body::-webkit-scrollbar {
@@ -43,6 +44,7 @@ body::-webkit-scrollbar {
     min-width: 500px;
     width: 500px;
     max-width: 500px;
+    @apply shadow-2xl;
   }
 }
 
@@ -80,6 +82,12 @@ body::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
 
+.limit-width {
+  min-width: 375px;
+  max-width: 500px;
+  /* margin-top: auto; */
+}
+
 @layer utilities {
   .typo-h1 {
     @apply font-suite text-h1 font-bold;
@@ -87,10 +95,10 @@ body::-webkit-scrollbar {
   .typo-h2 {
     @apply font-suite text-h2 font-bold;
   }
-  .typo-subtitle1 {
+  .typo-sub1 {
     @apply font-suite text-subtitle1 font-semibold;
   }
-  .typo-subtitle2 {
+  .typo-sub2 {
     @apply font-suite text-subtitle2 font-semibold;
   }
   .typo-body1 {
