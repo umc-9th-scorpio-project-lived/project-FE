@@ -5,14 +5,14 @@ const TreeIcon = ({ isActive }: IconProps) => {
     <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M15.5 18.9064V27.9064"
-        stroke-width="3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
         className={isActive ? "stroke-[#997A0D]" : "stroke-gray-200"}
       />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M13.8 13C13.5361 13 13.2758 13.0602 13.0397 13.176C12.8037 13.2917 12.5984 13.4597 12.44 13.6667L7.34 20.3333C7.15057 20.5809 7.03522 20.8754 7.00687 21.1837C6.97852 21.4919 7.03828 21.8018 7.17947 22.0787C7.32066 22.3555 7.5377 22.5884 7.80626 22.7511C8.07482 22.9138 8.38429 23 8.7 23H22.3C22.6157 23 22.9252 22.9138 23.1937 22.7511C23.4623 22.5884 23.6793 22.3555 23.8205 22.0787C23.9617 21.8018 24.0215 21.4919 23.9931 21.1837C23.9648 20.8754 23.8494 20.5809 23.66 20.3333L18.56 13.6667C18.4017 13.4597 18.1963 13.2917 17.9603 13.176C17.7242 13.0602 17.4639 13 17.2 13H13.8Z"
         className={isActive ? "fill-primary-900" : "fill-gray-100"}
       />

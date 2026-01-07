@@ -13,14 +13,14 @@ const HomeIcon = ({ isActive }: IconProps) => {
       />
       <path
         d="M27.5438 12.3213L16.8166 5.3538C16.4854 5.13863 16.0585 5.13863 15.7272 5.3538L5.00009 12.3213"
-        stroke-width="3"
-        stroke-linecap="round"
+        strokeWidth="3"
+        strokeLinecap="round"
         className={isActive ? "stroke-primary-900" : "stroke-gray-200"}
       />
       <path
         d="M23.4391 9.3385V6.0846"
-        stroke-width="2.5"
-        stroke-linecap="round"
+        strokeWidth="2.5"
+        strokeLinecap="round"
         className={isActive ? "stroke-primary-900" : "stroke-gray-200"}
       />
     </svg>
