@@ -1,5 +1,7 @@
+import type { CommunityCategory } from "@/constants/community";
+
 interface PostCardProps {
-  category: string;
+  category: CommunityCategory;
   title: string;
   content: string;
   imageCount: number;
@@ -19,7 +21,7 @@ const PostCard = ({
   const hasImage = imageCount > 0;
 
   return (
-    <section className="flex flex-col my-2 py-2 border-b border-b-gray-100 gap-2.5">
+    <section className="flex flex-col my-2 py-2 border-b border-b-gray-100 gap-2.5 overflow-auto">
       <div className="flex items-center bg-[#E1F2B7] rounded-sm px-2.5 w-fit h-6 text-xs text-gray-600">
         {category}
       </div>

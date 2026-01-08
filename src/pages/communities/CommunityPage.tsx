@@ -1,12 +1,13 @@
 import Category from "@/components/communities/Category";
 import PostList from "@/components/communities/PostList";
+import WritingButton from "@/components/communities/WritingButton";
 import { useState } from "react";
 
 const CommunityPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("전체");
 
   return (
-    <div className="flex flex-col mx-4">
+    <div className="flex flex-col mx-4 pb-[100px]">
       <div className="flex justify-between items-center">
         <h1 className="my-2 typo-h2 font-bold text-[#080808]">커뮤니티</h1>
         <div className="flex items-center justify-center gap-2">
@@ -36,6 +37,7 @@ const CommunityPage = () => {
       </div>
       <Category selected={selectedCategory} onSelect={setSelectedCategory} />
       <PostList />
+      <WritingButton />
     </div>
   );
 };
