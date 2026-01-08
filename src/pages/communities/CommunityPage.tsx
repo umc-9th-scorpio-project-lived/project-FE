@@ -1,4 +1,5 @@
 import Category from "@/components/communities/Category";
+import PopularPostList from "@/components/communities/PopularPostList";
 import PostList from "@/components/communities/PostList";
 import WritingButton from "@/components/communities/WritingButton";
 import { useState } from "react";
@@ -36,6 +37,10 @@ const CommunityPage = () => {
         </div>
       </div>
       <Category selected={selectedCategory} onSelect={setSelectedCategory} />
+      <section className="my-2 py-1 border-b border-b-gray-100">
+        <h2>실시간 인기글</h2>
+        <PopularPostList />
+      </section>
       <PostList />
       <WritingButton />
     </div>

@@ -1,46 +1,17 @@
-import type { CommunityCategory } from "@/constants/community";
-
-interface PostCardProps {
-  category: CommunityCategory;
+interface PopularPostCardProps {
   title: string;
   content: string;
-  imageCount: number;
   likeCount: number;
   commentCount: number;
-  createdAt: string;
 }
-const PostCard = ({
-  category,
-  title,
-  content,
-  imageCount,
-  likeCount,
-  commentCount,
-  createdAt,
-}: PostCardProps) => {
-  const hasImage = imageCount > 0;
 
+const PopularPostCard = ({ title, content, likeCount, commentCount }: PopularPostCardProps) => {
   return (
-    <section className="flex flex-col my-2 py-2 border-b border-b-gray-100 gap-2.5 overflow-auto">
-      <div className="flex items-center bg-[#E1F2B7] rounded-sm px-2.5 w-fit h-6 text-xs text-gray-600">
-        {category}
-      </div>
-      <div className="flex justify-between gap-1.5">
-        <article className="flex flex-col gap-1.5">
-          <h2 className="text-gray-900 text-sm font-bold line-clamp-1">{title}</h2>
-          <p className="text-xs text-gray-500 line-clamp-2 whitespace-pre-line">{content}</p>
-        </article>
-        {hasImage && (
-          <div className="relative w-16 h-16 bg-gray-400 rounded-lg shrink-0">
-            <p className="absolute text-center w-4 h-4 bg-[#F4F4F4] rounded-tl-lg text-[10px] right-0 bottom-0">
-              {imageCount}
-            </p>
-          </div>
-          /// 나중에 이미지 삽입
-        )}
-      </div>
-      <div className="flex text-xs justify-between">
-        <div className="flex gap-2.5 text-gray-900">
+    <article className="flex w-80 bg-gray-100 rounded-xl shrink-0 p-3 last:mr-4">
+      <div className="flex flex-col font-medium gap-2">
+        <h3 className="text-sm text-gray-900">{title}</h3>
+        <p className="text-xs text-[#8E8E8E] line-clamp-2 whitespace-pre-line">{content}</p>
+        <div className="flex text-xs text-gray-900 gap-2">
           <div className="flex gap-1">
             <svg width="16" height="16" viewBox="-1 -2 16 16" fill="#D4EA80">
               <path d="M0.658712 6.29563C0.650839 6.20496 0.6619 6.11364 0.691193 6.02746C0.720486 5.94129 0.767371 5.86215 0.828874 5.79506C0.890377 5.72796 0.965155 5.67439 1.04846 5.63773C1.13177 5.60107 1.22179 5.58213 1.3128 5.58211H2.5668C2.74097 5.58211 2.90801 5.6513 3.03117 5.77446C3.15433 5.89762 3.22352 6.06465 3.22352 6.23883V12.4776C3.22352 12.6518 3.15433 12.8188 3.03117 12.942C2.90801 13.0652 2.74097 13.1343 2.5668 13.1343H1.85558C1.69121 13.1344 1.5328 13.0728 1.41164 12.9617C1.29048 12.8507 1.21538 12.6982 1.20116 12.5344L0.658712 6.29563ZM5.19367 6.0336C5.19367 5.75909 5.36441 5.51348 5.61232 5.39659C6.15379 5.14112 7.07614 4.6279 7.49217 3.93408C8.02838 3.03963 8.12952 1.42378 8.14594 1.05372C8.14823 1.00184 8.14692 0.94996 8.15382 0.898736C8.2428 0.257453 9.48038 1.00644 9.95486 1.79844C10.2126 2.22793 10.2455 2.79238 10.2185 3.23336C10.1893 3.70489 10.0511 4.16032 9.91546 4.6128L9.6265 5.57718H13.1915C13.293 5.57718 13.393 5.60068 13.4839 5.64585C13.5747 5.69103 13.6539 5.75664 13.7151 5.83754C13.7764 5.91844 13.818 6.01243 13.8369 6.11213C13.8557 6.21184 13.8511 6.31455 13.8236 6.4122L12.0603 12.6563C12.0214 12.794 11.9385 12.9152 11.8244 13.0015C11.7102 13.0878 11.571 13.1344 11.4279 13.1343H5.85038C5.67621 13.1343 5.50917 13.0652 5.38601 12.942C5.26286 12.8188 5.19367 12.6518 5.19367 12.4776V6.0336Z" />
@@ -54,10 +25,9 @@ const PostCard = ({
             <p>{commentCount}</p>
           </div>
         </div>
-        <div className="text-[#9C9C9C]">{createdAt}</div>
       </div>
-    </section>
+    </article>
   );
 };
 
-export default PostCard;
+export default PopularPostCard;
