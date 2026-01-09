@@ -108,13 +108,13 @@ body::-webkit-scrollbar {
     @apply font-suite text-body_18 font-normal;
   }
   .typo-body_bold16 {
-    @apply font-suite text-body_14 font-bold;
+    @apply font-suite text-body_16 font-bold;
   }
   .typo-body_reg16 {
     @apply font-suite text-body_16 font-normal;
   }
-  .typo-body_bold_14 {
-    @apply font-suite text-body_16 font-bold;
+  .typo-body_bold14 {
+    @apply font-suite text-body_14 font-bold;
   }
   .typo-body_reg14 {
     @apply font-suite text-body_14 font-normal;

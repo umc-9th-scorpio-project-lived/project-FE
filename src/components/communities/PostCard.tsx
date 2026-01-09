@@ -22,13 +22,15 @@ const PostCard = ({
 
   return (
     <section className="flex flex-col my-2 py-2 border-b border-b-gray-100 gap-2.5 overflow-auto">
-      <div className="flex items-center bg-[#E1F2B7] rounded-sm px-2.5 w-fit h-6 text-xs text-gray-600">
+      <div className="flex items-center bg-[#E1F2B7] rounded-sm px-2.5 w-fit h-6 text-[11px] text-gray-600">
         {category}
       </div>
       <div className="flex justify-between gap-1.5">
         <article className="flex flex-col gap-1.5">
-          <h2 className="text-gray-900 text-sm font-bold line-clamp-1">{title}</h2>
-          <p className="text-xs text-gray-500 line-clamp-2 whitespace-pre-line">{content}</p>
+          <div className="text-gray-900 typo-body_bold14 line-clamp-1">{title}</div>
+          <div className="typo-body_reg12 text-gray-500 line-clamp-2 whitespace-pre-line">
+            {content}
+          </div>
         </article>
         {hasImage && (
           <div className="relative w-16 h-16 bg-gray-400 rounded-lg shrink-0">
@@ -39,7 +41,7 @@ const PostCard = ({
           /// 나중에 이미지 삽입
         )}
       </div>
-      <div className="flex text-xs justify-between">
+      <div className="flex text-[11px] justify-between">
         <div className="flex gap-2.5 text-gray-900">
           <div className="flex gap-1">
             <svg width="16" height="16" viewBox="-1 -2 16 16" fill="#D4EA80">

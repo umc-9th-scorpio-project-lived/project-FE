@@ -14,7 +14,7 @@ const Category = ({ selected, onSelect }: CategoryProps) => {
           <button
             key={category}
             onClick={() => onSelect(category)}
-            className={`rounded-full px-3 py-1 text-[12px] shrink-0 ${isActive ? "bg-[#8FC600] text-[#FCFDFF]" : "bg-gray-100 text-gray-600"}`}
+            className={`rounded-full px-3 py-1 text-[12px] shrink-0 ${isActive ? "bg-[#8FC600] text-screen-0" : "bg-gray-100 text-gray-600"}`}
           >
             {category}
           </button>

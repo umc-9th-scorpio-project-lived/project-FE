@@ -10,7 +10,7 @@ const CommunityPage = () => {
   return (
     <div className="flex flex-col mx-4 pb-[100px]">
       <div className="flex justify-between items-center">
-        <h1 className="my-2 typo-h2 font-bold text-[#080808]">커뮤니티</h1>
+        <div className="my-2 typo-h2_reg20 font-bold text-[#080808]">커뮤니티</div>
         <div className="flex items-center justify-center gap-2">
           <div className="w-6 h-6 flex items-center justify-center">
             <svg
@@ -38,7 +38,7 @@ const CommunityPage = () => {
       </div>
       <Category selected={selectedCategory} onSelect={setSelectedCategory} />
       <section className="my-2 py-1 border-b border-b-gray-100">
-        <h2>실시간 인기글</h2>
+        <div className="typo-body_reg16">실시간 인기글</div>
         <PopularPostList />
       </section>
       <PostList />
