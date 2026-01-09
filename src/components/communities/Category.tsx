@@ -1,20 +1,19 @@
-import { COMMUNITY_CATEGORIES } from "@/constants/community";
-
 type CategoryProps = {
+  categories: string[];
   selected: string;
   onSelect: (category: string) => void;
 };
 
-const Category = ({ selected, onSelect }: CategoryProps) => {
+const Category = ({ categories, selected, onSelect }: CategoryProps) => {
   return (
     <section className="flex my-2 gap-1 overflow-x-auto">
-      {COMMUNITY_CATEGORIES.map((category) => {
+      {categories.map((category) => {
         const isActive = selected === category;
         return (
           <button
             key={category}
             onClick={() => onSelect(category)}
-            className={`rounded-full px-3 py-1 text-[12px] shrink-0 ${isActive ? "bg-[#8FC600] text-screen-0" : "bg-gray-100 text-gray-600"}`}
+            className={`rounded-full px-3 py-1 text-[12px] shrink-0 ${isActive ? "bg-primary-50 text-screen-0" : "bg-gray-100 text-gray-600"}`}
           >
             {category}
           </button>

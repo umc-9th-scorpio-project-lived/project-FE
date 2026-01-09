@@ -2,7 +2,9 @@ import Category from "@/components/communities/Category";
 import PopularPostList from "@/components/communities/PopularPostList";
 import PostList from "@/components/communities/PostList";
 import WritingButton from "@/components/communities/WritingButton";
+import { COMMUNITY_CATEGORIES } from "@/constants/community";
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 const CommunityPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("전체");
@@ -36,13 +38,19 @@ const CommunityPage = () => {
           </div>
         </div>
       </div>
-      <Category selected={selectedCategory} onSelect={setSelectedCategory} />
+      <Category
+        categories={[...COMMUNITY_CATEGORIES]}
+        selected={selectedCategory}
+        onSelect={setSelectedCategory}
+      />
       <section className="my-2 py-1 border-b border-b-gray-100">
         <div className="typo-body_reg16">실시간 인기글</div>
         <PopularPostList />
       </section>
       <PostList />
-      <WritingButton />
+      <NavLink to="/lived/community/write">
+        <WritingButton />
+      </NavLink>
     </div>
   );
 };
