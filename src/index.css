@@ -89,11 +89,17 @@ body::-webkit-scrollbar {
 }
 
 @layer utilities {
-  .typo-h1 {
-    @apply font-suite text-h1 font-bold;
+  .typo-h1_bold24 {
+    @apply font-suite text-h1_24 font-bold;
   }
-  .typo-h2 {
-    @apply font-suite text-h2 font-bold;
+  .typo-h1_reg24 {
+    @apply font-suite text-h1_24 font-normal;
+  }
+  .typo-h2_bold20 {
+    @apply font-suite text-h2_20 font-bold;
+  }
+  .typo-h2_reg20 {
+    @apply font-suite text-h2_20 font-normal;
   }
   .typo-body_bold18 {
     @apply font-suite text-body_18 font-bold;

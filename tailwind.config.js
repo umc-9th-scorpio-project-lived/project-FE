@@ -33,8 +33,8 @@ export default {
         },
       },
       fontSize: {
-        h1: ["24px", { lineHeight: "140%" }],
-        h2: ["20px", { lineHeight: "140%" }],
+        h1_24: ["24px", { lineHeight: "140%" }],
+        h2_20: ["20px", { lineHeight: "140%" }],
         body_18: ["18px", { lineHeight: "140%" }],
         body_16: ["16px", { lineHeight: "140%" }],
         body_14: ["14px", { lineHeight: "140%" }],
