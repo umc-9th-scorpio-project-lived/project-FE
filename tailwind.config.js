@@ -53,7 +53,7 @@ export default {
         ...theme("colors"),
       }),
       boxShadow: {
-        "footer-shadow": "0px -4px 10px rgba(183, 183, 183, 0.  1)",
+        "footer-shadow": "0px -4px 10px rgba(183, 183, 183, 0.1)",
         soft: "0px 4px 10px rgba(183, 183, 183, 0.1)",
       },
       backgroundImage: {
