@@ -7,19 +7,11 @@ export default {
       colors: {
         "white-opacity": "rgba(255, 255, 255, 0.68)",
         primary: {
-          900: "#8FC600",
-          800: "#B2EF16",
-          700: "#BCEF37",
-          600: "#D0F663",
-          500: "#E2FF8F",
-          400: "#EDFFBE",
-          300: "#F0F7D6",
-        },
-        sub: {
-          900: "#94CEE5",
-          800: "#AAE6FF",
-          700: "#D0F1FF",
-          600: "#F6FCFF",
+          50: "#9FD416",
+          40: "#A9E119",
+          30: "#D1F27D",
+          20: "#E3FBA6",
+          10: "#F1FFCE",
         },
         gray: {
           900: "#1A1E22",
@@ -30,24 +22,23 @@ export default {
           400: "#979B9F",
           300: "#B0B4B8",
           200: "#C9CDD1",
-          100: "#E7E7E7",
-          50: "F2F4F6",
-          0: "FFFFFF",
+          100: "#E9ECEF",
+          50: "#F2F4F6",
         },
         screen: {
-          0: "FCFDFF",
+          0: "#FCFDFF",
+        },
+        alert: {
+          50: "#E84A4A",
         },
       },
       fontSize: {
-        h1: ["32px", { lineHeight: "140%" }],
-        h2: ["24px", { lineHeight: "140%" }],
-        subtitle1: ["18px", { lineHeight: "140%" }],
-        subtitle2: ["16px", { lineHeight: "140%" }],
-        body1: ["16px", { lineHeight: "140%" }],
-        body2: ["14px", { lineHeight: "140%" }],
-        button: ["12px", { lineHeight: "140%" }],
-        caption1: ["14px", { lineHeight: "140%" }],
-        caption2: ["11px", { lineHeight: "140%" }],
+        h1: ["24px", { lineHeight: "140%" }],
+        h2: ["20px", { lineHeight: "140%" }],
+        body_18: ["18px", { lineHeight: "140%" }],
+        body_16: ["16px", { lineHeight: "140%" }],
+        body_14: ["14px", { lineHeight: "140%" }],
+        body_12: ["12px", { lineHeight: "140%" }],
       },
       textColor: (theme) => ({
         ...theme("colors"),
@@ -62,7 +53,8 @@ export default {
         ...theme("colors"),
       }),
       boxShadow: {
-        "footer-shadow": "0px -4px 10px rgba(183, 183, 183, 0.1)",
+        "footer-shadow": "0px -4px 10px rgba(183, 183, 183, 0.  1)",
+        soft: "0px 4px 10px rgba(183, 183, 183, 0.1)",
       },
       backgroundImage: {
         // 아이콘
