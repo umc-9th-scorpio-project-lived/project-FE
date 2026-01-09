@@ -95,25 +95,28 @@ body::-webkit-scrollbar {
   .typo-h2 {
     @apply font-suite text-h2 font-bold;
   }
-  .typo-sub1 {
-    @apply font-suite text-subtitle1 font-semibold;
+  .typo-body_bold18 {
+    @apply font-suite text-body_18 font-bold;
   }
-  .typo-sub2 {
-    @apply font-suite text-subtitle2 font-semibold;
+  .typo-body_reg18 {
+    @apply font-suite text-body_18 font-normal;
   }
-  .typo-body1 {
-    @apply font-suite text-body1 font-medium;
+  .typo-body_bold16 {
+    @apply font-suite text-body_14 font-bold;
   }
-  .typo-body2 {
-    @apply font-suite text-body2 font-normal;
+  .typo-body_reg16 {
+    @apply font-suite text-body_16 font-normal;
   }
-  .typo-button {
-    @apply font-suite text-button font-normal;
+  .typo-body_bold_14 {
+    @apply font-suite text-body_16 font-bold;
   }
-  .typo-caption1 {
-    @apply font-suite text-caption1 font-medium;
+  .typo-body_reg14 {
+    @apply font-suite text-body_14 font-normal;
   }
-  .typo-caption2 {
-    @apply font-suite text-caption2 font-normal;
+  .typo-body_bold12 {
+    @apply font-suite text-body_12 font-bold;
+  }
+  .typo-body_reg12 {
+    @apply font-suite text-body_12 font-normal;
   }
 }

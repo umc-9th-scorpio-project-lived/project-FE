@@ -38,7 +38,7 @@ const Footer = () => {
             >
               <IconComponent isActive={isActive} />
               <div
-                className={`text-button font-semibold ${isActive ? "text-primary-900" : "text-gray-200"}`}
+                className={`typo-body_reg12 font-semibold ${isActive ? "text-[#8FC600]" : "text-gray-200"}`}
               >
                 {item.name}
               </div>
