@@ -8,6 +8,7 @@ import ModalPage from "./pages/commons/ModalPage";
 import SubLayout from "./layouts/SubLayout";
 import LoginPage from "./pages/onboardings/LoginPage";
 import PostWritingPage from "./pages/communities/PostWritingPage";
+import CommunityProfilePage from "./pages/communities/CommunityProfilePage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route element={<SubLayout />}>
           <Route path="/" element={<LoginPage />} />
           <Route path="/lived/community/write" element={<PostWritingPage />} />
+          <Route path="/lived/community/profile" element={<CommunityProfilePage />} />
         </Route>
 
         <Route path="/lived" element={<MainLayout />}>
