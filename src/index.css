@@ -107,7 +107,6 @@ body::-webkit-scrollbar {
   }
   .typo-body_bold16 {
     @apply font-suite text-body_16 font-bold;
-    @apply font-suite text-body_16 font-bold;
   }
   .typo-body_reg16 {
     @apply font-suite text-body_16 font-normal;

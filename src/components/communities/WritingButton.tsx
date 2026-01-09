@@ -1,7 +1,7 @@
 const WritingButton = () => {
   return (
     <div className="relative">
-      <button className="fixed bottom-32 right-[calc((100vw-390px)/2+16px)] w-14 h-14 rounded-full bg-[#D4EA80] flex items-center justify-center shadow-lg z-50">
+      <button className="fixed bottom-32 right-[calc((100vw-min(500px,100vw))/2+16px)] w-14 h-14 rounded-full bg-[#D4EA80] flex items-center justify-center shadow-lg z-50">
         <svg
           width="26"
           height="26"

@@ -60,7 +60,9 @@ const PostWritingPage = () => {
           </NavLink>
           <span className="typo-h2_reg20 font-bold">글쓰기</span>
         </div>
-        <span className="typo-body_bold14">완료</span>
+        <NavLink to="/lived/community" className="typo-body_bold14">
+          완료
+        </NavLink>
       </div>
       <div className="flex flex-col py-5 gap-5.5">
         <Category
