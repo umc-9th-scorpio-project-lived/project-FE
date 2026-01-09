@@ -9,19 +9,19 @@ const HomeIcon = ({ isActive }: IconProps) => {
       />
       <path
         d="M16.9312 16.9309H15.485C14.7179 16.9309 13.9822 17.2356 13.4398 17.7781C12.8974 18.3205 12.5927 19.0562 12.5927 19.8233V25.391C12.5927 25.5111 12.6895 25.608 12.8096 25.608H19.6066C19.6641 25.608 19.7193 25.5851 19.76 25.5444C19.8007 25.5038 19.8235 25.4486 19.8235 25.391V19.8233C19.8235 19.0562 19.5188 18.3205 18.9764 17.7781C18.434 17.2356 17.6983 16.9309 16.9312 16.9309Z"
-        className={isActive ? "fill-primary-900" : "fill-gray-200"}
+        className={isActive ? "fill-[#8FC600]" : "fill-gray-200"}
       />
       <path
         d="M27.5438 12.3213L16.8166 5.3538C16.4854 5.13863 16.0585 5.13863 15.7272 5.3538L5.00009 12.3213"
         strokeWidth="3"
         strokeLinecap="round"
-        className={isActive ? "stroke-primary-900" : "stroke-gray-200"}
+        className={isActive ? "stroke-[#8FC600]" : "stroke-gray-200"}
       />
       <path
         d="M23.4391 9.3385V6.0846"
         strokeWidth="2.5"
         strokeLinecap="round"
-        className={isActive ? "stroke-primary-900" : "stroke-gray-200"}
+        className={isActive ? "stroke-[#8FC600]" : "stroke-gray-200"}
       />
     </svg>
   );
