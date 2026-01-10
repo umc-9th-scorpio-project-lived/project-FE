@@ -12,7 +12,7 @@ const CommunityPage = () => {
   return (
     <div className="flex flex-col mx-4 pb-[100px]">
       <div className="flex justify-between items-center">
-        <div className="my-2 typo-h2_reg20 font-bold text-[#080808]">커뮤니티</div>
+        <div className="my-2 typo-h2_reg20 text-[#080808]">커뮤니티</div>
         <div className="flex items-center justify-center gap-2">
           <div className="w-6 h-6 flex items-center justify-center">
             <svg

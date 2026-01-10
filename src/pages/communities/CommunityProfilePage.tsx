@@ -5,7 +5,7 @@ const CommunityProfilePage = () => {
     <div className="flex flex-col min-h-screen mx-4">
       <div className="flex justify-between items-center text-gray-900 my-2">
         <div className="flex gap-3">
-          <NavLink to="/lived/community">
+          <NavLink to="/lived/community" className="flex items-center justify-center">
             <svg
               width="24"
               height="24"

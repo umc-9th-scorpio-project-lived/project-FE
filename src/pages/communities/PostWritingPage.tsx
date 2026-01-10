@@ -38,10 +38,10 @@ const PostWritingPage = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen mx-4 pb-24">
-      <div className="flex justify-between items-center text-gray-900 my-2">
+    <div className="flex flex-col min-h-screen pb-24">
+      <div className="flex justify-between items-center text-gray-900 my-2 mx-4">
         <div className="flex gap-3">
-          <NavLink to="/lived/community">
+          <NavLink to="/lived/community" className="flex items-center justify-center">
             <svg
               width="24"
               height="24"
@@ -58,13 +58,13 @@ const PostWritingPage = () => {
               />
             </svg>
           </NavLink>
-          <span className="typo-h2_reg20 font-bold">글쓰기</span>
+          <span className="typo-h2_reg20">글쓰기</span>
         </div>
         <NavLink to="/lived/community" className="typo-body_bold14">
           완료
         </NavLink>
       </div>
-      <div className="flex flex-col py-5 gap-5.5">
+      <div className="flex flex-col py-5 px-4 gap-5.5 border-b border-gray-100">
         <Category
           categories={writeCategories}
           selected={selectedCategory}
@@ -126,7 +126,7 @@ const PostWritingPage = () => {
           )}
         </div>
       </div>
-      <div className="flex flex-col text-[11px] text-[#B4B4B4] pt-4">
+      <div className="flex flex-col text-[11px] text-[#B4B4B4] pt-4 mx-4">
         <span>
           *주제에 맞지 않는 글이나 커뮤니티 이용정책에 위배되는 글은 <br /> 신고의 대상이 됩니다.
         </span>
