@@ -3,6 +3,7 @@ import PopularPostList from "@/components/communities/PopularPostList";
 import PostList from "@/components/communities/PostList";
 import WritingButton from "@/components/communities/WritingButton";
 import { COMMUNITY_CATEGORIES } from "@/constants/community";
+import { mockPosts } from "@/mocks/post";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 
@@ -10,7 +11,7 @@ const CommunityPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("전체");
 
   return (
-    <div className="flex flex-col mx-4 pb-[100px]">
+    <div className="flex flex-col mx-4 pb-[100px] min-h-screen">
       <div className="flex justify-between items-center">
         <div className="my-2 typo-h2_reg20 text-[#080808]">커뮤니티</div>
         <div className="flex items-center justify-center gap-2">
@@ -50,7 +51,7 @@ const CommunityPage = () => {
         <div className="typo-body_reg16">실시간 인기글</div>
         <PopularPostList />
       </section>
-      <PostList />
+      <PostList posts={mockPosts} />
       <NavLink to="/lived/community/write">
         <WritingButton />
       </NavLink>
