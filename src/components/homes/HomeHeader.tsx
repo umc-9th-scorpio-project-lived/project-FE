@@ -1,0 +1,61 @@
+import { useHomeDateStore } from "@/stores/homes/homeStore";
+import SlideCalendar from "./SlideCalendar";
+import useBaseModal from "@/stores/modals/baseModal";
+import {
+  formatDateTitle,
+  formatTopTitle,
+  getWeekStartDate,
+  isSameDay,
+  normalizeDate,
+} from "@/utils/homes/homeUtils";
+
+const HomeHeader = () => {
+  const { selectedDate, weekStartDate, resetToToday } = useHomeDateStore();
+  const { openModal } = useBaseModal();
+
+  const currentDate = selectedDate ?? normalizeDate(new Date());
+
+  const todayDate = normalizeDate(new Date());
+  const todayWeekStartDate = getWeekStartDate(todayDate);
+
+  const isSelectedToday = isSameDay(selectedDate, todayDate);
+  const isViewingCurrentWeek = isSameDay(weekStartDate, todayWeekStartDate);
+
+  return (
+    <div className="w-full flex flex-col gap-5 px-4 pt-2.5 rounded-b-lg shadow-soft bg-screen-0">
+      <div className="flex flex-col gap-[5px]">
+        <div className="flex justify-between h-10 items-center">
+          <div className="typo-h1_reg24 font-normal">{formatTopTitle(currentDate)}</div>
+          <div className="bg-alarm h-6 w-6" />
+        </div>
+
+        <div className="flex justify-between items-center h-10">
+          <div className="flex justify-start items-center gap-1">
+            <div
+              className="bg-calender h-6 w-6"
+              role="button"
+              onClick={() => openModal("selectDateModal", { position: "bottom" })}
+            />
+            <div className="typo-body_reg16">{formatDateTitle(currentDate)}</div>
+          </div>
+
+          {!(isSelectedToday && isViewingCurrentWeek) && (
+            <div
+              role="button"
+              onClick={resetToToday}
+              className="typo-body_reg12 text-gray-900 bg-gray-100 rounded-2xl px-2.5 py-1"
+            >
+              오늘
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div>
+        <SlideCalendar />
+      </div>
+    </div>
+  );
+};
+
+export default HomeHeader;
