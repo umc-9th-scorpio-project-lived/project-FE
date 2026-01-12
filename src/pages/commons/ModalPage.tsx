@@ -1,3 +1,4 @@
+import SelectDateModal from "@/components/homes/SelectDateModal";
 import BottomTestModal from "@/components/modals/BottomTestModal";
 import CenterTestModal from "@/components/modals/CenterTestModal";
 import ModalBackground from "@/components/modals/ModalBackground";
@@ -30,6 +31,7 @@ const ModalPage = () => {
       {modalType === "loadingModal" && <LoadingModal />} */}
         {modalType === "centerModal" && <CenterTestModal />}
         {modalType === "bottomModal" && <BottomTestModal />}
+        {modalType === "selectDateModal" && <SelectDateModal />}
       </ModalBackground>
     </>
   );
