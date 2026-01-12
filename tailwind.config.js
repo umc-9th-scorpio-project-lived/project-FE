@@ -66,6 +66,10 @@ export default {
         alarm: "url('/icons/alarm.svg')",
         calender: "url('/icons/calendar.svg')",
         write: "url('/icons/write.svg')",
+        left_chevron: "url('/icons/left_chevron.svg')",
+        right_chevron: "url('/icons/right_chevron.svg')",
+        calendar_left_chevron: "url('/icons/calendar_left_chevron.svg')",
+        calendar_right_chevron: "url('/icons/calendar_right_chevron.svg')",
       },
     },
     screens: {
