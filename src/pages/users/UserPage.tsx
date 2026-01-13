@@ -18,7 +18,7 @@ const UserPage = () => {
 
         <div className="py-3">
           <button className="px-8 py-3 bg-gray-100 text-gray-800 rounded-3xl">
-            <span className="typo-body_bold_14">루틴나무 변경하기</span>
+            <span className="typo-body_bold14">루틴나무 변경하기</span>
           </button>
         </div>
       </div>
