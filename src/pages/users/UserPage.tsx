@@ -22,7 +22,7 @@ const UserPage = () => {
       <Divider />
 
       <div className="w-full px-4 py-5 flex flex-col gap-5">
-        <NavLink to="/notice" className="w-full flex justify-between items-center">
+        <NavLink to="notice" className="w-full flex justify-between items-center">
           <span className="typo-body_bold_14 text-gray-900">공지사항</span>
         </NavLink>
         <NavLink to="/inquiry" className="w-full flex justify-between items-center">
