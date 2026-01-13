@@ -23,31 +23,31 @@ const UserPage = () => {
 
       <div className="w-full px-4 py-5 flex flex-col gap-5">
         <NavLink to="notice" className="w-full flex justify-between items-center">
-          <span className="typo-body_bold_14 text-gray-900">공지사항</span>
+          <span className="typo-body_bold14 text-gray-900">공지사항</span>
         </NavLink>
-        <NavLink to="/inquiry" className="w-full flex justify-between items-center">
-          <span className="typo-body_bold_14 text-gray-900">문의하기</span>
+        <NavLink to="inquiry" className="w-full flex justify-between items-center">
+          <span className="typo-body_bold14 text-gray-900">문의하기</span>
         </NavLink>
-        <NavLink to="/info" className="w-full flex justify-between items-center">
-          <span className="typo-body_bold_14 text-gray-900">정보</span>
+        <NavLink to="info" className="w-full flex justify-between items-center">
+          <span className="typo-body_bold14 text-gray-900">정보</span>
         </NavLink>
       </div>
 
       <Divider />
 
       <div className="w-full px-4 py-5 flex flex-col gap-5">
-        <NavLink to="/account" className="w-full flex justify-between items-center">
-          <span className="typo-body_bold_14 text-gray-900">계정 관리</span>
+        <NavLink to="account" className="w-full flex justify-between items-center">
+          <span className="typo-body_bold14 text-gray-900">계정 관리</span>
         </NavLink>
-        <NavLink to="/notifications" className="w-full flex justify-between items-center">
-          <span className="typo-body_bold_14 text-gray-900">알림 설정</span>
+        <NavLink to="notifications" className="w-full flex justify-between items-center">
+          <span className="typo-body_bold14 text-gray-900">알림 설정</span>
         </NavLink>
-        <NavLink to="/privacy" className="w-full flex justify-between items-center">
-          <span className="typo-body_bold_14 text-gray-900">개인정보보호</span>
+        <NavLink to="privacy" className="w-full flex justify-between items-center">
+          <span className="typo-body_bold14 text-gray-900">개인정보보호</span>
         </NavLink>
         <div className="w-full flex justify-between items-center">
-          <span className="typo-body_bold_14 text-gray-900">버전</span>
-          <span className="typo-body_bold_14 text-gray-400">1.0.0</span>
+          <span className="typo-body_bold14 text-gray-900">버전</span>
+          <span className="typo-body_bold14 text-gray-400">1.0.0</span>
         </div>
         <button
           onClick={() => {
@@ -55,7 +55,7 @@ const UserPage = () => {
           }}
           className="w-full flex justify-between items-center"
         >
-          <span className="typo-body_bold_14 text-gray-900">로그아웃</span>
+          <span className="typo-body_bold14 text-gray-900">로그아웃</span>
         </button>
       </div>
     </div>
