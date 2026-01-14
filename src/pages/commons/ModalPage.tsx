@@ -1,4 +1,6 @@
 import SelectDateModal from "@/components/homes/SelectDateModal";
+import SetAlarmModal from "@/components/homes/SetAlarmModal";
+import SetRepeatCycleModal from "@/components/homes/SetRepeatCycleModal";
 import BottomTestModal from "@/components/modals/BottomTestModal";
 import CenterTestModal from "@/components/modals/CenterTestModal";
 import ModalBackground from "@/components/modals/ModalBackground";
@@ -32,6 +34,8 @@ const ModalPage = () => {
         {modalType === "centerModal" && <CenterTestModal />}
         {modalType === "bottomModal" && <BottomTestModal />}
         {modalType === "selectDateModal" && <SelectDateModal />}
+        {modalType === "setRepeatCycleModal" && <SetRepeatCycleModal />}
+        {modalType === "setAlarmModal" && <SetAlarmModal />}
       </ModalBackground>
     </>
   );
