@@ -2,6 +2,8 @@ import Category from "@/components/communities/Category";
 import ImageError from "@/components/communities/ImageError";
 import PostFooter from "@/components/communities/PostFooter";
 import { COMMUNITY_CATEGORIES } from "@/constants/community";
+import CameraIcon from "@/icons/CameraIcon";
+import LeftChevronIcon from "@/icons/LeftChevronIcon";
 import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 
@@ -42,21 +44,7 @@ const PostWritingPage = () => {
       <div className="flex justify-between items-center text-gray-900 my-2 mx-4">
         <div className="flex gap-3">
           <NavLink to="/lived/community" className="flex items-center justify-center">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 12 22"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M10.75 0.75L0.75 10.75L10.75 20.75"
-                stroke="#1A1E22"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
+            <LeftChevronIcon className="w-6 h-6 text-gray-900 pt-0.5" />
           </NavLink>
           <span className="typo-h2_reg20">글쓰기</span>
         </div>
@@ -104,21 +92,7 @@ const PostWritingPage = () => {
                     className="absolute -top-2 -right-2 bg-gray-200 text-gray-900 w-5 h-5 rounded-full flex items-center justify-center"
                     onClick={() => handleRemoveImage(index)}
                   >
-                    <svg
-                      width="8"
-                      height="8"
-                      viewBox="0 0 8 8"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M0.45459 7.72683L4.09095 4.09047M4.09095 4.09047L7.72732 0.454102M4.09095 4.09047L0.45459 0.454102M4.09095 4.09047L7.72732 7.72683"
-                        stroke="#1A1E22"
-                        stroke-width="0.909091"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
+                    <CameraIcon />
                   </button>
                 </div>
               ))}
