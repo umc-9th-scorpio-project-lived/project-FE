@@ -1,0 +1,44 @@
+const Blocked = () => {
+  return (
+    <div className="w-full h-full flex flex-col gap-5 overflow-y-auto overflow-x-hidden">
+      {/* 뒤로가기 버튼(<) */}
+      <div className="flex typo-h2_reg20 text-gray-900 pt-13 px-4">차단 목록</div>
+
+      {/* <span className="typo-body_bold14 text-gray-700 pl-6.5 py-2.5">차단된 목록이 없습니다.</span> */}
+
+      <div className="w-full p-2.5 flex flex-col gap-2.5">
+        <div className="flex justify-between items-center p-2.5">
+          <div className="flex items-center gap-3">
+            <div className="min-w-11.5 min-h-11.5 rounded-full bg-gray-300"></div>
+            <span className="typo-body_bold14 text-gray-900">몬냥이</span>
+          </div>
+
+          <button
+            onClick={() => {
+              /* 차단 해제 로직 */
+            }}
+          >
+            <span className="typo-body_bold14 text-gray-900">해제</span>
+          </button>
+        </div>
+
+        <div className="flex justify-between items-center p-2.5 border-t border-gray-100">
+          <div className="flex items-center gap-3">
+            <div className="min-w-11.5 min-h-11.5 rounded-full bg-gray-300"></div>
+            <span className="typo-body_bold14 text-gray-900">팬텀</span>
+          </div>
+
+          <button
+            onClick={() => {
+              /* 차단 해제 로직 */
+            }}
+          >
+            <span className="typo-body_bold14 text-gray-900">해제</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Blocked;
