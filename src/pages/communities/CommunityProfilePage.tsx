@@ -1,16 +1,30 @@
 import CameraIcon from "@/icons/CameraIcon";
 import LeftChevronIcon from "@/icons/LeftChevronIcon";
 import WriteIcon from "@/icons/WirteIcon";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const CommunityProfilePage = () => {
   const [selectedTab, setSelectedTab] = useState("작성한 글");
   const [editMode, setEditMode] = useState(false);
+  const [communityName, setCommunityName] = useState("미지근하고 현실적 전기");
+  const inputRef = useRef<HTMLInputElement>(null);
+  const spanRef = useRef<HTMLSpanElement>(null);
 
   const handleEditProfile = () => {
     setEditMode((prev) => !prev);
   };
+
+  const resizeWidth = () => {
+    if (!inputRef.current || !spanRef.current) return;
+
+    spanRef.current.textContent = communityName || inputRef.current.value;
+    inputRef.current.style.width = `${spanRef.current.offsetWidth}px`;
+  };
+
+  useEffect(() => {
+    resizeWidth();
+  }, [communityName, editMode]);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -26,16 +40,39 @@ const CommunityProfilePage = () => {
         <div className="flex gap-2.5">
           <div className="relative w-20 h-20 rounded-full bg-gray-50">
             {editMode && (
-              <div className="flex absolute items-center justify-center w-5 h-5 rounded-full bg-gray-100 bottom-0 right-0 text-gray-600">
+              <button className="flex absolute items-center justify-center w-5 h-5 rounded-full bg-gray-100 bottom-0 right-0 text-gray-600">
                 <CameraIcon className="w-3.5 h-3.5" />
-              </div>
+              </button>
             )}
           </div>
           <div className="flex flex-col gap-2 justify-center">
             <div className="flex gap-2">
               <div className="flex gap-1">
-                {editMode && <WriteIcon className="w-4 h-4 text-gray-700" />}
-                <div className="typo-body_bold16">미지근하고 현실적인 전기장판</div>
+                {editMode ? (
+                  <div className="flex items-center gap-1">
+                    <WriteIcon className="w-4 h-4 text-gray-700" />
+                    <div className="relative inline-block">
+                      <input
+                        ref={inputRef}
+                        className="typo-body_bold16"
+                        maxLength={12}
+                        value={communityName}
+                        onChange={(e) => setCommunityName(e.target.value)}
+                        style={{
+                          minWidth: "40px",
+                          boxSizing: "content-box",
+                        }}
+                      />
+                      <span
+                        ref={spanRef}
+                        className="typo-body_bold16"
+                        style={{ position: "absolute", visibility: "hidden", whiteSpace: "pre" }}
+                      ></span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="typo-body_bold16">{communityName}</div>
+                )}
               </div>
               <div className="text-[12px] text-gray-600">자취 1년차</div>
             </div>
