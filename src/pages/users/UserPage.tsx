@@ -1,4 +1,5 @@
 import Divider from "@/components/users/Divider";
+import MiniRightChevronIcon from "@/icons/MiniRightChevronIcon";
 import { NavLink } from "react-router-dom";
 
 const UserPage = () => {
@@ -25,15 +26,15 @@ const UserPage = () => {
         <div className="w-full px-4 flex flex-col gap-5">
           <NavLink to="notice" className="w-full flex justify-between items-center">
             <span className="typo-body_bold14 text-gray-900">공지사항</span>
-            {/* > 아이콘 */}
+            <MiniRightChevronIcon className="w-6 h-6 text-gray-900" />
           </NavLink>
           <NavLink to="inquiry" className="w-full flex justify-between items-center">
             <span className="typo-body_bold14 text-gray-900">문의하기</span>
-            {/* > 아이콘 */}
+            <MiniRightChevronIcon className="w-6 h-6 text-gray-900" />
           </NavLink>
           <NavLink to="info" className="w-full flex justify-between items-center">
             <span className="typo-body_bold14 text-gray-900">정보</span>
-            {/* > 아이콘 */}
+            <MiniRightChevronIcon className="w-6 h-6 text-gray-900" />
           </NavLink>
         </div>
 
@@ -42,15 +43,15 @@ const UserPage = () => {
         <div className="w-full px-4 flex flex-col gap-5">
           <NavLink to="account" className="w-full flex justify-between items-center">
             <span className="typo-body_bold14 text-gray-900">계정 관리</span>
-            {/* > 아이콘 */}
+            <MiniRightChevronIcon className="w-6 h-6 text-gray-900" />
           </NavLink>
           <NavLink to="notifications" className="w-full flex justify-between items-center">
             <span className="typo-body_bold14 text-gray-900">알림 설정</span>
-            {/* > 아이콘 */}
+            <MiniRightChevronIcon className="w-6 h-6 text-gray-900" />
           </NavLink>
           <NavLink to="privacy" className="w-full flex justify-between items-center">
             <span className="typo-body_bold14 text-gray-900">개인정보보호</span>
-            {/* > 아이콘 */}
+            <MiniRightChevronIcon className="w-6 h-6 text-gray-900" />
           </NavLink>
           <div className="w-full flex justify-between items-center">
             <span className="typo-body_bold14 text-gray-900">버전</span>

@@ -1,8 +1,20 @@
+import MiniLeftChevronIcon from "@/icons/MiniLeftChevronIcon";
+import { useNavigate } from "react-router-dom";
+
 const Blocked = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="w-full h-full flex flex-col gap-5 overflow-y-auto overflow-x-hidden">
-      {/* 뒤로가기 버튼(<) */}
-      <div className="flex typo-h2_reg20 text-gray-900 pt-13 px-4">차단 목록</div>
+      <div className="flex items-center pt-13 px-4 gap-1">
+        <button
+          onClick={() => navigate("/lived/my")}
+          className="flex justify-center items-center cursor-pointer"
+        >
+          <MiniLeftChevronIcon className="w-5 h-5 text-gray-900" />
+        </button>
+        <span className="typo-h2_reg20 text-gray-900">차단 목록</span>
+      </div>
 
       {/* <span className="typo-body_bold14 text-gray-700 pl-6.5 py-2.5">차단된 목록이 없습니다.</span> */}
 

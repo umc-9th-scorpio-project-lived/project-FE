@@ -1,8 +1,20 @@
+import MiniLeftChevronIcon from "@/icons/MiniLeftChevronIcon";
+import { useNavigate } from "react-router-dom";
+
 const Account = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="w-full h-full flex flex-col gap-5.5 overflow-y-auto overflow-x-hidden">
-      {/* 뒤로가기 버튼(<) */}
-      <div className="flex justify-center typo-h2_reg20 text-gray-900 pt-13 px-4">계정 관리</div>
+      <div className="flex justify-center items-center pt-13 px-4 relative">
+        <button
+          onClick={() => navigate("/lived/my")}
+          className="flex justify-center items-center absolute left-4 cursor-pointer"
+        >
+          <MiniLeftChevronIcon className="w-5 h-5 text-gray-900" />
+        </button>
+        <span className="typo-h2_reg20 text-gray-900">정보</span>
+      </div>
 
       <div className="py-5 px-4 flex flex-col gap-11">
         <div className="flex flex-col gap-5">
