@@ -1,9 +1,11 @@
 import MiniLeftChevronIcon from "@/icons/MiniLeftChevronIcon";
 import MiniRightChevronIcon from "@/icons/MiniRightChevronIcon";
+import useBaseModal from "@/stores/modals/baseModal";
 import { useNavigate } from "react-router-dom";
 
 const Privacy = () => {
   const navigate = useNavigate();
+  const { openModal } = useBaseModal();
 
   return (
     <div className="w-full h-full flex flex-col gap-7 overflow-y-auto overflow-x-hidden">
@@ -41,10 +43,8 @@ const Privacy = () => {
 
           <div className="flex flex-col gap-2.5">
             <button
-              onClick={() => {
-                /* 공개 범위 설정 로직 */
-              }}
-              className="flex justify-between"
+              onClick={() => openModal("treeVisibilityModal", { position: "bottom" })}
+              className="flex justify-between cursor-pointer"
             >
               <span className="typo-body_bold14 text-gray-900">루틴 나무 공개 범위</span>
               <div className="flex items-center gap-3">

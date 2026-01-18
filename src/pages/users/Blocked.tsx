@@ -1,8 +1,10 @@
 import MiniLeftChevronIcon from "@/icons/MiniLeftChevronIcon";
+import useBaseModal from "@/stores/modals/baseModal";
 import { useNavigate } from "react-router-dom";
 
 const Blocked = () => {
   const navigate = useNavigate();
+  const { openModal } = useBaseModal();
 
   return (
     <div className="w-full h-full flex flex-col gap-5 overflow-y-auto overflow-x-hidden">
@@ -26,9 +28,8 @@ const Blocked = () => {
           </div>
 
           <button
-            onClick={() => {
-              /* 차단 해제 로직 */
-            }}
+            onClick={() => openModal("unblockModal", { position: "center" })}
+            className="cursor-pointer"
           >
             <span className="typo-body_bold14 text-gray-900">해제</span>
           </button>
@@ -41,9 +42,8 @@ const Blocked = () => {
           </div>
 
           <button
-            onClick={() => {
-              /* 차단 해제 로직 */
-            }}
+            onClick={() => openModal("unblockModal", { position: "center" })}
+            className="cursor-pointer"
           >
             <span className="typo-body_bold14 text-gray-900">해제</span>
           </button>

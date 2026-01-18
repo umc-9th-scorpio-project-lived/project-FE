@@ -1,8 +1,11 @@
 import Divider from "@/components/users/Divider";
 import MiniRightChevronIcon from "@/icons/MiniRightChevronIcon";
+import useBaseModal from "@/stores/modals/baseModal";
 import { NavLink } from "react-router-dom";
 
 const UserPage = () => {
+  const { openModal } = useBaseModal();
+
   return (
     <div className="w-full h-full flex flex-col gap-6 overflow-y-auto overflow-x-hidden">
       <span className="typo-h2_bold20 text-gray-900 pt-13 px-4">마이페이지</span>
@@ -58,9 +61,7 @@ const UserPage = () => {
             <span className="typo-body_bold14 text-gray-400">1.0.0</span>
           </div>
           <button
-            onClick={() => {
-              /* 로그아웃 로직 */
-            }}
+            onClick={() => openModal("logoutModal", { position: "center" })}
             className="w-full flex justify-between items-center"
           >
             <span className="typo-body_bold14 text-gray-900">로그아웃</span>
