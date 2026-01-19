@@ -5,10 +5,11 @@ const UnblockModal = () => {
 
   return (
     <div className="bg-white rounded-xl p-5 text-center">
-      <h2 className="text-lg font-semibold text-gray-900 pt-5 pb-10">차단을 해제하시겠어요?</h2>
+      <div className="typo-body_bold18 text-gray-900 pt-5 pb-10">차단을 해제하시겠어요?</div>
+
       <div className="flex justify-center gap-2.5">
-        <button onClick={closeModal} className="w-38 h-14 bg-gray-50 rounded-lg cursor-pointer">
-          <span className="text-gray-500 typo-body_bold16">취소</span>
+        <button onClick={closeModal} className="w-38 h-14 bg-gray-100 rounded-lg cursor-pointer">
+          <span className="text-gray-400 typo-body_bold16">취소</span>
         </button>
         <button
           onClick={() => {

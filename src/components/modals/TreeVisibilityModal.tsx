@@ -7,7 +7,7 @@ const TreeVisibilityModal = () => {
   return (
     <div className="bg-white p-4 rounded-t-xl">
       <div className="w-full py-3 text-center">
-        <h2 className="text-lg font-semibold text-gray-900 mb-2">루틴 나무 공개 범위</h2>
+        <div className="typo-body_bold18 text-gray-900 mb-2">루틴 나무 공개 범위</div>
       </div>
 
       <div className="flex flex-col gap-5">

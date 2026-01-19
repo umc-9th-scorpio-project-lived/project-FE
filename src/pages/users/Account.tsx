@@ -1,4 +1,4 @@
-import MiniLeftChevronIcon from "@/icons/MiniLeftChevronIcon";
+import LeftChevronIcon from "@/icons/LeftChevronIcon";
 import { useNavigate } from "react-router-dom";
 
 const Account = () => {
@@ -11,9 +11,9 @@ const Account = () => {
           onClick={() => navigate("/lived/my")}
           className="flex justify-center items-center absolute left-4 cursor-pointer"
         >
-          <MiniLeftChevronIcon className="w-5 h-5 text-gray-900" />
+          <LeftChevronIcon className="w-7 h-7 text-gray-900" />
         </button>
-        <span className="typo-h2_reg20 text-gray-900">정보</span>
+        <span className="typo-h2_reg20 text-gray-900">계정 관리</span>
       </div>
 
       <div className="py-5 px-4 flex flex-col gap-11">
@@ -22,6 +22,7 @@ const Account = () => {
             <span className="typo-body_bold14 text-gray-900">계정</span>
             <span className="typo-body_bold14 text-gray-400">example@example.com</span>
           </div>
+
           <div className="w-full flex justify-between items-center">
             <span className="typo-body_bold14 text-gray-900">루틴 시작일</span>
             <span className="typo-body_bold14 text-gray-400">2025.09.02</span>
@@ -37,6 +38,7 @@ const Account = () => {
           >
             <span className="typo-body_bold14 text-gray-900">로그아웃</span>
           </button>
+
           <button
             onClick={() => {
               /* 계정 삭제 로직 */

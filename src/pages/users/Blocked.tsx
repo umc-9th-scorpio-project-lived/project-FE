@@ -1,4 +1,4 @@
-import MiniLeftChevronIcon from "@/icons/MiniLeftChevronIcon";
+import LeftChevronIcon from "@/icons/LeftChevronIcon";
 import useBaseModal from "@/stores/modals/baseModal";
 import { useNavigate } from "react-router-dom";
 
@@ -13,7 +13,7 @@ const Blocked = () => {
           onClick={() => navigate("/lived/my")}
           className="flex justify-center items-center cursor-pointer"
         >
-          <MiniLeftChevronIcon className="w-5 h-5 text-gray-900" />
+          <LeftChevronIcon className="w-7 h-7 text-gray-900" />
         </button>
         <span className="typo-h2_reg20 text-gray-900">차단 목록</span>
       </div>

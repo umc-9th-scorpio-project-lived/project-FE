@@ -1,4 +1,4 @@
-import MiniLeftChevronIcon from "@/icons/MiniLeftChevronIcon";
+import LeftChevronIcon from "@/icons/LeftChevronIcon";
 import { useNavigate } from "react-router-dom";
 
 const Inquiry = () => {
@@ -11,7 +11,7 @@ const Inquiry = () => {
           onClick={() => navigate("/lived/my")}
           className="flex justify-center items-center absolute left-4 cursor-pointer"
         >
-          <MiniLeftChevronIcon className="w-5 h-5 text-gray-900" />
+          <LeftChevronIcon className="w-7 h-7 text-gray-900" />
         </button>
         <span className="typo-h2_reg20 text-gray-900">문의하기</span>
       </div>

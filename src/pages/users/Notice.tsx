@@ -1,4 +1,4 @@
-import MiniLeftChevronIcon from "@/icons/MiniLeftChevronIcon";
+import LeftChevronIcon from "@/icons/LeftChevronIcon";
 import { useNavigate } from "react-router-dom";
 
 const Notice = () => {
@@ -11,7 +11,7 @@ const Notice = () => {
           onClick={() => navigate("/lived/my")}
           className="flex justify-center items-center absolute left-4 cursor-pointer"
         >
-          <MiniLeftChevronIcon className="w-5 h-5 text-gray-900" />
+          <LeftChevronIcon className="w-7 h-7 text-gray-900" />
         </button>
         <span className="typo-h2_reg20 text-gray-900">공지사항</span>
       </div>
@@ -22,7 +22,7 @@ const Notice = () => {
           공지사항 메뉴입니다. 이곳에서 알려드려야 할 사항을 전달드릴 예정입니다. 앞으로 잘
           부탁드립니다. :)
         </span>
-        <span className="typo-body_bold14 text-gray-400">2025.12.26</span>
+        <span className="typo-body_reg14 text-gray-400">2025.12.26</span>
       </div>
     </div>
   );
