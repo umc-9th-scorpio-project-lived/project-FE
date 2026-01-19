@@ -41,9 +41,7 @@ const AccountPage = () => {
           </button>
 
           <button
-            onClick={() => {
-              /* 계정 삭제 로직 */
-            }}
+            onClick={() => openModal("deleteAccountModal", { position: "center" })}
             className="w-full flex justify-between items-center"
           >
             <span className="typo-body_bold14 text-alert-50">계정 삭제</span>

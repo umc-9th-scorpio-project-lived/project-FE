@@ -1,5 +1,6 @@
 import BottomTestModal from "@/components/modals/BottomTestModal";
 import CenterTestModal from "@/components/modals/CenterTestModal";
+import DeleteAccountModal from "@/components/modals/DeleteAccountModal";
 import LogoutModal from "@/components/modals/LogoutModal";
 import ModalBackground from "@/components/modals/ModalBackground";
 import TreeVisibilityModal from "@/components/modals/TreeVisibilityModal";
@@ -30,6 +31,7 @@ const ModalPage = () => {
         {modalType === "centerModal" && <CenterTestModal />}
         {modalType === "bottomModal" && <BottomTestModal />}
         {modalType === "logoutModal" && <LogoutModal />}
+        {modalType === "deleteAccountModal" && <DeleteAccountModal />}
         {modalType === "treeVisibilityModal" && <TreeVisibilityModal />}
         {modalType === "unblockModal" && <UnblockModal />}
       </ModalBackground>
