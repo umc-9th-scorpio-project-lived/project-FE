@@ -9,7 +9,7 @@ const LogoutModal = () => {
 
       <div className="flex justify-center gap-2.5">
         <button onClick={closeModal} className="w-38 h-14 bg-primary-50 rounded-lg cursor-pointer">
-          <span className="text-gray-50 typo-body_bold16">취소</span>
+          <span className="text-screen-0 typo-body_bold16">취소</span>
         </button>
         <button
           onClick={() => {
