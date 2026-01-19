@@ -30,7 +30,7 @@ const TreeVisibilityModal = () => {
               resetVisibility();
               setIsFriendsOnly(true);
             }}
-            className="flex gap-2"
+            className="flex gap-2 cursor-pointer"
           >
             <CheckCircleIcon
               className={`w-6 h-6 ${isFriendsOnly ? "text-primary-50" : "text-gray-300"}`}
@@ -43,7 +43,7 @@ const TreeVisibilityModal = () => {
               resetVisibility();
               setIsSomeoneSelected(true);
             }}
-            className="flex gap-2"
+            className="flex gap-2 cursor-pointer"
           >
             <CheckCircleIcon
               className={`w-6 h-6 ${isSomeoneSelected ? "text-primary-50" : "text-gray-300"}`}
@@ -56,7 +56,7 @@ const TreeVisibilityModal = () => {
               resetVisibility();
               setIsPrivate(true);
             }}
-            className="flex gap-2"
+            className="flex gap-2 cursor-pointer"
           >
             <CheckCircleIcon
               className={`w-6 h-6 ${isPrivate ? "text-primary-50" : "text-gray-300"}`}

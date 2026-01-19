@@ -59,7 +59,7 @@ const UserPage = () => {
             </div>
             <button
               onClick={() => openModal("logoutModal", { position: "center" })}
-              className="w-full flex justify-between items-center"
+              className="w-full flex justify-between items-center cursor-pointer"
             >
               <span className="typo-body_bold14 text-gray-900">로그아웃</span>
             </button>
