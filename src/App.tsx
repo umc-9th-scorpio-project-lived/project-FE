@@ -7,6 +7,7 @@ import UserPage from "./pages/users/UserPage";
 import ModalPage from "./pages/commons/ModalPage";
 import SubLayout from "./layouts/SubLayout";
 import LoginPage from "./pages/onboardings/LoginPage";
+import BasicInfoPage from "./pages/onboardings/basicInfoPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route element={<SubLayout />}>
           <Route path="/" element={<LoginPage />} />
+          <Route path="/onboardings/basic-info" element={<BasicInfoPage />} />
         </Route>
 
         <Route path="/lived" element={<MainLayout />}>
