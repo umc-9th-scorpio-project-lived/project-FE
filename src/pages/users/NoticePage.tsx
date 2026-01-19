@@ -1,7 +1,7 @@
 import LeftChevronIcon from "@/icons/LeftChevronIcon";
 import { useNavigate } from "react-router-dom";
 
-const Notice = () => {
+const NoticePage = () => {
   const navigate = useNavigate();
 
   return (
@@ -28,4 +28,4 @@ const Notice = () => {
   );
 };
 
-export default Notice;
+export default NoticePage;

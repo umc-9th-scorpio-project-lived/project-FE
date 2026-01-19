@@ -2,7 +2,7 @@ import LeftChevronIcon from "@/icons/LeftChevronIcon";
 import MiniRightChevronIcon from "@/icons/MiniRightChevronIcon";
 import { NavLink, useNavigate } from "react-router-dom";
 
-const Info = () => {
+const InfoPage = () => {
   const navigate = useNavigate();
 
   return (
@@ -31,4 +31,4 @@ const Info = () => {
   );
 };
 
-export default Info;
+export default InfoPage;

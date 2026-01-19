@@ -2,7 +2,7 @@ import LeftChevronIcon from "@/icons/LeftChevronIcon";
 import useBaseModal from "@/stores/modals/baseModal";
 import { useNavigate } from "react-router-dom";
 
-const Blocked = () => {
+const BlockedPage = () => {
   const navigate = useNavigate();
   const { openModal } = useBaseModal();
 
@@ -53,4 +53,4 @@ const Blocked = () => {
   );
 };
 
-export default Blocked;
+export default BlockedPage;

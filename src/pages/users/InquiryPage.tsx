@@ -1,7 +1,7 @@
 import LeftChevronIcon from "@/icons/LeftChevronIcon";
 import { useNavigate } from "react-router-dom";
 
-const Inquiry = () => {
+const InquiryPage = () => {
   const navigate = useNavigate();
 
   return (
@@ -30,4 +30,4 @@ const Inquiry = () => {
   );
 };
 
-export default Inquiry;
+export default InquiryPage;

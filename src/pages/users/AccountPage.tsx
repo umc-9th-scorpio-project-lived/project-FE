@@ -2,7 +2,7 @@ import LeftChevronIcon from "@/icons/LeftChevronIcon";
 import useBaseModal from "@/stores/modals/baseModal";
 import { useNavigate } from "react-router-dom";
 
-const Account = () => {
+const AccountPage = () => {
   const navigate = useNavigate();
 
   const { openModal } = useBaseModal();
@@ -54,4 +54,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default AccountPage;

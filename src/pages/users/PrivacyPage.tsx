@@ -3,7 +3,7 @@ import MiniRightChevronIcon from "@/icons/MiniRightChevronIcon";
 import useBaseModal from "@/stores/modals/baseModal";
 import { useNavigate } from "react-router-dom";
 
-const Privacy = () => {
+const PrivacyPage = () => {
   const navigate = useNavigate();
   const { openModal } = useBaseModal();
 
@@ -48,7 +48,7 @@ const Privacy = () => {
             >
               <span className="typo-body_bold14 text-gray-900">루틴 나무 공개 범위</span>
               <div className="flex items-center gap-3">
-                <span className="typo-body_bold14 text-gray-700">친구 공개</span>
+                <span className="typo-body_bold14 text-gray-700">일부 공개</span>
                 <MiniRightChevronIcon className="w-6 h-6 text-gray-900" />
               </div>
             </button>
@@ -63,4 +63,4 @@ const Privacy = () => {
   );
 };
 
-export default Privacy;
+export default PrivacyPage;

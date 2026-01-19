@@ -3,7 +3,7 @@ import LeftChevronIcon from "@/icons/LeftChevronIcon";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-const Notifications = () => {
+const NotificationsPage = () => {
   const navigate = useNavigate();
 
   // 알림 카테고리별 활성화 여부를 관리하는 상태 변수들
@@ -190,4 +190,4 @@ const Notifications = () => {
   );
 };
 
-export default Notifications;
+export default NotificationsPage;
