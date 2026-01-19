@@ -118,9 +118,9 @@ const TreeVisibilityModal = () => {
 
         <button
           onClick={closeModal}
-          className="w-full py-3 bg-primary-50 text-white rounded-4xl cursor-pointer"
+          className="w-full py-3 bg-primary-50 rounded-4xl cursor-pointer"
         >
-          수정 완료
+          <span className="text-screen-0">수정 완료</span>
         </button>
       </div>
     </div>
