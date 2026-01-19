@@ -38,13 +38,27 @@ function App() {
           <Route path="my" element={<UserPage />} />
         </Route>
 
+        {/* 마이페이지의 상세페이지 */}
         <Route path="/lived/my" element={<SubLayout />}>
+          {/* 공지사항 */}
           <Route path="notice" element={<Notice />} />
+
+          {/* 문의하기 */}
           <Route path="inquiry" element={<Inquiry />} />
+
+          {/* 정보 */}
           <Route path="info" element={<Info />} />
+
+          {/* 계정관리 */}
           <Route path="account" element={<Account />} />
+
+          {/* 알림 설정 */}
           <Route path="notifications" element={<Notifications />} />
+
+          {/* 개인정보보호 */}
           <Route path="privacy" element={<Privacy />} />
+
+          {/* 차단 목록 */}
           <Route path="privacy/blocked" element={<Blocked />} />
         </Route>
       </Routes>
