@@ -8,10 +8,10 @@ const Blocked = () => {
 
   return (
     <div className="w-full h-full flex flex-col gap-5 overflow-y-auto overflow-x-hidden">
-      <div className="flex items-center pt-13 px-4 gap-1">
+      <div className="flex justify-center items-center pt-13 px-4 relative">
         <button
-          onClick={() => navigate("/lived/my")}
-          className="flex justify-center items-center cursor-pointer"
+          onClick={() => navigate("/lived/my/privacy")}
+          className="flex justify-center items-center absolute left-4 cursor-pointer"
         >
           <LeftChevronIcon className="w-7 h-7 text-gray-900" />
         </button>
