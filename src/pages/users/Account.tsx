@@ -1,8 +1,11 @@
 import LeftChevronIcon from "@/icons/LeftChevronIcon";
+import useBaseModal from "@/stores/modals/baseModal";
 import { useNavigate } from "react-router-dom";
 
 const Account = () => {
   const navigate = useNavigate();
+
+  const { openModal } = useBaseModal();
 
   return (
     <div className="w-full h-full flex flex-col gap-5.5 overflow-y-auto overflow-x-hidden">
@@ -31,10 +34,8 @@ const Account = () => {
 
         <div className="flex flex-col gap-5">
           <button
-            onClick={() => {
-              /* 로그아웃 로직 */
-            }}
-            className="w-full flex justify-between items-center"
+            onClick={() => openModal("logoutModal", { position: "center" })}
+            className="w-full flex justify-between items-center cursor-pointer"
           >
             <span className="typo-body_bold14 text-gray-900">로그아웃</span>
           </button>
