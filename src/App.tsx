@@ -9,6 +9,7 @@ import SubLayout from "./layouts/SubLayout";
 import LoginPage from "./pages/onboardings/LoginPage";
 import BasicInfoPage from "./pages/onboardings/basicInfoPage";
 import ConcernPage from "./pages/onboardings/concernPage";
+import RoutinePage from "./pages/onboardings/RoutinePage";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/" element={<LoginPage />} />
           <Route path="/onboardings/basic-info" element={<BasicInfoPage />} />
           <Route path="/onboardings/concern" element={<ConcernPage />} />
+          <Route path="/onboardings/routine" element={<RoutinePage />} />
         </Route>
 
         <Route path="/lived" element={<MainLayout />}>
