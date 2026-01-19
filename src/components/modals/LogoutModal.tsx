@@ -4,7 +4,7 @@ const LogoutModal = () => {
   const { closeModal } = useBaseModal();
 
   return (
-    <div className="bg-white rounded-xl p-5 text-center">
+    <div className="bg-white rounded-2xl p-5 text-center">
       <div className="typo-body_bold18 text-gray-900 pt-5 pb-10">로그아웃 하시겠어요?</div>
 
       <div className="flex justify-center gap-2.5">

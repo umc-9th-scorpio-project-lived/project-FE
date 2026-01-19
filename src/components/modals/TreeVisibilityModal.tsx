@@ -19,9 +19,9 @@ const TreeVisibilityModal = () => {
   };
 
   return (
-    <div className="h-[50vh] bg-white p-4 rounded-t-xl flex flex-col overflow-y-auto overflow-x-hidden">
+    <div className="h-[50vh] bg-white p-4 rounded-t-2xl flex flex-col overflow-y-auto overflow-x-hidden">
       <div className="w-full py-3 text-center">
-        <div className="typo-body_bold18 text-gray-900 mb-2">루틴 나무 공개 범위</div>
+        <div className="typo-h2_reg20 text-gray-900 mb-2">루틴 나무 공개 범위</div>
       </div>
 
       <div className="flex flex-col flex-1 justify-between gap-5">
