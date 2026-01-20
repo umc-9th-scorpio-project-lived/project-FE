@@ -7,7 +7,8 @@ import KebabIcon from "@/icons/KebabIcon";
 import LeftChevronIcon from "@/icons/LeftChevronIcon";
 import LikeIcon from "@/icons/LikeIcon";
 import { mockPosts } from "@/mocks/post";
-import { useState } from "react";
+import useBaseModal from "@/stores/modals/baseModal";
+import { useEffect, useState } from "react";
 import { NavLink, useParams } from "react-router-dom";
 
 const PostDetailPage = () => {
@@ -17,10 +18,17 @@ const PostDetailPage = () => {
     return <div className="p-4">게시글을 찾을 수 없습니다.</div>;
   }
 
+  const { isModalOpen } = useBaseModal();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [likeCount, setLikeCount] = useState(post?.likeCount ?? 0);
   const [isLiked, setIsLiked] = useState(false);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      setOpen(false);
+    }
+  }, [isModalOpen]);
 
   const handleLikeToggle = () => {
     if (isLiked) {
@@ -33,6 +41,7 @@ const PostDetailPage = () => {
 
   return (
     <div className="flex flex-col w-full min-h-screen pt-2 pb-[100px]">
+      {/*네브바*/}
       <div className="flex px-4 justify-between">
         <NavLink to="/lived/community" className="w-6 h-6 flex items-center justify-center">
           <LeftChevronIcon className="w-7 h-7 text-gray-900 pt-0.5" />
@@ -46,13 +55,14 @@ const PostDetailPage = () => {
             className="w-7 h-7 text-gray-700 fill-none"
             onClick={() => setOpen((prev) => !prev)}
           />
-          {open && (
+          {open && !isModalOpen && (
             <div className="absolute top-8 right-0 z-50">
               <CommunityHamburger type="post" />
             </div>
           )}
         </div>
       </div>
+      {/*게시글 본문*/}
       <div className="flex flex-col px-4 py-3 gap-2 border-b-2 border-gray-100">
         <div className="flex items-center gap-2.5">
           <div className="w-13.5 h-13.5 rounded-full bg-gray-500" />
@@ -93,7 +103,7 @@ const PostDetailPage = () => {
         </div>
       </div>
       <CommunityCommentList />
-      <PostFooter />
+      {!isModalOpen && <PostFooter />}
     </div>
   );
 };
