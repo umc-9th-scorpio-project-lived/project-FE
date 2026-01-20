@@ -7,9 +7,10 @@ import UserPage from "./pages/users/UserPage";
 import ModalPage from "./pages/commons/ModalPage";
 import SubLayout from "./layouts/SubLayout";
 import LoginPage from "./pages/onboardings/LoginPage";
-import BasicInfoPage from "./pages/onboardings/basicInfoPage";
-import ConcernPage from "./pages/onboardings/concernPage";
+import BasicInfoPage from "./pages/onboardings/BasicInfoPage";
+import ConcernPage from "./pages/onboardings/ConcernPage";
 import RoutinePage from "./pages/onboardings/RoutinePage";
+import PushGuidePage from "./pages/onboardings/PushGuidePage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/onboardings/basic-info" element={<BasicInfoPage />} />
           <Route path="/onboardings/concern" element={<ConcernPage />} />
           <Route path="/onboardings/routine" element={<RoutinePage />} />
+          <Route path="/onboardings/push-guide" element={<PushGuidePage />} />"
         </Route>
 
         <Route path="/lived" element={<MainLayout />}>

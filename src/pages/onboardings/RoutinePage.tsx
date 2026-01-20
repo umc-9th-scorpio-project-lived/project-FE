@@ -97,13 +97,13 @@ const RoutinePage = () => {
             tabIndex={0}
             onClick={() => {
               setSelected([]);
-              navigate("/lived");
+              navigate("/onboardings/push-guide");
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
                 setSelected([]);
-                navigate("/");
+                navigate("/onboardings/push-guide");
               }
             }}
             className="w-full cursor-pointer select-none text-center typo-body_bold14 text-gray-700"
@@ -118,13 +118,13 @@ const RoutinePage = () => {
               aria-disabled={!isStartEnabled}
               onClick={() => {
                 if (!isStartEnabled) return;
-                navigate("/lived");
+                navigate("/onboardings/push-guide");
               }}
               onKeyDown={(e) => {
                 if (!isStartEnabled) return;
                 if (e.key === "Enter" || e.key === " ") {
                   e.preventDefault();
-                  navigate("/lived");
+                  navigate("/onboardings/push-guide");
                 }
               }}
               className={[
