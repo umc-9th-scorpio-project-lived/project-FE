@@ -1,6 +1,7 @@
 import type { Post } from "@/types/Post.types";
 
 export const mockPosts: Post[] = [
+  // 임시 게시물용 더미데이터(나중에 삭제 예정)
   {
     id: 1,
     category: "자취 일상",
@@ -17,7 +18,7 @@ export const mockPosts: Post[] = [
     category: "추천템",
     title: "브리타 정수기 진짜 좋은듯",
     content:
-      "진짜 나 빼고 다 아는 거였긴 한데...  브리타 정수기 쓰면 필터만  교체해주면 돼서 좋음! 2달 주기에 한 번씩만 필터 교체해주면 돼!!",
+      "진짜 나 빼고 다 아는 거였긴 한데... 브리타 정수기 쓰면 필터만 \n 교체해주면 돼서 좋음! 2달 주기에 한 번씩만 필터 교체해주면 되고 \n 필터 하나 당 5,000원 정도 해서 가성비도 조음... ",
     imageCount: 2,
     likeCount: 6,
     commentCount: 12,

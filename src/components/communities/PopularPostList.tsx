@@ -2,7 +2,7 @@ import PopularPostCard from "./PopularPostCard";
 
 const PopularPostList = () => {
   return (
-    <div className="flex py-3 overflow-x-auto gap-2 flex-nowrap -mr-4">
+    <div className="flex py-3 px-4 overflow-x-auto gap-2 flex-nowrap -mr-4">
       <PopularPostCard
         title="이렇게 추운날"
         content="보일러 몇 도로 틀고 지내? 

@@ -6,14 +6,14 @@ type CategoryProps = {
 
 const Category = ({ categories, selected, onSelect }: CategoryProps) => {
   return (
-    <section className="flex my-2 gap-1 overflow-x-auto">
+    <section className="flex my-2 gap-2 overflow-x-auto">
       {categories.map((category) => {
         const isActive = selected === category;
         return (
           <button
             key={category}
             onClick={() => onSelect(category)}
-            className={`rounded-full px-3 py-1 text-[12px] shrink-0 ${isActive ? "bg-primary-50 text-screen-0" : "bg-gray-100 text-gray-600"}`}
+            className={`rounded-2xl px-3 py-2 text-[12px] shrink-0 ${isActive ? "bg-primary-50 text-screen-0" : "bg-gray-50 text-gray-800"}`}
           >
             {category}
           </button>
