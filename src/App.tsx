@@ -10,6 +10,7 @@ import LoginPage from "./pages/onboardings/LoginPage";
 import PostWritingPage from "./pages/communities/PostWritingPage";
 import CommunityProfilePage from "./pages/communities/CommunityProfilePage";
 import PostSearchPage from "./pages/communities/PostSearchPage";
+import PostDetailPage from "./pages/communities/PostDetailPage";
 
 function App() {
   return (
@@ -18,8 +19,9 @@ function App() {
       <Routes>
         <Route element={<SubLayout />}>
           <Route path="/" element={<LoginPage />} />
+          <Route path="/lived/community/:postId" element={<PostDetailPage />} />
           <Route path="/lived/community/write" element={<PostWritingPage />} />
-          <Route path="/lived/community/profile" element={<CommunityProfilePage />} />
+          <Route path="/lived/community/profile/:userid" element={<CommunityProfilePage />} />
           <Route path="/lived/community/search" element={<PostSearchPage />} />
         </Route>
 
