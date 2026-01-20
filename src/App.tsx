@@ -18,11 +18,20 @@ function App() {
       <ModalPage />
       <Routes>
         <Route element={<SubLayout />}>
+          {/* 로그인 */}
           <Route path="/" element={<LoginPage />} />
+
+          {/* 온보딩 기본 정보 */}
           <Route path="/onboardings/basic-info" element={<BasicInfoPage />} />
+
+          {/* 온보딩 자취 고민 */}
           <Route path="/onboardings/concern" element={<ConcernPage />} />
+
+          {/* 온보딩 맞춤 루틴 */}
           <Route path="/onboardings/routine" element={<RoutinePage />} />
-          <Route path="/onboardings/push-guide" element={<PushGuidePage />} />"
+
+          {/* 온보딩 알림 설정 */}
+          <Route path="/onboardings/push-guide" element={<PushGuidePage />} />
         </Route>
 
         <Route path="/lived" element={<MainLayout />}>
