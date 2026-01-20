@@ -83,7 +83,7 @@ export default function BasicInfoPage() {
           <button
             type="button"
             onClick={() => openModal("livingYear", { position: "bottom" })}
-            className="flex h-[60px] w-full items-center justify-between rounded-xl bg-gray-50 px-5"
+            className="flex h-[60px] w-full items-center justify-between rounded-[8px] bg-gray-50 px-5"
           >
             <span
               className={
@@ -92,7 +92,7 @@ export default function BasicInfoPage() {
             >
               {livingYear || "자취 연차를 선택해주세요."}
             </span>
-            <DownChevronIcon className="size-6 text-gray-500" />
+            <DownChevronIcon className="size-6 text-gray-700" />
           </button>
         </div>
 
@@ -110,7 +110,7 @@ export default function BasicInfoPage() {
                   type="button"
                   onClick={() => setGender(g)}
                   className={[
-                    "h-[56px] w-full rounded-[10px] typo-body_reg16",
+                    "h-[56px] w-full rounded-[8px] typo-body_reg16",
                     active ? "bg-primary-50 text-screen-0" : "bg-primary-50/20 text-gray-600",
                   ].join(" ")}
                 >
@@ -135,7 +135,7 @@ export default function BasicInfoPage() {
               onClick={setTempBirth} // 임시: 클릭 시 고정 값 입력
               placeholder="2000.11.10"
               className={[
-                "h-[60px] w-full rounded-xl bg-gray-50 px-5 pr-12 outline-none cursor-pointer",
+                "h-[60px] w-full rounded-[8px] bg-gray-50 px-5 pr-12 outline-none cursor-pointer",
                 "typo-body_bold16 text-gray-900 placeholder:text-gray-300",
               ].join(" ")}
             />
@@ -161,23 +161,30 @@ export default function BasicInfoPage() {
 
         <div className="flex-1" />
 
-        {/* 다음 버튼 */}
-        <div
-          role="button"
-          tabIndex={0}
-          aria-disabled={!isNextEnabled}
-          onClick={() => isNextEnabled && navigate("/onboardings/concern")}
-          className={[
-            "fixed left-4 bottom-8",
-            "w-[358px] h-[50px]",
-            "flex items-center justify-center gap-[10px] p-[10px]",
-            "rounded-full typo-body_bold18",
-            isNextEnabled
-              ? "bg-primary-50 text-screen-0"
-              : "bg-gray-100 text-gray-400 pointer-events-none",
-          ].join(" ")}
-        >
-          다음
+        <div className="mt-auto pb-8">
+          <div
+            role="button"
+            tabIndex={0}
+            aria-disabled={!isNextEnabled}
+            onClick={() => isNextEnabled && navigate("/onboardings/concern")}
+            onKeyDown={(e) => {
+              if (!isNextEnabled) return;
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                navigate("/onboardings/concern");
+              }
+            }}
+            className={[
+              "h-[50px] w-full rounded-full",
+              "flex items-center justify-center",
+              "typo-body_bold18",
+              isNextEnabled
+                ? "bg-primary-50 text-screen-0"
+                : "bg-gray-100 text-gray-400 pointer-events-none",
+            ].join(" ")}
+          >
+            다음
+          </div>
         </div>
       </section>
     </main>
