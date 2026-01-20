@@ -1,5 +1,5 @@
 import LeftChevronIcon from "@/icons/LeftChevronIcon";
-import { useMemo, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 type StepItem = {
@@ -34,39 +34,22 @@ const STEPS: StepItem[] = [
 export default function PushGuidePage() {
   const navigate = useNavigate();
 
-  // 현재 스텝 (0 ~ 3)
+  // 현재 스텝
   const [step, setStep] = useState(0);
   const isLast = step === STEPS.length - 1;
+  const current = STEPS[step];
 
-  // 현재 스텝 데이터
-  const current = useMemo(() => STEPS[step], [step]);
-
-  // 터치(스와이프)용
   const startXRef = useRef<number | null>(null);
-
-  // 뒤로가기: 첫 페이지면 이전 페이지로, 아니면 step 감소
-  const handleBack = () => {
-    if (step === 0) {
-      navigate(-1);
-      return;
-    }
-    setStep((prev) => prev - 1);
-  };
-
-  // 다음 step
-  const goNextStep = () => {
-    if (isLast) return;
-    setStep((prev) => Math.min(prev + 1, STEPS.length - 1));
-  };
-
-  // 이전 step
-  const goPrevStep = () => {
-    setStep((prev) => Math.max(prev - 1, 0));
-  };
 
   // 완료
   const handleDone = () => {
     navigate("/lived");
+  };
+
+  // 뒤로가기
+  const handleBack = () => {
+    if (step === 0) navigate(-1);
+    else setStep((prev) => prev - 1);
   };
 
   // 스와이프 시작
@@ -77,19 +60,28 @@ export default function PushGuidePage() {
   // 스와이프 끝
   const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
     if (startXRef.current === null) return;
+
     const endX = e.changedTouches[0].clientX;
     const diff = endX - startXRef.current;
     startXRef.current = null;
 
     if (Math.abs(diff) < 40) return;
 
-    if (diff < 0) goNextStep();
-    else goPrevStep();
+    setStep((prev) => {
+      if (diff < 0) return Math.min(prev + 1, STEPS.length - 1);
+      return Math.max(prev - 1, 0);
+    });
+  };
+
+  const handleKeyActivate = (e: React.KeyboardEvent<HTMLDivElement>, cb: () => void) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    e.preventDefault();
+    cb();
   };
 
   return (
     <main className="min-h-dvh font-suite">
-      <section className="mx-auto flex min-h-dvh w-full max-w-[500px] flex-col px-4">
+      <section className="relative mx-auto flex min-h-dvh w-full max-w-[500px] flex-col px-4">
         {/* 상단 뒤로가기 */}
         <div className="h-11 w-full py-[5px] pt-6">
           <button
@@ -101,6 +93,7 @@ export default function PushGuidePage() {
             <LeftChevronIcon className="size-6" />
           </button>
         </div>
+
         {/* 본문: 스와이프로만 step 넘기기 */}
         <div className="flex flex-col" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
           {/* 이미지 */}
@@ -108,7 +101,7 @@ export default function PushGuidePage() {
             <img
               src={current.img}
               alt={`푸시 알림 가이드 ${step + 1}`}
-              className="w-[220px] h-[340px] object-contain"
+              className="h-[340px] w-[220px] object-contain"
               draggable={false}
             />
           </div>
@@ -120,25 +113,23 @@ export default function PushGuidePage() {
           </div>
         </div>
 
-        {/* 점 인디케이터*/}
+        {/* 점 인디케이터 */}
         <div className="absolute left-1/2 top-[618px] -translate-x-1/2">
           <div className="flex items-center justify-center gap-[12px]">
-            {STEPS.map((_, idx) => {
-              const active = idx === step;
-              return (
-                <span
-                  key={idx}
-                  className={[
-                    "h-[10px] w-[10px] rounded-full",
-                    active ? "bg-primary-50" : "bg-gray-200",
-                  ].join(" ")}
-                />
-              );
-            })}
+            {STEPS.map((_, idx) => (
+              <span
+                key={idx}
+                className={[
+                  "h-[10px] w-[10px] rounded-full",
+                  idx === step ? "bg-primary-50" : "bg-gray-200",
+                ].join(" ")}
+              />
+            ))}
           </div>
         </div>
 
         <div className="flex-1" />
+
         {/* 하단 영역 */}
         <div className="pb-8">
           {/* 스킵 */}
@@ -146,12 +137,7 @@ export default function PushGuidePage() {
             role="button"
             tabIndex={0}
             onClick={handleDone}
-            onKeyDown={(e) => {
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                handleDone();
-              }
-            }}
+            onKeyDown={(e) => handleKeyActivate(e, handleDone)}
             className="mx-auto pb-2 w-fit typo-body_bold14 text-gray-700 cursor-pointer"
           >
             나중에 설정할게요
@@ -165,10 +151,7 @@ export default function PushGuidePage() {
             onClick={() => isLast && handleDone()}
             onKeyDown={(e) => {
               if (!isLast) return;
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                handleDone();
-              }
+              handleKeyActivate(e, handleDone);
             }}
             className={[
               "h-[50px] w-full rounded-full",
