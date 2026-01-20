@@ -38,10 +38,10 @@ export default function LivingYearModal() {
 
               // // default / active / unactive
               const itemClass = isActive
-                ? "bg-primary-50 text-screen-0 typo-body_bold18" // active
+                ? "bg-primary-50 text-screen-0" // active
                 : hasPicked
-                  ? "bg-gray-50 text-gray-300 typo-body_bold18" // unactive
-                  : "bg-gray-50 text-gray-500 typo-body_bold18"; // default
+                  ? "bg-gray-50 text-gray-300" // unactive
+                  : "bg-gray-50 text-gray-500"; // default
 
               return (
                 <div
