@@ -19,10 +19,10 @@ const CommunityHamburger = ({ type }: CommunityHamburgerProps) => {
       )}
       {(type === "myPost" || type === "myComment") && (
         <div>
-          <div className="w-full h-1/2 rounded-sm border-t-[0.5px] border-gray-300 px-3 py-2 bg-screen-0 text-[11px] text-gray-900 text-center">
+          <div className="w-full h-1/2 rounded-t-sm border-[0.5px] border-gray-300 px-3 py-2 bg-screen-0 text-[11px] text-gray-900 text-center">
             수정하기
           </div>
-          <div className="w-full h-1/2 rounded-sm border-b-[0.5px] border-gray-300 px-3 py-2 bg-screen-0 text-[11px] text-gray-900 text-center">
+          <div className="w-full h-1/2 rounded-b-sm border-[0.5px] border-gray-300 px-3 py-2 bg-screen-0 text-[11px] text-gray-900 text-center">
             삭제하기
           </div>
         </div>
