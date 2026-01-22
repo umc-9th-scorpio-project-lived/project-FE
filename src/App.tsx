@@ -7,7 +7,9 @@ import UserPage from "./pages/users/UserPage";
 import ModalPage from "./pages/commons/ModalPage";
 import SubLayout from "./layouts/SubLayout";
 import LoginPage from "./pages/onboardings/LoginPage";
-import CreateRoutinePage from "./pages/homes/CreateRoutinePage";
+import RoutinePage from "./pages/homes/RoutinePage";
+import AlarmPage from "./pages/alarms/AlarmPage";
+import RecommendPage from "./pages/homes/RecommendPage";
 
 function App() {
   return (
@@ -16,7 +18,15 @@ function App() {
       <Routes>
         <Route element={<SubLayout />}>
           <Route path="/" element={<LoginPage />} />
-          <Route path="/lived/create" element={<CreateRoutinePage />} />
+
+          {/* 루틴 생성/수정 페이지 */}
+          <Route path="/lived/create" element={<RoutinePage mode="create" />} />
+          {/* 추후 루틴 아이디 별로 관리 */}
+          <Route path="/lived/edit" element={<RoutinePage mode="edit" />} />
+          {/* 알림 페이지 */}
+          <Route path="/lived/alarm" element={<AlarmPage />} />
+          {/* 루틴 추천 페이지 */}
+          <Route path="/lived/recommend" element={<RecommendPage />} />
         </Route>
 
         <Route path="/lived" element={<MainLayout />}>
