@@ -55,6 +55,7 @@ export default {
       boxShadow: {
         "footer-shadow": "0px -4px 10px rgba(183, 183, 183, 0.1)",
         soft: "0px 4px 10px rgba(183, 183, 183, 0.1)",
+        mini: "0px 0px 10px rgba(85, 85, 85, 0.1)",
       },
       backgroundImage: {
         // 아이콘
