@@ -9,6 +9,8 @@ import {
   isSameDay,
   normalizeDate,
 } from "@/utils/homes/homeUtils";
+import MiniLeftChevronIcon from "@/icons/MiniLeftChevronIcon";
+import MiniRightChevronIcon from "@/icons/MiniRightChevronIcon";
 
 const SelectDateModal = () => {
   const { closeModal } = useBaseModal();
@@ -56,26 +58,16 @@ const SelectDateModal = () => {
         <div className="flex items-center gap-2.5 justify-start py-3 px-1.5">
           <div className="bg-calender w-6 h-6" />
 
-          <div className="typo-h2_bold20 text-gray-900">날짜를 선택해주세요</div>
+          <div className="typo-h2_reg20 text-gray-900">날짜를 선택해주세요</div>
         </div>
 
         {/* 월 이동 */}
         <div className="flex items-center justify-between">
-          <div
-            role="button"
-            onClick={handlePrevMonth}
-            className="w-6 h-6 bg-calendar_left_chevron"
-            aria-label="이전 달"
-          />
+          <MiniLeftChevronIcon className="w-6 h-6" onClick={handlePrevMonth} />
 
-          <div className="typo-body_bold16 text-gray-900">{calendarTitle}</div>
+          <div className="typo-body_reg16 text-gray-900">{calendarTitle}</div>
 
-          <div
-            role="button"
-            onClick={handleNextMonth}
-            className="w-6 h-6 bg-calendar_right_chevron"
-            aria-label="다음 달"
-          />
+          <MiniRightChevronIcon className="w-6 h-6" onClick={handleNextMonth} />
         </div>
       </div>
 
