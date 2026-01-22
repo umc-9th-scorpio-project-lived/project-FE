@@ -1,6 +1,8 @@
-import SelectDateModal from "@/components/homes/SelectDateModal";
-import SetAlarmModal from "@/components/homes/SetAlarmModal";
-import SetRepeatCycleModal from "@/components/homes/SetRepeatCycleModal";
+import DeleteRoutineModal from "@/components/modals/homes/DeleteRoutineModal";
+import SelectDateModal from "@/components/modals/homes/SelectDateModal";
+import SelectIconModal from "@/components/modals/homes/SelectIconModal";
+import SetAlarmModal from "@/components/modals/homes/SetAlarmModal";
+import SetRepeatCycleModal from "@/components/modals/homes/SetRepeatCycleModal";
 import BottomTestModal from "@/components/modals/BottomTestModal";
 import CenterTestModal from "@/components/modals/CenterTestModal";
 import ModalBackground from "@/components/modals/ModalBackground";
@@ -8,7 +10,7 @@ import useBaseModal from "@/stores/modals/baseModal";
 import { useEffect } from "react";
 
 const ModalPage = () => {
-  const { isModalOpen, modalType } = useBaseModal();
+  const { isModalOpen, modalType, modalProps } = useBaseModal();
 
   useEffect(() => {
     if (isModalOpen) {
@@ -27,15 +29,13 @@ const ModalPage = () => {
   return (
     <>
       <ModalBackground>
-        {/* 
-      예시 형식입니다! 팝업 모달 추가할 때 아래 형식처럼 추가해서 사용하시면 됩니다.
-      퍼블리싱 진행하실 때 해당 주석은 삭제해주세요!
-      {modalType === "loadingModal" && <LoadingModal />} */}
         {modalType === "centerModal" && <CenterTestModal />}
         {modalType === "bottomModal" && <BottomTestModal />}
         {modalType === "selectDateModal" && <SelectDateModal />}
-        {modalType === "setRepeatCycleModal" && <SetRepeatCycleModal />}
-        {modalType === "setAlarmModal" && <SetAlarmModal />}
+        {modalType === "setRepeatCycleModal" && <SetRepeatCycleModal {...(modalProps ?? {})} />}
+        {modalType === "setAlarmModal" && <SetAlarmModal {...(modalProps ?? {})} />}
+        {modalType === "selectIconModal" && <SelectIconModal {...(modalProps ?? {})} />}
+        {modalType === "deleteRoutineModal" && <DeleteRoutineModal {...(modalProps ?? {})} />}
       </ModalBackground>
     </>
   );
