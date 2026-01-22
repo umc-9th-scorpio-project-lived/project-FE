@@ -128,7 +128,7 @@ const RoutinePage = ({ mode = "create" as Mode }) => {
 
   return (
     <div className="w-full min-h-dvh px-4 pt-2.5 flex flex-col">
-      <div className="relative flex w-full py-1.5 items-center justify-center">
+      <div className="relative flex w-full py-2 items-center justify-center">
         <LeftChevronIcon
           className="absolute left-0 w-7 h-7 text-gray-900"
           onClick={handleClickBack}

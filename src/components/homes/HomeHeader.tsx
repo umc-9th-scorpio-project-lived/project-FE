@@ -8,10 +8,12 @@ import {
   isSameDay,
   normalizeDate,
 } from "@/utils/homes/homeUtils";
+import { useNavigate } from "react-router-dom";
 
 const HomeHeader = () => {
   const { selectedDate, weekStartDate, resetToToday } = useHomeDateStore();
   const { openModal } = useBaseModal();
+  const navigate = useNavigate();
 
   const currentDate = selectedDate ?? normalizeDate(new Date());
 
@@ -26,7 +28,7 @@ const HomeHeader = () => {
       <div className="flex flex-col gap-[5px]">
         <div className="flex justify-between h-10 items-center">
           <div className="text-[22px] font-normal">{formatTopTitle(currentDate)}</div>
-          <div className="bg-alarm h-6 w-6" />
+          <div className="bg-alarm h-6 w-6" onClick={() => navigate("/lived/alarm")} />
         </div>
 
         <div className="flex justify-between items-center h-10">
