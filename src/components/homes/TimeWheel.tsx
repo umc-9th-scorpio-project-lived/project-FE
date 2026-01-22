@@ -1,99 +1,161 @@
-import { useEffect, useRef, useMemo } from "react";
+import { useDebouncedSnap } from "@/hooks/useDebounceSnap";
+import { useEffect, useMemo, useRef } from "react";
 
-type TimeWheelProps = {
-  items: string[];
-  value: string;
-  onChange: (v: string) => void;
+type TimeWheelProps<T extends string> = {
+  items: T[];
+  value: T;
+  onChange: (v: T) => void;
   width?: string;
 };
 
-const ITEM_H = 56;
-const VISIBLE_ITEMS = 3;
+const ROW_HEIGHT = 56;
+const VISIBLE_ROWS = 3;
 
-const TimeWheel = ({ items, value, onChange, width = "60px" }: TimeWheelProps) => {
-  const ref = useRef<HTMLDivElement | null>(null);
+const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
 
-  // 1. 무한 루프를 위해 데이터를 3세트 복사합니다.
-  const extendedItems = useMemo(() => [...items, ...items, ...items], [items]);
-  const originalLength = items.length;
+const TimeWheel = <T extends string>({
+  items,
+  value,
+  onChange,
+  width = "60px",
+}: TimeWheelProps<T>) => {
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const isTwoOptionWheel = items.length === 2;
 
-  // 초기 위치 설정 (중간 세트의 해당 값 위치로 이동)
-  const syncToValue = (v: string) => {
-    const el = ref.current;
+  if (isTwoOptionWheel) {
+    const scrollToValue = (v: T) => {
+      const el = scrollRef.current;
+      if (!el) return;
+      const idx = clamp(items.indexOf(v), 0, 1);
+      el.scrollTo({ top: idx * ROW_HEIGHT, behavior: "auto" });
+    };
+
+    useEffect(() => {
+      scrollToValue(value);
+    }, []);
+
+    const snapToNearest = () => {
+      const el = scrollRef.current;
+      if (!el) return;
+
+      const index = clamp(Math.round(el.scrollTop / ROW_HEIGHT), 0, 1);
+      const nextValue = items[index];
+
+      el.scrollTo({ top: index * ROW_HEIGHT, behavior: "smooth" });
+      if (nextValue !== value) onChange(nextValue);
+    };
+
+    const { schedule: scheduleSnap } = useDebouncedSnap(snapToNearest, 220);
+
+    return (
+      <div
+        className="relative overflow-hidden"
+        style={{ height: ROW_HEIGHT * VISIBLE_ROWS, width }}
+      >
+        <div
+          ref={scrollRef}
+          onScroll={scheduleSnap}
+          className="h-full w-full overflow-y-auto scrollbar-hide"
+          style={{
+            paddingTop: ROW_HEIGHT,
+            paddingBottom: ROW_HEIGHT,
+            msOverflowStyle: "none",
+            scrollbarWidth: "none",
+          }}
+        >
+          {items.map((item) => (
+            <div
+              key={item}
+              className="flex items-center justify-center"
+              style={{ height: ROW_HEIGHT }}
+            >
+              <span
+                className={`transition-all duration-200 ${
+                  item === value
+                    ? "typo-body_bold16 text-gray-900"
+                    : "typo-body_reg16 text-gray-600"
+                }`}
+              >
+                {item}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // 시 : 분 영역
+  const tripledItems = useMemo(() => [...items, ...items, ...items], [items]);
+  const baseSize = items.length;
+
+  const scrollToValue = (v: T) => {
+    const el = scrollRef.current;
     if (!el) return;
-    const baseIdx = items.indexOf(v);
-    if (baseIdx < 0) return;
-    // 중간 세트(index + length)로 이동
-    el.scrollTo({ top: (baseIdx + originalLength) * ITEM_H });
+    const baseIndex = items.indexOf(v);
+    if (baseIndex < 0) return;
+
+    // 중간 세트로 이동
+    el.scrollTo({ top: (baseIndex + baseSize) * ROW_HEIGHT });
   };
 
   useEffect(() => {
-    syncToValue(value);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    scrollToValue(value);
   }, []);
 
   const handleScroll = () => {
-    const el = ref.current;
+    const el = scrollRef.current;
     if (!el) return;
 
-    const scrollTop = el.scrollTop;
-    const currentIdx = Math.round(scrollTop / ITEM_H);
+    const index = Math.round(el.scrollTop / ROW_HEIGHT);
 
-    // 2. 경계 검사: 첫 번째 세트 끝이나 세 번째 세트 시작 부분에 도달하면 중앙으로 '점프'
-    if (currentIdx < originalLength) {
-      // 위로 너무 올라가면 아래쪽 동일 위치로 점프
-      el.scrollTo({ top: (currentIdx + originalLength) * ITEM_H });
-    } else if (currentIdx >= originalLength * 2) {
-      // 아래로 너무 내려가면 위쪽 동일 위치로 점프
-      el.scrollTo({ top: (currentIdx - originalLength) * ITEM_H });
+    // 경계 도달 시 중앙 세트로 점프
+    if (index < baseSize) {
+      el.scrollTo({ top: (index + baseSize) * ROW_HEIGHT });
+    } else if (index >= baseSize * 2) {
+      el.scrollTo({ top: (index - baseSize) * ROW_HEIGHT });
     }
 
-    // 3. 현재 중앙 세트 기준 실제 인덱스 계산 후 값 변경 알림
-    const actualIdx = currentIdx % originalLength;
-    const newValue = items[actualIdx];
-    if (newValue !== value) {
-      onChange(newValue);
-    }
+    const actualIdx = index % baseSize;
+    const next = items[actualIdx];
+    if (next !== value) onChange(next);
   };
 
-  const snap = () => {
-    const el = ref.current;
+  const snapToNearest = () => {
+    const el = scrollRef.current;
     if (!el) return;
-    const idx = Math.round(el.scrollTop / ITEM_H);
-    el.scrollTo({ top: idx * ITEM_H, behavior: "smooth" });
+
+    const index = Math.round(el.scrollTop / ROW_HEIGHT);
+    el.scrollTo({ top: index * ROW_HEIGHT, behavior: "smooth" });
   };
 
-  const scheduleSnap = () => {
-    const el = ref.current as any;
-    if (!el) return;
-    window.clearTimeout(el._t);
-    el._t = window.setTimeout(snap, 150);
-  };
+  const { schedule: scheduleSnap } = useDebouncedSnap(snapToNearest, 150);
 
   return (
-    <div className="relative overflow-hidden" style={{ height: ITEM_H * VISIBLE_ITEMS, width }}>
+    <div className="relative overflow-hidden" style={{ height: ROW_HEIGHT * VISIBLE_ROWS, width }}>
       <div
-        ref={ref}
+        ref={scrollRef}
         onScroll={() => {
           handleScroll();
           scheduleSnap();
         }}
         className="h-full w-full overflow-y-auto snap-y snap-mandatory scrollbar-hide"
         style={{
-          // 무한 휠에서는 데이터 자체가 앞뒤로 존재하므로 padding이 필요 없습니다.
+          paddingTop: ROW_HEIGHT,
+          paddingBottom: ROW_HEIGHT,
           msOverflowStyle: "none",
           scrollbarWidth: "none",
         }}
       >
-        {extendedItems.map((item, idx) => (
+        {tripledItems.map((item, idx) => (
           <div
-            key={`${item}-${idx}`} // 중복된 값이 있으므로 index를 조합하여 key 생성
+            key={`${item}-${idx}`}
             className="snap-center flex items-center justify-center"
-            style={{ height: ITEM_H }}
+            style={{ height: ROW_HEIGHT }}
           >
             <span
               className={`transition-all duration-200 ${
-                item === value ? "typo-body_bold18 text-gray-900" : "typo-body_reg16 text-gray-400"
+                item === value ? "typo-body_bold16 text-gray-900" : "typo-body_reg16 text-gray-600"
               }`}
             >
               {item}
