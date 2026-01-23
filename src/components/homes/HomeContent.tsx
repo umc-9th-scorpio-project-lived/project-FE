@@ -15,6 +15,17 @@ const HomeContent = () => {
 
   const { openCoach: openCoach, close: closeCoach } = useCoachModal("coach:home");
 
+  const totalCount = MOCK_ROUTINES.length;
+
+  const doneCount = completed.size;
+
+  const headerText =
+    totalCount === 0
+      ? "오늘 루틴을 시작해볼까요?"
+      : doneCount === 0
+        ? "아직 완료하지 않은 루틴이 있어요!"
+        : `오늘 루틴 ${doneCount}/${totalCount} 진행 중!`;
+
   // ✅ 브라우저 타입
   const pressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const longPressTriggered = useRef(false);
@@ -73,7 +84,7 @@ const HomeContent = () => {
 
   return (
     <div className="flex flex-col gap-3.5 px-4 pt-6 h-[calc(100%-173px)]">
-      <span className="typo-body_reg16 text-gray-900">오늘 루틴을 시작해볼까요?</span>
+      <span className="typo-body_reg16 text-gray-900">{headerText}</span>
 
       <div className="relative flex-1 min-h-0 overflow-y-auto pb-6">
         <div className="grid grid-cols-3 gap-5 justify-items-center">
