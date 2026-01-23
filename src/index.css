@@ -1,1 +1,139 @@
-@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
+@reference "tailwindcss/theme";
+
+html {
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
+  height: auto;
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  font-family: "suite";
+  min-width: 375px; /* iphone SE 기준 - 모바일 최소 너비 */
+  max-width: 500px; /* 모바일 최대 너비 */
+  min-height: 100vh;
+  height: auto;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  overflow-y: auto;
+  position: relative;
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE 10+ */
+  background-color: #fcfdff;
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+@media (min-width: 500px) {
+  html {
+    display: flex;
+    justify-content: center;
+  }
+
+  body {
+    min-width: 500px;
+    width: 500px;
+    max-width: 500px;
+    @apply shadow-2xl;
+  }
+}
+
+/* 모바일 스크롤바 관련 툴킷 옵션 설정 */
+::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-visible {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
+}
+
+.scrollbar-visible::-webkit-scrollbar {
+  width: 4px;
+}
+
+.scrollbar-visible::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-visible::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.25);
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  background-clip: content-box;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.limit-width {
+  min-width: 375px;
+  max-width: 500px;
+}
+
+@layer utilities {
+  .typo-h1_bold24 {
+    @apply font-suite text-h1_24 font-bold;
+  }
+  .typo-h1_reg24 {
+    @apply font-suite text-h1_24 font-normal;
+  }
+  .typo-h2_bold20 {
+    @apply font-suite text-h2_20 font-bold;
+  }
+  .typo-h2_reg20 {
+    @apply font-suite text-h2_20 font-normal;
+  }
+  .typo-body_bold18 {
+    @apply font-suite text-body_18 font-bold;
+  }
+  .typo-body_reg18 {
+    @apply font-suite text-body_18 font-normal;
+  }
+  .typo-body_bold16 {
+    @apply font-suite text-body_16 font-bold;
+  }
+  .typo-body_reg16 {
+    @apply font-suite text-body_16 font-normal;
+  }
+  .typo-body_bold14 {
+    @apply font-suite text-body_14 font-bold;
+  }
+  .typo-body_reg14 {
+    @apply font-suite text-body_14 font-normal;
+  }
+  .typo-body_bold12 {
+    @apply font-suite text-body_12 font-bold;
+  }
+  .typo-body_reg12 {
+    @apply font-suite text-body_12 font-normal;
+  }
+}
+
+@theme {
+  --color-gray-900: #1a1e22;
+  --color-gray-800: #33373b;
+  --color-gray-700: #4c5054;
+  --color-gray-600: #65696d;
+  --color-gray-500: #7e8286;
+  --color-gray-400: #979b9f;
+  --color-gray-300: #b0b4b8;
+  --color-gray-200: #c9cdd1;
+  --color-gray-100: #e9ecef;
+  --color-gray-50: #f2f4f6;
+}

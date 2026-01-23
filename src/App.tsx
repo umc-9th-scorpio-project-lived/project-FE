@@ -1,30 +1,37 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import MainLayout from "./layouts/MainLayout";
+import HomePage from "./pages/homes/HomePage";
+import TreePage from "./pages/trees/TreePage";
+import CommunityPage from "./pages/communities/CommunityPage";
+import UserPage from "./pages/users/UserPage";
+import ModalPage from "./pages/commons/ModalPage";
+import SubLayout from "./layouts/SubLayout";
+import LoginPage from "./pages/onboardings/LoginPage";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
+    <BrowserRouter>
+      <ModalPage />
+      <Routes>
+        <Route element={<SubLayout />}>
+          <Route path="/" element={<LoginPage />} />
+        </Route>
+
+        <Route path="/lived" element={<MainLayout />}>
+          {/* 홈 */}
+          <Route index element={<HomePage />} />
+
+          {/* 루틴 나무 */}
+          <Route path="tree" element={<TreePage />} />
+
+          {/* 커뮤니티 */}
+          <Route path="community" element={<CommunityPage />} />
+
+          {/* 마이 */}
+          <Route path="my" element={<UserPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
