@@ -125,7 +125,7 @@ const HomeContent = () => {
           </div>
         </div>
 
-        {openCoach && (
+        {totalCount > 0 && openCoach && (
           <>
             <div className="fixed inset-0 z-40" onClick={closeCoach} />
             <div className="absolute left-20 top-[120px] -translate-x-1/2 z-50">

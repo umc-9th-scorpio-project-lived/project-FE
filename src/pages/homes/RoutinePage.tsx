@@ -159,7 +159,7 @@ const RoutinePage = ({ mode = "create" as Mode }) => {
                 onKeyDown={handleKeyDown}
                 className={`w-[106px] h-[106px] rounded-lg flex items-center justify-center px-2.5 py-2.5 outline-none typo-body_reg14 text-center whitespace-pre-wrap break-all overflow-y-auto transition-colors ${
                   isTitleFocused || hasTitle
-                    ? "bg-primary-30 text-gray-900"
+                    ? "bg-primary-20 text-gray-900"
                     : "bg-gray-100 text-gray-500"
                 }`}
               >
