@@ -8,6 +8,7 @@ import ModalPage from "./pages/commons/ModalPage";
 import SubLayout from "./layouts/SubLayout";
 import LoginPage from "./pages/onboardings/LoginPage";
 import RoutineTrackerPage from "./pages/trees/RoutineTrackerPage";
+import FriendTreePage from "./pages/trees/FriendTreePage";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         {/* 루틴나무 페이지의 상세페이지 */}
         <Route path="/lived/tree" element={<SubLayout />}>
           <Route path="tracker" element={<RoutineTrackerPage />} />
+          <Route path="friend" element={<FriendTreePage />} />
         </Route>
       </Routes>
     </BrowserRouter>

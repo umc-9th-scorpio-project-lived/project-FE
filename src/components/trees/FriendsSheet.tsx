@@ -3,8 +3,11 @@ import MiniRightChevronIcon from "@/icons/MiniRightChevronIcon";
 import SearchIcon from "@/icons/SearchIcon";
 import { AnimatePresence, motion, useAnimation, type PanInfo } from "framer-motion";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const FriendsSheet = () => {
+  const navigate = useNavigate();
+
   const [isOpen, setIsOpen] = useState(false);
 
   // 애니메이션을 코드로 제어하기 위한 컨트롤러
@@ -104,31 +107,56 @@ const FriendsSheet = () => {
 
         {/* 친구 목록 영역 */}
         <div className="w-full flex flex-col">
-          <button className="p-4 pr-2.5 flex justify-between items-center border-b border-gray-200">
+          <button
+            onClick={() => {
+              navigate("/lived/tree/friend");
+            }}
+            className="p-4 pr-2.5 flex justify-between items-center border-b border-gray-200 cursor-pointer"
+          >
             <div className="typo-body_reg16 text-gray-900">이수민</div>
 
             <MiniRightChevronIcon className="w-4 h-4 text-gray-500" />
           </button>
 
-          <button className="p-4 pr-2.5 flex justify-between items-center border-b border-gray-200">
+          <button
+            onClick={() => {
+              navigate("/lived/tree/friend");
+            }}
+            className="p-4 pr-2.5 flex justify-between items-center border-b border-gray-200 cursor-pointer"
+          >
             <div className="typo-body_reg16 text-gray-900">홍재원</div>
 
             <MiniRightChevronIcon className="w-4 h-4 text-gray-500" />
           </button>
 
-          <button className="p-4 pr-2.5 flex justify-between items-center border-b border-gray-200">
+          <button
+            onClick={() => {
+              navigate("/lived/tree/friend");
+            }}
+            className="p-4 pr-2.5 flex justify-between items-center border-b border-gray-200 cursor-pointer"
+          >
             <div className="typo-body_reg16 text-gray-900">구유경</div>
 
             <MiniRightChevronIcon className="w-4 h-4 text-gray-500" />
           </button>
 
-          <button className="p-4 pr-2.5 flex justify-between items-center border-b border-gray-200">
+          <button
+            onClick={() => {
+              navigate("/lived/tree/friend");
+            }}
+            className="p-4 pr-2.5 flex justify-between items-center border-b border-gray-200 cursor-pointer"
+          >
             <div className="typo-body_reg16 text-gray-900">장연주</div>
 
             <MiniRightChevronIcon className="w-4 h-4 text-gray-500" />
           </button>
 
-          <button className="p-4 pr-2.5 flex justify-between items-center border-b border-gray-200">
+          <button
+            onClick={() => {
+              navigate("/lived/tree/friend");
+            }}
+            className="p-4 pr-2.5 flex justify-between items-center border-b border-gray-200 cursor-pointer"
+          >
             <div className="typo-body_reg16 text-gray-900">박경호</div>
 
             <MiniRightChevronIcon className="w-4 h-4 text-gray-500" />
