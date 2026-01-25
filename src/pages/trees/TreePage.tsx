@@ -11,7 +11,7 @@ const TreePage = () => {
   const { openModal } = useBaseModal();
 
   return (
-    <div className="w-full h-full overflow-y-auto">
+    <div className="bg-gray-50 w-full h-[120%] overflow-y-auto">
       <div className="pt-13.5 px-4 flex justify-between">
         <span className="typo-h2_bold20 text-gray-900">루틴 나무</span>
 
