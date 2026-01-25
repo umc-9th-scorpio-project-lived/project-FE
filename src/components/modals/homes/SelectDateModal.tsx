@@ -94,15 +94,11 @@ const SelectDateModal = () => {
               type="button"
               disabled={disabled}
               onClick={() => handleSelectDate(d)}
-              className={["", disabled ? "text-transparent" : "text-gray-900"].join(" ")}
+              className={`${disabled ? "text-transparent" : "text-gray-900"}`}
               aria-label={`${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`}
             >
               <span
-                className={[
-                  "w-11 h-11 rounded-full flex items-center justify-center typo-body_bold14 ",
-                  isSelected ? "text-white bg-primary-50" : "",
-                  disabled ? "text-transparent" : "text-gray-900",
-                ].join(" ")}
+                className={`w-11 h-11 rounded-full flex items-center justify-center typo-body_bold14 ${isSelected ? "text-white bg-primary-50" : ""} ${disabled ? "text-transparent" : "text-gray-900"}`}
               >
                 {d.getDate()}
               </span>

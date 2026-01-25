@@ -125,20 +125,14 @@ const SlideCalendar = ({ onChange }: Props) => {
                 className="flex flex-col items-center select-none"
               >
                 <span
-                  className={[
-                    "typo-body_reg12 leading-none flex justify-center items-center",
-                    isActiveDay ? "text-primary-50" : "text-gray-700",
-                  ].join(" ")}
+                  className={`typo-body_reg12 leading-none flex justify-center items-center ${isActiveDay ? "text-primary-50" : "text-gray-700"}`}
                 >
                   {WEEK_LABELS[idx]}
                 </span>
 
                 <div className="py-[5px]">
                   <span
-                    className={[
-                      "typo-body_reg16 leading-none min-w-9 min-h-9 flex items-center justify-center",
-                      isSelected ? "text-primary-50" : "text-gray-900",
-                    ].join(" ")}
+                    className={`typo-body_reg16 leading-none min-w-9 min-h-9 flex items-center justify-center ${isSelected ? "text-primary-50" : "text-gray-900"}`}
                   >
                     {d.getDate()}
                   </span>
