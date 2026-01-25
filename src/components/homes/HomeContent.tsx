@@ -95,7 +95,7 @@ const HomeContent = () => {
               <div
                 key={`${r.customTitle}-${idx}`}
                 className={`relative w-[106px] h-[106px] rounded-lg flex items-center justify-center select-none
-                  ${isDone ? "bg-primary-30" : "bg-primary-30"}`}
+                  ${isDone ? "bg-primary-30" : "bg-primary-20"}`}
                 style={{ touchAction: "manipulation" }}
                 onPointerDown={(e) => handlePressStart(e)}
                 onPointerMove={handlePressMove}

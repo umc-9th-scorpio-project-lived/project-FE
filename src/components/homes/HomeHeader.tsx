@@ -45,7 +45,7 @@ const HomeHeader = () => {
             <div
               role="button"
               onClick={resetToToday}
-              className="typo-body_reg12 text-gray-900 bg-gray-100 rounded-2xl px-2.5 py-1"
+              className="w-14 flex justify-center items-center typo-body_reg12 text-gray-900 bg-gray-100 rounded-2xl px-2.5 py-1.5"
             >
               오늘
             </div>

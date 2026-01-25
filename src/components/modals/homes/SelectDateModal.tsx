@@ -76,7 +76,7 @@ const SelectDateModal = () => {
         {WEEK_LABELS.map((w) => (
           <div
             key={w}
-            className="w-11 h-11 typo-body_bold14 text-gray-900 flex items-center justify-center"
+            className="w-11 h-11 typo-body_bold14 text-gray-700 flex items-center justify-center"
           >
             {w}
           </div>
