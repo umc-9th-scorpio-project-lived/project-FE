@@ -6,6 +6,10 @@ import RoutineTreeMiddleIcon from "@/icons/RoutineTreeMiddleIcon";
 import RoutineTreeTopIcon from "@/icons/RoutineTreeTopIcon";
 import useBaseModal from "@/stores/modals/baseModal";
 
+interface RoutineTreeProps {
+  isFruitClickable?: boolean;
+}
+
 // 임시 루틴 타입
 type Routine = {
   title: string;
@@ -20,7 +24,7 @@ type Fruit = {
   middleIconIndex: number;
 };
 
-const RoutineTree = () => {
+const RoutineTree = ({ isFruitClickable = true }: RoutineTreeProps) => {
   // 임시 루틴 배열 (추후 API로 불러오기)
   const routines: Routine[] = [
     { title: "일어나자마자 이불 정리하기", achievement: 20 },
@@ -198,7 +202,8 @@ const RoutineTree = () => {
                 <button
                   key={fruitIndex}
                   onClick={handleFruitClick}
-                  className={`absolute cursor-pointer`}
+                  disabled={!isFruitClickable}
+                  className={`absolute ${isFruitClickable ? "cursor-pointer" : "cursor-default"}`}
                   style={{ top: `${fruit.top}rem`, left: `${fruit.left}rem` }}
                 >
                   {getFruitIcon(fruit.type)}

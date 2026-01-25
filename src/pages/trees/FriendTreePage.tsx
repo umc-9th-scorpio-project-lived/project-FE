@@ -78,7 +78,7 @@ const FriendTreePage = () => {
         </div>
       </div>
 
-      <RoutineTree />
+      <RoutineTree isFruitClickable={false} />
     </div>
   );
 };
