@@ -11,8 +11,8 @@ const TreePage = () => {
   const { openModal } = useBaseModal();
 
   return (
-    // 친구 목록 바텀시트가 루틴 나무를 가리는 걸 방지하기 위해 h-[120%] 추가
-    <div className="bg-gray-50 w-full h-[120%] overflow-y-auto">
+    // 친구 목록 바텀시트가 루틴 나무를 가리는 걸 방지하기 위해 h-[125dvh] 추가
+    <div className="bg-gray-50 w-full h-[125dvh] overflow-y-auto">
       <div className="pt-13.5 px-4 flex justify-between">
         <span className="typo-h2_bold20 text-gray-900">루틴 나무</span>
 
