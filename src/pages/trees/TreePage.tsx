@@ -6,8 +6,11 @@ import InfoIcon from "@/icons/InfoIcon";
 import MiniRightChevronIcon from "@/icons/MiniRightChevronIcon";
 import NormalFruitIcon from "@/icons/NormalFruitIcon";
 import useBaseModal from "@/stores/modals/baseModal";
+import { useNavigate } from "react-router-dom";
 
 const TreePage = () => {
+  const navigate = useNavigate();
+
   const { openModal } = useBaseModal();
 
   return (
@@ -18,9 +21,9 @@ const TreePage = () => {
 
         <button
           onClick={() => {
-            // 루틴나무_통계분석(주간통계)으로 전환
+            navigate("/lived/tree/statistics");
           }}
-          className="border border-primary-50 rounded-2xl py-1.5 px-3.5 flex items-center"
+          className="border border-primary-50 rounded-2xl py-1.5 px-3.5 flex items-center cursor-pointer"
         >
           <span className="typo-body_bold12 text-primary-50">통계 분석</span>
         </button>

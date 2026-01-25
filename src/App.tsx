@@ -9,6 +9,7 @@ import SubLayout from "./layouts/SubLayout";
 import LoginPage from "./pages/onboardings/LoginPage";
 import RoutineTrackerPage from "./pages/trees/RoutineTrackerPage";
 import FriendTreePage from "./pages/trees/FriendTreePage";
+import StatisticsPage from "./pages/trees/StatisticsPage";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
         <Route path="/lived/tree" element={<SubLayout />}>
           <Route path="tracker" element={<RoutineTrackerPage />} />
           <Route path="friend" element={<FriendTreePage />} />
+          <Route path="statistics" element={<StatisticsPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
