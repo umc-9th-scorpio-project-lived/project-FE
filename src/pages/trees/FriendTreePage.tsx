@@ -40,7 +40,7 @@ const FriendTreePage = () => {
           onClick={() => {
             /* 친구 삭제 로직 */
           }}
-          className={`absolute right-4 -bottom-12 rounded-sm border border-gray-300 bg-screen-0 px-4 py-2 typo-body_reg12 text-gray-900 ${
+          className={`absolute right-4 -bottom-12 rounded-sm border-[0.5px] border-gray-300 bg-screen-0 px-4 py-2 typo-body_reg12 text-gray-900 ${
             isDeleteModalOpen ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
         >
