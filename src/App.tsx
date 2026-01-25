@@ -7,6 +7,7 @@ import UserPage from "./pages/users/UserPage";
 import ModalPage from "./pages/commons/ModalPage";
 import SubLayout from "./layouts/SubLayout";
 import LoginPage from "./pages/onboardings/LoginPage";
+import RoutineTrackerPage from "./pages/trees/RoutineTrackerPage";
 
 function App() {
   return (
@@ -29,6 +30,11 @@ function App() {
 
           {/* 마이 */}
           <Route path="my" element={<UserPage />} />
+        </Route>
+
+        {/* 루틴나무 페이지의 상세페이지 */}
+        <Route path="/lived/tree" element={<SubLayout />}>
+          <Route path="tracker" element={<RoutineTrackerPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

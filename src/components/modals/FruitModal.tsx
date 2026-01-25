@@ -1,10 +1,13 @@
 import CloseIcon from "@/icons/CloseIcon";
 import RightChevronIcon from "@/icons/RightChevronIcon";
 import useBaseModal from "@/stores/modals/baseModal";
+import { useNavigate } from "react-router-dom";
 
 // TODO: 제목, 달성률 props로 전달받기
 const FruitModal = () => {
   const { closeModal } = useBaseModal();
+
+  const navigate = useNavigate();
 
   return (
     <div className="bg-screen-0 rounded-2xl pt-6.5 px-4 pb-7 flex flex-col gap-5.5 relative">
@@ -28,9 +31,10 @@ const FruitModal = () => {
 
       <button
         onClick={() => {
-          /* 루틴트래커 페이지로 이동 */
+          closeModal();
+          navigate("/lived/tree/tracker");
         }}
-        className="px-3.5 py-3 w-full bg-primary-20 rounded-lg flex justify-between items-center"
+        className="px-3.5 py-3 w-full bg-primary-20 rounded-lg flex justify-between items-center cursor-pointer"
       >
         <div className="typo-body_reg14">🏃🏼‍♀ 루틴 트래커 확인하기</div>
         <RightChevronIcon className="w-4.5 h-4.5" />
