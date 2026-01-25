@@ -166,6 +166,9 @@ const RoutineTree = () => {
     }
   };
 
+  // 나무의 전체 높이를 동적으로 계산
+  const treeHeight = getLogIconTop() + 5.65; // 5.65rem은 RoutineTreeLogIcon 높이
+
   const { openModal } = useBaseModal();
   const handleFruitClick = () => {
     openModal("fruitModal", { position: "center" });
@@ -174,7 +177,7 @@ const RoutineTree = () => {
   return (
     // 상단 나뭇잎 / 중단 나뭇잎 / 줄기로 나뉜 루틴 나무 아이콘과 열매들을 위치에 맞게 배치하는 div
     // tailwind css는 동적으로 계산한 클래스명을 인식하지 못하므로 style을 사용해 배치
-    <div className="flex flex-col items-center relative">
+    <div className="flex flex-col items-center relative" style={{ minHeight: `${treeHeight}rem` }}>
       {/* 나무 줄기 부분 */}
       <RoutineTreeLogIcon className="w-22.5 relative" style={{ top: `${getLogIconTop()}rem` }} />
 
