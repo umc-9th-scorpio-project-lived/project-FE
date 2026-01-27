@@ -139,57 +139,60 @@ const StatisticsPage = () => {
             </div>
           ) : (
             <div className="w-full flex flex-col gap-4">
-              <h3 className="typo-body_reg16 text-gray-900">이번 달 루틴 달력이에요 🗓️</h3>
+              <div className="typo-body_reg16 text-gray-900">이번 달 루틴 달력이에요 🗓️</div>
 
-              <div className="grid grid-cols-7 gap-x-1 place-items-center">
-                <div className="w-10.5 h-10.5 flex justify-center items-center typo-body_bold14 text-gray-900">
-                  일
-                </div>
-                <div className="w-10.5 h-10.5 flex justify-center items-center typo-body_bold14 text-gray-900">
-                  월
-                </div>
-                <div className="w-10.5 h-10.5 flex justify-center items-center typo-body_bold14 text-gray-900">
-                  화
-                </div>
-                <div className="w-10.5 h-10.5 flex justify-center items-center typo-body_bold14 text-gray-900">
-                  수
-                </div>
-                <div className="w-10.5 h-10.5 flex justify-center items-center typo-body_bold14 text-gray-900">
-                  목
-                </div>
-                <div className="w-10.5 h-10.5 flex justify-center items-center typo-body_bold14 text-gray-900">
-                  금
-                </div>
-                <div className="w-10.5 h-10.5 flex justify-center items-center typo-body_bold14 text-gray-900">
-                  토
-                </div>
-                {calendarDays.map((day, index) => {
-                  if (day === null) return <div className="w-10.5 h-10.5" key={`empty-${index}`} />;
+              <div className="w-full flex justify-center">
+                <div className="grid grid-cols-7 gap-x-1 place-items-center">
+                  <div className="w-10.5 h-10.5 flex justify-center items-center typo-body_bold14 text-gray-900">
+                    일
+                  </div>
+                  <div className="w-10.5 h-10.5 flex justify-center items-center typo-body_bold14 text-gray-900">
+                    월
+                  </div>
+                  <div className="w-10.5 h-10.5 flex justify-center items-center typo-body_bold14 text-gray-900">
+                    화
+                  </div>
+                  <div className="w-10.5 h-10.5 flex justify-center items-center typo-body_bold14 text-gray-900">
+                    수
+                  </div>
+                  <div className="w-10.5 h-10.5 flex justify-center items-center typo-body_bold14 text-gray-900">
+                    목
+                  </div>
+                  <div className="w-10.5 h-10.5 flex justify-center items-center typo-body_bold14 text-gray-900">
+                    금
+                  </div>
+                  <div className="w-10.5 h-10.5 flex justify-center items-center typo-body_bold14 text-gray-900">
+                    토
+                  </div>
+                  {calendarDays.map((day, index) => {
+                    if (day === null)
+                      return <div className="w-10.5 h-10.5" key={`empty-${index}`} />;
 
-                  const isCompleted = completedDays.includes(day);
+                    const isCompleted = completedDays.includes(day);
 
-                  if (isCompleted) {
-                    // 완료된 날짜 (초록색 원형 강조)
-                    return (
-                      <div
-                        key={day}
-                        className="w-10.5 h-10.5 bg-primary-50 rounded-full flex justify-center items-center typo-body_bold14 text-screen-0"
-                      >
-                        {day}
-                      </div>
-                    );
-                  } else {
-                    // 일반 날짜
-                    return (
-                      <div
-                        key={day}
-                        className="w-10.5 h-10.5 flex justify-center items-center typo-body_bold14 text-gray-900"
-                      >
-                        {day}
-                      </div>
-                    );
-                  }
-                })}
+                    if (isCompleted) {
+                      // 완료된 날짜 (초록색 원형 강조)
+                      return (
+                        <div
+                          key={day}
+                          className="w-10.5 h-10.5 bg-primary-50 rounded-full flex justify-center items-center typo-body_bold14 text-screen-0"
+                        >
+                          {day}
+                        </div>
+                      );
+                    } else {
+                      // 일반 날짜
+                      return (
+                        <div
+                          key={day}
+                          className="w-10.5 h-10.5 flex justify-center items-center typo-body_bold14 text-gray-900"
+                        >
+                          {day}
+                        </div>
+                      );
+                    }
+                  })}
+                </div>
               </div>
             </div>
           )}
