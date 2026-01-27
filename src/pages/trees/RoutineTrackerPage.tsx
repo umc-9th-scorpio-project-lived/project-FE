@@ -67,15 +67,17 @@ const RoutineTrackerPage = () => {
             <div className="typo-body_reg14 text-gray-900">🏃🏼‍♀ 완벽해요! 황금열매를 얻었어요!</div>
           </div>
 
-          <div className="px-4 grid grid-cols-8 gap-x-1 gap-y-2 place-items-center">
-            {Array.from({ length: 30 }, (_, i) => (
-              <div
-                key={i}
-                className="w-8 h-8 bg-primary-40 rounded-lg flex items-center justify-center typo-body_reg16 text-screen-0"
-              >
-                {i + 1}
-              </div>
-            ))}
+          <div className="w-full flex justify-center">
+            <div className="px-4 grid grid-cols-8 gap-x-1 gap-y-2 place-items-center">
+              {Array.from({ length: 30 }, (_, i) => (
+                <div
+                  key={i}
+                  className="w-8 h-8 bg-primary-40 rounded-lg flex items-center justify-center typo-body_reg16 text-screen-0"
+                >
+                  {i + 1}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -98,15 +100,17 @@ const RoutineTrackerPage = () => {
             <div className="typo-body_reg14 text-gray-900">열매가 열렸어요!</div>
           </div>
 
-          <div className="px-4 grid grid-cols-8 gap-x-1 gap-y-2 place-items-center">
-            {Array.from({ length: 30 }, (_, i) => (
-              <div
-                key={i}
-                className="w-8 h-8 bg-primary-10 rounded-lg flex items-center justify-center typo-body_reg16 text-gray-300"
-              >
-                {i + 1}
-              </div>
-            ))}
+          <div className="w-full flex justify-center">
+            <div className="px-4 grid grid-cols-8 gap-x-1 gap-y-2 place-items-center">
+              {Array.from({ length: 30 }, (_, i) => (
+                <div
+                  key={i}
+                  className="w-8 h-8 bg-primary-10 rounded-lg flex items-center justify-center typo-body_reg16 text-gray-300"
+                >
+                  {i + 1}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -129,15 +133,17 @@ const RoutineTrackerPage = () => {
             <div className="typo-body_reg14 text-gray-900">아직 자라나는 중이에요</div>
           </div>
 
-          <div className="px-4 grid grid-cols-8 gap-x-1 gap-y-2 place-items-center">
-            {Array.from({ length: 30 }, (_, i) => (
-              <div
-                key={i}
-                className="w-8 h-8 bg-screen-0 rounded-lg flex items-center justify-center typo-body_reg16 text-gray-200"
-              >
-                {i + 1}
-              </div>
-            ))}
+          <div className="w-full flex justify-center">
+            <div className="px-4 grid grid-cols-8 gap-x-1 gap-y-2 place-items-center">
+              {Array.from({ length: 30 }, (_, i) => (
+                <div
+                  key={i}
+                  className="w-8 h-8 bg-screen-0 rounded-lg flex items-center justify-center typo-body_reg16 text-gray-200"
+                >
+                  {i + 1}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
