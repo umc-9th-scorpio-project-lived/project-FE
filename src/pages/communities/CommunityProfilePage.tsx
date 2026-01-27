@@ -55,7 +55,7 @@ const CommunityProfilePage = () => {
       <div className="flex flex-col border-b border-gray-100 px-4 py-5 gap-[15px]">
         <div className="flex gap-2.5">
           <div
-            className="relative w-20 h-20 rounded-full bg-gray-50 bg-no-repeat bg-center bg-cover"
+            className={`relative w-20 h-20 rounded-full bg-gray-50 bg-no-repeat bg-center bg-cover ${!image ? "bg-user" : ""}`}
             style={{ backgroundImage: image ? `url(${image})` : undefined }}
           >
             {editMode && (
@@ -116,14 +116,14 @@ const CommunityProfilePage = () => {
           </div>
         </div>
         <button
-          className={`p-2 rounded-lg text-center text-body_12 text-gray-900 ${editMode ? "bg-primary-30" : "bg-gray-100 "}`}
+          className={`p-2.5 rounded-lg text-center text-body_12 text-gray-900 ${editMode ? "bg-primary-30" : "bg-gray-100 "}`}
           onClick={handleEditProfile}
         >
           {editMode ? "프로필 수정 완료" : "프로필 수정"}
         </button>
       </div>
       {/*게시글 구분. 후에 게시글 구분하며 컴포넌트로 뺄지도*/}
-      <div className="flex justify-between w-full text-[14px]">
+      <div className="flex justify-between w-full typo-body_reg14">
         <button
           className={`w-full p-2.5 border-b ${selectedTab === "작성한 글" ? "border-black" : "border-[#D9D9D9]"}`}
           onClick={() => setSelectedTab("작성한 글")}

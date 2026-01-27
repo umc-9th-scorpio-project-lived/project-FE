@@ -18,10 +18,10 @@ const CommunityPage = () => {
   };
 
   return (
-    <div className="flex flex-col px-4 pb-[100px] w-full min-h-screen">
+    <div className="flex flex-col pb-[100px] w-full min-h-screen">
       {/*네브바*/}
-      <div className="flex justify-between items-center">
-        <div className="my-2 typo-h2_bold20 text-[#080808]">커뮤니티</div>
+      <div className="flex justify-between items-center px-4">
+        <div className="my-2 typo-h2_bold20 text-gray-900">커뮤니티</div>
         <div className="flex items-center justify-center gap-2">
           <NavLink
             to="/lived/community/search"
@@ -42,7 +42,7 @@ const CommunityPage = () => {
         onSelect={setSelectedCategory}
       />
       {/*인기글 게시글*/}
-      <section className="my-2 py-1 -mx-4 border-b border-b-gray-100">
+      <section className="my-2 py-1 border-b border-b-gray-100">
         <div className="px-4 typo-body_reg16 text-gray-900">실시간 인기글</div>
         <PopularPostList />
       </section>

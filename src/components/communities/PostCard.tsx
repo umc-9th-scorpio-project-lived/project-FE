@@ -15,7 +15,7 @@ const PostCard = ({ post, showCategory = true, showStates = true, onClick }: Pos
 
   return (
     <section
-      className="flex flex-col my-2 py-2 border-b border-gray-100 gap-2.5 overflow-auto"
+      className="flex flex-col py-2.5 border-b border-gray-100 gap-2.5 overflow-auto"
       onClick={() => onClick?.(post)}
     >
       {showCategory && (
@@ -32,7 +32,7 @@ const PostCard = ({ post, showCategory = true, showStates = true, onClick }: Pos
         </article>
         {hasImage && (
           <div className="relative w-16 h-16 bg-gray-400 rounded-lg shrink-0">
-            <p className="absolute text-center w-4 h-4 bg-[#F4F4F4] rounded-tl-lg text-[10px] right-0 bottom-0">
+            <p className="absolute text-center w-4 h-4 bg-gray-100 rounded-tl-lg text-[10px] right-0 bottom-0">
               {imageCount}
             </p>
           </div>
@@ -41,7 +41,7 @@ const PostCard = ({ post, showCategory = true, showStates = true, onClick }: Pos
       </div>
       {showStates && (
         <div className="flex text-[11px] justify-between">
-          <div className="flex gap-2.5 text-gray-900">
+          <div className="flex gap-2 text-gray-900">
             <div className="flex gap-1">
               <LikeIcon className="w-4 h-4 text-primary-40" />
               <p>{likeCount}</p>

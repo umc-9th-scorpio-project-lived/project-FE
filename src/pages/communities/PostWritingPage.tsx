@@ -57,7 +57,7 @@ const PostWritingPage = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen pb-24">
+    <div className="flex flex-col h-dvh pb-[100px]">
       {/*네브바*/}
       <div className="flex justify-between items-center text-gray-900 my-2 mx-4">
         <div className="flex gap-3">
@@ -75,60 +75,62 @@ const PostWritingPage = () => {
         </button>
       </div>
       {/*게시글 입력*/}
-      <div className="flex flex-col py-5 px-4 gap-5.5 border-b border-gray-100">
-        <Category
-          categories={writeCategories}
-          selected={selectedCategory}
-          onSelect={setSelectedCategory}
-        />
-        <div className="flex flex-col w-full gap-2.5">
-          <textarea
-            rows={1}
-            className="resize-none overflow-hidden text-[16px] font-bold text-gray-900"
-            placeholder="제목을 입력하세요."
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            onInput={(e) => {
-              const target = e.currentTarget;
-              target.style.height = "auto";
-              target.style.height = `${target.scrollHeight}px`;
-            }}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <div className="flex flex-col flex-1 py-5 gap-5.5 overflow-hidden border-b border-gray-100">
+          <Category
+            categories={writeCategories}
+            selected={selectedCategory}
+            onSelect={setSelectedCategory}
           />
-          <textarea
-            className="resize-none overflow-hidden text-[14px] text-gray-900"
-            placeholder="자취하며 겪은 이야기, 무엇이든 괜찮아요. 
+          <div className="flex flex-col flex-1 w-full gap-2.5 px-4">
+            <textarea
+              rows={1}
+              className="resize-none overflow-hidden text-[16px] font-bold text-gray-900 outline-none"
+              placeholder="제목을 입력하세요."
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              onInput={(e) => {
+                const target = e.currentTarget;
+                target.style.height = "auto";
+                target.style.height = `${target.scrollHeight}px`;
+              }}
+            />
+            <textarea
+              className="flex-1 resize-none overflow y-auto text-[14px] text-gray-900 outline-none"
+              placeholder="자취하며 겪은 이야기, 무엇이든 괜찮아요. 
 후기, 팁, 고민까지 자유롭게 남겨주세요."
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            onInput={(e) => {
-              const target = e.currentTarget;
-              target.style.height = "auto";
-              target.style.height = `${target.scrollHeight}px`;
-            }}
-          />
-          {images.length > 0 && (
-            <div className="flex pt-4 -mr-4 gap-2.5 overflow-x-auto overflow-y-visible flex-nowrap">
-              {images.map((src, index) => (
-                <div key={index} className="relative shrink-0">
-                  <img
-                    src={src}
-                    alt={`preview-${index}`}
-                    className="w-32 h-32 object-cover rounded-lg"
-                  />
-                  <button
-                    className="absolute -top-2 -right-2 bg-gray-200 text-gray-900 w-5 h-5 rounded-full flex items-center justify-center"
-                    onClick={() => handleRemoveImage(index)}
-                  >
-                    <MiniCloseIcon className="w-1/2 h-1/2 text-gray-900" />
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              onInput={(e) => {
+                const target = e.currentTarget;
+                target.style.height = "auto";
+                target.style.height = `${target.scrollHeight}px`;
+              }}
+            />
+            {images.length > 0 && (
+              <div className="flex pt-4 -mr-4 gap-2.5 overflow-x-auto overflow-y-visible flex-nowrap">
+                {images.map((src, index) => (
+                  <div key={index} className="relative shrink-0">
+                    <img
+                      src={src}
+                      alt={`preview-${index}`}
+                      className="w-32 h-32 object-cover rounded-lg"
+                    />
+                    <button
+                      className="absolute -top-2 -right-2 bg-gray-200 text-gray-900 w-5 h-5 rounded-full flex items-center justify-center"
+                      onClick={() => handleRemoveImage(index)}
+                    >
+                      <MiniCloseIcon className="w-1/2 h-1/2 text-gray-900" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
       {/*경고문*/}
-      <div className="flex flex-col text-[11px] text-[#B4B4B4] pt-4 mx-4">
+      <div className="flex flex-col typo-body_reg12 text-gray-200 px-4 py-2.5 shrink-0">
         <span>
           *주제에 맞지 않는 글이나 커뮤니티 이용정책에 위배되는 글은 <br /> 신고의 대상이 됩니다.
         </span>

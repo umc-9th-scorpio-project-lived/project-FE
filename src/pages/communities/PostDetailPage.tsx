@@ -46,7 +46,7 @@ const PostDetailPage = () => {
         <NavLink to="/lived/community" className="w-6 h-6 flex items-center justify-center">
           <LeftChevronIcon className="w-7 h-7 text-gray-900 pt-0.5" />
         </NavLink>
-        <div className="relative flex gap-1">
+        <div className="relative flex gap-2">
           <BookmarkIcon
             className={`w-7 h-7 transition-colors ${isBookmarked ? "fill-current text-primary-40" : "fill-none text-gray-700"}`}
             onClick={() => setIsBookmarked(!isBookmarked)}
@@ -82,7 +82,7 @@ const PostDetailPage = () => {
           <span className="typo-body_reg12 text-gray-800 whitespace-pre-line">{post?.content}</span>
         </div>
         {post.imageCount > 0 && (
-          <div className="flex gap-3 overflow-x-auto pt-2">
+          <div className="flex gap-3 overflow-x-auto">
             {Array.from({ length: post.imageCount }).map((_, index) => (
               <div key={index} className="w-26 h-26 rounded-lg bg-gray-500"></div>
             ))}

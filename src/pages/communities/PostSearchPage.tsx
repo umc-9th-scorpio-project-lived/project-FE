@@ -12,16 +12,16 @@ const PostSearchPage = () => {
 
   return (
     <>
-      <div className="border-b border-gray-400">
+      <div className="border-b-[0.5px] border-gray-400">
         {/*네브바*/}
-        <div className="flex items-center mx-4 my-2 gap-5">
+        <div className="flex items-center mx-4 my-3.5 gap-5">
           <div className="flex w-8/9 gap-1.5">
             <NavLink to="/lived/community" className="flex items-center justify-center">
               <LeftChevronIcon className="w-6 h-6 text-gray-900 pt-0.5" />
             </NavLink>
             {state !== "activate" && (
               <input
-                className="w-full h-8 bg-gray-100 py-2.5 px-4 rounded-full text-[14px] text-gray-900"
+                className="w-full h-8 bg-gray-100 py-2.5 px-4 rounded-full text-[14px] text-gray-900 outline-none"
                 placeholder="생활 팁이나 고민을 검색해보세요."
                 value={searchWord}
                 onChange={(e) => setSearchWord(e.target.value)}

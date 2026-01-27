@@ -12,7 +12,7 @@ type PostListProps = {
 
 const PostList = ({ posts, cardOptions, onPostClick }: PostListProps) => {
   return (
-    <div>
+    <div className="flex flex-col px-4 gap-6 pt-2.5">
       {posts.map((post) => (
         <PostCard
           key={post.id}

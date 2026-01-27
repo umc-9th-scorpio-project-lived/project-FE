@@ -10,8 +10,8 @@ interface PopularPostCardProps {
 
 const PopularPostCard = ({ title, content, likeCount, commentCount }: PopularPostCardProps) => {
   return (
-    <article className="flex w-[300px] bg-gray-50 rounded-xl shrink-0 p-3 last:mr-4">
-      <div className="flex flex-col gap-2">
+    <article className="flex w-[300px] bg-gray-50 rounded-lg shrink-0 px-3 py-2 last:mr-4">
+      <div className="flex flex-col gap-3">
         <span className="typo-body_reg14 text-gray-900">{title}</span>
         <span className="typo-body_reg12 text-gray-600 line-clamp-2 whitespace-pre-line">
           {content}

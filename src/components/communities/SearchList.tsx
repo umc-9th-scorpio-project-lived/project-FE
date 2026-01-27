@@ -21,9 +21,9 @@ const SearchList = () => {
     <>
       <div className="flex flex-col gap-2.5 p-2.5">
         <div className="flex px-4 justify-between">
-          <span className="typo-body_reg12 text-gray-700">최근 검색</span>
+          <span className="typo-body_reg12 text-gray-600">최근 검색</span>
           <span
-            className="text-[11px] text-gray-600"
+            className="typo-body_reg12 text-gray-600"
             onClick={() =>
               openModal("searchDeleteModal", { position: "center", onConfirm: handleClear })
             }
@@ -36,7 +36,7 @@ const SearchList = () => {
             <div key={index} className="flex justify-between items-center">
               <div className="flex gap-2 items-center">
                 <ClockIcon className="w-3 h-3" />
-                <span className="typo-body_reg16 text-[#4E4E4E]">{keyword}</span>
+                <span className="typo-body_reg16 text-gray-700">{keyword}</span>
               </div>
               <CloseIcon className="w-4 h-4 cursor-pointer" onClick={() => handleDelete(index)} />
             </div>

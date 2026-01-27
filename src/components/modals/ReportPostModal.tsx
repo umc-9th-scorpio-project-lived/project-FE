@@ -63,7 +63,7 @@ const ReportPostModal = () => {
       <button
         disabled={!isSubmit}
         onClick={closeModal}
-        className={`w-full py-3 text-white rounded-xl ${isSubmit ? "bg-black" : "bg-gray-300"}`}
+        className={`w-full py-3 mt-4 text-[18px] font-bold rounded-full ${isSubmit ? "bg-black text-screen-0" : "bg-gray-100 text-gray-400"}`}
       >
         신고하기
       </button>
