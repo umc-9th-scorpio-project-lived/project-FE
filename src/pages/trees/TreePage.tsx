@@ -42,9 +42,9 @@ const TreePage = () => {
 
         <button
           onClick={() => {
-            // 루틴나무 모아보기 화면으로 전환
+            navigate("/lived/tree/archive");
           }}
-          className="flex items-center gap-0.5"
+          className="flex items-center gap-0.5 cursor-pointer"
         >
           <span className="typo-body_reg12 text-gray-900">루틴 나무 모아보기</span>
           <MiniRightChevronIcon className="w-3 h-3 text-gray-900" />

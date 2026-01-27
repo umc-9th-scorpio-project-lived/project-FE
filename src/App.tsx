@@ -10,6 +10,7 @@ import LoginPage from "./pages/onboardings/LoginPage";
 import RoutineTrackerPage from "./pages/trees/RoutineTrackerPage";
 import FriendTreePage from "./pages/trees/FriendTreePage";
 import StatisticsPage from "./pages/trees/StatisticsPage";
+import TreeArchivePage from "./pages/trees/TreeArchivePage";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
           <Route path="tracker" element={<RoutineTrackerPage />} />
           <Route path="friend" element={<FriendTreePage />} />
           <Route path="statistics" element={<StatisticsPage />} />
+          <Route path="archive" element={<TreeArchivePage />} />
         </Route>
       </Routes>
     </BrowserRouter>
