@@ -1,4 +1,4 @@
-import MiniRoutineTree from "@/components/trees/MiniRoutineTree";
+import RoutineTree from "@/components/trees/RoutineTree";
 import LeftChevronIcon from "@/icons/LeftChevronIcon";
 import MiniGoldenFruitIcon from "@/icons/MiniGoldenFruitIcon";
 import MiniGrowingFruitIcon from "@/icons/MiniGrowingFruitIcon";
@@ -26,7 +26,7 @@ const TreeArchivePage = () => {
 
           <div className="w-full h-49 bg-gray-50 rounded-sm flex justify-center relative overflow-y-hidden">
             <div className="w-full absolute bottom-3">
-              <MiniRoutineTree />
+              <RoutineTree width={111.26} isFruitClickable={false} />
             </div>
           </div>
 
@@ -54,7 +54,7 @@ const TreeArchivePage = () => {
 
           <div className="w-full h-49 bg-gray-50 rounded-sm flex justify-center relative overflow-y-hidden">
             <div className="w-full absolute bottom-3">
-              <MiniRoutineTree />
+              <RoutineTree width={111.26} isFruitClickable={false} />
             </div>
           </div>
 
@@ -82,7 +82,7 @@ const TreeArchivePage = () => {
 
           <div className="w-full h-49 bg-gray-50 rounded-sm flex justify-center relative overflow-y-hidden">
             <div className="w-full absolute bottom-3">
-              <MiniRoutineTree />
+              <RoutineTree width={111.26} isFruitClickable={false} />
             </div>
           </div>
 
@@ -110,7 +110,7 @@ const TreeArchivePage = () => {
 
           <div className="w-full h-49 bg-gray-50 rounded-sm flex justify-center relative overflow-y-hidden">
             <div className="w-full absolute bottom-3">
-              <MiniRoutineTree />
+              <RoutineTree width={111.26} isFruitClickable={false} />
             </div>
           </div>
 
@@ -138,7 +138,7 @@ const TreeArchivePage = () => {
 
           <div className="w-full h-49 bg-gray-50 rounded-sm flex justify-center relative overflow-y-hidden">
             <div className="w-full absolute bottom-3">
-              <MiniRoutineTree />
+              <RoutineTree width={111.26} isFruitClickable={false} />
             </div>
           </div>
 
