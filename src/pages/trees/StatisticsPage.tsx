@@ -53,12 +53,22 @@ const StatisticsPage = () => {
 
       <div className="p-4 flex-1 bg-screen-0 rounded-t-2xl">
         {isWeekly ? (
-          <button className="border border-primary-50 rounded-2xl px-2.5 py-1.5 flex items-center gap-1">
+          <button
+            onClick={() => {
+              /* 날짜 수정 로직 */
+            }}
+            className="border border-primary-50 rounded-2xl px-2.5 py-1.5 flex items-center gap-1"
+          >
             <span className="typo-body_reg12 text-gray-900">10월 2주차</span>
             <DownChevronIcon className="w-4 h-4 text-primary-50" />
           </button>
         ) : (
-          <button className="border border-primary-50 rounded-2xl px-2.5 py-1.5 flex items-center gap-1">
+          <button
+            onClick={() => {
+              /* 날짜 수정 로직 */
+            }}
+            className="border border-primary-50 rounded-2xl px-2.5 py-1.5 flex items-center gap-1"
+          >
             <span className="typo-body_reg12 text-gray-900">2025년 10월</span>
             <DownChevronIcon className="w-4 h-4 text-primary-50" />
           </button>

@@ -26,6 +26,7 @@ const RoutineTrackerPage = () => {
       <div className="w-full px-4 pb-6 flex flex-col gap-6">
         <div className="w-full flex justify-between items-center">
           <div className="flex items-center gap-1">
+            {/* 날짜 선택 모달 디자인 미완 */}
             <CalendarIcon className="w-6 h-6" />
             <span className="typo-body_reg16 text-gray-900">2025년 12월</span>
           </div>
