@@ -31,7 +31,7 @@ const STEPS: StepItem[] = [
   },
 ];
 
-export default function PushGuidePage() {
+const PushGuidePage = () => {
   const navigate = useNavigate();
 
   // 현재 스텝
@@ -168,4 +168,6 @@ export default function PushGuidePage() {
       </section>
     </main>
   );
-}
+};
+
+export default PushGuidePage;

@@ -25,7 +25,7 @@ const ModalPage = () => {
   return (
     <>
       <ModalBackground>
-        {modalType === "livingYear" && <LivingYearModal />}
+        {modalType === "livingYearModal" && <LivingYearModal />}{" "}
         {modalType === "centerModal" && <CenterTestModal />}
         {modalType === "bottomModal" && <BottomTestModal />}
       </ModalBackground>

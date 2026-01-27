@@ -12,7 +12,7 @@ const formatBirth = (value: string) => {
   return `${value.slice(0, 4)}.${value.slice(4, 6)}.${value.slice(6)}`;
 };
 
-export default function BasicInfoPage() {
+const BasicInfoPage = () => {
   const navigate = useNavigate();
   const { openModal } = useBaseModal();
 
@@ -82,7 +82,7 @@ export default function BasicInfoPage() {
 
           <button
             type="button"
-            onClick={() => openModal("livingYear", { position: "bottom" })}
+            onClick={() => openModal("livingYearModal", { position: "bottom" })}
             className="flex h-[60px] w-full items-center justify-between rounded-[8px] bg-gray-50 px-5"
           >
             <span
@@ -189,4 +189,6 @@ export default function BasicInfoPage() {
       </section>
     </main>
   );
-}
+};
+
+export default BasicInfoPage;
