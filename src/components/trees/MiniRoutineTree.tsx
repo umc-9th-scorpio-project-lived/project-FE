@@ -178,7 +178,7 @@ const MiniRoutineTree = () => {
   };
 
   // 나무의 전체 높이를 동적으로 계산
-  const treeHeight = getLogIconTop() + 2.24; // 2.24rem은 RoutineTreeLogIcon 높이
+  const treeHeight = getLogIconTop() + toRem(35.83); // 35.83px은 RoutineTreeLogIcon 높이
 
   return (
     // 상단 나뭇잎 / 중단 나뭇잎 / 줄기로 나뉜 루틴 나무 아이콘과 열매들을 위치에 맞게 배치하는 div
