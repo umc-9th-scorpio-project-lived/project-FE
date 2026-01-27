@@ -41,7 +41,7 @@ const PrivacyPage = () => {
         <div className="flex flex-col gap-1">
           <span className="typo-body_reg16 text-gray-900">루틴 나무</span>
 
-          <div className="flex flex-col gap-2.5">
+          <div className="flex flex-col items-center gap-2.5">
             <button
               onClick={() => openModal("treeVisibilityModal", { position: "bottom" })}
               className="flex justify-between cursor-pointer"
