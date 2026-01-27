@@ -23,10 +23,10 @@ const PrivacyPage = () => {
         <div className="flex flex-col gap-1">
           <span className="typo-body_reg16 text-gray-900">차단</span>
 
-          <div className="flex flex-col items-center gap-2.5">
+          <div className="flex flex-col gap-2.5">
             <button
               onClick={() => navigate("blocked")}
-              className="flex justify-between cursor-pointer"
+              className="flex justify-between items-center cursor-pointer"
             >
               <span className="typo-body_bold14 text-gray-900">차단 목록</span>
               <MiniRightChevronIcon className="w-6 h-6 text-gray-900" />
@@ -41,10 +41,10 @@ const PrivacyPage = () => {
         <div className="flex flex-col gap-1">
           <span className="typo-body_reg16 text-gray-900">루틴 나무</span>
 
-          <div className="flex flex-col items-center gap-2.5">
+          <div className="flex flex-col gap-2.5">
             <button
               onClick={() => openModal("treeVisibilityModal", { position: "bottom" })}
-              className="flex justify-between cursor-pointer"
+              className="flex justify-between items-center cursor-pointer"
             >
               <span className="typo-body_bold14 text-gray-900">루틴 나무 공개 범위</span>
               <div className="flex items-center gap-3">
