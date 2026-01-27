@@ -61,7 +61,7 @@ const BasicInfoPage = () => {
         </div>
 
         {/* 진행바 */}
-        <div className="pt-10">
+        <div className="flex flex-col gap-8 pt-10">
           <div className="flex items-center gap-2">
             <span className="h-[6px] w-[32px] rounded-full bg-primary-50" />
             <span className="h-[6px] w-[6px] rounded-full bg-primary-30" />
@@ -70,15 +70,15 @@ const BasicInfoPage = () => {
         </div>
 
         {/* 타이틀 */}
-        <div className="pt-10">
+        <div className="flex flex-col gap-3 pt-10">
           <div className="typo-h2_bold20 text-gray-900">
             반가워요! <br /> 당신의 이야기를 들려주세요.
           </div>
         </div>
 
         {/* 자취 연차 */}
-        <div className="pt-10">
-          <div className="pb-3 typo-body_reg14 text-gray-900">자취 연차</div>
+        <div className="flex flex-col gap-3 pt-10">
+          <div className="typo-body_reg14 text-gray-900">자취 연차</div>
 
           <button
             type="button"
@@ -97,48 +97,59 @@ const BasicInfoPage = () => {
         </div>
 
         {/* 성별 */}
-        <div className="pt-10">
-          <div className="pb-3 typo-body_reg14 text-gray-900">성별</div>
+        <div className="flex flex-col gap-3 pt-10">
+          <div className="typo-body_reg14 text-gray-900">성별</div>
 
           <div className="grid w-full grid-cols-3 gap-[8px]">
             {(["남성", "여성", "기타"] as const).map((g) => {
               const active = gender === g;
 
               return (
-                <button
+                <div
                   key={g}
-                  type="button"
+                  role="button"
+                  tabIndex={0}
                   onClick={() => setGender(g)}
-                  className={[
-                    "h-[56px] w-full rounded-[8px] typo-body_reg16",
-                    active ? "bg-primary-50 text-screen-0" : "bg-primary-50/20 text-gray-600",
-                  ].join(" ")}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setGender(g);
+                    }
+                  }}
+                  className={`h-[56px] w-full rounded-[8px] flex items-center justify-center
+                    ${active ? "typo-body_bold16 bg-primary-50 text-screen-0" : "typo-body_reg16 bg-primary-20 text-gray-500"}`}
                 >
                   {g}
-                </button>
+                </div>
               );
             })}
           </div>
         </div>
 
         {/* 생년월일 (임시 입력 방식) */}
-        <div className="pt-10">
-          <div className="pb-3 text-gray-900">
+        <div className="flex flex-col gap-3 pt-10">
+          <div className="text-gray-900">
             <span className="typo-body_reg14">생년월일</span>
             <span className="typo-body_reg12"> (8자리)</span>
           </div>
 
           <div className="relative">
-            <input
-              value={birth ? formatBirth(birth) : ""}
-              readOnly
-              onClick={setTempBirth} // 임시: 클릭 시 고정 값 입력
-              placeholder="2000.11.10"
-              className={[
-                "h-[60px] w-full rounded-[8px] bg-gray-50 px-5 pr-12 outline-none cursor-pointer",
-                "typo-body_bold16 text-gray-900 placeholder:text-gray-300",
-              ].join(" ")}
-            />
+            <div
+              role="button"
+              tabIndex={0}
+              onClick={setTempBirth}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  setTempBirth();
+                }
+              }}
+              className={`h-[60px] w-full rounded-[8px] bg-gray-50 px-5 pr-12
+                flex items-center cursor-pointer
+                ${birth ? "typo-body_bold16 text-gray-900" : "typo-body_reg16 text-gray-900"}`}
+            >
+              {birth ? formatBirth(birth) : <span className="text-gray-300">2000.11.10</span>}
+            </div>
 
             {/* 캘린더 버튼 */}
             <button
@@ -174,14 +185,8 @@ const BasicInfoPage = () => {
                 navigate("/onboardings/concern");
               }
             }}
-            className={[
-              "h-[50px] w-full rounded-full",
-              "flex items-center justify-center",
-              "typo-body_bold18",
-              isNextEnabled
-                ? "bg-primary-50 text-screen-0"
-                : "bg-gray-100 text-gray-400 pointer-events-none",
-            ].join(" ")}
+            className={`h-[50px] w-full rounded-full flex items-center justify-center typo-body_bold18
+              ${isNextEnabled ? "bg-primary-50 text-screen-0" : "bg-gray-100 text-gray-400 pointer-events-none"}`}
           >
             다음
           </div>

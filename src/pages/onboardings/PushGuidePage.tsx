@@ -119,10 +119,7 @@ const PushGuidePage = () => {
             {STEPS.map((_, idx) => (
               <span
                 key={idx}
-                className={[
-                  "h-[10px] w-[10px] rounded-full",
-                  idx === step ? "bg-primary-50" : "bg-gray-200",
-                ].join(" ")}
+                className={`h-[10px] w-[10px] rounded-full ${idx === step ? "bg-primary-50" : "bg-gray-200"}`}
               />
             ))}
           </div>
@@ -153,14 +150,10 @@ const PushGuidePage = () => {
               if (!isLast) return;
               handleKeyActivate(e, handleDone);
             }}
-            className={[
-              "h-[50px] w-full rounded-full",
-              "flex items-center justify-center",
-              "typo-body_bold18",
-              isLast
-                ? "bg-primary-50 text-screen-0"
-                : "bg-gray-100 text-gray-400 pointer-events-none",
-            ].join(" ")}
+            className={`h-[50px] w-full rounded-full
+              flex items-center justify-center typo-body_bold18
+              ${isLast ? "bg-primary-50 text-screen-0" : "bg-gray-100 text-gray-400 pointer-events-none"}
+`}
           >
             완료
           </div>

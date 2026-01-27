@@ -58,36 +58,36 @@ const ConcernPage = () => {
         </div>
 
         {/* 진행바 */}
-        <div className="pt-10">
+        <div className="flex flex-col gap-8 pt-10">
           <div className="flex items-center gap-2">
             <span className="h-[6px] w-[6px] rounded-full bg-primary-30" />
             <span className="h-[6px] w-[32px] rounded-full bg-primary-50" />
             <span className="h-[6px] w-[6px] rounded-full bg-primary-30" />
           </div>
-        </div>
 
-        {/* 타이틀 */}
-        <div className="pt-8">
-          <div className="typo-h2_bold20">
-            자취하면서 <br />
-            어떤 점이 가장 고민되시나요?
+          {/* 타이틀 */}
+          <div className="flex flex-col gap-2">
+            <div className="typo-h2_bold20">
+              자취하면서 <br />
+              어떤 점이 가장 고민되시나요?
+            </div>
+            <p className="typo-body_reg14">최대 5개 선택 가능해요.</p>
           </div>
-          <p className="pt-2 typo-body_reg14">최대 5개 선택 가능해요.</p>
         </div>
 
         {/* 칩 영역 */}
         <div className="pt-8 px-0.5 flex flex-wrap gap-3">
           {CHIPS.map((chip) => {
             const isActive = selected.includes(chip);
+
             return (
               <button
                 key={chip}
                 type="button"
                 onClick={() => toggleChip(chip)}
-                className={[
-                  "h-11.5 rounded-[8px] px-4 typo-body_reg16 transition",
-                  isActive ? "bg-primary-50 text-screen-0" : "bg-gray-50 text-gray-600",
-                ].join(" ")}
+                className={`h-11.5 rounded-[8px] px-4 typo-body_reg16 transition
+          ${isActive ? "bg-primary-50 text-screen-0" : "bg-gray-50 text-gray-600"}
+        `}
               >
                 {chip}
               </button>
@@ -96,13 +96,12 @@ const ConcernPage = () => {
         </div>
 
         {/* 에러 멘트 */}
-        <div className="mt-auto pb-8">
+        <div className="mt-auto pb-8 flex flex-col gap-2">
           {isOverSelected && (
-            <p className="pb-2 text-center typo-body_bold14 text-alert-50 ">
+            <p className="text-center typo-body_bold14 text-alert-50 ">
               최대 5개까지 선택 가능합니다.
             </p>
           )}
-
           {/* 다음 버튼 */}
           <div
             role="button"
@@ -116,14 +115,14 @@ const ConcernPage = () => {
                 handleNext();
               }
             }}
-            className={[
-              "h-[50px] w-full rounded-full",
-              "flex items-center justify-center",
-              "typo-body_bold18",
-              isButtonEnabled
-                ? "bg-primary-50 text-screen-0"
-                : "bg-gray-100 text-gray-400 pointer-events-none",
-            ].join(" ")}
+            className={`h-[50px] w-full rounded-full
+              flex items-center justify-center typo-body_bold18
+              ${
+                isButtonEnabled
+                  ? "bg-primary-50 text-screen-0"
+                  : "bg-gray-100 text-gray-400 pointer-events-none"
+              }
+`}
           >
             {selectedCount}개 선택하기
           </div>

@@ -20,7 +20,7 @@ export default function LivingYearModal() {
 
   return (
     // (바깥 영역)
-    <div className="fixed inset-0 bg-black/40" onClick={handleDimClick}>
+    <div className="fixed inset-0" onClick={handleDimClick}>
       <div
         className="absolute bottom-0 left-0 right-0 mx-auto w-full max-w-[500px] rounded-t-[16px] bg-screen-0"
         onClick={(e) => e.stopPropagation()}
@@ -38,9 +38,9 @@ export default function LivingYearModal() {
 
               // // default / active / unactive
               const itemClass = isActive
-                ? "bg-primary-50 text-screen-0" // active
+                ? "bg-primary-50 text-screen-0 shadow-mini" // active
                 : hasPicked
-                  ? "bg-gray-50 text-gray-300" // unactive
+                  ? "bg-gray-50 text-gray-200" // unactive
                   : "bg-gray-50 text-gray-500"; // default
 
               return (
@@ -55,12 +55,10 @@ export default function LivingYearModal() {
                       setPicked(opt);
                     }
                   }}
-                  className={[
-                    "h-[56px] w-full rounded-[16px] px-4",
-                    "flex items-center",
-                    "typo-body_bold16",
-                    itemClass,
-                  ].join(" ")}
+                  className={`h-[56px] w-full rounded-[8px] px-4
+                    flex items-center
+                    typo-body_bold16
+                    ${itemClass}`}
                 >
                   {opt}
                 </div>

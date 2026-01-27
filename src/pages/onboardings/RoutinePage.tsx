@@ -40,7 +40,7 @@ const RoutinePage = () => {
         </div>
 
         {/* 진행바 */}
-        <div className=" pt-10">
+        <div className="flex flex-col gap-8 pt-10">
           <div className="flex items-center gap-2">
             <span className="h-[6px] w-[6px] rounded-full bg-primary-30" />
             <span className="h-[6px] w-[6px] rounded-full bg-primary-30" />
@@ -57,7 +57,7 @@ const RoutinePage = () => {
         </div>
 
         <div className="min-h-0 flex-1 overflow-y-auto">
-          <div className="flex flex-col gap-4 pb-6">
+          <div className="flex flex-col gap-4 pb-6 px-4 w-full">
             {ROUTINES.map((r) => {
               const active = selected.includes(r.id);
 
@@ -74,13 +74,9 @@ const RoutinePage = () => {
                       toggleRoutine(r.id);
                     }
                   }}
-                  className={[
-                    "h-[50px] w-[358px]] rounded-[8px] px-5",
-                    "flex items-center gap-3",
-                    "cursor-pointer select-none",
-                    "transition",
-                    active ? "bg-primary-50 text-screen-0" : "bg-gray-50 text-gray-600",
-                  ].join(" ")}
+                  className={`h-[50px] w-full rounded-[8px] px-4
+                    flex items-center gap-3 cursor-pointer select-none transition
+                    ${active ? "bg-primary-50 text-screen-0" : "bg-gray-50 text-gray-600"}`}
                 >
                   <span className="typo-body_bold16">{r.emoji}</span>
                   <span className="typo-body_bold16">{r.label}</span>
@@ -91,7 +87,7 @@ const RoutinePage = () => {
         </div>
 
         {/* 하단 (고정) */}
-        <div className="pb-8 pt-4">
+        <div className="pb-8 flex flex-col gap-2">
           <div
             role="button"
             tabIndex={0}
@@ -110,8 +106,7 @@ const RoutinePage = () => {
           >
             루틴 추천 받지 않기
           </div>
-
-          <div className="pt-2.5">
+          <div>
             <div
               role="button"
               tabIndex={isStartEnabled ? 0 : -1}
@@ -127,13 +122,14 @@ const RoutinePage = () => {
                   navigate("/onboardings/push-guide");
                 }
               }}
-              className={[
-                "h-[50px] w-full rounded-full typo-body_bold18 transition",
-                "flex items-center justify-center",
-                isStartEnabled
-                  ? "bg-primary-50 text-screen-0 cursor-pointer"
-                  : "bg-gray-100 text-gray-400 cursor-not-allowed",
-              ].join(" ")}
+              className={`h-[50px] w-full rounded-full
+                flex items-center justify-center typo-body_bold18 transition
+      ${
+        isStartEnabled
+          ? "bg-primary-50 text-screen-0 cursor-pointer"
+          : "bg-gray-100 text-gray-400 cursor-not-allowed"
+      }
+    `}
             >
               시작하기
             </div>
