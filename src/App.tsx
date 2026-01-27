@@ -7,6 +7,10 @@ import UserPage from "./pages/users/UserPage";
 import ModalPage from "./pages/commons/ModalPage";
 import SubLayout from "./layouts/SubLayout";
 import LoginPage from "./pages/onboardings/LoginPage";
+import PostWritingPage from "./pages/communities/PostWritingPage";
+import CommunityProfilePage from "./pages/communities/CommunityProfilePage";
+import PostSearchPage from "./pages/communities/PostSearchPage";
+import PostDetailPage from "./pages/communities/PostDetailPage";
 import PrivacyPage from "./pages/users/PrivacyPage";
 import NoticePage from "./pages/users/NoticePage";
 import InquiryPage from "./pages/users/InquiryPage";
@@ -22,6 +26,10 @@ function App() {
       <Routes>
         <Route element={<SubLayout />}>
           <Route path="/" element={<LoginPage />} />
+          <Route path="/lived/community/:postId" element={<PostDetailPage />} />
+          <Route path="/lived/community/write" element={<PostWritingPage />} />
+          <Route path="/lived/community/profile/:userid" element={<CommunityProfilePage />} />
+          <Route path="/lived/community/search" element={<PostSearchPage />} />
         </Route>
 
         <Route path="/lived" element={<MainLayout />}>
