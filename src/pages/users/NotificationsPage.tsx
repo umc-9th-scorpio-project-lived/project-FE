@@ -145,7 +145,7 @@ const NotificationsPage = () => {
             </div>
           </div>
 
-          <div className="flex flex-col pl-14">
+          <div className="flex flex-col gap-4 pl-14">
             <div className="flex justify-between items-center py-1.5">
               <span className="typo-body_bold14 text-gray-900">댓글 알림</span>
               <div className="px-1">
