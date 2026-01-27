@@ -19,7 +19,7 @@ const TreeVisibilityModal = () => {
   };
 
   return (
-    <div className="h-[50vh] bg-white p-4 rounded-t-2xl flex flex-col overflow-y-auto overflow-x-hidden">
+    <div className="h-[50vh] bg-white p-4 rounded-t-2xl flex flex-col justify-center items-center overflow-y-auto overflow-x-hidden">
       <div className="w-full py-3 text-center">
         <div className="typo-h2_reg20 text-gray-900 mb-2">루틴 나무 공개 범위</div>
       </div>
@@ -54,44 +54,44 @@ const TreeVisibilityModal = () => {
             </button>
             {isSomeoneSelected ? (
               <div className="h-38 pl-4 pr-18 flex flex-col gap-2 overflow-y-auto overflow-x-hidden">
-                <div className="w-full flex justify-between">
-                  <span className="typo-body_reg16 text-gray-900">친구1</span>
+                <div className="w-full flex justify-between items-center">
+                  <span className="typo-body_reg12 text-gray-900">친구1</span>
                   <button>
                     <CheckIcon className="w-6 h-6 text-primary-50" />
                   </button>
                 </div>
                 <div className="w-full flex justify-between">
-                  <span className="typo-body_reg16 text-gray-900">친구2</span>
+                  <span className="typo-body_reg12 text-gray-900">친구2</span>
                   <button>
                     <CheckIcon className="w-6 h-6 text-gray-900" />
                   </button>
                 </div>
                 <div className="w-full flex justify-between">
-                  <span className="typo-body_reg16 text-gray-900">친구3</span>
+                  <span className="typo-body_reg12 text-gray-900">친구3</span>
                   <button>
                     <CheckIcon className="w-6 h-6 text-gray-900" />
                   </button>
                 </div>
                 <div className="w-full flex justify-between">
-                  <span className="typo-body_reg16 text-gray-900">친구4</span>
+                  <span className="typo-body_reg12 text-gray-900">친구4</span>
                   <button>
                     <CheckIcon className="w-6 h-6 text-gray-900" />
                   </button>
                 </div>
                 <div className="w-full flex justify-between">
-                  <span className="typo-body_reg16 text-gray-900">친구5</span>
+                  <span className="typo-body_reg12 text-gray-900">친구5</span>
                   <button>
                     <CheckIcon className="w-6 h-6 text-gray-900" />
                   </button>
                 </div>
                 <div className="w-full flex justify-between">
-                  <span className="typo-body_reg16 text-gray-900">친구6</span>
+                  <span className="typo-body_reg12 text-gray-900">친구6</span>
                   <button>
                     <CheckIcon className="w-6 h-6 text-gray-900" />
                   </button>
                 </div>
                 <div className="w-full flex justify-between">
-                  <span className="typo-body_reg16 text-gray-900">친구7</span>
+                  <span className="typo-body_reg12 text-gray-900">친구7</span>
                   <button>
                     <CheckIcon className="w-6 h-6 text-gray-900" />
                   </button>
@@ -107,7 +107,7 @@ const TreeVisibilityModal = () => {
               resetVisibility();
               setIsPrivate(true);
             }}
-            className="flex gap-2 cursor-pointer"
+            className="flex items-center gap-2 cursor-pointer"
           >
             <CheckCircleIcon
               className={`w-6 h-6 ${isPrivate ? "text-primary-50" : "text-gray-300"}`}
@@ -118,9 +118,9 @@ const TreeVisibilityModal = () => {
 
         <button
           onClick={closeModal}
-          className="w-full py-3 bg-primary-50 rounded-4xl cursor-pointer"
+          className="w-full py-3 bg-primary-50 rounded-lg cursor-pointer"
         >
-          <span className="text-screen-0">수정 완료</span>
+          <span className="typo-body_bold18 text-screen-0">수정 완료</span>
         </button>
       </div>
     </div>
