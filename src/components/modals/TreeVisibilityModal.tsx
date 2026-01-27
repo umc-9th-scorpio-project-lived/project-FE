@@ -19,7 +19,7 @@ const TreeVisibilityModal = () => {
   };
 
   return (
-    <div className="h-[50vh] bg-white p-4 rounded-t-2xl flex flex-col justify-center items-center overflow-y-auto overflow-x-hidden">
+    <div className="h-[50vh] bg-screen-0 p-4 rounded-t-2xl flex flex-col justify-center items-center overflow-y-auto overflow-x-hidden">
       <div className="w-full py-3 text-center">
         <div className="typo-h2_reg20 text-gray-900 mb-2">루틴 나무 공개 범위</div>
       </div>
@@ -31,7 +31,7 @@ const TreeVisibilityModal = () => {
               resetVisibility();
               setIsFriendsOnly(true);
             }}
-            className="flex gap-2 cursor-pointer"
+            className="flex items-center gap-2 cursor-pointer"
           >
             <CheckCircleIcon
               className={`w-6 h-6 ${isFriendsOnly ? "text-primary-50" : "text-gray-300"}`}
@@ -45,7 +45,7 @@ const TreeVisibilityModal = () => {
                 resetVisibility();
                 setIsSomeoneSelected(true);
               }}
-              className="flex gap-2 cursor-pointer"
+              className="flex items-center gap-2 cursor-pointer"
             >
               <CheckCircleIcon
                 className={`w-6 h-6 ${isSomeoneSelected ? "text-primary-50" : "text-gray-300"}`}
