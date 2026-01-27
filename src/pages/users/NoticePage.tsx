@@ -16,8 +16,8 @@ const NoticePage = () => {
         <span className="typo-h2_reg20 text-gray-900">공지사항</span>
       </div>
 
-      {/* 첫 번째 공지사항에만 border-t border-b를, 나머지는 border-b만 적용 */}
-      <div className="w-full border-t border-b border-gray-200 px-5 py-2.5 flex flex-col gap-1">
+      {/* 첫 번째 공지사항에만 border-t-[0.5px] border-b-[0.5px]를, 나머지는 border-b-[0.5px]만 적용 */}
+      <div className="w-full border-t-[0.5px] border-b-[0.5px] border-gray-200 px-5 py-2.5 flex flex-col gap-1">
         <span className="typo-body_bold14 text-gray-900">
           공지사항 메뉴입니다. 이곳에서 알려드려야 할 사항을 전달드릴 예정입니다. 앞으로 잘
           부탁드립니다. :)
