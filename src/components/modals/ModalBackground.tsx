@@ -27,7 +27,8 @@ const ModalBackground = ({ children }: ModalBackgroundProps) => {
   const layoutClass =
     position === "center" ? "grid place-items-center px-4" : "flex items-end px-0";
 
-  const contentClass = position === "center" ? "w-full max-w-[420px]" : "w-full";
+  const contentClass =
+    position === "center" ? "flex w-full max-w-[420px] items-center justify-center" : "w-full";
 
   return (
     <div
