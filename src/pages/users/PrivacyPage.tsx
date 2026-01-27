@@ -23,7 +23,7 @@ const PrivacyPage = () => {
         <div className="flex flex-col gap-1">
           <span className="typo-body_reg16 text-gray-900">차단</span>
 
-          <div className="flex flex-col gap-2.5">
+          <div className="flex flex-col items-center gap-2.5">
             <button
               onClick={() => navigate("blocked")}
               className="flex justify-between cursor-pointer"
