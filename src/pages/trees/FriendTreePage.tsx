@@ -19,7 +19,7 @@ const FriendTreePage = () => {
   return (
     // 늘어난 루틴나무 아이콘 아래 여백을 위해 pb-4 추가
     <div className="bg-gray-50 w-full h-screen overflow-y-auto pb-4">
-      <div className="pt-13.5 px-4 flex justify-between items-center relative">
+      <div className="pt-10 px-4 flex justify-between items-center relative">
         <div className="flex items-center gap-2">
           <button onClick={() => navigate("/lived/tree")} className="cursor-pointer">
             <LeftChevronIcon className="w-7 h-7 text-gray-900" />

@@ -40,7 +40,7 @@ const StatisticsPage = () => {
 
   return (
     <div className="bg-primary-50 h-dvh flex flex-col gap-4 overflow-y-auto overflow-x-hidden">
-      <div className="pt-15.5 flex justify-center items-center relative">
+      <div className="pt-10 flex justify-center items-center relative">
         <button onClick={() => navigate("/lived/tree")} className="absolute left-4 cursor-pointer">
           <LeftChevronIcon className="w-7 h-7 text-screen-0" />
         </button>
