@@ -8,7 +8,7 @@ const BlockedPage = () => {
 
   return (
     <div className="w-full h-full flex flex-col gap-5 overflow-y-auto overflow-x-hidden">
-      <div className="flex justify-center items-center pt-13 px-4 relative">
+      <div className="flex justify-center items-center pt-10 px-4 relative">
         <button
           onClick={() => navigate("/lived/my/privacy")}
           className="flex justify-center items-center absolute left-4 cursor-pointer"

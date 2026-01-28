@@ -8,7 +8,7 @@ const UserPage = () => {
 
   return (
     <div className="w-full h-full flex flex-col gap-4.5 overflow-y-auto overflow-x-hidden">
-      <span className="typo-h2_bold20 text-gray-900 pt-15 px-4">마이페이지</span>
+      <span className="typo-h2_bold20 text-gray-900 pt-10 px-4">마이페이지</span>
 
       <div className="flex flex-col gap-6">
         <div className="flex flex-col items-center gap-2">
