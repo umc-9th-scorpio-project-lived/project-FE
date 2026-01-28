@@ -33,7 +33,7 @@ const RadialProgress = ({ current, total }: RadialProgressProps) => {
           strokeDasharray={circumference}
           strokeDashoffset={circumference - totalTrackLength}
           strokeLinecap="round"
-          stroke="#C9CDD1" // index.css의 @theme 때문에 stroke-gray-200이 작동하지 않음
+          className="stroke-gray-200"
         />
         {/* Active Track: 진행률이 표시되는 연두색 바 */}
         <circle
