@@ -12,22 +12,22 @@ const STEPS: StepItem[] = [
   {
     img: "/images/onboardings/alarm-push-step-01.png",
     title: "모바일 PUSH 알림 설정 방법",
-    desc: "살아보니 사이트 접속 후\n공유 버튼 클릭",
+    desc: "1. 살아보니 사이트 접속 후,\n공유 버튼 클릭",
   },
   {
     img: "/images/onboardings/alarm-push-step-02.png",
     title: "모바일 PUSH 알림 설정 방법",
-    desc: "더보기 > 홈 화면에 추가 버튼 클릭하기",
+    desc: "2. 더보기 > 홈 화면에 추가 버튼 클릭하기",
   },
   {
     img: "/images/onboardings/alarm-push-step-03.png",
     title: "모바일 PUSH 알림 설정 방법",
-    desc: "제목에 ‘살아보니’ 입력 후\n추가 버튼 클릭하기",
+    desc: "3. 제목에 ‘살아보니’ 입력 후\n추가 버튼 클릭하기",
   },
   {
     img: "/images/onboardings/alarm-push-step-04.png",
     title: "모바일 PUSH 알림 설정 방법",
-    desc: "앱처럼 푸시 알림을 받을 수 있어요!",
+    desc: "4. 앱처럼 푸시 알림을 받을 수 있어요!",
   },
 ];
 
@@ -36,8 +36,10 @@ const PushGuidePage = () => {
 
   // 현재 스텝
   const [step, setStep] = useState(0);
-  const isLast = step === STEPS.length - 1;
   const current = STEPS[step];
+
+  // 스와이프를 실제로 한 번이라도 했는지
+  const [hasSwiped, setHasSwiped] = useState(false);
 
   const startXRef = useRef<number | null>(null);
 
@@ -68,8 +70,11 @@ const PushGuidePage = () => {
     if (Math.abs(diff) < 40) return;
 
     setStep((prev) => {
-      if (diff < 0) return Math.min(prev + 1, STEPS.length - 1);
-      return Math.max(prev - 1, 0);
+      const next = diff < 0 ? Math.min(prev + 1, STEPS.length - 1) : Math.max(prev - 1, 0);
+
+      if (next !== prev) setHasSwiped(true);
+
+      return next;
     });
   };
 
@@ -94,14 +99,14 @@ const PushGuidePage = () => {
           </button>
         </div>
 
-        {/* 본문: 스와이프로만 step 넘기기 */}
+        {/* 본문: 스와이프로 step 넘기기 */}
         <div className="flex flex-col" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
           {/* 이미지 */}
           <div className="pt-10 flex justify-center">
             <img
               src={current.img}
               alt={`푸시 알림 가이드 ${step + 1}`}
-              className="h-[340px] w-[220px] object-contain"
+              className="h-[361px] w-[168px] object-contain"
               draggable={false}
             />
           </div>
@@ -119,7 +124,9 @@ const PushGuidePage = () => {
             {STEPS.map((_, idx) => (
               <span
                 key={idx}
-                className={`h-[10px] w-[10px] rounded-full ${idx === step ? "bg-primary-50" : "bg-gray-200"}`}
+                className={`h-[10px] w-[10px] rounded-full ${
+                  idx === step ? "bg-primary-50" : "bg-gray-200"
+                }`}
               />
             ))}
           </div>
@@ -129,33 +136,26 @@ const PushGuidePage = () => {
 
         {/* 하단 영역 */}
         <div className="pb-8">
-          {/* 스킵 */}
-          <div
-            role="button"
-            tabIndex={0}
-            onClick={handleDone}
-            onKeyDown={(e) => handleKeyActivate(e, handleDone)}
-            className="mx-auto pb-2 w-fit typo-body_bold14 text-gray-700 cursor-pointer"
-          >
-            나중에 설정할게요
-          </div>
-
           {/* 완료 버튼 */}
           <div
             role="button"
-            tabIndex={0}
-            aria-disabled={!isLast}
-            onClick={() => isLast && handleDone()}
+            tabIndex={hasSwiped ? 0 : -1}
+            aria-disabled={!hasSwiped}
+            onClick={() => hasSwiped && handleDone()}
             onKeyDown={(e) => {
-              if (!isLast) return;
+              if (!hasSwiped) return;
               handleKeyActivate(e, handleDone);
             }}
-            className={`h-[50px] w-full rounded-full
+            className={`h-[50px] w-full rounded-[32px]
               flex items-center justify-center typo-body_bold18
-              ${isLast ? "bg-primary-50 text-screen-0" : "bg-gray-100 text-gray-400 pointer-events-none"}
-`}
+              ${
+                hasSwiped
+                  ? "bg-primary-50 text-screen-0"
+                  : "bg-gray-100 text-gray-400 pointer-events-none"
+              }
+            `}
           >
-            완료
+            확인했어요!
           </div>
         </div>
       </section>
