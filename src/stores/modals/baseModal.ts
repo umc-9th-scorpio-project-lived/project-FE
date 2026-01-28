@@ -5,6 +5,7 @@ const useBaseModal = create<BaseModal>((set) => ({
   isModalOpen: false,
   modalType: "",
   options: { position: "center" },
+  modalProps: undefined,
 
   setModalType: (type) => set({ modalType: type }),
   openModal: (type, options) =>
@@ -15,9 +16,10 @@ const useBaseModal = create<BaseModal>((set) => ({
         position: options?.position ?? "center",
         onConfirm: options?.onConfirm,
       },
+      modalProps: options?.props,
     }),
 
-  closeModal: () => set({ isModalOpen: false, modalType: "" }),
+  closeModal: () => set({ isModalOpen: false, modalType: "", modalProps: undefined }),
 }));
 
 export default useBaseModal;

@@ -57,7 +57,7 @@ const PostWritingPage = () => {
   };
 
   return (
-    <div className="flex flex-col h-dvh pb-[100px]">
+    <div className="flex flex-col h-dvh pb-25 pt-10">
       {/*네브바*/}
       <div className="flex justify-between items-center text-gray-900 my-2 mx-4">
         <div className="flex gap-3">

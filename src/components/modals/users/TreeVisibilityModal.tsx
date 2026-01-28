@@ -24,7 +24,7 @@ const TreeVisibilityModal = () => {
         <div className="typo-h2_reg20 text-gray-900 mb-2">루틴 나무 공개 범위</div>
       </div>
 
-      <div className="flex flex-col flex-1 justify-between gap-5">
+      <div className="w-full flex flex-col flex-1 justify-between gap-5">
         <div className="flex flex-col gap-3.5">
           <button
             onClick={() => {
