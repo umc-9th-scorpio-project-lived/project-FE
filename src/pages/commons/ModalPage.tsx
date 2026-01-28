@@ -2,6 +2,7 @@ import BottomTestModal from "@/components/modals/BottomTestModal";
 import CenterTestModal from "@/components/modals/CenterTestModal";
 import LivingYearModal from "@/components/modals/LivingYearModal";
 import ModalBackground from "@/components/modals/ModalBackground";
+import PushAlarmModal from "@/components/modals/PushAlarmModal";
 import useBaseModal from "@/stores/modals/baseModal";
 import { useEffect } from "react";
 
@@ -25,9 +26,10 @@ const ModalPage = () => {
   return (
     <>
       <ModalBackground>
-        {modalType === "livingYearModal" && <LivingYearModal />}{" "}
+        {modalType === "livingYearModal" && <LivingYearModal />}
         {modalType === "centerModal" && <CenterTestModal />}
         {modalType === "bottomModal" && <BottomTestModal />}
+        {modalType === "pushAlarmModal" && <PushAlarmModal />}
       </ModalBackground>
     </>
   );

@@ -1,4 +1,5 @@
 import LeftChevronIcon from "@/icons/LeftChevronIcon";
+import useBaseModal from "@/stores/modals/baseModal";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -17,6 +18,7 @@ const ROUTINES = [
 const RoutinePage = () => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState<string[]>([]);
+  const { openModal } = useBaseModal();
 
   const isStartEnabled = useMemo(() => selected.length > 0, [selected]);
 
@@ -92,7 +94,7 @@ const RoutinePage = () => {
             tabIndex={0}
             onClick={() => {
               setSelected([]);
-              navigate("/onboardings/push-guide");
+              openModal("pushAlarmModal");
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
@@ -112,7 +114,7 @@ const RoutinePage = () => {
               aria-disabled={!isStartEnabled}
               onClick={() => {
                 if (!isStartEnabled) return;
-                navigate("/onboardings/push-guide");
+                openModal("pushAlarmModal");
               }}
               onKeyDown={(e) => {
                 if (!isStartEnabled) return;
