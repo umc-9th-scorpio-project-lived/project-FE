@@ -14,6 +14,7 @@ const useBaseModal = create<BaseModal>((set) => ({
       modalType: type,
       options: {
         position: options?.position ?? "center",
+        onConfirm: options?.onConfirm,
       },
       modalProps: options?.props,
     }),

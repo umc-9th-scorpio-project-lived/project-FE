@@ -2,7 +2,7 @@
 
 @import "tailwindcss/preflight";
 @import "tailwindcss/utilities";
-@reference "tailwindcss/theme";
+@import "tailwindcss/theme";
 
 html {
   margin: 0px;

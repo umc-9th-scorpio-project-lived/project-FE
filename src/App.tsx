@@ -10,6 +10,14 @@ import LoginPage from "./pages/onboardings/LoginPage";
 import RoutinePage from "./pages/homes/RoutinePage";
 import AlarmPage from "./pages/alarms/AlarmPage";
 import RecommendPage from "./pages/homes/RecommendPage";
+import RoutineTrackerPage from "./pages/trees/RoutineTrackerPage";
+import FriendTreePage from "./pages/trees/FriendTreePage";
+import StatisticsPage from "./pages/trees/StatisticsPage";
+import TreeArchivePage from "./pages/trees/TreeArchivePage";
+import PostWritingPage from "./pages/communities/PostWritingPage";
+import CommunityProfilePage from "./pages/communities/CommunityProfilePage";
+import PostSearchPage from "./pages/communities/PostSearchPage";
+import PostDetailPage from "./pages/communities/PostDetailPage";
 import PrivacyPage from "./pages/users/PrivacyPage";
 import NoticePage from "./pages/users/NoticePage";
 import InquiryPage from "./pages/users/InquiryPage";
@@ -34,6 +42,10 @@ function App() {
           <Route path="/lived/alarm" element={<AlarmPage />} />
           {/* 루틴 추천 페이지 */}
           <Route path="/lived/recommend" element={<RecommendPage />} />
+          <Route path="/lived/community/:postId" element={<PostDetailPage />} />
+          <Route path="/lived/community/write" element={<PostWritingPage />} />
+          <Route path="/lived/community/profile/:userid" element={<CommunityProfilePage />} />
+          <Route path="/lived/community/search" element={<PostSearchPage />} />
         </Route>
 
         <Route path="/lived" element={<MainLayout />}>
@@ -50,6 +62,13 @@ function App() {
           <Route path="my" element={<UserPage />} />
         </Route>
 
+        {/* 루틴나무 페이지의 상세페이지 */}
+        <Route path="/lived/tree" element={<SubLayout />}>
+          <Route path="tracker" element={<RoutineTrackerPage />} />
+          <Route path="friend" element={<FriendTreePage />} />
+          <Route path="statistics" element={<StatisticsPage />} />
+          <Route path="archive" element={<TreeArchivePage />} />
+        </Route>
         {/* 마이페이지의 상세페이지 */}
         <Route path="/lived/my" element={<SubLayout />}>
           {/* 공지사항 */}
