@@ -14,7 +14,10 @@ import SearchDeleteModal from "@/components/modals/communities/SearchDeleteModal
 import TreeVisibilityModal from "@/components/modals/users/TreeVisibilityModal";
 import UnblockModal from "@/components/modals/users/UnblockModal";
 import useBaseModal from "@/stores/modals/baseModal";
+import SetStatisticsMonthModal from "@/components/modals/trees/SetStatisticsMonthModal";
 import { useEffect } from "react";
+import SetStatisticsWeekModal from "@/components/modals/trees/SetStatisticsWeekModal";
+import SetTrackerMonthModal from "@/components/modals/trees/SetTrackerMonthModal";
 
 const ModalPage = () => {
   const { isModalOpen, modalType, modalProps } = useBaseModal();
@@ -50,6 +53,13 @@ const ModalPage = () => {
         {modalType === "deleteAccountModal" && <DeleteAccountModal />}
         {modalType === "treeVisibilityModal" && <TreeVisibilityModal />}
         {modalType === "unblockModal" && <UnblockModal />}
+        {modalType === "setStatisticsMonthModal" && (
+          <SetStatisticsMonthModal {...(modalProps ?? {})} />
+        )}
+        {modalType === "setStatisticsWeekModal" && (
+          <SetStatisticsWeekModal {...(modalProps ?? {})} />
+        )}
+        {modalType === "setTrackerMonthModal" && <SetTrackerMonthModal {...(modalProps ?? {})} />}
       </ModalBackground>
     </>
   );
