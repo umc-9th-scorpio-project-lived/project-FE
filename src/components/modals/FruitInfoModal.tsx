@@ -1,4 +1,4 @@
-import CloseIcon from "@/icons/CloseIcon";
+import MiniCloseIcon from "@/icons/MiniCloseIcon";
 import MiniGoldenFruitIcon from "@/icons/MiniGoldenFruitIcon";
 import MiniGrowingFruitIcon from "@/icons/MiniGrowingFruitIcon";
 import MiniNormalFruitIcon from "@/icons/MiniNormalFruitIcon";
@@ -8,9 +8,9 @@ const FruitInfoModal = () => {
   const { closeModal } = useBaseModal();
 
   return (
-    <div className="bg-gray-50 rounded-2xl py-6 px-7 flex justify-between items-center relative">
-      <button onClick={closeModal} className="absolute top-2.5 right-2.5 cursor-pointer">
-        <CloseIcon className="w-2.5 h-2.5 text-gray-900" />
+    <div className="bg-gray-50 rounded-2xl py-5 px-7 flex justify-between items-center relative">
+      <button onClick={closeModal} className="absolute top-3 right-3 cursor-pointer">
+        <MiniCloseIcon className="w-2.5 h-2.5 text-gray-900" />
       </button>
 
       <div className="flex flex-col items-center gap-1">
