@@ -1,6 +1,6 @@
 import CameraIcon from "@/icons/CameraIcon";
 import LeftChevronIcon from "@/icons/LeftChevronIcon";
-import WriteIcon from "@/icons/WirteIcon";
+import WriteIcon from "@/icons/WriteIcon";
 import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 
