@@ -42,7 +42,24 @@ const BasicInfoPage = () => {
   // 임시 처리:
   // 캘린더 클릭 시 항상 고정된 생년월일을 입력
   const setTempBirth = () => {
-    setBirth("20001110");
+    openModal("setBirthModal", {
+      position: "center",
+      props: {
+        initialValue: birth
+          ? {
+              year: Number(birth.slice(0, 4)),
+              month: Number(birth.slice(4, 6)),
+              date: Number(birth.slice(6, 8)),
+            }
+          : undefined,
+        onApply: ({ year, month, date }: { year: number; month: number; date: number }) => {
+          const y = String(year);
+          const m = String(month).padStart(2, "0");
+          const d = String(date).padStart(2, "0");
+          setBirth(`${y}${m}${d}`);
+        },
+      },
+    });
   };
 
   return (
@@ -156,7 +173,6 @@ const BasicInfoPage = () => {
               type="button"
               onClick={() => {
                 setTempBirth(); // 임시 값 세팅
-                openModal("birthPicker", { position: "bottom" }); // 추후 실제 피커 연결
               }}
               className="absolute right-4 top-1/2 -translate-y-1/2 rounded-md p-2"
               aria-label="생년월일 선택"

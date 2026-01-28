@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import useBaseModal from "@/stores/modals/baseModal";
+import AlarmIcon from "@/icons/AlarmIcon";
 
 export default function PushAlarmModal() {
   const navigate = useNavigate();
@@ -10,16 +11,17 @@ export default function PushAlarmModal() {
       role="dialog"
       aria-modal="true"
       className="
-        relative h-[356px] w-full rounded-[16px] bg-screen-0
+        relative w-full rounded-2xl bg-screen-0
         flex flex-col items-center
-        px-6 py-6
+        gap-8.5
+        px-5 py-5
       "
     >
       {/* content */}
-      <div className="flex flex-col items-center gap-[15px]">
+      <div className="flex flex-col items-center gap-3.75">
         {/* 아이콘 */}
-        <div className="flex items-center justify-center">
-          <div className="bg-alarm h-[50px] w-[50px] bg-contain bg-center bg-no-repeat" />
+        <div className="flex items-center justify-center pt-4.5">
+          <AlarmIcon className="h-12.5 w-12.5" />
         </div>
 
         {/* 타이틀 */}
@@ -37,27 +39,27 @@ export default function PushAlarmModal() {
 
       {/* buttons */}
       <div className="mt-auto flex w-full flex-col gap-[10px]">
-        <button
-          type="button"
+        <div
+          role="button"
           onClick={() => {
             closeModal();
             navigate("/onboardings/push-guide");
           }}
-          className="h-[51px] w-full rounded-[8px] bg-primary-50 typo-body_bold16 text-screen-0"
+          className="flex justify-center items-center h-[51px] w-full rounded-[8px] bg-primary-50 typo-body_bold16 text-screen-0"
         >
           알림 받기
-        </button>
+        </div>
 
-        <button
-          type="button"
+        <div
+          role="button"
           onClick={() => {
             closeModal();
             navigate("/lived");
           }}
-          className="h-[51px] w-full rounded-[8px] bg-gray-100 typo-body_bold16 text-gray-400"
+          className="flex justify-center items-center h-[51px] w-full rounded-[8px] bg-gray-100 typo-body_bold16 text-gray-400"
         >
           나중에 설정할게요
-        </button>
+        </div>
       </div>
     </div>
   );

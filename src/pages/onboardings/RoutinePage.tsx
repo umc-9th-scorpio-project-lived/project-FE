@@ -28,7 +28,7 @@ const RoutinePage = () => {
 
   return (
     <main className="h-dvh bg-white font-suite overflow-hidden">
-      <section className="mx-auto flex h-dvh w-full  flex-col px-4 overflow-hidden">
+      <section className="mx-auto flex h-dvh w-full flex-col px-4 overflow-hidden">
         {/* 상단 */}
         <div className="h-11 w-full py-[5px] pt-6">
           <button
@@ -59,7 +59,7 @@ const RoutinePage = () => {
         </div>
 
         <div className="min-h-0 flex-1 overflow-y-auto">
-          <div className="flex flex-col gap-4 pb-6 px-4 w-full">
+          <div className="flex flex-col gap-4 pb-6 w-full">
             {ROUTINES.map((r) => {
               const active = selected.includes(r.id);
 
@@ -88,7 +88,7 @@ const RoutinePage = () => {
         </div>
 
         {/* 하단 (고정) */}
-        <div className="pb-8 flex flex-col gap-2">
+        <div className="pb-8 pt-2 flex flex-col gap-2">
           <div
             role="button"
             tabIndex={0}
