@@ -1,5 +1,8 @@
 import BottomTestModal from "@/components/modals/BottomTestModal";
 import CenterTestModal from "@/components/modals/CenterTestModal";
+import LivingYearModal from "@/components/modals/LivingYearModal";
+import ModalBackground from "@/components/modals/ModalBackground";
+import PushAlarmModal from "@/components/modals/PushAlarmModal";
 import FruitInfoModal from "@/components/modals/FruitInfoModal";
 import FruitModal from "@/components/modals/FruitModal";
 import DeleteAccountModal from "@/components/modals/DeleteAccountModal";
@@ -33,6 +36,10 @@ const ModalPage = () => {
   return (
     <>
       <ModalBackground>
+        {modalType === "livingYearModal" && <LivingYearModal />}
+        {modalType === "centerModal" && <CenterTestModal />}
+        {modalType === "bottomModal" && <BottomTestModal />}
+        {modalType === "pushAlarmModal" && <PushAlarmModal />}
         {modalType === "centerModal" && <CenterTestModal />}
         {modalType === "bottomModal" && <BottomTestModal />}
         {modalType === "fruitInfoModal" && <FruitInfoModal />}
