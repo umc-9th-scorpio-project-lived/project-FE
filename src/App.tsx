@@ -10,6 +10,9 @@ import LoginPage from "./pages/onboardings/LoginPage";
 import RoutinePage from "./pages/homes/RoutinePage";
 import AlarmPage from "./pages/alarms/AlarmPage";
 import RecommendPage from "./pages/homes/RecommendPage";
+import BasicInfoPage from "./pages/onboardings/BasicInfoPage";
+import ConcernPage from "./pages/onboardings/ConcernPage";
+import PushGuidePage from "./pages/onboardings/PushGuidePage";
 import RoutineTrackerPage from "./pages/trees/RoutineTrackerPage";
 import FriendTreePage from "./pages/trees/FriendTreePage";
 import StatisticsPage from "./pages/trees/StatisticsPage";
@@ -32,6 +35,7 @@ function App() {
       <ModalPage />
       <Routes>
         <Route element={<SubLayout />}>
+          {/* 로그인 */}
           <Route path="/" element={<LoginPage />} />
 
           {/* 루틴 생성/수정 페이지 */}
@@ -42,6 +46,17 @@ function App() {
           <Route path="/lived/alarm" element={<AlarmPage />} />
           {/* 루틴 추천 페이지 */}
           <Route path="/lived/recommend" element={<RecommendPage />} />
+          {/* 온보딩 기본 정보 */}
+          <Route path="/onboardings/basic-info" element={<BasicInfoPage />} />
+
+          {/* 온보딩 자취 고민 */}
+          <Route path="/onboardings/concern" element={<ConcernPage />} />
+
+          {/* 온보딩 맞춤 루틴 */}
+          <Route path="/onboardings/routine" element={<RoutinePage />} />
+
+          {/* 온보딩 알림 설정 */}
+          <Route path="/onboardings/push-guide" element={<PushGuidePage />} />
           <Route path="/lived/community/:postId" element={<PostDetailPage />} />
           <Route path="/lived/community/write" element={<PostWritingPage />} />
           <Route path="/lived/community/profile/:userid" element={<CommunityProfilePage />} />

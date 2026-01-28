@@ -3,10 +3,8 @@ import SelectDateModal from "@/components/modals/homes/SelectDateModal";
 import SelectIconModal from "@/components/modals/homes/SelectIconModal";
 import SetAlarmModal from "@/components/modals/homes/SetAlarmModal";
 import SetRepeatCycleModal from "@/components/modals/homes/SetRepeatCycleModal";
-import FruitInfoModal from "@/components/modals/trees/FruitInfoModal";
-import FruitModal from "@/components/modals/trees/FruitModal";
-import DeleteAccountModal from "@/components/modals/users/DeleteAccountModal";
-import LogoutModal from "@/components/modals/users/LogoutModal";
+import LivingYearModal from "@/components/modals/LivingYearModal";
+import PushAlarmModal from "@/components/modals/PushAlarmModal";
 import ModalBackground from "@/components/modals/ModalBackground";
 import PostDeleteModal from "@/components/modals/communities/PostDeleteModal";
 import ReportPostModal from "@/components/modals/communities/ReportPostModal";
@@ -19,6 +17,10 @@ import { useEffect } from "react";
 import SetStatisticsWeekModal from "@/components/modals/trees/SetStatisticsWeekModal";
 import SetTrackerMonthModal from "@/components/modals/trees/SetTrackerMonthModal";
 import SetBirthModal from "@/components/modals/onboardings/setBirthModal";
+import FruitInfoModal from "@/components/modals/trees/FruitInfoModal";
+import FruitModal from "@/components/modals/trees/FruitModal";
+import LogoutModal from "@/components/modals/users/LogoutModal";
+import DeleteAccountModal from "@/components/modals/users/DeleteAccountModal";
 
 const ModalPage = () => {
   const { isModalOpen, modalType, modalProps } = useBaseModal();
@@ -45,6 +47,8 @@ const ModalPage = () => {
         {modalType === "setAlarmModal" && <SetAlarmModal {...(modalProps ?? {})} />}
         {modalType === "selectIconModal" && <SelectIconModal {...(modalProps ?? {})} />}
         {modalType === "deleteRoutineModal" && <DeleteRoutineModal {...(modalProps ?? {})} />}
+        {modalType === "livingYearModal" && <LivingYearModal />}
+        {modalType === "pushAlarmModal" && <PushAlarmModal />}
         {modalType === "fruitInfoModal" && <FruitInfoModal />}
         {modalType === "fruitModal" && <FruitModal />}
         {modalType === "searchDeleteModal" && <SearchDeleteModal />}
