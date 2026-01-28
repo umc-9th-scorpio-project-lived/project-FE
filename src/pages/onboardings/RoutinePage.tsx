@@ -3,15 +3,15 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ROUTINES = [
-  { id: "stretch", label: "3분 아침 스트레칭", emoji: "🧘" },
-  { id: "account", label: "가계부 작성", emoji: "💸" },
-  { id: "dish", label: "밥 먹고 바로 설거지 하기", emoji: "🍽️" },
-  { id: "breakfast", label: "간단한 아침 챙겨 먹기", emoji: "☕" },
-  { id: "bed", label: "일어나자마자 이불 정리", emoji: "🛏️" },
-  { id: "laundry", label: "옷 세탁하기", emoji: "🧺" },
-  { id: "desk", label: "책상 정리 하기", emoji: "🗂️" },
-  { id: "monthly-plan", label: "한 달 소비 계획하기", emoji: "🗓️" },
-  { id: "cook", label: "하루 한 끼 해먹기", emoji: "🍚" },
+  { id: "stretch", label: "3분 아침 스트레칭" },
+  { id: "account", label: "가계부 작성" },
+  { id: "dish", label: "밥 먹고 바로 설거지 하기" },
+  { id: "breakfast", label: "간단한 아침 챙겨 먹기" },
+  { id: "bed", label: "일어나자마자 이불 정리" },
+  { id: "laundry", label: "옷 세탁하기" },
+  { id: "desk", label: "책상 정리 하기" },
+  { id: "monthly-plan", label: "한 달 소비 계획하기" },
+  { id: "cook", label: "하루 한 끼 해먹기" },
 ] as const;
 
 const RoutinePage = () => {
@@ -78,7 +78,6 @@ const RoutinePage = () => {
                     flex items-center gap-3 cursor-pointer select-none transition
                     ${active ? "bg-primary-50 text-screen-0" : "bg-gray-50 text-gray-600"}`}
                 >
-                  <span className="typo-body_bold16">{r.emoji}</span>
                   <span className="typo-body_bold16">{r.label}</span>
                 </div>
               );
