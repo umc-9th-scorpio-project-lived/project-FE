@@ -86,7 +86,7 @@ const StatisticsPage = () => {
                   <span className="typo-body_reg14 text-gray-900">루틴 완료율</span>
                 </div>
 
-                <span className="typo-h1_bold24 text-4xl text-gray-900">60%</span>
+                <span className="typo-h1_bold24 text-[40px] text-gray-900">60%</span>
               </div>
 
               <div>
