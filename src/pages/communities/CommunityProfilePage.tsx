@@ -41,7 +41,7 @@ const CommunityProfilePage = () => {
   }, [communityName, editMode]);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen pt-10">
       {/*네브바*/}
       <div className="flex justify-between items-center text-gray-900 mx-4 my-2">
         <div className="flex gap-3">
@@ -52,7 +52,7 @@ const CommunityProfilePage = () => {
         </div>
       </div>
       {/*프로필창*/}
-      <div className="flex flex-col border-b border-gray-100 px-4 py-5 gap-[15px]">
+      <div className="flex flex-col border-b border-gray-100 px-4 py-5 gap-3.75">
         <div className="flex gap-2.5">
           <div
             className={`relative w-20 h-20 rounded-full bg-gray-50 bg-no-repeat bg-center bg-cover ${!image ? "bg-user" : ""}`}

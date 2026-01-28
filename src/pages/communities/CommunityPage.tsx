@@ -18,7 +18,7 @@ const CommunityPage = () => {
   };
 
   return (
-    <div className="flex flex-col pb-[100px] w-full min-h-screen">
+    <div className="flex flex-col pb-25 w-full min-h-screen pt-10">
       {/*네브바*/}
       <div className="flex justify-between items-center px-4">
         <div className="my-2 typo-h2_bold20 text-gray-900">커뮤니티</div>

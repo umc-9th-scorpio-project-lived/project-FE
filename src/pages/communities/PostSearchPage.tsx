@@ -12,7 +12,7 @@ const PostSearchPage = () => {
 
   return (
     <>
-      <div className="border-b-[0.5px] border-gray-400">
+      <div className="border-b-[0.5px] border-gray-400 pt-10">
         {/*네브바*/}
         <div className="flex items-center mx-4 my-3.5 gap-5">
           <div className="flex w-8/9 gap-1.5">
