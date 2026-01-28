@@ -40,11 +40,11 @@ const FriendTreePage = () => {
           onClick={() => {
             /* 친구 삭제 로직 */
           }}
-          className={`absolute right-4 -bottom-12 rounded-sm border-[0.5px] border-gray-300 bg-screen-0 px-4 py-2 typo-body_reg12 text-gray-900 ${
+          className={`absolute right-4 -bottom-10 rounded-sm border-[0.5px] border-gray-300 bg-screen-0 px-4 py-2 flex justify-center items-center ${
             isDeleteModalOpen ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}
         >
-          친구 삭제하기
+          <span className="typo-body_reg12 text-gray-900">친구 삭제하기</span>
         </button>
       </div>
 
@@ -61,18 +61,18 @@ const FriendTreePage = () => {
       </div>
 
       {/* 열매 개수 계산 로직 필요 */}
-      <div className="pt-4 pb-15.5 px-4 flex items-center gap-7.5">
-        <div className="flex items-center gap-1.5">
+      <div className="pt-4 pb-15.5 px-4 flex items-center gap-5">
+        <div className="flex items-center gap-2">
           <GoldenFruitIcon className="w-12.5" />
           <span className="typo-body_bold14 text-gray-900">8개</span>
         </div>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-2">
           <NormalFruitIcon className="w-12.5" />
           <span className="typo-body_bold14 text-gray-900">8개</span>
         </div>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-2">
           <GrowingFruitIcon className="w-12.5" />
           <span className="typo-body_bold14 text-gray-900">4개</span>
         </div>
