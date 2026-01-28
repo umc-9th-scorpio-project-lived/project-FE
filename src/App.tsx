@@ -18,12 +18,15 @@ import InfoPage from "./pages/users/InfoPage";
 import AccountPage from "./pages/users/AccountPage";
 import NotificationsPage from "./pages/users/NotificationsPage";
 import BlockedPage from "./pages/users/BlockedPage";
+import CallbackPage from "./pages/commons/CallbackPage";
 
 function App() {
   return (
     <BrowserRouter>
       <ModalPage />
       <Routes>
+        <Route path="/signup/callback" element={<CallbackPage />} />
+
         <Route element={<SubLayout />}>
           <Route path="/" element={<LoginPage />} />
           <Route path="/lived/community/:postId" element={<PostDetailPage />} />

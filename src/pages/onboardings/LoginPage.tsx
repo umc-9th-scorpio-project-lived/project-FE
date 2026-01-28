@@ -1,10 +1,8 @@
 import GoogleGIcon from "@/icons/GoogleIcon";
 import KakaoIcon from "@/icons/KakaoIcon";
-import { useNavigate } from "react-router-dom";
+import { redirectToSocialLogin } from "@/services/logins/socialLogin";
 
 const LoginPage = () => {
-  const navigate = useNavigate();
-
   return (
     <main className="min-h-dvh">
       <section className="mx-auto flex min-h-dvh w-full max-w-[500px] flex-col items-center">
@@ -21,7 +19,7 @@ const LoginPage = () => {
           {/* Kakao Login Button */}
           <button
             type="button"
-            onClick={() => navigate("/onboardings/basic-info")}
+            onClick={() => redirectToSocialLogin("kakao")}
             className="
               flex items-center justify-center w-[290px] h-[58px] gap-[8px] rounded-full bg-[#FFEE50] py-[24px]"
           >
@@ -35,6 +33,7 @@ const LoginPage = () => {
           <button
             type="button"
             className="flex items-center justify-center w-[290px] h-[58px] gap-2 rounded-full bg-screen-0 border-[0.5px] border-gray-900"
+            onClick={() => redirectToSocialLogin("google")}
           >
             <GoogleGIcon className="size-6" />
             <span className="typo-body_reg14 font-semibold text-gray-400 whitespace-nowrap">
