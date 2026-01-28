@@ -18,6 +18,7 @@ import SetStatisticsMonthModal from "@/components/modals/trees/SetStatisticsMont
 import { useEffect } from "react";
 import SetStatisticsWeekModal from "@/components/modals/trees/SetStatisticsWeekModal";
 import SetTrackerMonthModal from "@/components/modals/trees/SetTrackerMonthModal";
+import SetBirthModal from "@/components/modals/onboardings/setBirthModal";
 
 const ModalPage = () => {
   const { isModalOpen, modalType, modalProps } = useBaseModal();
@@ -60,6 +61,7 @@ const ModalPage = () => {
           <SetStatisticsWeekModal {...(modalProps ?? {})} />
         )}
         {modalType === "setTrackerMonthModal" && <SetTrackerMonthModal {...(modalProps ?? {})} />}
+        {modalType === "setBirthModal" && <SetBirthModal {...(modalProps ?? {})} />}
       </ModalBackground>
     </>
   );
