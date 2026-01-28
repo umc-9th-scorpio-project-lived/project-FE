@@ -1,6 +1,6 @@
 import GoogleGIcon from "@/icons/GoogleIcon";
 import KakaoIcon from "@/icons/KakaoIcon";
-import { redirectToSocialLogin } from "@/services/logins/socialLogin";
+import { redirectToSocialLogin } from "@/services/auths/socialLogin";
 
 const LoginPage = () => {
   return (
