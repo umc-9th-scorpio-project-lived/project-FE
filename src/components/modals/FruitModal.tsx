@@ -1,4 +1,4 @@
-import CloseIcon from "@/icons/CloseIcon";
+import MiniCloseIcon from "@/icons/MiniCloseIcon";
 import RightChevronIcon from "@/icons/RightChevronIcon";
 import useBaseModal from "@/stores/modals/baseModal";
 import { useNavigate } from "react-router-dom";
@@ -11,8 +11,8 @@ const FruitModal = () => {
 
   return (
     <div className="bg-screen-0 rounded-2xl pt-6.5 px-4 pb-7 flex flex-col gap-5.5 relative">
-      <button onClick={closeModal} className="absolute top-2.5 right-2.5 cursor-pointer">
-        <CloseIcon className="w-2.5 h-2.5 text-gray-900" />
+      <button onClick={closeModal} className="absolute top-3 right-3 cursor-pointer">
+        <MiniCloseIcon className="w-2.5 h-2.5 text-gray-900" />
       </button>
 
       <span className="typo-body_bold18 text-gray-900">정해진 시간에 일어나기</span>
