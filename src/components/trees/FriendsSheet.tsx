@@ -96,7 +96,7 @@ const FriendsSheet = () => {
               onClick={() => {
                 /* 검색 로직 */
               }}
-              className="absolute top-2.5 right-3"
+              className="absolute top-1/4 right-3"
             >
               <SearchIcon className="w-6 h-6 text-gray-600" />
             </button>
