@@ -30,7 +30,7 @@ const TreeArchivePage = () => {
             </div>
           </div>
 
-          <div className="flex justify-between items-center gap-3">
+          <div className="flex w-full justify-between items-center px-0.5">
             <div className="flex items-center gap-1">
               <MiniGoldenFruitIcon className="h-7" />
               <div className="typo-body_reg12 text-gray-900">8개</div>
@@ -58,7 +58,7 @@ const TreeArchivePage = () => {
             </div>
           </div>
 
-          <div className="flex justify-between items-center gap-3">
+          <div className="flex w-full justify-between items-center px-0.5">
             <div className="flex items-center gap-1">
               <MiniGoldenFruitIcon className="h-7" />
               <div className="typo-body_reg12 text-gray-900">8개</div>
@@ -86,7 +86,7 @@ const TreeArchivePage = () => {
             </div>
           </div>
 
-          <div className="flex justify-between items-center gap-3">
+          <div className="flex w-full justify-between items-center px-0.5">
             <div className="flex items-center gap-1">
               <MiniGoldenFruitIcon className="h-7" />
               <div className="typo-body_reg12 text-gray-900">8개</div>
@@ -114,7 +114,7 @@ const TreeArchivePage = () => {
             </div>
           </div>
 
-          <div className="flex justify-between items-center gap-3">
+          <div className="flex w-full justify-between items-center px-0.5">
             <div className="flex items-center gap-1">
               <MiniGoldenFruitIcon className="h-7" />
               <div className="typo-body_reg12 text-gray-900">8개</div>
@@ -142,7 +142,7 @@ const TreeArchivePage = () => {
             </div>
           </div>
 
-          <div className="flex justify-between items-center gap-3">
+          <div className="flex w-full justify-between items-center px-0.5">
             <div className="flex items-center gap-1">
               <MiniGoldenFruitIcon className="h-7" />
               <div className="typo-body_reg12 text-gray-900">8개</div>
