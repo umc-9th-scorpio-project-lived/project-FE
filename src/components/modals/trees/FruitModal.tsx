@@ -10,7 +10,7 @@ const FruitModal = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="bg-screen-0 rounded-2xl pt-6.5 px-4 pb-7 flex flex-col gap-5.5 relative">
+    <div className="w-full bg-screen-0 rounded-2xl pt-6.5 px-4 pb-7 flex flex-col gap-5.5 relative">
       <button onClick={closeModal} className="absolute top-3 right-3 cursor-pointer">
         <MiniCloseIcon className="w-2.5 h-2.5 text-gray-900" />
       </button>

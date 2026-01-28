@@ -40,7 +40,7 @@ const PostDetailPage = () => {
   };
 
   return (
-    <div className="flex flex-col w-full min-h-screen pt-2 pb-[100px]">
+    <div className="flex flex-col w-full min-h-screen pt-10 pb-25">
       {/*네브바*/}
       <div className="flex px-4 justify-between">
         <NavLink to="/lived/community" className="w-6 h-6 flex items-center justify-center">

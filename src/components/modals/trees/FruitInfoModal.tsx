@@ -8,7 +8,7 @@ const FruitInfoModal = () => {
   const { closeModal } = useBaseModal();
 
   return (
-    <div className="bg-gray-50 rounded-2xl py-5 px-7 flex justify-between items-center relative">
+    <div className="w-full bg-gray-50 rounded-2xl py-5 px-7 flex justify-between items-center relative">
       <button onClick={closeModal} className="absolute top-3 right-3 cursor-pointer">
         <MiniCloseIcon className="w-2.5 h-2.5 text-gray-900" />
       </button>

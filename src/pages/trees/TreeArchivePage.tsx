@@ -10,7 +10,7 @@ const TreeArchivePage = () => {
 
   return (
     <div className="w-full flex flex-col items-center gap-5 overflow-y-auto">
-      <div className="pt-13 px-4 w-full flex items-center gap-7">
+      <div className="pt-10 px-4 w-full flex items-center gap-7">
         <button onClick={() => navigate("/lived/tree")} className="cursor-pointer">
           <LeftChevronIcon className="w-7 h-7 text-gray-900" />
         </button>

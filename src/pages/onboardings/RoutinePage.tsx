@@ -28,13 +28,13 @@ const RoutinePage = () => {
 
   return (
     <main className="h-dvh bg-white font-suite overflow-hidden">
-      <section className="mx-auto flex h-dvh w-full  flex-col px-4 overflow-hidden">
+      <section className="mx-auto flex h-dvh w-full flex-col px-4 overflow-hidden">
         {/* 상단 */}
-        <div className="h-11 w-full py-[5px] pt-6">
+        <div className="h-11 w-full py-1.25 pt-6">
           <button
             type="button"
             onClick={() => navigate("/onboardings/concern")}
-            className="h-[34px] w-[34px] text-gray-900"
+            className="h-8.5 w-8.5 text-gray-900"
             aria-label="뒤로가기"
           >
             <LeftChevronIcon className="size-6" />
@@ -44,9 +44,9 @@ const RoutinePage = () => {
         {/* 진행바 */}
         <div className="flex flex-col gap-8 pt-10">
           <div className="flex items-center gap-2">
-            <span className="h-[6px] w-[6px] rounded-full bg-primary-30" />
-            <span className="h-[6px] w-[6px] rounded-full bg-primary-30" />
-            <span className="h-[6px] w-[32px] rounded-full bg-primary-50" />
+            <span className="h-1.5 w-1.5 rounded-full bg-primary-30" />
+            <span className="h-1.5 w-1.5 rounded-full bg-primary-30" />
+            <span className="h-1.5 w-8 rounded-full bg-primary-50" />
           </div>
         </div>
 
@@ -59,7 +59,7 @@ const RoutinePage = () => {
         </div>
 
         <div className="min-h-0 flex-1 overflow-y-auto">
-          <div className="flex flex-col gap-4 pb-6 px-4 w-full">
+          <div className="flex flex-col gap-4 pb-6 w-full">
             {ROUTINES.map((r) => {
               const active = selected.includes(r.id);
 
@@ -76,7 +76,7 @@ const RoutinePage = () => {
                       toggleRoutine(r.id);
                     }
                   }}
-                  className={`h-[50px] w-full rounded-[8px] px-4
+                  className={`h-12.5 w-full rounded-lg px-4
                     flex items-center gap-3 cursor-pointer select-none transition
                     ${active ? "bg-primary-50 text-screen-0" : "bg-gray-50 text-gray-600"}`}
                 >
@@ -88,7 +88,7 @@ const RoutinePage = () => {
         </div>
 
         {/* 하단 (고정) */}
-        <div className="pb-8 flex flex-col gap-2">
+        <div className="pb-8 pt-2 flex flex-col gap-2">
           <div
             role="button"
             tabIndex={0}
@@ -123,7 +123,7 @@ const RoutinePage = () => {
                   navigate("/onboardings/push-guide");
                 }
               }}
-              className={`h-[50px] w-full rounded-full
+              className={`h-12.5 w-full rounded-full
                 flex items-center justify-center typo-body_bold18 transition
       ${
         isStartEnabled

@@ -136,4 +136,8 @@ body::-webkit-scrollbar {
   --color-gray-200: #c9cdd1;
   --color-gray-100: #e9ecef;
   --color-gray-50: #f2f4f6;
+
+  --shadow-footer-shadow: 0px -4px 10px rgba(183, 183, 183, 0.1);
+  --shadow-soft: 0px 4px 10px rgba(183, 183, 183, 0.1);
+  --shadow-mini: 0px 0px 10px rgba(85, 85, 85, 0.1);
 }

@@ -4,10 +4,13 @@ import CheckCircleIcon from "@/icons/CheckCircleIcon";
 import DownChevronIcon from "@/icons/DownChevronIcon";
 import LeftChevronIcon from "@/icons/LeftChevronIcon";
 import { useNavigate } from "react-router-dom";
+import useBaseModal from "@/stores/modals/baseModal";
 
 const StatisticsPage = () => {
   const navigate = useNavigate();
   const [isWeekly, setIsWeekly] = useState(true);
+
+  const { openModal } = useBaseModal();
 
   // 해당 월의 첫 번째 날의 요일과 마지막 날짜 계산
   const [year, setYear] = useState(2025);
@@ -18,6 +21,17 @@ const StatisticsPage = () => {
   // 임시로 루틴을 완료한 날짜를 기록할 배열
   const [completedDays, setCompletedDays] = useState([10]);
 
+  //
+  const [weeklyPeriod, setWeeklyPeriod] = useState<{ month: number; week: number }>({
+    month: 10,
+    week: 2,
+  });
+
+  const [monthlyPeriod, setMonthlyPeriod] = useState<{ year: number; month: number }>({
+    year: 2025,
+    month: 10,
+  });
+
   // 달력 칸 생성을 위한 배열 (빈 칸 + 날짜)
   const calendarDays = [
     ...Array(firstDayOfMonth).fill(null),
@@ -26,7 +40,7 @@ const StatisticsPage = () => {
 
   return (
     <div className="bg-primary-50 h-dvh flex flex-col gap-4 overflow-y-auto overflow-x-hidden">
-      <div className="pt-15.5 flex justify-center items-center relative">
+      <div className="pt-10 flex justify-center items-center relative">
         <button onClick={() => navigate("/lived/tree")} className="absolute left-4 cursor-pointer">
           <LeftChevronIcon className="w-7 h-7 text-screen-0" />
         </button>
@@ -55,21 +69,41 @@ const StatisticsPage = () => {
         {isWeekly ? (
           <button
             onClick={() => {
-              /* 날짜 수정 로직 */
+              openModal("setStatisticsMonthModal", {
+                position: "bottom",
+                props: {
+                  initialValue: weeklyPeriod,
+                  onApply: (value: { month: number; week: number }) => {
+                    setWeeklyPeriod(value);
+                  },
+                },
+              });
             }}
             className="border border-primary-50 rounded-2xl px-2.5 py-1.5 flex items-center gap-1"
           >
-            <span className="typo-body_reg12 text-gray-900">10월 2주차</span>
+            <span className="typo-body_reg12 text-gray-900">
+              {weeklyPeriod.month}월 {weeklyPeriod.week}주차
+            </span>
             <DownChevronIcon className="w-4 h-4 text-primary-50" />
           </button>
         ) : (
           <button
             onClick={() => {
-              /* 날짜 수정 로직 */
+              openModal("setStatisticsWeekModal", {
+                position: "bottom",
+                props: {
+                  initialValue: monthlyPeriod,
+                  onApply: (value: { year: number; month: number }) => {
+                    setMonthlyPeriod(value);
+                  },
+                },
+              });
             }}
             className="border border-primary-50 rounded-2xl px-2.5 py-1.5 flex items-center gap-1"
           >
-            <span className="typo-body_reg12 text-gray-900">2025년 10월</span>
+            <span className="typo-body_reg12 text-gray-900">
+              {monthlyPeriod.year}년 {monthlyPeriod.month}월
+            </span>
             <DownChevronIcon className="w-4 h-4 text-primary-50" />
           </button>
         )}

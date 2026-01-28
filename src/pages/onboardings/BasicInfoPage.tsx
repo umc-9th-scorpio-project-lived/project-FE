@@ -42,18 +42,35 @@ const BasicInfoPage = () => {
   // 임시 처리:
   // 캘린더 클릭 시 항상 고정된 생년월일을 입력
   const setTempBirth = () => {
-    setBirth("20001110");
+    openModal("setBirthModal", {
+      position: "center",
+      props: {
+        initialValue: birth
+          ? {
+              year: Number(birth.slice(0, 4)),
+              month: Number(birth.slice(4, 6)),
+              date: Number(birth.slice(6, 8)),
+            }
+          : undefined,
+        onApply: ({ year, month, date }: { year: number; month: number; date: number }) => {
+          const y = String(year);
+          const m = String(month).padStart(2, "0");
+          const d = String(date).padStart(2, "0");
+          setBirth(`${y}${m}${d}`);
+        },
+      },
+    });
   };
 
   return (
     <main className="min-h-dvh font-suite">
-      <section className="mx-auto flex min-h-dvh w-full max-w-[500px] flex-col px-4">
+      <section className="mx-auto flex min-h-dvh w-full max-w-125 flex-col px-4">
         {/* 상단 뒤로가기 */}
-        <div className="h-11 w-full py-[5px] pt-6">
+        <div className="h-11 w-full py-1.25 pt-6">
           <button
             type="button"
             onClick={() => navigate("/")}
-            className="h-[34px] w-[34px] text-gray-900"
+            className="h-8.5 w-8.5 text-gray-900"
             aria-label="뒤로가기"
           >
             <LeftChevronIcon className="size-6" />
@@ -63,9 +80,9 @@ const BasicInfoPage = () => {
         {/* 진행바 */}
         <div className="flex flex-col gap-8 pt-10">
           <div className="flex items-center gap-2">
-            <span className="h-[6px] w-[32px] rounded-full bg-primary-50" />
-            <span className="h-[6px] w-[6px] rounded-full bg-primary-30" />
-            <span className="h-[6px] w-[6px] rounded-full bg-primary-30" />
+            <span className="h-1.5 w-8 rounded-full bg-primary-50" />
+            <span className="h-1.5 w-1.5 rounded-full bg-primary-30" />
+            <span className="h-1.5 w-1.5 rounded-full bg-primary-30" />
           </div>
         </div>
 
@@ -83,7 +100,7 @@ const BasicInfoPage = () => {
           <button
             type="button"
             onClick={() => openModal("livingYearModal", { position: "bottom" })}
-            className="flex h-[60px] w-full items-center justify-between rounded-[8px] bg-gray-50 px-5"
+            className="flex h-15 w-full items-center justify-between rounded-lg bg-gray-50 px-5"
           >
             <span
               className={
@@ -100,7 +117,7 @@ const BasicInfoPage = () => {
         <div className="flex flex-col gap-3 pt-10">
           <div className="typo-body_reg14 text-gray-900">성별</div>
 
-          <div className="grid w-full grid-cols-3 gap-[8px]">
+          <div className="grid w-full grid-cols-3 gap-2">
             {(["남성", "여성", "기타"] as const).map((g) => {
               const active = gender === g;
 
@@ -116,7 +133,7 @@ const BasicInfoPage = () => {
                       setGender(g);
                     }
                   }}
-                  className={`h-[56px] w-full rounded-[8px] flex items-center justify-center
+                  className={`h-14 w-full rounded-lg flex items-center justify-center
                     ${active ? "typo-body_bold16 bg-primary-50 text-screen-0" : "typo-body_reg16 bg-primary-20 text-gray-500"}`}
                 >
                   {g}
@@ -144,7 +161,7 @@ const BasicInfoPage = () => {
                   setTempBirth();
                 }
               }}
-              className={`h-[60px] w-full rounded-[8px] bg-gray-50 px-5 pr-12
+              className={`h-15 w-full rounded-lg bg-gray-50 px-5 pr-12
                 flex items-center cursor-pointer
                 ${birth ? "typo-body_bold16 text-gray-900" : "typo-body_reg16 text-gray-900"}`}
             >
@@ -156,7 +173,6 @@ const BasicInfoPage = () => {
               type="button"
               onClick={() => {
                 setTempBirth(); // 임시 값 세팅
-                openModal("birthPicker", { position: "bottom" }); // 추후 실제 피커 연결
               }}
               className="absolute right-4 top-1/2 -translate-y-1/2 rounded-md p-2"
               aria-label="생년월일 선택"
@@ -185,7 +201,7 @@ const BasicInfoPage = () => {
                 navigate("/onboardings/concern");
               }
             }}
-            className={`h-[50px] w-full rounded-full flex items-center justify-center typo-body_bold18
+            className={`h-12.5 w-full rounded-full flex items-center justify-center typo-body_bold18
               ${isNextEnabled ? "bg-primary-50 text-screen-0" : "bg-gray-100 text-gray-400 pointer-events-none"}`}
           >
             다음

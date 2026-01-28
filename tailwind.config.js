@@ -10,8 +10,8 @@ export default {
           50: "#9FD416",
           40: "#A9E119",
           30: "#D1F27D",
-          20: "#E3FBA6",
-          10: "#F1FFCE",
+          20: "#E8F6C2",
+          10: "#F2F9DF",
         },
         gray: {
           900: "#1A1E22",
@@ -52,10 +52,6 @@ export default {
       borderColor: (theme) => ({
         ...theme("colors"),
       }),
-      boxShadow: {
-        "footer-shadow": "0px -4px 10px rgba(183, 183, 183, 0.1)",
-        soft: "0px 4px 10px rgba(183, 183, 183, 0.1)",
-      },
       backgroundImage: {
         // 아이콘
         home: "url('/icons/home.svg')",

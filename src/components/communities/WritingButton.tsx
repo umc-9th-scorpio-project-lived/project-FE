@@ -1,4 +1,4 @@
-import WriteIcon from "@/icons/WirteIcon";
+import WriteIcon from "@/icons/WriteIcon";
 
 const WritingButton = () => {
   return (

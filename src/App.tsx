@@ -7,9 +7,10 @@ import UserPage from "./pages/users/UserPage";
 import ModalPage from "./pages/commons/ModalPage";
 import SubLayout from "./layouts/SubLayout";
 import LoginPage from "./pages/onboardings/LoginPage";
+import AlarmPage from "./pages/alarms/AlarmPage";
+import RecommendPage from "./pages/homes/RecommendPage";
 import BasicInfoPage from "./pages/onboardings/BasicInfoPage";
 import ConcernPage from "./pages/onboardings/ConcernPage";
-import RoutinePage from "./pages/onboardings/RoutinePage";
 import PushGuidePage from "./pages/onboardings/PushGuidePage";
 import RoutineTrackerPage from "./pages/trees/RoutineTrackerPage";
 import FriendTreePage from "./pages/trees/FriendTreePage";
@@ -26,6 +27,8 @@ import InfoPage from "./pages/users/InfoPage";
 import AccountPage from "./pages/users/AccountPage";
 import NotificationsPage from "./pages/users/NotificationsPage";
 import BlockedPage from "./pages/users/BlockedPage";
+import HomeRoutinePage from "./pages/homes/HomeRoutinePage";
+import RoutinePage from "./pages/onboardings/RoutinePage";
 
 function App() {
   return (
@@ -36,6 +39,14 @@ function App() {
           {/* 로그인 */}
           <Route path="/" element={<LoginPage />} />
 
+          {/* 루틴 생성/수정 페이지 */}
+          <Route path="/lived/create" element={<HomeRoutinePage mode="create" />} />
+          {/* 추후 루틴 아이디 별로 관리 */}
+          <Route path="/lived/edit" element={<HomeRoutinePage mode="edit" />} />
+          {/* 알림 페이지 */}
+          <Route path="/lived/alarm" element={<AlarmPage />} />
+          {/* 루틴 추천 페이지 */}
+          <Route path="/lived/recommend" element={<RecommendPage />} />
           {/* 온보딩 기본 정보 */}
           <Route path="/onboardings/basic-info" element={<BasicInfoPage />} />
 

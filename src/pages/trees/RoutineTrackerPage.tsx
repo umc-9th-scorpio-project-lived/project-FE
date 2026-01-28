@@ -3,14 +3,19 @@ import LeftChevronIcon from "@/icons/LeftChevronIcon";
 import MiniGoldenFruitIcon from "@/icons/MiniGoldenFruitIcon";
 import MiniGrowingFruitIcon from "@/icons/MiniGrowingFruitIcon";
 import MiniNormalFruitIcon from "@/icons/MiniNormalFruitIcon";
+import useBaseModal from "@/stores/modals/baseModal";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const RoutineTrackerPage = () => {
   const navigate = useNavigate();
+  const { openModal } = useBaseModal();
+
+  const [period, setPeriod] = useState({ year: 2025, month: 10 });
 
   return (
     <div className="bg-gray-50 w-full h-dvh overflow-y-auto flex flex-col items-center gap-6">
-      <div className="w-full bg-primary-50 rounded-b-2xl pt-15.5 pb-5">
+      <div className="w-full bg-primary-50 rounded-b-2xl pt-10 pb-5">
         <div className="px-4 py-2 flex justify-center items-center gap-7 relative">
           <button
             onClick={() => navigate("/lived/tree")}
@@ -28,10 +33,21 @@ const RoutineTrackerPage = () => {
           <button
             onClick={() => {
               /* 날짜 수정 로직 */
+              openModal("setTrackerMonthModal", {
+                position: "bottom",
+                props: {
+                  initialValue: period,
+                  onApply: (value: { year: number; month: number }) => {
+                    setPeriod(value);
+                  },
+                },
+              });
             }}
             className="border border-primary-50 rounded-2xl bg-screen-0 px-2.5 py-1.5 flex items-center gap-1"
           >
-            <span className="typo-body_reg12 text-gray-900">2025년 10월</span>
+            <span className="typo-body_reg12 text-gray-900">
+              {period.year}년 {period.month}월
+            </span>
             <DownChevronIcon className="w-4 h-4 text-primary-50" />
           </button>
 

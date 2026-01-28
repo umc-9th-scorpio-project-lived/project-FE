@@ -1,23 +1,14 @@
-import useBaseModal from "@/stores/modals/baseModal";
+import HomeHeader from "@/components/homes/HomeHeader";
+import HomeContent from "@/components/homes/HomeContent";
+import HomeFloatingButton from "@/components/homes/HomeFloatingButton";
 
 const HomePage = () => {
-  const { openModal } = useBaseModal();
   return (
-    <div className="w-full h-full flex justify-center items-center">
-      <div className="flex gap-2">
-        <button
-          onClick={() => openModal("centerModal", { position: "center" })}
-          className="px-4 py-2 bg-primary-900 text-white rounded"
-        >
-          중앙 모달
-        </button>
-
-        <button
-          onClick={() => openModal("bottomModal", { position: "bottom" })}
-          className="px-4 py-2 bg-sub-900 text-white rounded"
-        >
-          하단 모달
-        </button>
+    <div className="relative w-full h-full overflow-y-hidden">
+      <HomeHeader />
+      <HomeContent />
+      <div className="absolute bottom-4 right-4">
+        <HomeFloatingButton />
       </div>
     </div>
   );
