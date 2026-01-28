@@ -1,4 +1,4 @@
-type ModalType = "livingYearModal" | "centerModal" | "bottomModal" | "pushAlarmModal";
+type ModalType = "livingYearModal" | "centerModal" | "bottomModal" | "pushAlarmModal" | string;
 
 type ModalPosition = "center" | "bottom";
 
@@ -10,7 +10,7 @@ interface ModalOptions {
 
 export interface BaseModal {
   isModalOpen: boolean;
-  modalType: ModalType | "";
+  modalType: ModalType | string;
   options: {
     position: ModalPosition;
     onConfirm?: () => void;
