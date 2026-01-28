@@ -3,18 +3,16 @@ import SelectDateModal from "@/components/modals/homes/SelectDateModal";
 import SelectIconModal from "@/components/modals/homes/SelectIconModal";
 import SetAlarmModal from "@/components/modals/homes/SetAlarmModal";
 import SetRepeatCycleModal from "@/components/modals/homes/SetRepeatCycleModal";
-import BottomTestModal from "@/components/modals/BottomTestModal";
-import CenterTestModal from "@/components/modals/CenterTestModal";
-import FruitInfoModal from "@/components/modals/FruitInfoModal";
-import FruitModal from "@/components/modals/FruitModal";
-import DeleteAccountModal from "@/components/modals/DeleteAccountModal";
-import LogoutModal from "@/components/modals/LogoutModal";
+import FruitInfoModal from "@/components/modals/trees/FruitInfoModal";
+import FruitModal from "@/components/modals/trees/FruitModal";
+import DeleteAccountModal from "@/components/modals/users/DeleteAccountModal";
+import LogoutModal from "@/components/modals/users/LogoutModal";
 import ModalBackground from "@/components/modals/ModalBackground";
-import PostDeleteModal from "@/components/modals/PostDeleteModal";
-import ReportPostModal from "@/components/modals/ReportPostModal";
-import SearchDeleteModal from "@/components/modals/SearchDeleteModal";
-import TreeVisibilityModal from "@/components/modals/TreeVisibilityModal";
-import UnblockModal from "@/components/modals/UnblockModal";
+import PostDeleteModal from "@/components/modals/communities/PostDeleteModal";
+import ReportPostModal from "@/components/modals/communities/ReportPostModal";
+import SearchDeleteModal from "@/components/modals/communities/SearchDeleteModal";
+import TreeVisibilityModal from "@/components/modals/users/TreeVisibilityModal";
+import UnblockModal from "@/components/modals/users/UnblockModal";
 import useBaseModal from "@/stores/modals/baseModal";
 import { useEffect } from "react";
 
@@ -38,8 +36,6 @@ const ModalPage = () => {
   return (
     <>
       <ModalBackground>
-        {modalType === "centerModal" && <CenterTestModal />}
-        {modalType === "bottomModal" && <BottomTestModal />}
         {modalType === "selectDateModal" && <SelectDateModal />}
         {modalType === "setRepeatCycleModal" && <SetRepeatCycleModal {...(modalProps ?? {})} />}
         {modalType === "setAlarmModal" && <SetAlarmModal {...(modalProps ?? {})} />}
