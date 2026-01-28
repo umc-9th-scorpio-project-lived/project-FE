@@ -28,9 +28,9 @@ const RoutinePage = () => {
 
   return (
     <main className="h-dvh bg-white font-suite overflow-hidden">
-      <section className="mx-auto flex h-dvh w-full flex-col px-4 overflow-hidden">
+      <section className="mx-auto flex h-dvh w-full flex-col px-4 overflow-hidden pt-10">
         {/* 상단 */}
-        <div className="h-11 w-full py-1.25 pt-6">
+        <div className="h-11 w-full py-1.25">
           <button
             type="button"
             onClick={() => navigate("/onboardings/concern")}
@@ -42,7 +42,7 @@ const RoutinePage = () => {
         </div>
 
         {/* 진행바 */}
-        <div className="flex flex-col gap-8 pt-10">
+        <div className="flex flex-col gap-7 pt-6">
           <div className="flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-primary-30" />
             <span className="h-1.5 w-1.5 rounded-full bg-primary-30" />
@@ -51,7 +51,7 @@ const RoutinePage = () => {
         </div>
 
         {/* 타이틀 */}
-        <div className="pt-8 pb-10">
+        <div className="pt-7 pb-10">
           <div className="typo-h2_bold20 text-gray-900">고민에 맞는 루틴을 준비했어요!</div>
           <div className="pt-1 typo-body_reg14 text-gray-900">
             앞서 선택하신 고민에 맞춰 제안해 드릴게요.

@@ -86,13 +86,13 @@ const PushGuidePage = () => {
 
   return (
     <main className="min-h-dvh font-suite">
-      <section className="relative mx-auto flex min-h-dvh w-full max-w-[500px] flex-col px-4">
+      <section className="relative mx-auto flex min-h-dvh w-full max-w-125 flex-col px-4 pt-10">
         {/* 상단 뒤로가기 */}
-        <div className="h-11 w-full py-[5px] pt-6">
+        <div className="h-11 w-full py-1.25">
           <button
             type="button"
             onClick={handleBack}
-            className="h-[34px] w-[34px] text-gray-900"
+            className="h-8.5 w-8.5 text-gray-900"
             aria-label="뒤로가기"
           >
             <LeftChevronIcon className="size-6" />
@@ -106,7 +106,7 @@ const PushGuidePage = () => {
             <img
               src={current.img}
               alt={`푸시 알림 가이드 ${step + 1}`}
-              className="h-[361px] w-[168px] object-contain"
+              className="h-90.25 w-42 object-contain"
               draggable={false}
             />
           </div>
@@ -114,17 +114,19 @@ const PushGuidePage = () => {
           {/* 텍스트 */}
           <div className="pt-9 text-center">
             <div className="typo-h2_bold20 text-gray-900">{current.title}</div>
-            <p className="pt-4 typo-body_reg18 text-gray-900 whitespace-pre-line">{current.desc}</p>
+            <p className="pt-4 pb-7.5 typo-body_reg18 text-gray-900 whitespace-pre-line">
+              {current.desc}
+            </p>
           </div>
         </div>
 
         {/* 점 인디케이터 */}
-        <div className="absolute left-1/2 top-[618px] -translate-x-1/2">
-          <div className="flex items-center justify-center gap-[12px]">
+        <div className="absolute left-1/2 top-160.5 -translate-x-1/2">
+          <div className="flex items-center justify-center gap-3">
             {STEPS.map((_, idx) => (
               <span
                 key={idx}
-                className={`h-[10px] w-[10px] rounded-full ${
+                className={`h-2.5 w-2.5 rounded-full ${
                   idx === step ? "bg-primary-50" : "bg-gray-200"
                 }`}
               />
@@ -146,7 +148,7 @@ const PushGuidePage = () => {
               if (!hasSwiped) return;
               handleKeyActivate(e, handleDone);
             }}
-            className={`h-[50px] w-full rounded-[32px]
+            className={`h-12.5 w-full rounded-4xl
               flex items-center justify-center typo-body_bold18
               ${
                 hasSwiped

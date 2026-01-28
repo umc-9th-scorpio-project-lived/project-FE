@@ -27,6 +27,7 @@ import InfoPage from "./pages/users/InfoPage";
 import AccountPage from "./pages/users/AccountPage";
 import NotificationsPage from "./pages/users/NotificationsPage";
 import BlockedPage from "./pages/users/BlockedPage";
+import CallbackPage from "./pages/commons/CallbackPage";
 import HomeRoutinePage from "./pages/homes/HomeRoutinePage";
 import RoutinePage from "./pages/onboardings/RoutinePage";
 
@@ -35,6 +36,8 @@ function App() {
     <BrowserRouter>
       <ModalPage />
       <Routes>
+        <Route path="/signup/callback" element={<CallbackPage />} />
+
         <Route element={<SubLayout />}>
           {/* 로그인 */}
           <Route path="/" element={<LoginPage />} />

@@ -64,9 +64,9 @@ const BasicInfoPage = () => {
 
   return (
     <main className="min-h-dvh font-suite">
-      <section className="mx-auto flex min-h-dvh w-full max-w-125 flex-col px-4">
+      <section className="flex min-h-dvh w-full max-w-125 flex-col px-4 pt-10">
         {/* 상단 뒤로가기 */}
-        <div className="h-11 w-full py-1.25 pt-6">
+        <div className="h-11 w-full py-1.25">
           <button
             type="button"
             onClick={() => navigate("/")}
@@ -78,7 +78,7 @@ const BasicInfoPage = () => {
         </div>
 
         {/* 진행바 */}
-        <div className="flex flex-col gap-8 pt-10">
+        <div className="flex flex-col gap-8 pt-6">
           <div className="flex items-center gap-2">
             <span className="h-1.5 w-8 rounded-full bg-primary-50" />
             <span className="h-1.5 w-1.5 rounded-full bg-primary-30" />
@@ -87,7 +87,7 @@ const BasicInfoPage = () => {
         </div>
 
         {/* 타이틀 */}
-        <div className="flex flex-col gap-3 pt-10">
+        <div className="flex flex-col gap-3 pt-7">
           <div className="typo-h2_bold20 text-gray-900">
             반가워요! <br /> 당신의 이야기를 들려주세요.
           </div>
