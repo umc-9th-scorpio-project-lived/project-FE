@@ -44,13 +44,13 @@ const ConcernPage = () => {
 
   return (
     <main className="min-h-dvh font-suite">
-      <section className="mx-auto flex min-h-dvh w-full max-w-[500px] flex-col px-4">
+      <section className="mx-auto flex min-h-dvh w-full max-w-125 flex-col px-4 pt-10">
         {/* 상단 뒤로가기 */}
-        <div className="h-11 w-full py-[5px] pt-6">
+        <div className="h-11 w-full py-1.25">
           <button
             type="button"
             onClick={() => navigate("/onboardings/basic-info")}
-            className="h-[34px] w-[34px] text-gray-900"
+            className="h-8.5 w-8.5 text-gray-900"
             aria-label="뒤로가기"
           >
             <LeftChevronIcon className="size-6" />
@@ -58,11 +58,11 @@ const ConcernPage = () => {
         </div>
 
         {/* 진행바 */}
-        <div className="flex flex-col gap-8 pt-10">
+        <div className="flex flex-col gap-7 pt-6">
           <div className="flex items-center gap-2">
-            <span className="h-[6px] w-[6px] rounded-full bg-primary-30" />
-            <span className="h-[6px] w-[32px] rounded-full bg-primary-50" />
-            <span className="h-[6px] w-[6px] rounded-full bg-primary-30" />
+            <span className="h-1.5 w-1.5 rounded-full bg-primary-30" />
+            <span className="h-1.5 w-8 rounded-full bg-primary-50" />
+            <span className="h-1.5 w-1.5 rounded-full bg-primary-30" />
           </div>
 
           {/* 타이틀 */}
@@ -85,7 +85,7 @@ const ConcernPage = () => {
                 key={chip}
                 type="button"
                 onClick={() => toggleChip(chip)}
-                className={`h-11.5 rounded-[8px] px-4 typo-body_reg16 transition
+                className={`h-11.5 rounded-lg px-4 typo-body_reg16 transition
           ${isActive ? "bg-primary-50 text-screen-0" : "bg-gray-50 text-gray-600"}
         `}
               >
@@ -115,7 +115,7 @@ const ConcernPage = () => {
                 handleNext();
               }
             }}
-            className={`h-[50px] w-full rounded-full
+            className={`h-12.5 w-full rounded-full
               flex items-center justify-center typo-body_bold18
               ${
                 isButtonEnabled
