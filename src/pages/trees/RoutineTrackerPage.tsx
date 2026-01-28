@@ -1,4 +1,4 @@
-import CalendarIcon from "@/icons/CalendarIcon";
+import DownChevronIcon from "@/icons/DownChevronIcon";
 import LeftChevronIcon from "@/icons/LeftChevronIcon";
 import MiniGoldenFruitIcon from "@/icons/MiniGoldenFruitIcon";
 import MiniGrowingFruitIcon from "@/icons/MiniGrowingFruitIcon";
@@ -25,11 +25,15 @@ const RoutineTrackerPage = () => {
 
       <div className="w-full px-4 pb-6 flex flex-col gap-6">
         <div className="w-full flex justify-between items-center">
-          <div className="flex items-center gap-1">
-            {/* 날짜 선택 모달 디자인 미완 */}
-            <CalendarIcon className="w-6 h-6" />
-            <span className="typo-body_reg16 text-gray-900">2025년 12월</span>
-          </div>
+          <button
+            onClick={() => {
+              /* 날짜 수정 로직 */
+            }}
+            className="border border-primary-50 rounded-2xl bg-screen-0 px-2.5 py-1.5 flex items-center gap-1"
+          >
+            <span className="typo-body_reg12 text-gray-900">2025년 10월</span>
+            <DownChevronIcon className="w-4 h-4 text-primary-50" />
+          </button>
 
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-1">
