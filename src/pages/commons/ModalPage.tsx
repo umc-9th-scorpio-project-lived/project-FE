@@ -1,5 +1,7 @@
 import BottomTestModal from "@/components/modals/BottomTestModal";
 import CenterTestModal from "@/components/modals/CenterTestModal";
+import FruitInfoModal from "@/components/modals/FruitInfoModal";
+import FruitModal from "@/components/modals/FruitModal";
 import DeleteAccountModal from "@/components/modals/DeleteAccountModal";
 import LogoutModal from "@/components/modals/LogoutModal";
 import ModalBackground from "@/components/modals/ModalBackground";
@@ -33,6 +35,8 @@ const ModalPage = () => {
       <ModalBackground>
         {modalType === "centerModal" && <CenterTestModal />}
         {modalType === "bottomModal" && <BottomTestModal />}
+        {modalType === "fruitInfoModal" && <FruitInfoModal />}
+        {modalType === "fruitModal" && <FruitModal />}
         {modalType === "searchDeleteModal" && <SearchDeleteModal />}
         {modalType === "reportPostModal" && <ReportPostModal />}
         {modalType === "postDeleteModal" && <PostDeleteModal />}

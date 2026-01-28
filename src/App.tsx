@@ -7,6 +7,10 @@ import UserPage from "./pages/users/UserPage";
 import ModalPage from "./pages/commons/ModalPage";
 import SubLayout from "./layouts/SubLayout";
 import LoginPage from "./pages/onboardings/LoginPage";
+import RoutineTrackerPage from "./pages/trees/RoutineTrackerPage";
+import FriendTreePage from "./pages/trees/FriendTreePage";
+import StatisticsPage from "./pages/trees/StatisticsPage";
+import TreeArchivePage from "./pages/trees/TreeArchivePage";
 import PostWritingPage from "./pages/communities/PostWritingPage";
 import CommunityProfilePage from "./pages/communities/CommunityProfilePage";
 import PostSearchPage from "./pages/communities/PostSearchPage";
@@ -46,6 +50,12 @@ function App() {
           <Route path="my" element={<UserPage />} />
         </Route>
 
+        {/* 루틴나무 페이지의 상세페이지 */}
+        <Route path="/lived/tree" element={<SubLayout />}>
+          <Route path="tracker" element={<RoutineTrackerPage />} />
+          <Route path="friend" element={<FriendTreePage />} />
+          <Route path="statistics" element={<StatisticsPage />} />
+          <Route path="archive" element={<TreeArchivePage />} />
         {/* 마이페이지의 상세페이지 */}
         <Route path="/lived/my" element={<SubLayout />}>
           {/* 공지사항 */}
