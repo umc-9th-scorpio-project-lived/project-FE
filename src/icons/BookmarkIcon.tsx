@@ -9,7 +9,6 @@ const BookmarkIcon = (props: SVGProps<SVGSVGElement>) => {
         strokeWidth={1.5}
         strokeLinecap="round"
         strokeLinejoin="round"
-        fill="currentColor"
       />
     </svg>
   );

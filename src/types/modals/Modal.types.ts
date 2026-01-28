@@ -2,6 +2,7 @@ type ModalPosition = "center" | "bottom";
 
 interface ModalOptions {
   position?: ModalPosition;
+  onConfirm?: () => void;
 }
 
 export interface BaseModal {
@@ -9,6 +10,7 @@ export interface BaseModal {
   modalType: string;
   options: {
     position: ModalPosition;
+    onConfirm?: () => void;
   };
 
   setModalType: (type: string) => void;
