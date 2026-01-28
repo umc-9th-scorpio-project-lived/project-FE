@@ -96,7 +96,7 @@ const AlarmPage = () => {
   const isCommunity = tab === "COMMUNITY";
 
   return (
-    <div className="w-full h-dvh pt-2.5">
+    <div className="w-full h-dvh pt-10">
       {/* 헤더 */}
       <div className="w-full py-2 px-4">
         <div className="relative flex w-full items-center justify-center">

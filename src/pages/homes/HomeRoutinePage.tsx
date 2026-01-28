@@ -127,7 +127,7 @@ const HomeRoutinePage = ({ mode = "create" as Mode }) => {
   const ctaLabel = mode === "edit" ? "수정 완료" : "루틴 추가하기";
 
   return (
-    <div className="w-full min-h-dvh px-4 pt-2.5 flex flex-col">
+    <div className="w-full min-h-dvh px-4 pt-10 flex flex-col">
       <div className="relative flex w-full py-2 items-center justify-center">
         <LeftChevronIcon
           className="absolute left-0 w-7 h-7 text-gray-900"

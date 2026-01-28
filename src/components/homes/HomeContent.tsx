@@ -26,11 +26,9 @@ const HomeContent = () => {
         ? "아직 완료하지 않은 루틴이 있어요!"
         : `오늘 루틴 ${doneCount}/${totalCount} 진행 중!`;
 
-  // ✅ 브라우저 타입
   const pressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const longPressTriggered = useRef(false);
 
-  // 이동량으로 롱프레스 취소용
   const startPt = useRef<{ x: number; y: number } | null>(null);
 
   const toggleComplete = (idx: number) => {
@@ -83,7 +81,7 @@ const HomeContent = () => {
   };
 
   return (
-    <div className="flex flex-col gap-3.5 px-4 pt-6 h-[calc(100%-173px)]">
+    <div className="flex flex-col gap-3.5 px-4 pt-6 h-[calc(100%-200px)]">
       <span className="typo-body_reg16 text-gray-900">{headerText}</span>
 
       <div className="relative flex-1 min-h-0 overflow-y-auto pb-6">

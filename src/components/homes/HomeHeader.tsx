@@ -24,8 +24,8 @@ const HomeHeader = () => {
   const isViewingCurrentWeek = isSameDay(weekStartDate, todayWeekStartDate);
 
   return (
-    <div className="w-full flex flex-col gap-5 px-4 pt-2.5 rounded-b-lg shadow-soft bg-screen-0">
-      <div className="flex flex-col gap-[5px]">
+    <div className="w-full flex flex-col gap-5 px-4 pt-10 rounded-b-lg shadow-soft bg-screen-0">
+      <div className="flex flex-col gap-1.25">
         <div className="flex justify-between h-10 items-center">
           <div className="text-[22px] font-normal">{formatTopTitle(currentDate)}</div>
           <div className="bg-alarm h-6 w-6" onClick={() => navigate("/lived/alarm")} />

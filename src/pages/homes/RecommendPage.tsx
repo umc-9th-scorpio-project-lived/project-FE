@@ -25,7 +25,7 @@ const RecommendPage = () => {
   const selectedIds = selectedByTab[tab];
   const selectedCount = selectedIds.size;
 
-  const isSelected = (id: string) => selectedIds.has(id);
+  // const isSelected = (id: string) => selectedIds.has(id);
 
   const toggleSelect = (id: string) => {
     setSelectedByTab((prev) => {
@@ -48,7 +48,7 @@ const RecommendPage = () => {
   };
 
   return (
-    <div className="w-full h-dvh bg-primary-50 pt-2.5 flex flex-col">
+    <div className="w-full h-dvh bg-primary-50 pt-10 flex flex-col">
       {/* 헤더 */}
       <div className="w-full py-2 px-4">
         <div className="relative flex w-full items-center justify-center">
