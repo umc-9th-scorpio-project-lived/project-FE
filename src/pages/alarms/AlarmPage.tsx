@@ -1,20 +1,20 @@
-import LeftChevronIcon from "@/icons/LeftChevronIcon";
-import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { motion, useMotionValue, animate } from "framer-motion";
-import { useRef } from "react";
+import LeftChevronIcon from '@/icons/LeftChevronIcon';
+import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { motion, useMotionValue, animate } from 'framer-motion';
+import { useRef } from 'react';
 
-type AlarmTab = "ROUTINE" | "COMMUNITY";
-type CommunityCategory = "ALL" | "COMMENT" | "TRENDING";
+type AlarmTab = 'ROUTINE' | 'COMMUNITY';
+type CommunityCategory = 'ALL' | 'COMMENT' | 'TRENDING';
 
 type AlarmLocationState = {
   initialTab?: AlarmTab;
 };
 
 const COMMUNITY_CATEGORIES: { label: string; value: CommunityCategory }[] = [
-  { label: "전체", value: "ALL" },
-  { label: "댓글", value: "COMMENT" },
-  { label: "실시간 인기글", value: "TRENDING" },
+  { label: '전체', value: 'ALL' },
+  { label: '댓글', value: 'COMMENT' },
+  { label: '실시간 인기글', value: 'TRENDING' },
 ];
 
 const REVEAL_PX = 80; // 오른쪽 버튼 노출 폭
@@ -34,7 +34,11 @@ export const SwipeRow = ({ children, onRead }: Props) => {
     const open = cur <= -OPEN_THRESHOLD;
 
     isOpenRef.current = open;
-    animate(x, open ? -REVEAL_PX : 0, { type: "spring", stiffness: 500, damping: 40 });
+    animate(x, open ? -REVEAL_PX : 0, {
+      type: 'spring',
+      stiffness: 500,
+      damping: 40,
+    });
   };
 
   return (
@@ -46,7 +50,7 @@ export const SwipeRow = ({ children, onRead }: Props) => {
           onClick={() => {
             onRead?.();
             // 버튼 누르면 닫기
-            animate(x, 0, { type: "spring", stiffness: 500, damping: 40 });
+            animate(x, 0, { type: 'spring', stiffness: 500, damping: 40 });
             isOpenRef.current = false;
           }}
         >
@@ -57,7 +61,7 @@ export const SwipeRow = ({ children, onRead }: Props) => {
       {/* 실제 컨텐츠(드래그 되는 부분) */}
       <motion.div
         className="relative bg-screen-0"
-        style={{ x, touchAction: "pan-y" }} // 세로 스크롤은 유지
+        style={{ x, touchAction: 'pan-y' }} // 세로 스크롤은 유지
         drag="x"
         dragConstraints={{ left: -REVEAL_PX, right: 0 }}
         dragElastic={0.1}
@@ -65,7 +69,7 @@ export const SwipeRow = ({ children, onRead }: Props) => {
         onPointerDown={() => {
           // 열린 상태에서 다른 곳 누르면 닫히게 하고 싶으면:
           if (isOpenRef.current) {
-            animate(x, 0, { type: "spring", stiffness: 500, damping: 40 });
+            animate(x, 0, { type: 'spring', stiffness: 500, damping: 40 });
             isOpenRef.current = false;
           }
         }}
@@ -81,18 +85,21 @@ const AlarmPage = () => {
   const location = useLocation() as { state?: AlarmLocationState };
 
   // 알람 페이지 탭 상태
-  const [tab, setTab] = useState<AlarmTab>(() => location.state?.initialTab ?? "ROUTINE");
+  const [tab, setTab] = useState<AlarmTab>(
+    () => location.state?.initialTab ?? 'ROUTINE'
+  );
 
   // 커뮤니티 카테고리 상태
-  const [selectedCategory, setSelectedCategory] = useState<CommunityCategory>("ALL");
+  const [selectedCategory, setSelectedCategory] =
+    useState<CommunityCategory>('ALL');
 
   const handleChangeTab = (next: AlarmTab) => {
     setTab(next);
-    if (next === "COMMUNITY") setSelectedCategory("ALL");
+    if (next === 'COMMUNITY') setSelectedCategory('ALL');
   };
 
-  const isRoutine = tab === "ROUTINE";
-  const isCommunity = tab === "COMMUNITY";
+  const isRoutine = tab === 'ROUTINE';
+  const isCommunity = tab === 'COMMUNITY';
 
   return (
     <div className="w-full h-dvh pt-10">
@@ -104,16 +111,20 @@ const AlarmPage = () => {
             onClick={() => navigate(-1)}
           />
           <span className="typo-h2_bold20 text-gray-900">알림</span>
-          <span className="absolute right-0 typo-body_reg12 text-gray-900">모두 읽음</span>
+          <span className="absolute right-0 typo-body_reg12 text-gray-900">
+            모두 읽음
+          </span>
         </div>
       </div>
       {/* 탭 */}
       <div className="w-full flex">
         <div
           role="button"
-          onClick={() => handleChangeTab("ROUTINE")}
+          onClick={() => handleChangeTab('ROUTINE')}
           className={`w-1/2 py-2.5 text-center typo-body_bold18 ${
-            isRoutine ? " text-primary-50 border-b border-primary-50" : " text-gray-400"
+            isRoutine
+              ? ' text-primary-50 border-b border-primary-50'
+              : ' text-gray-400'
           }`}
         >
           루틴
@@ -121,9 +132,11 @@ const AlarmPage = () => {
 
         <div
           role="button"
-          onClick={() => handleChangeTab("COMMUNITY")}
+          onClick={() => handleChangeTab('COMMUNITY')}
           className={`w-1/2 py-2.5 text-center typo-body_bold18 ${
-            isCommunity ? "text-primary-50 border-b border-primary-50" : "text-gray-400"
+            isCommunity
+              ? 'text-primary-50 border-b border-primary-50'
+              : 'text-gray-400'
           }`}
         >
           커뮤니티
@@ -142,7 +155,7 @@ const AlarmPage = () => {
                 role="button"
                 onClick={() => setSelectedCategory(value)}
                 className={`typo-body_reg12 py-2 px-3 rounded-2xl transition-colors
-            ${active ? "bg-primary-50 text-screen-0" : "bg-gray-50 text-gray-800"}
+            ${active ? 'bg-primary-50 text-screen-0' : 'bg-gray-50 text-gray-800'}
           `}
               >
                 {label}
@@ -157,7 +170,7 @@ const AlarmPage = () => {
         {/* 루틴 알림 */}
         {isRoutine && (
           <div className="flex flex-col w-full">
-            <SwipeRow onRead={() => console.log("읽음 처리!")}>
+            <SwipeRow onRead={() => console.log('읽음 처리!')}>
               <div className="w-full flex p-4 bg-primary-10 gap-5 items-center">
                 <div className="text-[28px]">💊</div>
                 <div className="w-full flex flex-col gap-0.5">
@@ -167,7 +180,9 @@ const AlarmPage = () => {
                   </div>
                   <div className="flex flex-col items-start justify-center text-gray-900">
                     <span className="typo-body_reg16">물 1L 마시기</span>
-                    <span className="typo-body_reg12">루틴을 완료하셨나요?</span>
+                    <span className="typo-body_reg12">
+                      루틴을 완료하셨나요?
+                    </span>
                   </div>
                 </div>
               </div>
@@ -181,8 +196,12 @@ const AlarmPage = () => {
                   <span>3일 전</span>
                 </div>
                 <div className="flex flex-col items-start justify-center text-gray-900">
-                  <span className="typo-body_reg16">새로운 열매가 열렸어요!</span>
-                  <span className="typo-body_reg12">루틴 나무 확인하러 가기 {">"}</span>
+                  <span className="typo-body_reg16">
+                    새로운 열매가 열렸어요!
+                  </span>
+                  <span className="typo-body_reg12">
+                    루틴 나무 확인하러 가기 {'>'}
+                  </span>
                 </div>
               </div>
             </div>
@@ -200,8 +219,12 @@ const AlarmPage = () => {
                   <span>4시간 전</span>
                 </div>
                 <div className="flex flex-col items-start justify-center text-gray-900">
-                  <span className="typo-body_reg16">민님 외 6명이 게시글에 좋아요를 남겼어요.</span>
-                  <span className="typo-body_reg12">아 제발...ㅋㅋㅋㅋㅋㅋ</span>
+                  <span className="typo-body_reg16">
+                    민님 외 6명이 게시글에 좋아요를 남겼어요.
+                  </span>
+                  <span className="typo-body_reg12">
+                    아 제발...ㅋㅋㅋㅋㅋㅋ
+                  </span>
                 </div>
               </div>
             </div>
@@ -214,8 +237,12 @@ const AlarmPage = () => {
                   <span>4일 전</span>
                 </div>
                 <div className="flex flex-col items-start justify-center text-gray-900">
-                  <span className="typo-body_reg16">게시글이 실시간 인기글로 채택 됐어요!</span>
-                  <span className="typo-body_reg12">게시글 확인하러 가기 {">"}</span>
+                  <span className="typo-body_reg16">
+                    게시글이 실시간 인기글로 채택 됐어요!
+                  </span>
+                  <span className="typo-body_reg12">
+                    게시글 확인하러 가기 {'>'}
+                  </span>
                 </div>
               </div>
             </div>
