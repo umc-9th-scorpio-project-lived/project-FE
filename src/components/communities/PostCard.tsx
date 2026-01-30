@@ -1,6 +1,6 @@
 import CommentIcon from "@/icons/CommentIcon";
 import LikeIcon from "@/icons/LikeIcon";
-import type { Post } from "@/types/Post.types";
+import type { Post } from "@/types/communities/Post.types";
 
 interface PostCardProps {
   post: Post;
@@ -10,7 +10,7 @@ interface PostCardProps {
 }
 
 const PostCard = ({ post, showCategory = true, showStates = true, onClick }: PostCardProps) => {
-  const { category, title, content, imageCount, likeCount, commentCount, createdAt } = post;
+  const { categoryLabel, title, content, imageCount, likeCount, commentCount, createdAt } = post;
   const hasImage = imageCount > 0;
 
   return (
@@ -20,7 +20,7 @@ const PostCard = ({ post, showCategory = true, showStates = true, onClick }: Pos
     >
       {showCategory && (
         <div className="flex items-center bg-primary-20 rounded-sm px-2.5 w-fit h-6 typo-body_reg12 text-gray-600">
-          {category}
+          {categoryLabel}
         </div>
       )}
       <div className="flex justify-between gap-1.5">

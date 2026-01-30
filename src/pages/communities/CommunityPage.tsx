@@ -4,18 +4,33 @@ import PostList from "@/components/communities/PostList";
 import WritingButton from "@/components/communities/WritingButton";
 import { COMMUNITY_CATEGORIES } from "@/constants/community";
 import SearchIcon from "@/icons/SearchIcon";
-import { mockPosts } from "@/mocks/post";
-import type { Post } from "@/types/Post.types";
-import { useState } from "react";
+import { getPostList } from "@/services/posts/post";
+import type { Post } from "@/types/communities/Post.types";
+import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const CommunityPage = () => {
   const [selectedCategory, setSelectedCategory] = useState("전체");
+  const [posts, setPosts] = useState<Post[]>([]);
   const navigate = useNavigate();
 
   const handlePostClick = (post: Post) => {
-    navigate(`/lived/community/${post.id}`);
+    navigate(`/lived/community/${post.postId}`);
   };
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const res = await getPostList({
+          memberId: 1,
+        });
+        setPosts(res.content);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fetchPosts();
+  }, []);
 
   return (
     <div className="flex flex-col pb-25 w-full min-h-screen pt-10">
@@ -47,7 +62,7 @@ const CommunityPage = () => {
         <PopularPostList />
       </section>
       {/*게시글*/}
-      <PostList posts={mockPosts} onPostClick={handlePostClick} />
+      <PostList posts={posts} onPostClick={handlePostClick} />
       <NavLink to="/lived/community/write">
         <WritingButton />
       </NavLink>

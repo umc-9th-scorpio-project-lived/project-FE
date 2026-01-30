@@ -1,16 +1,19 @@
-import type { Post } from "@/types/Post.types";
+import type { Post } from "@/types/communities/Post.types";
 
 export const mockPosts: Post[] = [
   // 임시 게시물용 더미데이터(나중에 삭제 예정)
   {
-    id: 1,
-    category: "자취 일상",
+    postId: 1,
+    category: "SELF_LIFE",
+    categoryLabel: "자취 일상",
     title: "오늘 누워있는데",
     content:
       "갑자기 엄마가 반찬 갖고 온다고 해서 놀랬음... \n 진짜 바로 일어나서 방 치우느라 힘들었다...",
     imageCount: 0,
     likeCount: 2,
     commentCount: 4,
+    thumbnailUrl: "",
+    isBlocked: false,
     createdAt: "24분 전",
   },
   {

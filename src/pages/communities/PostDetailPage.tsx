@@ -13,7 +13,7 @@ import { NavLink, useParams } from "react-router-dom";
 
 const PostDetailPage = () => {
   const { postId } = useParams<{ postId: string }>(); //더미 데이터에서 게시글의 id를 가져오기(일시적)
-  const post = mockPosts.find((p) => p.id === Number(postId));
+  const post = mockPosts.find((p) => p.postId === Number(postId));
   if (!post) {
     return <div className="p-4">게시글을 찾을 수 없습니다.</div>;
   }
@@ -69,7 +69,7 @@ const PostDetailPage = () => {
           <div className="flex flex-col gap-0.5">
             <span className="typo-body_reg16 text-gray-900">민</span>
             <div className="flex items-center gap-1">
-              <span className="typo-body_reg12 text-gray-600">{post?.category}</span>
+              <span className="typo-body_reg12 text-gray-600">{post?.categoryLabel}</span>
               <div className="w-0.5 h-0.5 bg-[#9C9C9C]" />
               <span className="typo-body_reg12 text-gray-400">조회 539</span>
               <div className="w-0.5 h-0.5 bg-[#9C9C9C]" />
