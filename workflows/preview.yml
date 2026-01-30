@@ -1,0 +1,60 @@
+name: Vercel Preview Deployment
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+on:
+  push:
+    branches-ignore:
+      - main # main 브랜치 외 모든 브랜치에서 실행
+
+jobs:
+  Deploy-Preview:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. 코드 체크아웃
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. pnpm 설정
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      # 3. Node.js 설정 (pnpm 캐싱 포함)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      # 4. 의존성 설치
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # 5. 린트 검사 (선택사항)
+      - name: Run lint
+        run: pnpm run lint
+
+      # 6. 테스트 실행 (선택사항)
+      - name: Run tests
+        run: pnpm test
+        continue-on-error: true
+
+      # 7. Vercel CLI 설치
+      - name: Install Vercel CLI
+        run: pnpm add -g vercel@latest
+
+      # 8. Vercel 환경변수 다운로드
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+
+      # 9. 프로젝트 빌드
+      - name: Build Project Artifacts
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      # 10. Vercel에 배포 (prebuilt 사용)
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
