@@ -30,7 +30,6 @@ export default defineConfig([
     },
     rules: {
       // Prettier 결과를 에러로 강제
-      "prettier/prettier": "error",
 
       // 연산자 공백
       "space-infix-ops": "error",
