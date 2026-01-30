@@ -22,7 +22,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: "npm"
+          cache: 'npm'
 
       # 3. 의존성 설치
       - name: Install dependencies
@@ -35,7 +35,6 @@ jobs:
       # 5. 테스트 실행 (선택)
       - name: Run tests
         run: npm test
-        continue-on-error: true
 
       # 6. Vercel CLI 설치
       - name: Install Vercel CLI
