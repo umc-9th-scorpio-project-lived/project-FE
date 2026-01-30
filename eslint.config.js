@@ -1,48 +1,31 @@
-import js from "@eslint/js";
-import globals from "globals";
-import reactHooks from "eslint-plugin-react-hooks";
-import reactRefresh from "eslint-plugin-react-refresh";
-import tseslint from "typescript-eslint";
-import { defineConfig, globalIgnores } from "eslint/config";
-import importPlugin from "eslint-plugin-import";
-import prettierConfig from "eslint-config-prettier";
-import prettierPlugin from "eslint-plugin-prettier";
+import eslint from '@eslint/js';
+import tseslint from '@typescript-eslint/eslint-plugin';
+import tsparser from '@typescript-eslint/parser';
+import prettier from 'eslint-config-prettier';
+import globals from 'globals';
 
-export default defineConfig([
-  globalIgnores(["dist"]),
+export default [
+  eslint.configs.recommended,
   {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      js.configs.recommended,
-      tseslint.configs.recommended,
-      reactHooks.configs.flat.recommended,
-      reactRefresh.configs.vite,
-
-      prettierConfig,
-    ],
-    plugins: {
-      import: importPlugin,
-      prettier: prettierPlugin,
-    },
+    files: ['**/*.ts', '**/*.tsx'],
     languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
-    },
-    rules: {
-      // Prettier 결과를 에러로 강제
-
-      // 연산자 공백
-      "space-infix-ops": "error",
-
-      // 콤마 뒤 공백
-      "comma-spacing": ["error", { before: false, after: true }],
-    },
-    settings: {
-      "import/resolver": {
-        typescript: {
-          project: ["./tsconfig.app.json"],
-        },
+      parser: tsparser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+      },
+      globals: {
+        ...globals.browser,
       },
     },
+    plugins: {
+      '@typescript-eslint': tseslint,
+    },
+    rules: {
+      ...tseslint.configs.recommended.rules,
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': 'error',
+    },
   },
-]);
+  prettier, // Prettier와 충돌하는 규칙 비활성화
+];
