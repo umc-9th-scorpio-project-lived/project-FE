@@ -12,6 +12,7 @@
     "prepare": "husky",
     "test": "vitest run",
     "test:watch": "vitest"
+    "type-check": "tsc --noEmit"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx,json,css,md}": [
