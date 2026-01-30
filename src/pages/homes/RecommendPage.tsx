@@ -81,7 +81,7 @@ const RecommendPage = () => {
 
       {/* 콘텐츠 영역 */}
       <div
-        className={`relative w-full flex flex-col flex-1 overflow-y-auto rounded-t-2xl px-4 pt-6 bg-screen-0 ${isAI ? "pb-[166px]" : "pb-[100px]"}`}
+        className={`relative w-full flex flex-col flex-1 overflow-y-auto rounded-t-2xl px-4 pt-6 bg-screen-0 ${isAI ? "pb-41.5" : "pb-25"}`}
       >
         {isAI && (
           <div className="flex flex-col gap-4 overflow-y-auto">
@@ -131,7 +131,7 @@ const RecommendPage = () => {
                         key={r.id}
                         role="button"
                         onClick={() => toggleSelect(r.id)}
-                        className={`relative shrink-0 w-[106px] h-[106px] p-2 flex justify-center items-center text-center rounded-lg typo-body_reg14 transition-colors bg-gray-50 text-gray-900`}
+                        className={`relative shrink-0 w-26.5 h-26.5 p-2 flex justify-center items-center text-center rounded-lg typo-body_reg14 transition-colors bg-gray-50 text-gray-900`}
                       >
                         {r.title}
 

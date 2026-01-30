@@ -24,18 +24,14 @@ const applyInterceptors = (instance: AxiosInstance) => {
       // 공통 포맷이 아닌 응답일 경우 fallback
       return res.data;
     },
-    (err: AxiosError<any>) => {
+    (err: AxiosError<ApiError>) => {
       const status = err?.response?.status ?? 0;
       const serverData = err?.response?.data;
 
       return Promise.reject({
         status,
         code: typeof serverData?.code === "string" ? serverData.code : undefined,
-        message:
-          serverData?.message ||
-          serverData?.error ||
-          err?.message ||
-          "요청 중 오류가 발생했습니다.",
+        message: serverData?.message || err?.message || "요청 중 오류가 발생했습니다.",
         raw: err,
       } satisfies ApiError);
     },

@@ -1,7 +1,7 @@
-import { useMemo, useRef, type PointerEvent } from "react";
-import { useHomeDateStore } from "@/stores/homes/homeStore";
-import { WEEK_LABELS } from "@/constants";
-import { addDays, isSameDay } from "@/utils/homes/homeUtils";
+import React, { useMemo, useRef, type PointerEvent } from 'react';
+import { useHomeDateStore } from '@/stores/homes/homeStore';
+import { WEEK_LABELS } from '@/constants';
+import { addDays, isSameDay } from '@/utils/homes/homeUtils';
 
 const SWIPE_THRESHOLD_PX = 40; // 스와이프로 인정할 최소 가로 이동 거리
 const LOCK_THRESHOLD_PX = 8; // 축 잠금(가로/세로)을 결정하기 위한 최소 이동 거리
@@ -11,8 +11,13 @@ type Props = {
 };
 
 const SlideCalendar = ({ onChange }: Props) => {
-  const { selectedDate, weekStartDate, setSelectedDate, goPrevWeek, goNextWeek } =
-    useHomeDateStore();
+  const {
+    selectedDate,
+    weekStartDate,
+    setSelectedDate,
+    goPrevWeek,
+    goNextWeek,
+  } = useHomeDateStore();
 
   // 현재 주(weekStartDate) 기준 7일 배열
   const weekDates = useMemo(() => {
@@ -37,7 +42,7 @@ const SlideCalendar = ({ onChange }: Props) => {
   const startRef = useRef({ x: 0, y: 0, t: 0 });
 
   // 사용자가 가로로 스와이프하는지(week 이동), 세로 스크롤하는지 축을 잠금
-  const lockedAxisRef = useRef<"x" | "y" | null>(null);
+  const lockedAxisRef = useRef<'x' | 'y' | null>(null);
 
   const didDragRef = useRef(false);
 
@@ -57,11 +62,12 @@ const SlideCalendar = ({ onChange }: Props) => {
     const dy = e.clientY - startRef.current.y;
 
     if (!lockedAxisRef.current) {
-      if (Math.abs(dx) < LOCK_THRESHOLD_PX && Math.abs(dy) < LOCK_THRESHOLD_PX) return;
-      lockedAxisRef.current = Math.abs(dx) >= Math.abs(dy) ? "x" : "y";
+      if (Math.abs(dx) < LOCK_THRESHOLD_PX && Math.abs(dy) < LOCK_THRESHOLD_PX)
+        return;
+      lockedAxisRef.current = Math.abs(dx) >= Math.abs(dy) ? 'x' : 'y';
     }
 
-    if (lockedAxisRef.current === "x" && Math.abs(dx) >= SWIPE_THRESHOLD_PX) {
+    if (lockedAxisRef.current === 'x' && Math.abs(dx) >= SWIPE_THRESHOLD_PX) {
       didDragRef.current = true;
       e.preventDefault();
     }
@@ -77,7 +83,7 @@ const SlideCalendar = ({ onChange }: Props) => {
     pointerIdRef.current = null;
 
     // 세로 스크롤로 판정되면 스와이프 되지 않음
-    if (lockedAxisRef.current === "y") return;
+    if (lockedAxisRef.current === 'y') return;
 
     // 가로 스크롤일 경우면 스와이프 진행
     if (Math.abs(dx) >= SWIPE_THRESHOLD_PX && Math.abs(dx) > Math.abs(dy)) {
@@ -97,7 +103,7 @@ const SlideCalendar = ({ onChange }: Props) => {
     <div className="w-full">
       <div
         className="w-full"
-        style={{ touchAction: "pan-y" }}
+        style={{ touchAction: 'pan-y' }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
@@ -108,7 +114,9 @@ const SlideCalendar = ({ onChange }: Props) => {
           {weekDates.map((d, idx) => {
             const isSelected = !!selectedDate && isSameDay(d, selectedDate);
             const isActiveDay =
-              !!selectedDate && isSelectedDateInWeek && d.getDay() === selectedDate.getDay();
+              !!selectedDate &&
+              isSelectedDateInWeek &&
+              d.getDay() === selectedDate.getDay();
 
             return (
               <div
@@ -117,7 +125,7 @@ const SlideCalendar = ({ onChange }: Props) => {
                 tabIndex={0}
                 onClick={() => handleSelectDate(d)}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
+                  if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     handleSelectDate(d);
                   }
@@ -125,14 +133,14 @@ const SlideCalendar = ({ onChange }: Props) => {
                 className="flex flex-col items-center select-none"
               >
                 <span
-                  className={`typo-body_reg12 leading-none flex justify-center items-center ${isActiveDay ? "text-primary-50" : "text-gray-700"}`}
+                  className={`typo-body_reg12 leading-none flex justify-center items-center ${isActiveDay ? 'text-primary-50' : 'text-gray-700'}`}
                 >
                   {WEEK_LABELS[idx]}
                 </span>
 
-                <div className="py-[5px]">
+                <div className="py-1.25">
                   <span
-                    className={`typo-body_reg16 leading-none min-w-9 min-h-9 flex items-center justify-center ${isSelected ? "text-primary-50" : "text-gray-900"}`}
+                    className={`typo-body_reg16 leading-none min-w-9 min-h-9 flex items-center justify-center ${isSelected ? 'text-primary-50' : 'text-gray-900'}`}
                   >
                     {d.getDate()}
                   </span>
