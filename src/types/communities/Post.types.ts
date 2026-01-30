@@ -1,9 +1,9 @@
-import type { CommunityCategory } from "@/constants/community";
+import type { CommunityCategory, CommunityCategoryLabel } from "@/constants/community";
 
 export type Post = {
   postId: number;
-  category: string;
-  categoryLabel: CommunityCategory;
+  category: CommunityCategory;
+  categoryLabel: CommunityCategoryLabel;
   title: string;
   content: string;
   likeCount: number;

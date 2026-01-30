@@ -2,7 +2,7 @@ import Category from "@/components/communities/Category";
 import PopularPostList from "@/components/communities/PopularPostList";
 import PostList from "@/components/communities/PostList";
 import WritingButton from "@/components/communities/WritingButton";
-import { COMMUNITY_CATEGORIES } from "@/constants/community";
+import { COMMUNITY_CATEGORIES_LABEL } from "@/constants/community";
 import SearchIcon from "@/icons/SearchIcon";
 import { getPostList } from "@/services/posts/post";
 import type { Post } from "@/types/communities/Post.types";
@@ -52,7 +52,7 @@ const CommunityPage = () => {
         </div>
       </div>
       <Category
-        categories={[...COMMUNITY_CATEGORIES]}
+        categories={[...COMMUNITY_CATEGORIES_LABEL]}
         selected={selectedCategory}
         onSelect={setSelectedCategory}
       />

@@ -1,7 +1,7 @@
 import Category from "@/components/communities/Category";
 import ImageError from "@/components/communities/ImageError";
 import PostWriteFooter from "@/components/communities/PostWriteFooter";
-import { COMMUNITY_CATEGORIES } from "@/constants/community";
+import { COMMUNITY_CATEGORIES_LABEL } from "@/constants/community";
 import LeftChevronIcon from "@/icons/LeftChevronIcon";
 import MiniCloseIcon from "@/icons/MiniCloseIcon";
 import { useEffect, useState } from "react";
@@ -9,7 +9,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 const PostWritingPage = () => {
   const navigate = useNavigate();
-  const writeCategories = COMMUNITY_CATEGORIES.filter((category) => category !== "전체");
+  const writeCategories = COMMUNITY_CATEGORIES_LABEL.filter((category) => category !== "전체");
   const [selectedCategory, setSelectedCategory] = useState("자취 일상");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
