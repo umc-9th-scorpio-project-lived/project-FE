@@ -1,6 +1,6 @@
-import LeftChevronIcon from "@/icons/LeftChevronIcon";
-import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import LeftChevronIcon from '@/icons/LeftChevronIcon';
+import React, { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 type StepItem = {
   img: string;
@@ -10,24 +10,24 @@ type StepItem = {
 
 const STEPS: StepItem[] = [
   {
-    img: "/images/onboardings/alarm-push-step-01.png",
-    title: "모바일 PUSH 알림 설정 방법",
-    desc: "1. 살아보니 사이트 접속 후,\n공유 버튼 클릭",
+    img: '/images/onboardings/alarm-push-step-01.png',
+    title: '모바일 PUSH 알림 설정 방법',
+    desc: '1. 살아보니 사이트 접속 후,\n공유 버튼 클릭',
   },
   {
-    img: "/images/onboardings/alarm-push-step-02.png",
-    title: "모바일 PUSH 알림 설정 방법",
-    desc: "2. 더보기 > 홈 화면에 추가 버튼 클릭하기",
+    img: '/images/onboardings/alarm-push-step-02.png',
+    title: '모바일 PUSH 알림 설정 방법',
+    desc: '2. 더보기 > 홈 화면에 추가 버튼 클릭하기',
   },
   {
-    img: "/images/onboardings/alarm-push-step-03.png",
-    title: "모바일 PUSH 알림 설정 방법",
-    desc: "3. 제목에 ‘살아보니’ 입력 후\n추가 버튼 클릭하기",
+    img: '/images/onboardings/alarm-push-step-03.png',
+    title: '모바일 PUSH 알림 설정 방법',
+    desc: '3. 제목에 ‘살아보니’ 입력 후\n추가 버튼 클릭하기',
   },
   {
-    img: "/images/onboardings/alarm-push-step-04.png",
-    title: "모바일 PUSH 알림 설정 방법",
-    desc: "4. 앱처럼 푸시 알림을 받을 수 있어요!",
+    img: '/images/onboardings/alarm-push-step-04.png',
+    title: '모바일 PUSH 알림 설정 방법',
+    desc: '4. 앱처럼 푸시 알림을 받을 수 있어요!',
   },
 ];
 
@@ -45,7 +45,7 @@ const PushGuidePage = () => {
 
   // 완료
   const handleDone = () => {
-    navigate("/lived");
+    navigate('/lived');
   };
 
   // 뒤로가기
@@ -70,7 +70,8 @@ const PushGuidePage = () => {
     if (Math.abs(diff) < 40) return;
 
     setStep((prev) => {
-      const next = diff < 0 ? Math.min(prev + 1, STEPS.length - 1) : Math.max(prev - 1, 0);
+      const next =
+        diff < 0 ? Math.min(prev + 1, STEPS.length - 1) : Math.max(prev - 1, 0);
 
       if (next !== prev) setHasSwiped(true);
 
@@ -78,8 +79,11 @@ const PushGuidePage = () => {
     });
   };
 
-  const handleKeyActivate = (e: React.KeyboardEvent<HTMLDivElement>, cb: () => void) => {
-    if (e.key !== "Enter" && e.key !== " ") return;
+  const handleKeyActivate = (
+    e: React.KeyboardEvent<HTMLDivElement>,
+    cb: () => void
+  ) => {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
     e.preventDefault();
     cb();
   };
@@ -100,7 +104,11 @@ const PushGuidePage = () => {
         </div>
 
         {/* 본문: 스와이프로 step 넘기기 */}
-        <div className="flex flex-col" onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+        <div
+          className="flex flex-col"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
           {/* 이미지 */}
           <div className="pt-10 flex justify-center">
             <img
@@ -127,7 +135,7 @@ const PushGuidePage = () => {
               <span
                 key={idx}
                 className={`h-2.5 w-2.5 rounded-full ${
-                  idx === step ? "bg-primary-50" : "bg-gray-200"
+                  idx === step ? 'bg-primary-50' : 'bg-gray-200'
                 }`}
               />
             ))}
@@ -152,8 +160,8 @@ const PushGuidePage = () => {
               flex items-center justify-center typo-body_bold18
               ${
                 hasSwiped
-                  ? "bg-primary-50 text-screen-0"
-                  : "bg-gray-100 text-gray-400 pointer-events-none"
+                  ? 'bg-primary-50 text-screen-0'
+                  : 'bg-gray-100 text-gray-400 pointer-events-none'
               }
             `}
           >
