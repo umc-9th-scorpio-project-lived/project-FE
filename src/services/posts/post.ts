@@ -1,5 +1,6 @@
 import { authApi } from "@/api";
 import type { PostListResult } from "@/types/communities/Post.types";
+import type { PostDetail } from "@/types/communities/PostDetail.types";
 
 type GetPostParams = {
   memberId: number;
@@ -25,4 +26,8 @@ export const getPostList = ({
       size,
     },
   });
+};
+
+export const getPostDetail = async (postId: number): Promise<PostDetail> => {
+  return authApi.get(`/posts/${postId}`);
 };
