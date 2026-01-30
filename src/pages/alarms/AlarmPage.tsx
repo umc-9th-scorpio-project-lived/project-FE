@@ -1,11 +1,15 @@
 import LeftChevronIcon from "@/icons/LeftChevronIcon";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { motion, useMotionValue, animate } from "framer-motion";
 import { useRef } from "react";
 
 type AlarmTab = "ROUTINE" | "COMMUNITY";
 type CommunityCategory = "ALL" | "COMMENT" | "TRENDING";
+
+type AlarmLocationState = {
+  initialTab?: AlarmTab;
+};
 
 const COMMUNITY_CATEGORIES: { label: string; value: CommunityCategory }[] = [
   { label: "전체", value: "ALL" },
@@ -74,23 +78,18 @@ export const SwipeRow = ({ children, onRead }: Props) => {
 
 const AlarmPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
+  const location = useLocation() as { state?: AlarmLocationState };
 
   // 알람 페이지 탭 상태
-  const [tab, setTab] = useState<AlarmTab>("ROUTINE");
+  const [tab, setTab] = useState<AlarmTab>(() => location.state?.initialTab ?? "ROUTINE");
 
   // 커뮤니티 카테고리 상태
   const [selectedCategory, setSelectedCategory] = useState<CommunityCategory>("ALL");
 
-  useEffect(() => {
-    const initial = (location.state as any)?.initialTab as AlarmTab | undefined;
-    if (initial) setTab(initial);
-  }, [location.state]);
-
-  useEffect(() => {
-    if (tab === "ROUTINE") return;
-    setSelectedCategory("ALL");
-  }, [tab]);
+  const handleChangeTab = (next: AlarmTab) => {
+    setTab(next);
+    if (next === "COMMUNITY") setSelectedCategory("ALL");
+  };
 
   const isRoutine = tab === "ROUTINE";
   const isCommunity = tab === "COMMUNITY";
@@ -112,7 +111,7 @@ const AlarmPage = () => {
       <div className="w-full flex">
         <div
           role="button"
-          onClick={() => setTab("ROUTINE")}
+          onClick={() => handleChangeTab("ROUTINE")}
           className={`w-1/2 py-2.5 text-center typo-body_bold18 ${
             isRoutine ? " text-primary-50 border-b border-primary-50" : " text-gray-400"
           }`}
@@ -122,7 +121,7 @@ const AlarmPage = () => {
 
         <div
           role="button"
-          onClick={() => setTab("COMMUNITY")}
+          onClick={() => handleChangeTab("COMMUNITY")}
           className={`w-1/2 py-2.5 text-center typo-body_bold18 ${
             isCommunity ? "text-primary-50 border-b border-primary-50" : "text-gray-400"
           }`}
