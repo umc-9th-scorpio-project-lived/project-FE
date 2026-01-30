@@ -5,6 +5,8 @@ import reactRefresh from "eslint-plugin-react-refresh";
 import tseslint from "typescript-eslint";
 import { defineConfig, globalIgnores } from "eslint/config";
 import importPlugin from "eslint-plugin-import";
+import prettierConfig from "eslint-config-prettier";
+import prettierPlugin from "eslint-plugin-prettier";
 
 export default defineConfig([
   globalIgnores(["dist"]),
@@ -16,7 +18,6 @@ export default defineConfig([
       reactHooks.configs.flat.recommended,
       reactRefresh.configs.vite,
 
-      // ESLint ↔ Prettier 충돌 제거
       prettierConfig,
     ],
     plugins: {
