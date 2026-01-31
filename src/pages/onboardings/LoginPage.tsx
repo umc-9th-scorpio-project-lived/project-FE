@@ -1,15 +1,15 @@
-import GoogleGIcon from "@/icons/GoogleIcon";
-import KakaoIcon from "@/icons/KakaoIcon";
-import { redirectToSocialLogin } from "@/services/auths/socialLogin";
+import GoogleGIcon from '@/icons/GoogleIcon';
+import KakaoIcon from '@/icons/KakaoIcon';
+import { redirectToSocialLogin } from '@/services/auths/socialLogin';
 
 const LoginPage = () => {
   return (
     <main className="min-h-dvh">
-      <section className="mx-auto flex min-h-dvh w-full max-w-[500px] flex-col items-center">
+      <section className="mx-auto flex min-h-dvh w-full max-w-125 flex-col items-center">
         <div className="h-20" />
         {/* 로고 & 타이틀 영역 */}
         <div className="mt-16 flex flex-col items-center gap-1">
-          <div className="h-[103px] w-[103px] bg-logo" />
+          <div className="h-25.75 w-25.75 bg-logo" />
           <div className="typo-h1_bold24 text-gray-900">살아보니,</div>
           <div className="typo-body_reg18 text-gray-900">열매가 맺히더라</div>
         </div>
@@ -19,9 +19,9 @@ const LoginPage = () => {
           {/* Kakao Login Button */}
           <button
             type="button"
-            onClick={() => redirectToSocialLogin("kakao")}
+            onClick={() => redirectToSocialLogin('kakao')}
             className="
-              flex items-center justify-center w-[290px] h-[58px] gap-[8px] rounded-full bg-[#FFEE50] py-[24px]"
+              flex items-center justify-center w-72.5 h-14.5 gap-2 rounded-full bg-[#FFEE50] py-6"
           >
             <KakaoIcon className="size-8" />
             <span className="typo-body_reg14 font-semibold text-gray-400 whitespace-nowrap">
@@ -32,8 +32,8 @@ const LoginPage = () => {
           {/* Google Login Button */}
           <button
             type="button"
-            className="flex items-center justify-center w-[290px] h-[58px] gap-2 rounded-full bg-screen-0 border-[0.5px] border-gray-900"
-            onClick={() => redirectToSocialLogin("google")}
+            className="flex items-center justify-center w-72.5 h-14.5 gap-2 rounded-full bg-screen-0 border-[0.5px] border-gray-900"
+            onClick={() => redirectToSocialLogin('google')}
           >
             <GoogleGIcon className="size-6" />
             <span className="typo-body_reg14 font-semibold text-gray-400 whitespace-nowrap">

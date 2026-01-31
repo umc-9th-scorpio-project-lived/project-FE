@@ -1,9 +1,9 @@
-import MiniCloseIcon from "@/icons/MiniCloseIcon";
-import PlusIcon from "@/icons/PlusIcon";
-import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { MOCK_ROUTINES } from "./mockRoutines";
-import useCoachModal from "@/hooks/useCoachModal";
+import MiniCloseIcon from '@/icons/MiniCloseIcon';
+import PlusIcon from '@/icons/PlusIcon';
+import React, { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { MOCK_ROUTINES } from './mockRoutines';
+import useCoachModal from '@/hooks/useCoachModal';
 
 const LONG_PRESS_MS = 500;
 const MOVE_CANCEL_PX = 8;
@@ -13,7 +13,8 @@ const HomeContent = () => {
 
   const [completed, setCompleted] = useState<Set<number>>(new Set());
 
-  const { openCoach: openCoach, close: closeCoach } = useCoachModal("coach:home");
+  const { openCoach: openCoach, close: closeCoach } =
+    useCoachModal('coach:home');
 
   const totalCount = MOCK_ROUTINES.length;
 
@@ -21,9 +22,9 @@ const HomeContent = () => {
 
   const headerText =
     totalCount === 0
-      ? "오늘 루틴을 시작해볼까요?"
+      ? '오늘 루틴을 시작해볼까요?'
       : doneCount === 0
-        ? "아직 완료하지 않은 루틴이 있어요!"
+        ? '아직 완료하지 않은 루틴이 있어요!'
         : `오늘 루틴 ${doneCount}/${totalCount} 진행 중!`;
 
   const pressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -34,7 +35,11 @@ const HomeContent = () => {
   const toggleComplete = (idx: number) => {
     setCompleted((prev) => {
       const next = new Set(prev);
-      next.has(idx) ? next.delete(idx) : next.add(idx);
+      if (next.has(idx)) {
+        next.delete(idx);
+      } else {
+        next.add(idx);
+      }
       return next;
     });
   };
@@ -53,7 +58,7 @@ const HomeContent = () => {
 
     pressTimer.current = setTimeout(() => {
       longPressTriggered.current = true;
-      navigate("/lived/edit");
+      navigate('/lived/edit');
     }, LONG_PRESS_MS);
   };
 
@@ -92,9 +97,9 @@ const HomeContent = () => {
             return (
               <div
                 key={`${r.customTitle}-${idx}`}
-                className={`relative w-[106px] h-[106px] rounded-lg flex items-center justify-center select-none
-                  ${isDone ? "bg-primary-30" : "bg-primary-20"}`}
-                style={{ touchAction: "manipulation" }}
+                className={`relative w-26.5 h-26.5 rounded-lg flex items-center justify-center select-none
+                  ${isDone ? 'bg-primary-30' : 'bg-primary-20'}`}
+                style={{ touchAction: 'manipulation' }}
                 onPointerDown={(e) => handlePressStart(e)}
                 onPointerMove={handlePressMove}
                 onPointerUp={() => handlePressEnd(idx)}
@@ -115,8 +120,8 @@ const HomeContent = () => {
           })}
 
           <div
-            className="w-[106px] h-[106px] flex flex-col gap-3.5 justify-center items-center bg-gray-50 rounded-lg"
-            onClick={() => navigate("/lived/create")}
+            className="w-26.5 h-26.5 flex flex-col gap-3.5 justify-center items-center bg-gray-50 rounded-lg"
+            onClick={() => navigate('/lived/create')}
           >
             <PlusIcon className="w-5 h-5 text-gray-700" />
             <span className="typo-body_reg14">루틴 추가하기</span>
@@ -126,7 +131,7 @@ const HomeContent = () => {
         {totalCount > 0 && openCoach && (
           <>
             <div className="fixed inset-0 z-40" onClick={closeCoach} />
-            <div className="absolute left-20 top-[120px] -translate-x-1/2 z-50">
+            <div className="absolute left-20 top-30 -translate-x-1/2 z-50">
               <div className="relative bg-gray-700 text-screen-0 rounded-sm p-4">
                 <div className="flex gap-3 items-center">
                   <div className="typo-body_reg12 text-center">

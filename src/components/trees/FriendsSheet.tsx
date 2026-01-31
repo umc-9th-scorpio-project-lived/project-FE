@@ -1,9 +1,14 @@
-import AddFriendIcon from "@/icons/AddFriendIcon";
-import MiniRightChevronIcon from "@/icons/MiniRightChevronIcon";
-import SearchIcon from "@/icons/SearchIcon";
-import { AnimatePresence, motion, useAnimation, type PanInfo } from "framer-motion";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import AddFriendIcon from '@/icons/AddFriendIcon';
+import MiniRightChevronIcon from '@/icons/MiniRightChevronIcon';
+import SearchIcon from '@/icons/SearchIcon';
+import {
+  AnimatePresence,
+  motion,
+  useAnimation,
+  type PanInfo,
+} from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const FriendsSheet = () => {
   const navigate = useNavigate();
@@ -25,7 +30,10 @@ const FriendsSheet = () => {
 
   // 드래그 종료 시 로직: 사용자가 시트를 드래그하고 손을 뗐을 때 호출
   // info.velocity: 드래그 속도, info.offset: 드래그한 거리
-  const onDragEnd = (_: any, info: PanInfo) => {
+  const onDragEnd = (
+    _: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo
+  ) => {
     const shouldClose = info.velocity.y > 20 || info.offset.y > 100;
     const shouldOpen = info.velocity.y < -20 || info.offset.y < -100;
 
@@ -67,7 +75,7 @@ const FriendsSheet = () => {
               setIsOpen(false);
               controls.start({ y: SHEET_HEIGHT - PEEK_HEIGHT });
             }}
-            className="max-w-[500px] min-w-[375px] w-full fixed inset-0 mx-auto bg-black/25 overflow-hidden"
+            className="max-w-125 min-w-93.75 w-full fixed inset-0 mx-auto bg-black/25 overflow-hidden"
           />
         )}
       </AnimatePresence>
@@ -109,7 +117,7 @@ const FriendsSheet = () => {
         <div className="w-full flex flex-col">
           <button
             onClick={() => {
-              navigate("/lived/tree/friend");
+              navigate('/lived/tree/friend');
             }}
             className="p-4 pr-2.5 flex justify-between items-center border-b border-gray-200 cursor-pointer"
           >
@@ -120,7 +128,7 @@ const FriendsSheet = () => {
 
           <button
             onClick={() => {
-              navigate("/lived/tree/friend");
+              navigate('/lived/tree/friend');
             }}
             className="p-4 pr-2.5 flex justify-between items-center border-b border-gray-200 cursor-pointer"
           >
@@ -131,7 +139,7 @@ const FriendsSheet = () => {
 
           <button
             onClick={() => {
-              navigate("/lived/tree/friend");
+              navigate('/lived/tree/friend');
             }}
             className="p-4 pr-2.5 flex justify-between items-center border-b border-gray-200 cursor-pointer"
           >
@@ -142,7 +150,7 @@ const FriendsSheet = () => {
 
           <button
             onClick={() => {
-              navigate("/lived/tree/friend");
+              navigate('/lived/tree/friend');
             }}
             className="p-4 pr-2.5 flex justify-between items-center border-b border-gray-200 cursor-pointer"
           >
@@ -153,7 +161,7 @@ const FriendsSheet = () => {
 
           <button
             onClick={() => {
-              navigate("/lived/tree/friend");
+              navigate('/lived/tree/friend');
             }}
             className="p-4 pr-2.5 flex justify-between items-center border-b border-gray-200 cursor-pointer"
           >

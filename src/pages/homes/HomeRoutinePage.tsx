@@ -1,27 +1,28 @@
-import DownChevronIcon from "@/icons/DownChevronIcon";
-import LeftChevronIcon from "@/icons/LeftChevronIcon";
-import MiniCloseIcon from "@/icons/MiniCloseIcon";
-import { useRoutineStore } from "@/stores/homes/routineStore";
-import useBaseModal from "@/stores/modals/baseModal";
-import { useMemo, useRef, useState } from "react";
-import type { AlarmValue, RepeatValue } from "@/types/homes/Routine.types";
-import DeleteIcon from "@/icons/DeleteIcon";
-import useCoachModal from "@/hooks/useCoachModal";
-import { formatRepeatLabel } from "@/utils/homes/routineUtils";
-import { useNavigate } from "react-router-dom";
+import DownChevronIcon from '@/icons/DownChevronIcon';
+import LeftChevronIcon from '@/icons/LeftChevronIcon';
+import MiniCloseIcon from '@/icons/MiniCloseIcon';
+import { useRoutineStore } from '@/stores/homes/routineStore';
+import useBaseModal from '@/stores/modals/baseModal';
+import React, { useMemo, useRef, useState } from 'react';
+import type { AlarmValue, RepeatValue } from '@/types/homes/Routine.types';
+import DeleteIcon from '@/icons/DeleteIcon';
+import useCoachModal from '@/hooks/useCoachModal';
+import { formatRepeatLabel } from '@/utils/homes/routineUtils';
+import { useNavigate } from 'react-router-dom';
 
 // 루틴 제목 최대 길이
 const MAX_TITLE_LENGTH = 50;
 
 // 루틴 생성/수정 페이지 통합 관리
-type Mode = "create" | "edit";
+type Mode = 'create' | 'edit';
 
-const HomeRoutinePage = ({ mode = "create" as Mode }) => {
+const HomeRoutinePage = ({ mode = 'create' as Mode }) => {
   const { openModal } = useBaseModal();
   const navigate = useNavigate();
 
   // 아이콘 선택 코치 모달 - 계정당 1회 노출 설정
-  const { openCoach: openCoach, close: closeCoach } = useCoachModal("coach:icon");
+  const { openCoach: openCoach, close: closeCoach } =
+    useCoachModal('coach:icon');
 
   // 루틴 상태 관리
   const title = useRoutineStore((s) => s.draft.title);
@@ -42,14 +43,14 @@ const HomeRoutinePage = ({ mode = "create" as Mode }) => {
 
   // 알람 설정 라벨
   const alarmTimeLabel = useMemo(() => {
-    const fallback = "오후 12:00";
+    const fallback = '오후 12:00';
     return alarm.enabled ? alarm.time || fallback : fallback;
   }, [alarm.enabled, alarm.time]);
 
   // 적용 버튼 활성화 여부
   const canSubmit = useMemo(() => {
     if (title !== null && !title.trim()) return false;
-    if (repeat.type === "NONE") return false;
+    if (repeat.type === 'NONE') return false;
     if (alarm.enabled && !alarm.time) return false;
     return true;
   }, [title, repeat, alarm]);
@@ -91,19 +92,19 @@ const HomeRoutinePage = ({ mode = "create" as Mode }) => {
 
   // 엔터 입력 방지
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "Enter") e.preventDefault();
+    if (e.key === 'Enter') e.preventDefault();
   };
 
   // 뒤로가기 핸들러
   const handleClickBack = () => {
     resetDraft();
-    navigate("/lived");
+    navigate('/lived');
   };
 
   // 반복 주기 모달 오픈 핸들러
   const openRepeatModal = () => {
-    openModal("setRepeatCycleModal", {
-      position: "bottom",
+    openModal('setRepeatCycleModal', {
+      position: 'bottom',
       props: {
         initialValue: repeat,
         onApply: (_summary: string, value: RepeatValue) => setRepeat(value),
@@ -113,8 +114,8 @@ const HomeRoutinePage = ({ mode = "create" as Mode }) => {
 
   // 알람 설정 모달 오픈 핸들러
   const openAlarmModal = () => {
-    openModal("setAlarmModal", {
-      position: "bottom",
+    openModal('setAlarmModal', {
+      position: 'bottom',
       props: {
         initialValue: alarm,
         onApply: (value: AlarmValue) => setAlarm(value),
@@ -123,8 +124,8 @@ const HomeRoutinePage = ({ mode = "create" as Mode }) => {
   };
 
   // 페이지 타이틀 및 CTA 라벨
-  const pageTitle = mode === "edit" ? "루틴 수정" : "루틴 추가";
-  const ctaLabel = mode === "edit" ? "수정 완료" : "루틴 추가하기";
+  const pageTitle = mode === 'edit' ? '루틴 수정' : '루틴 추가';
+  const ctaLabel = mode === 'edit' ? '수정 완료' : '루틴 추가하기';
 
   return (
     <div className="w-full min-h-dvh px-4 pt-10 flex flex-col">
@@ -136,10 +137,12 @@ const HomeRoutinePage = ({ mode = "create" as Mode }) => {
         <span className="typo-h2_bold20 text-gray-900">{pageTitle}</span>
 
         {/* 수정 모드일 경우 루틴 삭제 버튼 노출 */}
-        {mode === "edit" && (
+        {mode === 'edit' && (
           <DeleteIcon
             className="absolute right-3 w-6 h-6 flex items-center justify-center"
-            onClick={() => openModal("deleteRoutineModal", { position: "bottom" })}
+            onClick={() =>
+              openModal('deleteRoutineModal', { position: 'bottom' })
+            }
           />
         )}
       </div>
@@ -157,29 +160,33 @@ const HomeRoutinePage = ({ mode = "create" as Mode }) => {
                 onBlur={handleBlur}
                 onInput={handleInput}
                 onKeyDown={handleKeyDown}
-                className={`w-[106px] h-[106px] rounded-lg flex items-center justify-center px-2.5 py-2.5 outline-none typo-body_reg14 text-center whitespace-pre-wrap break-all overflow-y-auto transition-colors ${
+                className={`w-26.5 h-26.5 rounded-lg flex items-center justify-center px-2.5 py-2.5 outline-none typo-body_reg14 text-center whitespace-pre-wrap break-all overflow-y-auto transition-colors ${
                   isTitleFocused || hasTitle
-                    ? "bg-primary-20 text-gray-900"
-                    : "bg-gray-100 text-gray-500"
+                    ? 'bg-primary-20 text-gray-900'
+                    : 'bg-gray-100 text-gray-500'
                 }`}
               >
-                {!hasTitle && !isTitleFocused ? "루틴 제목" : title}
+                {!hasTitle && !isTitleFocused ? '루틴 제목' : title}
               </div>
 
               {/* 루틴 아이콘 선택 버튼 */}
               <button
                 type="button"
-                onClick={() => openModal("selectIconModal", { position: "bottom" })}
+                onClick={() =>
+                  openModal('selectIconModal', { position: 'bottom' })
+                }
                 className="absolute -right-4 -bottom-4 w-9 h-9 rounded-full bg-gray-100 border border-screen-0 flex items-center justify-center"
               >
-                <span className="typo-body_reg16 leading-none">{icon ?? "👍"}</span>
+                <span className="typo-body_reg16 leading-none">
+                  {icon ?? '👍'}
+                </span>
               </button>
 
               {/* 아이콘 설정 코치 모달 */}
               {openCoach && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={closeCoach} />
-                  <div className="absolute left-[104px] top-[138px] -translate-x-1/2 z-50">
+                  <div className="absolute left-26 top-34.5 -translate-x-1/2 z-50">
                     <div className="relative bg-gray-700 text-screen-0 rounded-sm p-4 w-56">
                       <div className="flex gap-3 justify-center items-center ">
                         <div className="typo-body_reg12 text-screen-0 text-center z-10">
@@ -188,7 +195,10 @@ const HomeRoutinePage = ({ mode = "create" as Mode }) => {
                           탭하여 변경 가능합니다.
                         </div>
 
-                        <MiniCloseIcon className="w-2.5 h-2.5 text-screen-0" onClick={closeCoach} />
+                        <MiniCloseIcon
+                          className="w-2.5 h-2.5 text-screen-0"
+                          onClick={closeCoach}
+                        />
                       </div>
                       <div className="absolute -top-1 left-1/2 -translate-x-1/2">
                         <div className="w-4 h-4 bg-gray-700 rotate-45 rounded-xs" />
@@ -207,13 +217,13 @@ const HomeRoutinePage = ({ mode = "create" as Mode }) => {
               <button
                 type="button"
                 onClick={openRepeatModal}
-                className="w-full rounded-lg bg-gray-50 flex items-center justify-between px-4 py-[18px]"
+                className="w-full rounded-lg bg-gray-50 flex items-center justify-between px-4 py-4.5"
               >
                 <span
                   className={
-                    repeat.type === "NONE"
-                      ? "typo-body_reg16 text-gray-500"
-                      : "typo-body_bold16 text-gray-900"
+                    repeat.type === 'NONE'
+                      ? 'typo-body_reg16 text-gray-500'
+                      : 'typo-body_bold16 text-gray-900'
                   }
                 >
                   {repeatLabel}
@@ -236,24 +246,24 @@ const HomeRoutinePage = ({ mode = "create" as Mode }) => {
                     onClick={() =>
                       setAlarm(
                         alarm.enabled
-                          ? { enabled: false, time: alarm.time ?? "오후 12:00" }
-                          : { enabled: true, time: alarm.time ?? "오후 12:00" },
+                          ? { enabled: false, time: alarm.time ?? '오후 12:00' }
+                          : { enabled: true, time: alarm.time ?? '오후 12:00' }
                       )
                     }
                     className={`w-6 h-3 rounded-full relative transition-colors ${
-                      alarm.enabled ? "bg-primary-50" : "bg-gray-200"
+                      alarm.enabled ? 'bg-primary-50' : 'bg-gray-200'
                     }`}
                   >
                     {/* 알람 토글 */}
                     <span
                       className={`absolute top-0.5 w-2 h-2 rounded-full bg-gray-50 transition-transform ${
-                        alarm.enabled ? "translate-x-[2px]" : "translate-x-[-10px]"
+                        alarm.enabled ? 'translate-x-0.5' : '-translate-x-2.5'
                       }`}
                     />
                   </button>
 
                   <span className="typo-body_reg12 text-gray-700">
-                    {alarm.enabled ? "있음" : "없음"}
+                    {alarm.enabled ? '있음' : '없음'}
                   </span>
                 </div>
               </div>
@@ -262,13 +272,13 @@ const HomeRoutinePage = ({ mode = "create" as Mode }) => {
                 type="button"
                 disabled={!alarm.enabled}
                 onClick={openAlarmModal}
-                className="w-full rounded-lg bg-gray-50 flex items-center justify-between px-4 py-[18px]"
+                className="w-full rounded-lg bg-gray-50 flex items-center justify-between px-4 py-4.5"
               >
                 <span
                   className={
                     alarm.enabled
-                      ? "typo-body_bold16 text-gray-900"
-                      : "typo-body_reg16 text-gray-500"
+                      ? 'typo-body_bold16 text-gray-900'
+                      : 'typo-body_reg16 text-gray-500'
                   }
                 >
                   {alarmTimeLabel}
@@ -283,13 +293,15 @@ const HomeRoutinePage = ({ mode = "create" as Mode }) => {
         <div
           role="button"
           className={`w-full rounded-full typo-body_bold18 py-3 text-center ${
-            canSubmit ? "bg-primary-50 text-screen-0" : "bg-gray-100 text-gray-400"
+            canSubmit
+              ? 'bg-primary-50 text-screen-0'
+              : 'bg-gray-100 text-gray-400'
           }`}
           onClick={() => {
             if (!canSubmit) return;
             console.log({ title, icon, repeat, alarm });
             resetDraft();
-            navigate("/lived");
+            navigate('/lived');
           }}
         >
           {ctaLabel}
