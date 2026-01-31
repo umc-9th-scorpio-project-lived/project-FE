@@ -110,9 +110,7 @@ const RoutinePage = () => {
                       flex items-center gap-3 cursor-pointer select-none transition
                       ${active ? 'bg-primary-50 text-screen-0' : 'bg-gray-50 text-gray-600'}`}
                   >
-                    <span className="typo-body_bold16">
-                      {r.emoji} {r.title}
-                    </span>
+                    <span className="typo-body_bold16">{r.title}</span>
                   </div>
                 );
               })}
