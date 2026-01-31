@@ -1,10 +1,111 @@
-import { useNavigate } from "react-router-dom";
-import useBaseModal from "@/stores/modals/baseModal";
-import AlarmIcon from "@/icons/AlarmIcon";
+import { useNavigate } from 'react-router-dom';
+import useBaseModal from '@/stores/modals/baseModal';
+import AlarmIcon from '@/icons/AlarmIcon';
+
+import useOnboardingStore from '@/stores/onboarding/onboardingStore';
+
+import type { SignupRequest } from '@/types/auths/Auth.types';
+import {
+  toGenderEnum,
+  toLivingPeriod,
+  yyyymmddToDate,
+} from '@/utils/homes/authUtils';
+import { useSocialAuthStore } from '@/stores/auths/socialAuthStore';
+import { useSignupStore } from '@/stores/auths/signupStore';
 
 export default function PushAlarmModal() {
   const navigate = useNavigate();
   const { closeModal } = useBaseModal();
+
+  // 온보딩에서 모아둔 값들
+  const {
+    livingYear,
+    gender,
+    birth,
+    concerns,
+    routineIds,
+    setNotificationStatus,
+  } = useOnboardingStore();
+
+  // 콜백에서 저장해둔 소셜 값들
+  const { socialId, provider, name } = useSocialAuthStore();
+
+  // signup API 호출 상태
+  const { isSigningUp, signupAction } = useSignupStore();
+
+  const buildBody = (notificationStatus: 1 | 2): SignupRequest | null => {
+    // 신규회원인데 소셜 값이 없으면 회원가입 불가
+    if (!socialId || !provider || !name) return null;
+
+    const body: SignupRequest = {
+      socialId,
+      provider,
+      name,
+
+      livingPeriod: toLivingPeriod(livingYear),
+      gender: toGenderEnum(gender),
+      birth: yyyymmddToDate(birth),
+
+      concernIds: concerns,
+      notificationStatus,
+
+      ...(routineIds && routineIds.length > 0 ? { routineIds } : {}),
+    };
+
+    // 최소 검증
+    if (!body.birth) return null;
+    if (!body.livingPeriod) return null;
+    if (!body.gender) return null;
+    if (body.concernIds.length === 0) return null;
+
+    return body;
+  };
+
+  const handleSelect = async (notificationStatus: 1 | 2) => {
+    if (isSigningUp) return;
+
+    // store에 notificationStatus 저장
+    setNotificationStatus?.(notificationStatus);
+    console.log({
+      socialId,
+      provider,
+      name,
+      concerns,
+      birth,
+      livingYear,
+      gender,
+      routineIds,
+    });
+
+    const body = buildBody(notificationStatus);
+    if (!body) {
+      alert(
+        '회원가입에 필요한 정보가 부족합니다. 다시 로그인부터 진행해주세요.'
+      );
+      closeModal();
+      navigate('/', { replace: true });
+      return;
+    }
+
+    console.log('signup body =>', body);
+    const result = await signupAction(body);
+
+    if (!result) {
+      alert('회원가입에 실패했습니다. 다시 시도해주세요.');
+      return;
+    }
+
+    localStorage.setItem('accessToken', result.accessToken);
+    localStorage.setItem('refreshToken', result.refreshToken);
+
+    closeModal();
+
+    if (notificationStatus === 1) {
+      navigate('/onboardings/push-guide', { replace: true });
+    } else {
+      navigate('/lived', { replace: true });
+    }
+  };
 
   return (
     <div
@@ -41,22 +142,24 @@ export default function PushAlarmModal() {
       <div className="mt-auto flex w-full flex-col gap-[10px]">
         <div
           role="button"
-          onClick={() => {
-            closeModal();
-            navigate("/onboardings/push-guide");
-          }}
-          className="flex justify-center items-center h-[51px] w-full rounded-[8px] bg-primary-50 typo-body_bold16 text-screen-0"
+          onClick={() => handleSelect(1)}
+          aria-disabled={isSigningUp}
+          className={[
+            'flex justify-center items-center h-[51px] w-full rounded-[8px] typo-body_bold16 text-screen-0',
+            isSigningUp ? 'bg-primary-20' : 'bg-primary-50',
+          ].join(' ')}
         >
           알림 받기
         </div>
 
         <div
           role="button"
-          onClick={() => {
-            closeModal();
-            navigate("/lived");
-          }}
-          className="flex justify-center items-center h-[51px] w-full rounded-[8px] bg-gray-100 typo-body_bold16 text-gray-400"
+          onClick={() => handleSelect(2)}
+          aria-disabled={isSigningUp}
+          className={[
+            'flex justify-center items-center h-[51px] w-full rounded-[8px] typo-body_bold16 text-gray-400',
+            isSigningUp ? 'bg-gray-50' : 'bg-gray-100',
+          ].join(' ')}
         >
           나중에 설정할게요
         </div>
