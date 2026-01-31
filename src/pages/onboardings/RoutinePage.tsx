@@ -83,12 +83,6 @@ const RoutinePage = () => {
 
         <div className="min-h-0 flex-1 overflow-y-auto">
           <div className="flex flex-col gap-4 pb-6 w-full">
-            {isLoading && (
-              <div className="typo-body_reg14 text-gray-500">
-                추천 루틴 불러오는 중...
-              </div>
-            )}
-
             {!isLoading &&
               routines.map((r) => {
                 const active = selected.includes(r.routineId);
@@ -123,8 +117,8 @@ const RoutinePage = () => {
             role="button"
             tabIndex={0}
             onClick={() => {
-              setRoutineIds([]); // ✅ store에 반영
-              setSelected([]); // UI도 초기화
+              setRoutineIds([]);
+              setSelected([]);
               openModal('pushAlarmModal');
             }}
             className="w-full cursor-pointer select-none text-center typo-body_bold14 text-gray-700"
@@ -138,7 +132,7 @@ const RoutinePage = () => {
             aria-disabled={!isStartEnabled}
             onClick={() => {
               if (!isStartEnabled) return;
-              setRoutineIds(selected); // ✅ store에 반영 (number[])
+              setRoutineIds(selected);
               openModal('pushAlarmModal');
             }}
             className={`h-12.5 w-full rounded-full
