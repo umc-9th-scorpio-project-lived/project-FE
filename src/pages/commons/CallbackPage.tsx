@@ -23,6 +23,7 @@ const CallbackPage = () => {
 
   useEffect(() => {
     const isNewMember = params.get('isNewMember') === 'true';
+    const accessToken = params.get('accessToken');
 
     // 신규 회원일 경우 - 회원가입을 위한 정보 입력 단계로 이동
     if (isNewMember) {
@@ -46,6 +47,9 @@ const CallbackPage = () => {
     }
 
     // 기존 회원일 경우 - (토큰은 HttpOnly Cookie로 내려온다고 가정) 홈 화면으로 이동
+    if (accessToken) {
+      localStorage.setItem('accessToken', accessToken);
+    }
     navigate('/lived', { replace: true });
   }, [navigate, params, setSocialAuth]);
 
