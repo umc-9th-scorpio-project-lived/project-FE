@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import PopularPostCard from './PopularPostCard';
 import { getPopularPostList } from '@/services/posts/post';
-import type { PopularPost } from '@/types/communities/PopularPost';
+import type { PopularPost } from '@/types/communities/PopularPost.types';
 import { useNavigate } from 'react-router-dom';
 
 const PopularPostList = () => {

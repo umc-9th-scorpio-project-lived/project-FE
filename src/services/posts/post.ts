@@ -1,5 +1,5 @@
 import { authApi } from '@/api';
-import type { PopularPost } from '@/types/communities/PopularPost';
+import type { PopularPost } from '@/types/communities/PopularPost.types';
 import type {
   CreatePostRequest,
   CreatePostResponse,
@@ -12,7 +12,7 @@ import type { PostDetail } from '@/types/communities/PostDetail.types';
 import type {
   PostLikeResponse,
   PostScrapResponse,
-} from '@/types/communities/PostStatus';
+} from '@/types/communities/PostStatus.types';
 
 type GetPostParams = {
   keyword?: string;
