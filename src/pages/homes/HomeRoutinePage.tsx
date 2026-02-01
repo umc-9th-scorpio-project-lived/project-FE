@@ -3,7 +3,7 @@ import LeftChevronIcon from '@/icons/LeftChevronIcon';
 import MiniCloseIcon from '@/icons/MiniCloseIcon';
 import { useRoutineStore } from '@/stores/homes/routineStore';
 import useBaseModal from '@/stores/modals/baseModal';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import type { AlarmValue, RepeatValue } from '@/types/homes/Routine.types';
 import DeleteIcon from '@/icons/DeleteIcon';
 import useCoachModal from '@/hooks/useCoachModal';
@@ -11,7 +11,6 @@ import { formatRepeatLabel } from '@/utils/homes/routineUtils';
 import { useNavigate } from 'react-router-dom';
 import createRoutine from '@/services/routines/createRoutine';
 import type { CreateRoutineRequest } from '@/types/routines/Routine.types';
-import getHomeRoutine from '@/services/routines/getHomeRoutine';
 
 // 루틴 제목 최대 길이
 const MAX_TITLE_LENGTH = 50;
@@ -127,14 +126,14 @@ const HomeRoutinePage = ({ mode = 'create' as Mode }) => {
   };
 
   const dummyRoutine: CreateRoutineRequest = {
-    title: '물 마시기',
+    title: 'test routine',
     emoji: '👍',
     repeatType: 'WEEKLY',
     repeatInterval: 1,
     repeatValues: ['0', '2', '4'],
     isAlarmon: true,
     alarmTime: '13:30',
-    startDate: '2026-01-31',
+    startDate: '2026-02-01',
     repeatValueAsString: 'string',
   };
 
@@ -146,16 +145,6 @@ const HomeRoutinePage = ({ mode = 'create' as Mode }) => {
       console.error('❌ 루틴 생성 실패', e);
     }
   };
-
-  useEffect(() => {
-    getHomeRoutine(1, '2026-02-01')
-      .then((res) => {
-        console.log('✅ 루틴 조회 성공', res.data);
-      })
-      .catch((e) => {
-        console.error('❌ 루틴 조회 실패', e);
-      });
-  });
 
   // 페이지 타이틀 및 CTA 라벨
   const pageTitle = mode === 'edit' ? '루틴 수정' : '루틴 추가';

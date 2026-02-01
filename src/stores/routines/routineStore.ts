@@ -19,7 +19,13 @@ export const useRoutineStore = create<HomeRoutineState>((set, get) => ({
   isLoading: false,
 
   // 홈 루틴 데이터 설정
-  setHomeRoutine: (data) => set({ data }),
+  setHomeRoutine: (data) =>
+    set({
+      data: {
+        ...data,
+        routines: data.routines ?? [],
+      },
+    }),
 
   // 홈 루틴 데이터 초기화
   clearHomeRoutine: () => set({ data: EMPTY_HOME_ROUTINE }),
@@ -40,8 +46,7 @@ export const useRoutineStore = create<HomeRoutineState>((set, get) => ({
     });
 
     try {
-      const res = await toggleRoutineCheck(memberRoutineId, date);
-      if (!res.isSuccess) throw new Error(res.message);
+      await toggleRoutineCheck(memberRoutineId, date);
     } catch {
       set({ data: prev });
     }

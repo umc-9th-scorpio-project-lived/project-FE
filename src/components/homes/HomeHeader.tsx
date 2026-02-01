@@ -27,9 +27,8 @@ const HomeHeader = () => {
   useEffect(() => {
     const date = formatDate(selectedDate);
 
-    getHomeRoutine(date).then((res) => {
-      if (!res.isSuccess) return;
-      setHomeRoutine(res.result);
+    getHomeRoutine(date).then((result) => {
+      setHomeRoutine(result);
     });
   }, [selectedDate, setHomeRoutine]);
 
