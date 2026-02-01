@@ -1,23 +1,35 @@
-import PopularPostCard from "./PopularPostCard";
+import { useEffect, useState } from 'react';
+import PopularPostCard from './PopularPostCard';
+import { getPopularPostList } from '@/services/posts/post';
+import type { PopularPost } from '@/types/communities/PopularPost';
+import { useNavigate } from 'react-router-dom';
 
 const PopularPostList = () => {
+  const navigate = useNavigate();
+
+  const [posts, setPosts] = useState<PopularPost[]>([]);
+  useEffect(() => {
+    const fetch = async () => {
+      const res = await getPopularPostList();
+      setPosts(res.content);
+    };
+    fetch();
+  }, []);
+
+  if (posts.length === 0) return null;
+
   return (
     <div className="flex py-3 px-4 overflow-x-auto gap-5 flex-nowrap -mr-4">
-      <PopularPostCard
-        title="이렇게 추운날"
-        content="보일러 몇 도로 틀고 지내? 
-        원룸인데 우풍이 너무 심해서 퇴근하고 오면 16도야..."
-        likeCount={17}
-        commentCount={12}
-      />
-      <PopularPostCard
-        title="자취 선택지 고민된다..."
-        content="선택지가 2가지 있어
-        1. 월세랑 보증금 없음(할머니 건물이라)
-        2. 보증금 500에 월세 30만원"
-        likeCount={4}
-        commentCount={8}
-      />
+      {posts.map((post) => (
+        <PopularPostCard
+          key={post.postId}
+          title={post.title}
+          content={post.content}
+          likeCount={post.likeCount}
+          commentCount={post.commentCount}
+          onClick={() => navigate(`/lived/community/${post.postId}`)}
+        />
+      ))}
     </div>
   );
 };

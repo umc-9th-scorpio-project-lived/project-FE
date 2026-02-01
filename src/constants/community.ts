@@ -1,12 +1,32 @@
-export const COMMUNITY_CATEGORIES_LABEL = [
-  "전체",
-  "자취 일상",
-  "고민 상담소",
-  "추천템",
-  "자취 꿀팁",
-] as const;
+export const COMMUNITY_CATEGORIES = {
+  ALL: {
+    label: '전체',
+    code: null, // 또는 "ALL" (서버 정책에 맞게)
+  },
+  SELF_LIFE: {
+    label: '자취 일상',
+    code: 'SELF_LIFE',
+  },
+  COUNSEL: {
+    label: '고민 상담소',
+    code: 'COUNSEL',
+  },
+  RECOMMEND: {
+    label: '추천템',
+    code: 'RECOMMEND',
+  },
+  TIP: {
+    label: '자취 꿀팁',
+    code: 'TIP',
+  },
+} as const;
 
-export const COMMUNITY_CATEGORIES = ["SELF_LIFE", "COUNSEL", "RECOMMEND", "TIP"] as const;
+export type CommunityCategoryKey = keyof typeof COMMUNITY_CATEGORIES;
 
-export type CommunityCategoryLabel = (typeof COMMUNITY_CATEGORIES_LABEL)[number];
-export type CommunityCategory = (typeof COMMUNITY_CATEGORIES)[number];
+export type CommunityCategoryLabel =
+  (typeof COMMUNITY_CATEGORIES)[CommunityCategoryKey]['label'];
+
+export type CommunityCategory = Exclude<
+  (typeof COMMUNITY_CATEGORIES)[CommunityCategoryKey]['code'],
+  null
+>;

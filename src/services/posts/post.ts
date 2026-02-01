@@ -1,25 +1,37 @@
-import { authApi } from "@/api";
-import type { PostListResult } from "@/types/communities/Post.types";
-import type { PostDetail } from "@/types/communities/PostDetail.types";
+import { authApi } from '@/api';
+import type { PopularPost } from '@/types/communities/PopularPost';
+import type {
+  CreatePostRequest,
+  CreatePostResponse,
+  DeletePostResult,
+  EditPostRequest,
+  EditPostResponse,
+  PostListResult,
+} from '@/types/communities/Post.types';
+import type { PostDetail } from '@/types/communities/PostDetail.types';
 
 type GetPostParams = {
-  memberId: number;
   keyword?: string;
   category?: string;
   cursor?: number;
   size?: number;
 };
 
+type PopularPostListResult = {
+  content: PopularPost[];
+};
+
+{
+  /* 게시글 목록 조회 */
+}
 export const getPostList = ({
-  memberId,
   keyword,
   category,
   cursor,
   size = 20,
-}: GetPostParams): Promise<PostListResult> => {
-  return authApi.get("/posts", {
+}: GetPostParams = {}): Promise<PostListResult> => {
+  return authApi.get('/posts', {
     params: {
-      memberId,
       keyword,
       category,
       cursor,
@@ -28,6 +40,75 @@ export const getPostList = ({
   });
 };
 
+{
+  /* 게시글 상세 조회 */
+}
 export const getPostDetail = async (postId: number): Promise<PostDetail> => {
   return authApi.get(`/posts/${postId}`);
+};
+
+{
+  /* 게시글 작성 */
+}
+export const createPost = async (
+  body: CreatePostRequest
+): Promise<CreatePostResponse> => {
+  const formdata = new FormData();
+
+  formdata.append('category', body.category);
+  formdata.append('title', body.title);
+  formdata.append('content', body.content);
+
+  body.images?.slice(0, 10).forEach((image) => {
+    formdata.append('images', image);
+  });
+
+  return authApi.post(`/posts`, formdata, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
+
+{
+  /* 게시글 삭제 */
+}
+export const deletePost = async (postId: number): Promise<DeletePostResult> => {
+  return authApi.delete(`/posts/${postId}`);
+};
+
+{
+  /* 게시글 수정 */
+}
+export const EditPost = async (
+  postId: number,
+  body: EditPostRequest
+): Promise<EditPostResponse> => {
+  const formdata = new FormData();
+
+  formdata.append('category', body.category);
+  formdata.append('title', body.title);
+  formdata.append('content', body.content);
+
+  body.deleteImageIds?.forEach((id) => {
+    formdata.append('deleteImageIds', String(id));
+  });
+
+  body.imageOrders?.forEach((order) => {
+    formdata.append('imageOrders', JSON.stringify(order));
+  });
+
+  body.images?.slice(0, 10).forEach((image) => {
+    formdata.append('images', image);
+  });
+
+  return authApi.patch(`/posts/${postId}`, formdata, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
+
+export const getPopularPostList = async (): Promise<PopularPostListResult> => {
+  return authApi.get(`/posts/popular`);
 };

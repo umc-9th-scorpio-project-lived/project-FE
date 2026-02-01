@@ -1,16 +1,33 @@
-import Category from "@/components/communities/Category";
-import PopularPostList from "@/components/communities/PopularPostList";
-import PostList from "@/components/communities/PostList";
-import WritingButton from "@/components/communities/WritingButton";
-import { COMMUNITY_CATEGORIES_LABEL } from "@/constants/community";
-import SearchIcon from "@/icons/SearchIcon";
-import { getPostList } from "@/services/posts/post";
-import type { Post } from "@/types/communities/Post.types";
-import { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import Category from '@/components/communities/Category';
+import PopularPostList from '@/components/communities/PopularPostList';
+import PostList from '@/components/communities/PostList';
+import WritingButton from '@/components/communities/WritingButton';
+import {
+  COMMUNITY_CATEGORIES,
+  type CommunityCategory,
+  type CommunityCategoryLabel,
+} from '@/constants/community';
+import SearchIcon from '@/icons/SearchIcon';
+import { getPostList } from '@/services/posts/post';
+import type { Post } from '@/types/communities/Post.types';
+import { useEffect, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const CommunityPage = () => {
-  const [selectedCategory, setSelectedCategory] = useState("전체");
+  const categories: CommunityCategoryLabel[] = Object.values(
+    COMMUNITY_CATEGORIES
+  ).map((c) => c.label);
+  const [selectedCategory, setSelectedCategory] =
+    useState<CommunityCategoryLabel>('전체');
+  const getCategoryCodeByLabel = (
+    label: CommunityCategoryLabel
+  ): CommunityCategory | undefined => {
+    const found = Object.values(COMMUNITY_CATEGORIES).find(
+      (c) => c.label === label
+    );
+    return found?.code ?? undefined;
+  };
+
   const [posts, setPosts] = useState<Post[]>([]);
   const navigate = useNavigate();
 
@@ -21,16 +38,20 @@ const CommunityPage = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        const categoryCode = getCategoryCodeByLabel(selectedCategory);
+
         const res = await getPostList({
-          memberId: 1,
+          category: categoryCode,
         });
+
         setPosts(res.content);
       } catch (e) {
         console.error(e);
       }
     };
+
     fetchPosts();
-  }, []);
+  }, [selectedCategory]);
 
   return (
     <div className="flex flex-col pb-25 w-full min-h-screen pt-10">
@@ -52,7 +73,7 @@ const CommunityPage = () => {
         </div>
       </div>
       <Category
-        categories={[...COMMUNITY_CATEGORIES_LABEL]}
+        categories={categories}
         selected={selectedCategory}
         onSelect={setSelectedCategory}
       />
@@ -62,7 +83,13 @@ const CommunityPage = () => {
         <PopularPostList />
       </section>
       {/*게시글*/}
-      <PostList posts={posts} onPostClick={handlePostClick} />
+      {posts.length === 0 ? (
+        <div className="flex w-full items-center justify-center mt-6 typo-body_reg16 text-gray-400">
+          등록된 게시글이 없습니다.
+        </div>
+      ) : (
+        <PostList posts={posts} onPostClick={handlePostClick} />
+      )}
       <NavLink to="/lived/community/write">
         <WritingButton />
       </NavLink>

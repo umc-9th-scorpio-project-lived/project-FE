@@ -1,67 +1,139 @@
-import Category from "@/components/communities/Category";
-import ImageError from "@/components/communities/ImageError";
-import PostWriteFooter from "@/components/communities/PostWriteFooter";
-import { COMMUNITY_CATEGORIES_LABEL } from "@/constants/community";
-import LeftChevronIcon from "@/icons/LeftChevronIcon";
-import MiniCloseIcon from "@/icons/MiniCloseIcon";
-import { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import Category from '@/components/communities/Category';
+import ImageError from '@/components/communities/ImageError';
+import PostWriteFooter from '@/components/communities/PostWriteFooter';
+import {
+  COMMUNITY_CATEGORIES,
+  type CommunityCategoryLabel,
+  type CommunityCategory,
+} from '@/constants/community';
+import LeftChevronIcon from '@/icons/LeftChevronIcon';
+import MiniCloseIcon from '@/icons/MiniCloseIcon';
+import { createPost, EditPost, getPostDetail } from '@/services/posts/post';
+import { useEffect, useState } from 'react';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
+
+const CATEGORY_LABEL_TO_CODE = Object.values(COMMUNITY_CATEGORIES).reduce(
+  (acc, cur) => {
+    if (cur.code) acc[cur.label] = cur.code;
+    return acc;
+  },
+  {} as Record<CommunityCategoryLabel, CommunityCategory>
+);
 
 const PostWritingPage = () => {
+  const { postId } = useParams<{ postId?: string }>();
   const navigate = useNavigate();
-  const writeCategories = COMMUNITY_CATEGORIES_LABEL.filter((category) => category !== "전체");
-  const [selectedCategory, setSelectedCategory] = useState("자취 일상");
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [images, setImages] = useState<string[]>([]);
-  const [ImageLimitError, setImageLimitError] = useState(false);
+  {
+    /* 카테고리 선택 */
+  }
+  const writeCategories: CommunityCategoryLabel[] = Object.values(
+    COMMUNITY_CATEGORIES
+  )
+    .filter((c) => c.code !== null)
+    .map((c) => c.label);
+  const [selectedCategory, setSelectedCategory] =
+    useState<CommunityCategoryLabel>('자취 일상');
+
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [images, setImages] = useState<File[]>([]);
+  const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const [imageLimitError, setImageLimitError] = useState(false);
+
   const isFormValid = title.trim().length > 0 && content.trim().length > 0;
 
+  {
+    /* 이미지 관련 함수 */
+  }
   useEffect(() => {
-    if (!ImageLimitError) return;
+    if (!imageLimitError) return;
 
     const timer = setTimeout(() => {
       setImageLimitError(false);
-    }, 3000); // 3초 후에 사라지게 설정
+    }, 3000);
+
     return () => clearTimeout(timer);
-  }, [ImageLimitError]);
-
-  const handleSubmit = async () => {
-    if (!isFormValid) return;
-
-    try {
-      navigate("/lived/community");
-      // 후에 작성한 내용이 업로드 되도록 코드 수정
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  }, [imageLimitError]);
 
   const handleAddImages = (files: FileList | null) => {
     if (!files) return;
 
-    const newFile = Array.from(files);
-    // 이미 선택된 이미지와 새로 선택한 이미지의 수를 더해서 10을 초과하면 오류 메시지 출력
-    if (images.length + newFile.length > 10) {
+    const newFiles = Array.from(files);
+
+    if (images.length + newFiles.length > 10) {
       setImageLimitError(true);
       return;
     }
 
-    const urls = newFile.map((file) => URL.createObjectURL(file));
-    setImages((prev) => [...prev, ...urls]);
+    setImages((prev) => [...prev, ...newFiles]);
+    setImagePreviews((prev) => [
+      ...prev,
+      ...newFiles.map((file) => URL.createObjectURL(file)),
+    ]);
   };
 
-  // 이미지 삭제
   const handleRemoveImage = (index: number) => {
     setImages((prev) => prev.filter((_, i) => i !== index));
+    setImagePreviews((prev) => prev.filter((_, i) => i !== index));
   };
+
+  {
+    /* 완료 버튼을 누르면 해당 게시글로 이동 */
+  }
+  const handleSubmit = async () => {
+    if (!isFormValid) return;
+
+    try {
+      if (isEdit && postId) {
+        await EditPost(Number(postId), {
+          category: CATEGORY_LABEL_TO_CODE[selectedCategory],
+          title,
+          content,
+          images,
+        });
+        navigate(`/lived/community/${postId}`);
+      } else {
+        const res = await createPost({
+          category: CATEGORY_LABEL_TO_CODE[selectedCategory],
+          title,
+          content,
+          images,
+        });
+        navigate(`/lived/community/${res.postId}`);
+      }
+    } catch (error) {
+      console.error('게시글 작성 실패:', error);
+    }
+  };
+
+  {
+    /* 게시글 수정 관련 함수 */
+  }
+  const isEdit = Boolean(postId);
+  useEffect(() => {
+    if (!isEdit || !postId) return;
+
+    const fetchPost = async () => {
+      const post = await getPostDetail(Number(postId));
+      setSelectedCategory(post.categoryLabel);
+      setTitle(post.title);
+      setContent(post.content);
+      const urls = post.images.map((img) => img.imageUrl);
+      setImagePreviews(urls);
+      setImages([]);
+    };
+    fetchPost();
+  }, [isEdit, postId]);
 
   return (
     <div className="flex flex-col h-dvh pb-25 pt-10">
-      {/*네브바*/}
+      {/* 네브바 */}
       <div className="flex justify-between items-center text-gray-900 my-2 mx-4">
         <div className="flex gap-3">
-          <NavLink to="/lived/community" className="flex items-center justify-center">
+          <NavLink
+            to="/lived/community"
+            className="flex items-center justify-center"
+          >
             <LeftChevronIcon className="w-6 h-6 text-gray-900 pt-0.5" />
           </NavLink>
           <span className="typo-h2_bold20 text-gray-900">글쓰기</span>
@@ -69,12 +141,13 @@ const PostWritingPage = () => {
         <button
           onClick={handleSubmit}
           disabled={!isFormValid}
-          className={`typo-body_bold14 ${isFormValid ? "text-gray-900" : "text-gray-500"}`}
+          className={`typo-body_bold14 ${isFormValid ? 'text-gray-900' : 'text-gray-500'}`}
         >
           완료
         </button>
       </div>
-      {/*게시글 입력*/}
+
+      {/* 본문 */}
       <div className="flex-1 flex flex-col overflow-hidden">
         <div className="flex flex-col flex-1 py-5 gap-5.5 overflow-hidden border-b border-gray-100">
           <Category
@@ -82,6 +155,7 @@ const PostWritingPage = () => {
             selected={selectedCategory}
             onSelect={setSelectedCategory}
           />
+
           <div className="flex flex-col flex-1 w-full gap-2.5 px-4">
             <textarea
               rows={1}
@@ -91,25 +165,27 @@ const PostWritingPage = () => {
               onChange={(e) => setTitle(e.target.value)}
               onInput={(e) => {
                 const target = e.currentTarget;
-                target.style.height = "auto";
+                target.style.height = 'auto';
                 target.style.height = `${target.scrollHeight}px`;
               }}
             />
+
             <textarea
-              className="flex-1 resize-none overflow y-auto text-[14px] text-gray-900 outline-none"
-              placeholder="자취하며 겪은 이야기, 무엇이든 괜찮아요. 
-후기, 팁, 고민까지 자유롭게 남겨주세요."
+              className="flex-1 resize-none overflow-y-auto text-[14px] text-gray-900 outline-none"
+              placeholder={`자취하며 겪은 이야기, 무엇이든 괜찮아요.
+후기, 팁, 고민까지 자유롭게 남겨주세요.`}
               value={content}
               onChange={(e) => setContent(e.target.value)}
               onInput={(e) => {
                 const target = e.currentTarget;
-                target.style.height = "auto";
+                target.style.height = 'auto';
                 target.style.height = `${target.scrollHeight}px`;
               }}
             />
-            {images.length > 0 && (
-              <div className="flex pt-4 -mr-4 gap-2.5 overflow-x-auto overflow-y-visible flex-nowrap">
-                {images.map((src, index) => (
+
+            {imagePreviews.length > 0 && (
+              <div className="flex pt-4 -mr-4 gap-2.5 overflow-x-auto flex-nowrap">
+                {imagePreviews.map((src, index) => (
                   <div key={index} className="relative shrink-0">
                     <img
                       src={src}
@@ -117,10 +193,10 @@ const PostWritingPage = () => {
                       className="w-32 h-32 object-cover rounded-lg"
                     />
                     <button
-                      className="absolute -top-2 -right-2 bg-gray-200 text-gray-900 w-5 h-5 rounded-full flex items-center justify-center"
+                      className="absolute -top-2 -right-2 bg-gray-200 w-5 h-5 rounded-full flex items-center justify-center"
                       onClick={() => handleRemoveImage(index)}
                     >
-                      <MiniCloseIcon className="w-1/2 h-1/2 text-gray-900" />
+                      <MiniCloseIcon className="w-1/2 h-1/2" />
                     </button>
                   </div>
                 ))}
@@ -129,15 +205,20 @@ const PostWritingPage = () => {
           </div>
         </div>
       </div>
-      {/*경고문*/}
-      <div className="flex flex-col typo-body_reg12 text-gray-200 px-4 py-2.5 shrink-0">
+
+      {/* 안내 */}
+      <div className="flex flex-col typo-body_reg12 text-gray-200 px-4 py-2.5">
         <span>
-          *주제에 맞지 않는 글이나 커뮤니티 이용정책에 위배되는 글은 <br /> 신고의 대상이 됩니다.
+          *주제에 맞지 않는 글이나 커뮤니티 이용정책에 위배되는 글은 <br />
+          신고의 대상이 됩니다.
         </span>
-        <span>*일정 수 이상의 신고를 받으면 작성한 글이 숨김 및 삭제될 수 있습니다.</span>
+        <span>
+          *일정 수 이상의 신고를 받으면 작성한 글이 숨김 및 삭제될 수 있습니다.
+        </span>
       </div>
+
       <PostWriteFooter AddImage={handleAddImages} />
-      {ImageLimitError && <ImageError />}
+      {imageLimitError && <ImageError />}
     </div>
   );
 };

@@ -1,16 +1,26 @@
-import CommentIcon from "@/icons/CommentIcon";
-import LikeIcon from "@/icons/LikeIcon";
+import CommentIcon from '@/icons/CommentIcon';
+import LikeIcon from '@/icons/LikeIcon';
 
 interface PopularPostCardProps {
   title: string;
   content: string;
   likeCount: number;
   commentCount: number;
+  onClick?: () => void;
 }
 
-const PopularPostCard = ({ title, content, likeCount, commentCount }: PopularPostCardProps) => {
+const PopularPostCard = ({
+  title,
+  content,
+  likeCount,
+  commentCount,
+  onClick,
+}: PopularPostCardProps) => {
   return (
-    <article className="flex w-[300px] bg-gray-50 rounded-lg shrink-0 px-3 py-2 last:mr-4">
+    <article
+      className="flex w-75 bg-gray-50 rounded-lg shrink-0 px-3 py-2 last:mr-4"
+      onClick={onClick}
+    >
       <div className="flex flex-col gap-3">
         <span className="typo-body_reg14 text-gray-900">{title}</span>
         <span className="typo-body_reg12 text-gray-600 line-clamp-2 whitespace-pre-line">

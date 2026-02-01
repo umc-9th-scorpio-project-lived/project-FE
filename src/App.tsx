@@ -68,6 +68,10 @@ function App() {
           <Route path="/lived/community/:postId" element={<PostDetailPage />} />
           <Route path="/lived/community/write" element={<PostWritingPage />} />
           <Route
+            path="/lived/community/:postId/edit"
+            element={<PostWritingPage />}
+          />
+          <Route
             path="/lived/community/profile/:userid"
             element={<CommunityProfilePage />}
           />
