@@ -6,7 +6,7 @@ import CommentIcon from '@/icons/CommentIcon';
 import KebabIcon from '@/icons/KebabIcon';
 import LeftChevronIcon from '@/icons/LeftChevronIcon';
 import LikeIcon from '@/icons/LikeIcon';
-import { deletePost, getPostDetail } from '@/services/posts/post';
+import { deletePost, getPostDetail, postLike } from '@/services/posts/post';
 import useBaseModal from '@/stores/modals/baseModal';
 import type { PostDetail } from '@/types/communities/PostDetail.types';
 import { formatRelativeTime } from '@/utils/communites/timeUtils';
@@ -32,25 +32,33 @@ const PostDetailPage = () => {
   }, [postId]);
 
   const { isModalOpen } = useBaseModal();
-  const navigate = useNavigate();
-  const [isBookmarked, setIsBookmarked] = useState(false);
-  const [likeCount, setLikeCount] = useState(post?.likeCount ?? 0);
-  const [isLiked, setIsLiked] = useState(false);
   const [open, setOpen] = useState(false);
-
   useEffect(() => {
     if (isModalOpen) {
       setOpen(false);
     }
   }, [isModalOpen]);
 
-  const handleLikeToggle = () => {
-    if (isLiked) {
-      setLikeCount((c) => Math.max(0, c - 1));
-    } else {
-      setLikeCount((c) => c + 1);
+  const navigate = useNavigate();
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeCount, setLikeCount] = useState(0);
+  useEffect(() => {
+    if (!post) return;
+
+    setIsLiked(post.isLiked);
+    setLikeCount(post.likeCount);
+  }, [post]);
+  const handleLikeToggle = async () => {
+    if (!postId) return;
+
+    try {
+      const res = await postLike(Number(postId));
+      setIsLiked(res.isLiked);
+      setLikeCount(res.likeCount);
+    } catch (e) {
+      console.log('좋아요 토글 실패', e);
     }
-    setIsLiked((prev) => !prev);
   };
 
   const handleDeletePost = async () => {

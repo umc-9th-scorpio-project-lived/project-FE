@@ -9,6 +9,7 @@ import type {
   PostListResult,
 } from '@/types/communities/Post.types';
 import type { PostDetail } from '@/types/communities/PostDetail.types';
+import type { PostLikeResponse } from '@/types/communities/PostLike';
 
 type GetPostParams = {
   keyword?: string;
@@ -41,7 +42,7 @@ export const getPostList = ({
 };
 
 {
-  /* 게시글 상세 조회 */
+  /*게시글 상세 조회 */
 }
 export const getPostDetail = async (postId: number): Promise<PostDetail> => {
   return authApi.get(`/posts/${postId}`);
@@ -109,6 +110,16 @@ export const EditPost = async (
   });
 };
 
+{
+  /* 인기글 조회 */
+}
 export const getPopularPostList = async (): Promise<PopularPostListResult> => {
   return authApi.get(`/posts/popular`);
+};
+
+{
+  /* 게시글 좋아요 */
+}
+export const postLike = (postId: number): Promise<PostLikeResponse> => {
+  return authApi.post(`/posts/${postId}/like`);
 };
