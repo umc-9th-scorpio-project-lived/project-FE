@@ -29,23 +29,27 @@ export type EditRoutineRequest = {
   joinedRepeatValue: string;
 };
 
-// 루틴 조회 API 응답 타입
-export type GetRoutinesResponse = {
-  isSuccess: boolean;
-  code: string;
-  message: string;
-  result: {
-    dateTitle: string;
-    fullDate: string;
-    progressMessage: string;
-    routines: [
-      {
-        memberRoutineId: 0;
-        title: string;
-        emoji: string;
-        alarmTime: string;
-        isDone: boolean;
-      },
-    ];
-  };
+// 루틴 아이템
+export type HomeRoutineItem = {
+  memberRoutineId: number;
+  title: string;
+  emoji: string;
+  alarmTime: string;
+  isDone: boolean;
+};
+
+// 홈 화면 텍스트 및 루틴 목록 타입
+export type HomeRoutineResult = {
+  dateTitle: string;
+  fullDate: string;
+  progressMessage: string;
+  routines: HomeRoutineItem[];
+};
+
+// 홈 루틴 초기값
+export const EMPTY_HOME_ROUTINE: HomeRoutineResult = {
+  dateTitle: '',
+  fullDate: '',
+  progressMessage: '',
+  routines: [],
 };

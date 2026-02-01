@@ -1,7 +1,14 @@
 import { authApi } from '@/api';
+import type { ApiResponse } from '@/types/Api.types';
+import type { HomeRoutineResult } from '@/types/routines/Routine.types';
 
-const getHomeRoutine = async (memberId: 1, date: '2026-02-01') => {
-  return authApi.get(`/routines/home?memberId=${memberId}&date=${date}`);
+// 홈 화면 루틴 관련 정보 조회 API
+const getHomeRoutine = async (date: string) => {
+  const res = await authApi.get<ApiResponse<HomeRoutineResult>>(
+    `/routines/home?date=${date}`,
+    {}
+  );
+  return res.data;
 };
 
 export default getHomeRoutine;

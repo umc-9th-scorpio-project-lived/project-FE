@@ -1,4 +1,4 @@
-import { WEEK_LABELS } from "@/constants";
+import { WEEK_LABELS } from '@/constants';
 
 // 날짜를 00:00:00으로 정규화
 export const normalizeDate = (d: Date) => {
@@ -12,6 +12,14 @@ export const getWeekStartDate = (d: Date) => {
   const x = normalizeDate(d);
   x.setDate(x.getDate() - x.getDay());
   return x;
+};
+
+// 날짜 형식을 "YYYY-MM-DD" 문자열로 포맷
+export const formatDate = (date: Date) => {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
 };
 
 // 날짜(년/월/일) 동일 여부
@@ -35,7 +43,8 @@ export const addMonths = (d: Date, diff: number) => {
 };
 
 // 해당 달의 1일
-export const getMonthStartDate = (d: Date) => new Date(d.getFullYear(), d.getMonth(), 1);
+export const getMonthStartDate = (d: Date) =>
+  new Date(d.getFullYear(), d.getMonth(), 1);
 
 // 달력 그리드 시작일(해당 달 1일이 속한 주의 일요일)
 export const getCalendarGridStartDate = (monthDate: Date) => {
@@ -66,9 +75,9 @@ export const formatTopTitle = (selected: Date) => {
   const today = normalizeDate(new Date());
   const gap = getDayOffset(selected, today);
 
-  if (gap === 0) return "오늘";
-  if (gap === 1) return "내일";
-  if (gap === -1) return "어제";
+  if (gap === 0) return '오늘';
+  if (gap === 1) return '내일';
+  if (gap === -1) return '어제';
   if (gap > 1) return `${gap}일 후`;
   return `${Math.abs(gap)}일 전`;
 };
