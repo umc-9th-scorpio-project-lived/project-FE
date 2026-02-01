@@ -7,20 +7,35 @@ import KebabIcon from '@/icons/KebabIcon';
 import LeftChevronIcon from '@/icons/LeftChevronIcon';
 import LikeIcon from '@/icons/LikeIcon';
 import {
+  commentLike,
+  createComment,
+  deleteComment,
+  editComment,
+  getCommentList,
+} from '@/services/posts/comment';
+import {
   deletePost,
   getPostDetail,
   postLike,
   postScrap,
 } from '@/services/posts/post';
 import useBaseModal from '@/stores/modals/baseModal';
+import type { Comment } from '@/types/communities/Comment.types';
 import type { PostDetail } from '@/types/communities/PostDetail.types';
 import { formatRelativeTime } from '@/utils/communites/timeUtils';
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 
+type CommentType = 'create' | 'reply' | 'edit';
+
 const PostDetailPage = () => {
+  const navigate = useNavigate();
+  {
+    /* postId */
+  }
   const { postId } = useParams<{ postId: string }>();
   const [post, setPost] = useState<PostDetail | null>(null);
+
   useEffect(() => {
     if (!postId) return;
 
@@ -36,21 +51,29 @@ const PostDetailPage = () => {
     fetchPostDetail();
   }, [postId]);
 
+  {
+    /* 모달 */
+  }
   const { isModalOpen } = useBaseModal();
   const [open, setOpen] = useState(false);
+
   useEffect(() => {
     if (isModalOpen) {
       setOpen(false);
     }
   }, [isModalOpen]);
 
-  const navigate = useNavigate();
+  {
+    /* 스크랩 */
+  }
   const [scrapped, setScrapped] = useState(false);
+
   useEffect(() => {
     if (!post) return;
 
     setScrapped(post.isScrapped);
   }, [post]);
+
   const handleScrapToggle = async () => {
     if (!postId) return;
 
@@ -62,14 +85,19 @@ const PostDetailPage = () => {
     }
   };
 
+  {
+    /* 좋아요 */
+  }
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
+
   useEffect(() => {
     if (!post) return;
 
     setIsLiked(post.isLiked);
     setLikeCount(post.likeCount);
   }, [post]);
+
   const handleLikeToggle = async () => {
     if (!postId) return;
 
@@ -82,11 +110,103 @@ const PostDetailPage = () => {
     }
   };
 
+  {
+    /* 게시글 삭제 */
+  }
   const handleDeletePost = async () => {
     if (!postId) return;
 
     await deletePost(Number(postId));
     navigate('/lived/community');
+  };
+
+  {
+    /* 댓글 */
+  }
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
+  const [editingContent, setEditingContent] = useState('');
+  const [commentMode, setCommentMode] = useState<CommentType>('create');
+  const [targetCommentId, setTargetCommentId] = useState<number | null>(null);
+
+  const fetchComments = async () => {
+    if (!postId) return;
+
+    const res = await getCommentList({ postId: Number(postId) });
+    setComments(res.comments);
+  };
+
+  useEffect(() => {
+    if (!postId) return;
+    fetchComments();
+  }, [postId]);
+
+  const handleCreateComment = async (content: string) => {
+    if (!postId) return;
+
+    await createComment(Number(postId), { content });
+    await fetchComments();
+  };
+
+  const handleDeleteComment = async (commentId: number) => {
+    if (!postId) return;
+
+    try {
+      await deleteComment(Number(postId), commentId);
+      await fetchComments();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleEditComment = (commentId: number, content: string) => {
+    setEditingCommentId(commentId);
+    setEditingContent(content);
+  };
+
+  const handleReplyRequest = (parentCommentId: number) => {
+    setCommentMode('reply');
+    setTargetCommentId(parentCommentId);
+  };
+
+  const handleCommentLikeToggle = async (commentId: number) => {
+    try {
+      const res = await commentLike(Number(postId), commentId);
+
+      setComments((prev) =>
+        prev.map((comment) => {
+          if (!comment) return comment;
+
+          if (comment.commentId === commentId) {
+            return {
+              ...comment,
+              isLiked: res.isLiked,
+              likeCount: res.likeCount,
+            };
+          }
+          if (Array.isArray(comment.replies)) {
+            return {
+              ...comment,
+              replies: comment.replies?.map((reply) => {
+                if (!reply) return reply;
+
+                if (reply.commentId === commentId) {
+                  return {
+                    ...reply,
+                    isLiked: res.isLiked,
+                    likeCount: res.likeCount,
+                  };
+                }
+                return reply;
+              }),
+            };
+          }
+          return comment;
+        })
+      );
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
@@ -175,8 +295,44 @@ const PostDetailPage = () => {
           </div>
         </div>
       </div>
-      <CommunityCommentList />
-      {!isModalOpen && <PostFooter />}
+      <CommunityCommentList
+        comments={comments}
+        onDeleteComment={handleDeleteComment}
+        onEditRequest={handleEditComment}
+        onReplyRequest={handleReplyRequest}
+        onLikeToggle={handleCommentLikeToggle}
+      />
+      {!isModalOpen && (
+        <PostFooter
+          value={editingContent}
+          mode={commentMode}
+          onSubmitComment={async (content) => {
+            if (!postId) return;
+
+            if (commentMode === 'create') {
+              await handleCreateComment(content);
+            }
+
+            if (commentMode === 'edit' && editingCommentId) {
+              await editComment(Number(postId), editingCommentId, { content });
+            }
+
+            if (commentMode === 'reply' && targetCommentId) {
+              await createComment(Number(postId), {
+                content,
+                parentCommentId: targetCommentId,
+              });
+            }
+
+            setCommentMode('create');
+            setEditingCommentId(null);
+            setTargetCommentId(null);
+            setEditingContent('');
+
+            await fetchComments();
+          }}
+        />
+      )}
     </div>
   );
 };

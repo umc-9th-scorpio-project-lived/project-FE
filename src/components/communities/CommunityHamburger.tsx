@@ -5,12 +5,14 @@ interface CommunityHamburgerProps {
   type: 'myPost' | 'post' | 'myComment' | 'comment';
   postId?: number;
   onDelete?: () => Promise<void> | void;
+  onEdit?: () => void;
 }
 
 const CommunityHamburger = ({
   type,
   postId,
   onDelete,
+  onEdit,
 }: CommunityHamburgerProps) => {
   const { openModal } = useBaseModal();
   const navigate = useNavigate();
@@ -69,10 +71,16 @@ const CommunityHamburger = ({
       )}
       {type === 'myComment' && (
         <div>
-          <div className="flex items-center justify-center w-full h-1/2 rounded-t-sm border-[0.5px] border-b-0 border-gray-300 px-3 py-2 bg-screen-0 text-[11px] text-gray-900 text-center">
+          <div
+            className="flex items-center justify-center w-full h-1/2 rounded-t-sm border-[0.5px] border-b-0 border-gray-300 px-3 py-2 bg-screen-0 text-[11px] text-gray-900 text-center"
+            onClick={onEdit}
+          >
             수정하기
           </div>
-          <div className="flex items-center justify-center w-full h-1/2 rounded-b-sm border-[0.5px] border-gray-300 px-3 py-2 bg-screen-0 text-[11px] text-gray-900 text-center">
+          <div
+            className="flex items-center justify-center w-full h-1/2 rounded-b-sm border-[0.5px] border-gray-300 px-3 py-2 bg-screen-0 text-[11px] text-gray-900 text-center"
+            onClick={onDelete}
+          >
             삭제하기
           </div>
         </div>
