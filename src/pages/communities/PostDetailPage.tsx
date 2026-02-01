@@ -6,7 +6,12 @@ import CommentIcon from '@/icons/CommentIcon';
 import KebabIcon from '@/icons/KebabIcon';
 import LeftChevronIcon from '@/icons/LeftChevronIcon';
 import LikeIcon from '@/icons/LikeIcon';
-import { deletePost, getPostDetail, postLike } from '@/services/posts/post';
+import {
+  deletePost,
+  getPostDetail,
+  postLike,
+  postScrap,
+} from '@/services/posts/post';
 import useBaseModal from '@/stores/modals/baseModal';
 import type { PostDetail } from '@/types/communities/PostDetail.types';
 import { formatRelativeTime } from '@/utils/communites/timeUtils';
@@ -40,7 +45,23 @@ const PostDetailPage = () => {
   }, [isModalOpen]);
 
   const navigate = useNavigate();
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [scrapped, setScrapped] = useState(false);
+  useEffect(() => {
+    if (!post) return;
+
+    setScrapped(post.isScrapped);
+  }, [post]);
+  const handleScrapToggle = async () => {
+    if (!postId) return;
+
+    try {
+      const res = await postScrap(Number(postId));
+      setScrapped(res.isScrapped);
+    } catch (e) {
+      console.log('스크랩 토글 실패', e);
+    }
+  };
+
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   useEffect(() => {
@@ -80,8 +101,8 @@ const PostDetailPage = () => {
         </NavLink>
         <div className="relative flex gap-2">
           <BookmarkIcon
-            className={`w-7 h-7 transition-colors ${isBookmarked ? 'fill-current text-primary-40' : 'fill-none text-gray-700'}`}
-            onClick={() => setIsBookmarked(!isBookmarked)}
+            className={`w-7 h-7 transition-colors ${scrapped ? 'fill-current text-primary-40' : 'fill-none text-gray-700'}`}
+            onClick={handleScrapToggle}
           />
           <KebabIcon
             className="w-7 h-7 text-gray-700 fill-none"

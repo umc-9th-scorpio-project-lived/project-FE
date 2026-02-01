@@ -9,7 +9,10 @@ import type {
   PostListResult,
 } from '@/types/communities/Post.types';
 import type { PostDetail } from '@/types/communities/PostDetail.types';
-import type { PostLikeResponse } from '@/types/communities/PostLike';
+import type {
+  PostLikeResponse,
+  PostScrapResponse,
+} from '@/types/communities/PostStatus';
 
 type GetPostParams = {
   keyword?: string;
@@ -122,4 +125,11 @@ export const getPopularPostList = async (): Promise<PopularPostListResult> => {
 }
 export const postLike = (postId: number): Promise<PostLikeResponse> => {
   return authApi.post(`/posts/${postId}/like`);
+};
+
+{
+  /* 게시글 스크랩 */
+}
+export const postScrap = (postId: number): Promise<PostScrapResponse> => {
+  return authApi.post(`/posts/${postId}/scrap`);
 };
