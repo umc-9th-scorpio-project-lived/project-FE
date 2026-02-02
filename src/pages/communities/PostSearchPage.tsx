@@ -1,15 +1,40 @@
+import PostList from '@/components/communities/PostList';
 import SearchList from '@/components/communities/SearchList';
 import CloseIcon from '@/icons/CloseIcon';
 import LeftChevronIcon from '@/icons/LeftChevronIcon';
-import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { getPostList } from '@/services/posts/post';
+import type { Post } from '@/types/communities/Post.types';
+import { useEffect, useRef, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 type UIState = 'default' | 'pressed' | 'activate';
 
 const PostSearchPage = () => {
+  const navigate = useNavigate();
   const [searchWord, setSearchWord] = useState('');
-  const [savedKeyword, setSavedKeyword] = useState<string | undefined>();
   const [state, setState] = useState<UIState>('default');
+  const [posts, setPosts] = useState<Post[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (state === 'pressed') {
+      inputRef?.current?.focus();
+    }
+  }, [state]);
+
+  const search = async (keyword: string) => {
+    setSearchWord(keyword);
+    setState('activate');
+
+    try {
+      const res = await getPostList({
+        keyword,
+        size: 20,
+      });
+      setPosts(res.content);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <>
@@ -27,19 +52,22 @@ const PostSearchPage = () => {
               <input
                 className="w-full h-8 bg-gray-100 py-2.5 px-4 rounded-full text-[14px] text-gray-900 outline-none"
                 placeholder="생활 팁이나 고민을 검색해보세요."
+                ref={inputRef}
                 value={searchWord}
                 onChange={(e) => setSearchWord(e.target.value)}
                 onClick={() => setState('pressed')}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter' && searchWord.trim()) {
-                    setSavedKeyword(searchWord.trim());
-                    setState('default');
+                    search(searchWord.trim());
                   }
                 }}
               />
             )}
             {state === 'activate' && (
-              <div className="flex items-center w-full h-8 py-2.5 px-4 typo-body_bold16 text-gray-900">
+              <div
+                className="flex items-center w-full h-8 py-2.5 px-4 typo-body_bold16 text-gray-900"
+                onClick={() => setState('pressed')}
+              >
                 {searchWord}
               </div>
             )}
@@ -53,17 +81,40 @@ const PostSearchPage = () => {
           />
         </div>
       </div>
-      {state !== 'activate' && <SearchList newKeyword={savedKeyword} />}
+      {state !== 'activate' && (
+        <SearchList
+          onSelectedKeyword={(keyword) => {
+            search(keyword);
+          }}
+        />
+      )}
       {state === 'activate' && (
-        <div className="p-4">
-          {/*일단 2가지 경우 다 뜨게 퍼블리싱. 후에 검색 결과 필터링 기능을 추가 하면 조건부로 실행하게 수정*/}
-          <div className="typo-body_reg12 text-gray-600">
-            {searchWord}에 대한 검색 결과입니다.
-          </div>
-          <div className="typo-body_reg12 text-gray-600">
-            {searchWord}에 대한 검색 결과가 존재하지 않습니다.
-          </div>
-        </div>
+        <>
+          {posts.length === 0 && (
+            <div className="flex typo-body_reg12 px-4 pt-4">
+              <span className="flex text-gray-900">{searchWord}</span>
+              <span className="flex text-gray-600">
+                에 대한 검색 결과가 존재하지 않습니다.
+              </span>
+            </div>
+          )}
+          {posts.length > 0 && (
+            <>
+              <div className="flex typo-body_reg12 px-4 pt-4">
+                <span className="flex text-gray-900">{searchWord}</span>
+                <span className="flex text-gray-600">
+                  에 대한 검색 결과입니다.
+                </span>
+              </div>
+              <PostList
+                posts={posts}
+                onPostClick={(post) => {
+                  navigate(`/lived/community/${post.postId}`);
+                }}
+              />
+            </>
+          )}
+        </>
       )}
     </>
   );

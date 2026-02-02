@@ -10,34 +10,24 @@ import type { SearchHistory } from '@/types/communities/Search.types';
 import { useEffect, useState } from 'react';
 
 type SearchListProps = {
-  newKeyword?: string;
+  onSelectedKeyword?: (keyword: string) => void;
 };
 
-const SearchList = ({ newKeyword }: SearchListProps) => {
+const SearchList = ({ onSelectedKeyword }: SearchListProps) => {
   const { openModal } = useBaseModal();
 
   const [histories, setHistories] = useState<SearchHistory[]>([]);
-  useEffect(() => {
-    getSearchHistory().then((res) => {
+  const fetchHistories = async () => {
+    try {
+      const res = await getSearchHistory();
       setHistories(res.histories);
-    });
-  }, []);
-
+    } catch (e) {
+      console.error(e);
+    }
+  };
   useEffect(() => {
-    if (!newKeyword) return;
-
-    setHistories((prev) => {
-      const filtered = prev.filter((item) => item.keyword !== newKeyword);
-      return [
-        {
-          historyId: Date.now(),
-          keyword: newKeyword,
-          searchedAt: new Date().toISOString(),
-        },
-        ...filtered,
-      ];
-    });
-  }, [newKeyword]);
+    fetchHistories();
+  }, []);
 
   // 검색어 전체 삭제
   const handleClear = async () => {
@@ -92,7 +82,10 @@ const SearchList = ({ newKeyword }: SearchListProps) => {
               key={item.historyId}
               className="flex justify-between items-center"
             >
-              <div className="flex gap-2 items-center">
+              <div
+                className="flex gap-2 items-center"
+                onClick={() => onSelectedKeyword?.(item.keyword)}
+              >
                 <ClockIcon className="w-3 h-3" />
                 <span className="typo-body_reg16 text-gray-700">
                   {item.keyword}
