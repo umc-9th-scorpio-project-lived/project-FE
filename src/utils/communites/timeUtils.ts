@@ -1,6 +1,6 @@
 export const formatRelativeTime = (dateString: string): string => {
   const now = new Date();
-  const target = new Date(dateString + 'Z');
+  const target = new Date(dateString);
 
   const diffMs = now.getTime() - target.getTime();
   const diffSec = Math.floor(diffMs / 1000);

@@ -1,21 +1,73 @@
-import ClockIcon from "@/icons/ClockIcon";
-import CloseIcon from "@/icons/CloseIcon";
-import useBaseModal from "@/stores/modals/baseModal";
-import { useState } from "react";
+import ClockIcon from '@/icons/ClockIcon';
+import CloseIcon from '@/icons/CloseIcon';
+import {
+  deleteAllSearch,
+  deleteSearch,
+  getSearchHistory,
+} from '@/services/posts/search';
+import useBaseModal from '@/stores/modals/baseModal';
+import type { SearchHistory } from '@/types/communities/Search.types';
+import { useEffect, useState } from 'react';
 
-const SearchList = () => {
+type SearchListProps = {
+  newKeyword?: string;
+};
+
+const SearchList = ({ newKeyword }: SearchListProps) => {
   const { openModal } = useBaseModal();
-  const [searches, setSearches] = useState<string[]>(["정수기", "물", "다진 마늘"]);
 
-  const handleClear = () => {
-    // 검색어 전체 삭제
-    setSearches([]);
+  const [histories, setHistories] = useState<SearchHistory[]>([]);
+  useEffect(() => {
+    getSearchHistory().then((res) => {
+      setHistories(res.histories);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!newKeyword) return;
+
+    setHistories((prev) => {
+      const filtered = prev.filter((item) => item.keyword !== newKeyword);
+      return [
+        {
+          historyId: Date.now(),
+          keyword: newKeyword,
+          searchedAt: new Date().toISOString(),
+        },
+        ...filtered,
+      ];
+    });
+  }, [newKeyword]);
+
+  // 검색어 전체 삭제
+  const handleClear = async () => {
+    try {
+      await deleteAllSearch();
+      setHistories([]);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
-  const handleDelete = (index: number) => {
-    // 해당 검색어만 삭제
-    setSearches((prev) => prev.filter((_, i) => i !== index));
+  // 해당 검색어만 삭제
+  const handleDelete = async (historyId: number) => {
+    try {
+      await deleteSearch(historyId);
+      setHistories((prev) =>
+        prev.filter((item) => item.historyId !== historyId)
+      );
+    } catch (e) {
+      console.error(e);
+    }
   };
+
+  if (histories.length === 0) {
+    return (
+      <div className="flex w-full items-center justify-center mt-6 typo-body_reg16 text-gray-400">
+        최근 검색어가 없습니다.
+      </div>
+    );
+  }
 
   return (
     <>
@@ -25,20 +77,31 @@ const SearchList = () => {
           <span
             className="typo-body_reg12 text-gray-600"
             onClick={() =>
-              openModal("searchDeleteModal", { position: "center", onConfirm: handleClear })
+              openModal('searchDeleteModal', {
+                position: 'center',
+                onConfirm: handleClear,
+              })
             }
           >
             검색어 전체 삭제
           </span>
         </div>
         <div className="flex flex-col gap-5 px-3.5">
-          {searches.map((keyword, index) => (
-            <div key={index} className="flex justify-between items-center">
+          {histories.map((item) => (
+            <div
+              key={item.historyId}
+              className="flex justify-between items-center"
+            >
               <div className="flex gap-2 items-center">
                 <ClockIcon className="w-3 h-3" />
-                <span className="typo-body_reg16 text-gray-700">{keyword}</span>
+                <span className="typo-body_reg16 text-gray-700">
+                  {item.keyword}
+                </span>
               </div>
-              <CloseIcon className="w-4 h-4 cursor-pointer" onClick={() => handleDelete(index)} />
+              <CloseIcon
+                className="w-4 h-4 cursor-pointer"
+                onClick={() => handleDelete(item.historyId)}
+              />
             </div>
           ))}
         </div>
