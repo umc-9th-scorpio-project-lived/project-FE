@@ -1,14 +1,42 @@
 import CameraIcon from '@/icons/CameraIcon';
 import LeftChevronIcon from '@/icons/LeftChevronIcon';
 import WriteIcon from '@/icons/WriteIcon';
+import {
+  EditCommunityProfile,
+  getCommunityProfile,
+} from '@/services/posts/profile';
+import type { ProfileFruites } from '@/types/communities/Profile.types';
+import { isAxiosError } from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const CommunityProfilePage = () => {
   const [selectedTab, setSelectedTab] = useState('작성한 글');
   const [editMode, setEditMode] = useState(false);
-  const [communityName, setCommunityName] = useState('미지근하고 현실적 전기');
-  const [image, setImage] = useState<string | null>(null);
+
+  const [nickname, setNickname] = useState('');
+  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
+  const [livingPeriod, setLivingPeriod] = useState('');
+  const [fruits, setFruits] = useState<ProfileFruites[]>([]);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const res = await getCommunityProfile();
+        setNickname(res.nickname);
+        setProfileImageUrl(res.profileImageUrl ?? null);
+        setImagePreview(res.profileImageUrl ?? null);
+        setLivingPeriod(res.livingPeriod);
+        setFruits(res.fruits);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    fetchProfile();
+  }, []);
+
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const spanRef = useRef<HTMLSpanElement>(null);
   const ImageInputRef = useRef<HTMLInputElement>(null);
@@ -21,24 +49,63 @@ const CommunityProfilePage = () => {
     const file = e.target.files?.[0];
     if (!file) return null;
 
-    const imageUrl = URL.createObjectURL(file);
-    setImage(imageUrl);
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
   };
 
-  const handleEditProfile = () => {
-    setEditMode((prev) => !prev);
+  const handleSubmitProfile = async () => {
+    try {
+      const body = {
+        request: { nickname },
+        image: imageFile ?? undefined,
+      };
+
+      const formData = new FormData();
+      formData.append('request', JSON.stringify(body.request));
+      if (body.image) {
+        formData.append('image', body.image);
+      }
+
+      // 🔥 FormData 내용 출력
+      console.group('📦 EditCommunityProfile FormData');
+      for (const [key, value] of formData.entries()) {
+        console.log(key, value);
+      }
+      console.groupEnd();
+
+      const res = await EditCommunityProfile(body);
+      console.log('✅ PATCH success response:', res);
+
+      setNickname(res.nickname);
+      setProfileImageUrl(res.profileImageUrl ?? null);
+      setImagePreview(res.profileImageUrl ?? null);
+      setImageFile(null);
+      setEditMode(false);
+    } catch (e: unknown) {
+      console.error('❌ PATCH error');
+
+      if (isAxiosError(e)) {
+        console.error('status:', e.response?.status);
+        console.error('data:', e.response?.data);
+        console.error('headers:', e.response?.headers);
+      } else if (e instanceof Error) {
+        console.error('message:', e.message);
+      } else {
+        console.error('unknown error:', e);
+      }
+    }
   };
 
   const resizeWidth = () => {
     if (!inputRef.current || !spanRef.current) return;
 
-    spanRef.current.textContent = communityName || inputRef.current.value;
+    spanRef.current.textContent = nickname || inputRef.current.value;
     inputRef.current.style.width = `${spanRef.current.offsetWidth}px`;
   };
 
   useEffect(() => {
     resizeWidth();
-  }, [communityName, editMode]);
+  }, [nickname, editMode]);
 
   return (
     <div className="flex flex-col min-h-screen pt-10">
@@ -58,8 +125,12 @@ const CommunityProfilePage = () => {
       <div className="flex flex-col border-b border-gray-100 px-4 py-5 gap-3.75">
         <div className="flex gap-2.5">
           <div
-            className={`relative w-20 h-20 rounded-full bg-gray-50 bg-no-repeat bg-center bg-cover ${!image ? 'bg-user' : ''}`}
-            style={{ backgroundImage: image ? `url(${image})` : undefined }}
+            className={`relative w-20 h-20 rounded-full bg-gray-50 bg-no-repeat bg-center bg-cover ${!imagePreview ? 'bg-user' : ''}`}
+            style={{
+              backgroundImage: imagePreview
+                ? `url(${imagePreview})`
+                : undefined,
+            }}
           >
             {editMode && (
               <button
@@ -88,8 +159,8 @@ const CommunityProfilePage = () => {
                         ref={inputRef}
                         className="font-bold"
                         maxLength={12}
-                        value={communityName}
-                        onChange={(e) => setCommunityName(e.target.value)}
+                        value={nickname}
+                        onChange={(e) => setNickname(e.target.value)}
                         style={{
                           minWidth: '40px',
                           boxSizing: 'content-box',
@@ -107,24 +178,37 @@ const CommunityProfilePage = () => {
                     </div>
                   </div>
                 ) : (
-                  <div className="typo-body_bold16">{communityName}</div>
+                  <div className="typo-body_bold16">{nickname}</div>
                 )}
               </div>
-              <div className="text-[12px] text-gray-600">자취 1년차</div>
+              <div className="text-[12px] text-gray-600">{livingPeriod}</div>
             </div>
             {/*대형열매 5개*/}
             <div className="flex gap-2">
-              <div className="w-8 h-8 rounded-full bg-[#2E2E2E]"></div>
-              <div className="w-8 h-8 rounded-full bg-[#2E2E2E]"></div>
-              <div className="w-8 h-8 rounded-full bg-[#2E2E2E]"></div>
-              <div className="w-8 h-8 rounded-full bg-[#2E2E2E]"></div>
-              <div className="w-8 h-8 rounded-full bg-[#2E2E2E]"></div>
+              {fruits.slice(0, 5).map((fruit) => (
+                <div
+                  key={fruit.fruitId}
+                  className="w-8 h-8 rounded-full bg-[#2E2E2E]"
+                />
+              ))}
+              {Array.from({ length: 5 - fruits.length }).map((_, index) => (
+                <div
+                  key={`empty-${index}`}
+                  className="w-8 h-8 rounded-full bg-gray-300/40"
+                />
+              ))}
             </div>
           </div>
         </div>
         <button
           className={`p-2.5 rounded-lg text-center text-body_12 text-gray-900 ${editMode ? 'bg-primary-30' : 'bg-gray-100 '}`}
-          onClick={handleEditProfile}
+          onClick={() => {
+            if (editMode) {
+              handleSubmitProfile();
+            } else {
+              setEditMode(true);
+            }
+          }}
         >
           {editMode ? '프로필 수정 완료' : '프로필 수정'}
         </button>
