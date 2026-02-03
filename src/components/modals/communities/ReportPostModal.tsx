@@ -21,10 +21,10 @@ const ReportPostModal = () => {
   const isSubmit = selectReason !== null;
 
   return (
-    <div className="bg-screen-0 p-4 rounded-t-xl">
+    <div className="bg-screen-0 px-6 pt-2 pb-6 rounded-t-xl">
       <div className="relative flex items-center justify-center w-full mb-6"></div>
       {/*신고 사유 리스트*/}
-      <div className="flex flex-col gap-4.5 my-2 text-body_18">
+      <div className="flex flex-col gap-4.5 pb-2 text-body_16">
         {REPORT_REASONS.map((reason) => {
           const select = selectReason === reason;
 
@@ -36,10 +36,9 @@ const ReportPostModal = () => {
               onClick={() => setSelectReason(reason)}
             >
               <span
-                className={`w-9 h-9 rounded-full flex items-center justify-center bg-gray-100
-                  `}
+                className={`w-6 h-6 rounded-full flex items-center justify-center ${select ? "bg-gray-900" : "bg-gray-200"}`}
               >
-                {select && <span className="w-6 h-6 rounded-full bg-primary-50" />}
+                <span className="w-3 h-3 rounded-full bg-screen-0" />
               </span>
               <span>{reason}</span>
             </button>
