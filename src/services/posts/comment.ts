@@ -15,9 +15,7 @@ type GetCommentParams = {
   size?: number;
 };
 
-{
-  /* 댓글 목록 조회 */
-}
+// 댓글 목록 조회
 export const getCommentList = ({
   postId,
   cursor,
@@ -32,9 +30,7 @@ export const getCommentList = ({
   });
 };
 
-{
-  /* 댓글 작성 */
-}
+// 댓글 작성
 export const createComment = async (
   postId: number,
   body: CreateCommentRequest
@@ -42,9 +38,7 @@ export const createComment = async (
   return authApi.post(`/posts/${postId}/comments`, body);
 };
 
-{
-  /* 댓글 삭제 */
-}
+// 댓글 삭제
 export const deleteComment = async (
   postId: number,
   commentId: number
@@ -52,9 +46,7 @@ export const deleteComment = async (
   return authApi.delete(`/posts/${postId}/comments/${commentId}`);
 };
 
-{
-  /* 댓글 수정 */
-}
+// 댓글 수정
 export const editComment = async (
   postId: number,
   commentId: number,
@@ -63,9 +55,7 @@ export const editComment = async (
   return authApi.patch(`/posts/${postId}/comments/${commentId}`, body);
 };
 
-{
-  /* 댓글 좋아요 */
-}
+// 댓글 좋아요
 export const commentLike = (
   postId: number,
   commentId: number

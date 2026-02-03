@@ -25,9 +25,7 @@ type PopularPostListResult = {
   content: PopularPost[];
 };
 
-{
-  /* 게시글 목록 조회 */
-}
+// 게시글 목록 조회
 export const getPostList = ({
   keyword,
   category,
@@ -44,16 +42,12 @@ export const getPostList = ({
   });
 };
 
-{
-  /*게시글 상세 조회 */
-}
+//게시글 상세 조회
 export const getPostDetail = async (postId: number): Promise<PostDetail> => {
   return authApi.get(`/posts/${postId}`);
 };
 
-{
-  /* 게시글 작성 */
-}
+// 게시글 작성
 export const createPost = async (
   body: CreatePostRequest
 ): Promise<CreatePostResponse> => {
@@ -74,16 +68,12 @@ export const createPost = async (
   });
 };
 
-{
-  /* 게시글 삭제 */
-}
+// 게시글 삭제
 export const deletePost = async (postId: number): Promise<DeletePostResult> => {
   return authApi.delete(`/posts/${postId}`);
 };
 
-{
-  /* 게시글 수정 */
-}
+// 게시글 수정
 export const EditPost = async (
   postId: number,
   body: EditPostRequest
@@ -94,42 +84,53 @@ export const EditPost = async (
   formdata.append('title', body.title);
   formdata.append('content', body.content);
 
-  body.deleteImageIds?.forEach((id) => {
-    formdata.append('deleteImageIds', String(id));
-  });
+  // ✅ deleteImageIds: array<Integer>
+  if (body.deleteImageIds && body.deleteImageIds.length > 0) {
+    formdata.append(
+      'deleteImageIds',
+      new Blob([JSON.stringify(body.deleteImageIds)], {
+        type: 'application/json',
+      })
+    );
+  }
 
-  body.imageOrders?.forEach((order) => {
-    formdata.append('imageOrders', JSON.stringify(order));
-  });
+  // ✅ imageOrders: array<{ imageId, orderIndex }>
+  if (body.imageOrders && body.imageOrders.length > 0) {
+    formdata.append(
+      'imageOrders',
+      new Blob([JSON.stringify(body.imageOrders)], {
+        type: 'application/json',
+      })
+    );
+  }
 
   body.images?.slice(0, 10).forEach((image) => {
     formdata.append('images', image);
   });
 
+  // 🔍 확인용 (지금은 꼭 찍어봐)
+  for (const [key, value] of formdata.entries()) {
+    console.log('[FormData]', key, value);
+  }
+
   return authApi.patch(`/posts/${postId}`, formdata, {
     headers: {
-      'Content-Type': 'multipart/form-data',
+      'Content-Type': undefined,
     },
   });
 };
 
-{
-  /* 인기글 조회 */
-}
+// 인기글 조회
 export const getPopularPostList = async (): Promise<PopularPostListResult> => {
   return authApi.get(`/posts/popular`);
 };
 
-{
-  /* 게시글 좋아요 */
-}
+// 게시글 좋아요
 export const postLike = (postId: number): Promise<PostLikeResponse> => {
   return authApi.post(`/posts/${postId}/like`);
 };
 
-{
-  /* 게시글 스크랩 */
-}
+// 게시글 스크랩
 export const postScrap = (postId: number): Promise<PostScrapResponse> => {
   return authApi.post(`/posts/${postId}/scrap`);
 };
