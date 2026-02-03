@@ -84,34 +84,21 @@ export const EditPost = async (
   formdata.append('title', body.title);
   formdata.append('content', body.content);
 
-  // ✅ deleteImageIds: array<Integer>
-  if (body.deleteImageIds && body.deleteImageIds.length > 0) {
-    formdata.append(
-      'deleteImageIds',
-      new Blob([JSON.stringify(body.deleteImageIds)], {
-        type: 'application/json',
-      })
-    );
-  }
-
-  // ✅ imageOrders: array<{ imageId, orderIndex }>
-  if (body.imageOrders && body.imageOrders.length > 0) {
-    formdata.append(
-      'imageOrders',
-      new Blob([JSON.stringify(body.imageOrders)], {
-        type: 'application/json',
-      })
-    );
-  }
-
-  body.images?.slice(0, 10).forEach((image) => {
-    formdata.append('images', image);
+  body.deleteImageIds?.forEach((id) => {
+    formdata.append('deleteImageIds', String(id));
   });
 
-  // 🔍 확인용 (지금은 꼭 찍어봐)
-  for (const [key, value] of formdata.entries()) {
-    console.log('[FormData]', key, value);
-  }
+  body.imageOrders?.forEach((order, index) => {
+    formdata.append(`imageOrders[${index}].imageId`, String(order.imageId));
+    formdata.append(
+      `imageOrders[${index}].orderIndex`,
+      String(order.orderIndex)
+    );
+  });
+
+  body.images?.forEach((image) => {
+    formdata.append('images', image);
+  });
 
   return authApi.patch(`/posts/${postId}`, formdata, {
     headers: {

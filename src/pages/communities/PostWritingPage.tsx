@@ -20,12 +20,16 @@ const CATEGORY_LABEL_TO_CODE = Object.values(COMMUNITY_CATEGORIES).reduce(
   {} as Record<CommunityCategoryLabel, CommunityCategory>
 );
 
+type ExistingImage = {
+  imageId: number;
+  imageUrl: string;
+};
+
 const PostWritingPage = () => {
   const { postId } = useParams<{ postId?: string }>();
   const navigate = useNavigate();
-  {
-    /* 카테고리 선택 */
-  }
+
+  // 카테고리 선택
   const writeCategories: CommunityCategoryLabel[] = Object.values(
     COMMUNITY_CATEGORIES
   )
@@ -38,13 +42,13 @@ const PostWritingPage = () => {
   const [content, setContent] = useState('');
   const [images, setImages] = useState<File[]>([]);
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
+  const [existingImages, setExistingImages] = useState<ExistingImage[]>([]);
+  const [deleteImageIds, setDeleteImageIds] = useState<number[]>([]);
   const [imageLimitError, setImageLimitError] = useState(false);
 
   const isFormValid = title.trim().length > 0 && content.trim().length > 0;
 
-  {
-    /* 이미지 관련 함수 */
-  }
+  // 이미지 관련 함수
   useEffect(() => {
     if (!imageLimitError) return;
 
@@ -60,7 +64,7 @@ const PostWritingPage = () => {
 
     const newFiles = Array.from(files);
 
-    if (images.length + newFiles.length > 10) {
+    if (imagePreviews.length + newFiles.length > 10) {
       setImageLimitError(true);
       return;
     }
@@ -73,13 +77,30 @@ const PostWritingPage = () => {
   };
 
   const handleRemoveImage = (index: number) => {
-    setImages((prev) => prev.filter((_, i) => i !== index));
+    if (index < existingImages.length) {
+      const target = existingImages[index];
+      setDeleteImageIds((prev) =>
+        prev.includes(target.imageId) ? prev : [...prev, target.imageId]
+      );
+
+      setExistingImages((prev) => prev.filter((_, i) => i !== index));
+    } else {
+      const newIndex = index - existingImages.length;
+      setImages((prev) => prev.filter((_, i) => i !== newIndex));
+    }
+
     setImagePreviews((prev) => prev.filter((_, i) => i !== index));
+    console.groupEnd();
   };
 
-  {
-    /* 완료 버튼을 누르면 해당 게시글로 이동 */
-  }
+  const buildImageOrders = () => {
+    return existingImages.map((img, index) => ({
+      imageId: img.imageId,
+      orderIndex: index + 1,
+    }));
+  };
+
+  // 완료 버튼 누르면 해당 게시글로
   const handleSubmit = async () => {
     if (!isFormValid) return;
 
@@ -90,6 +111,8 @@ const PostWritingPage = () => {
           title,
           content,
           images,
+          deleteImageIds,
+          imageOrders: buildImageOrders(),
         });
         navigate(`/lived/community/${postId}`);
       } else {
@@ -106,22 +129,27 @@ const PostWritingPage = () => {
     }
   };
 
-  {
-    /* 게시글 수정 관련 함수 */
-  }
+  // 게시글수정 함수
   const isEdit = Boolean(postId);
   useEffect(() => {
     if (!isEdit || !postId) return;
 
     const fetchPost = async () => {
       const post = await getPostDetail(Number(postId));
+      const imgs = post.images.map((img) => ({
+        imageId: img.imageId,
+        imageUrl: img.imageUrl,
+      }));
+
       setSelectedCategory(post.categoryLabel);
       setTitle(post.title);
       setContent(post.content);
-      const urls = post.images.map((img) => img.imageUrl);
-      setImagePreviews(urls);
+      setExistingImages(imgs);
+      setImagePreviews(imgs.map((i) => i.imageUrl));
       setImages([]);
+      setDeleteImageIds([]);
     };
+
     fetchPost();
   }, [isEdit, postId]);
 
