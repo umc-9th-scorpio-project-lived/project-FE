@@ -108,7 +108,8 @@ const CommunityCommentList = ({
                   {openCommentId === comment.commentId && !isModalOpen && (
                     <div className="absolute right-0 top-8 z-50">
                       <CommunityHamburger
-                        type="myComment"
+                        type="comment"
+                        commentId={comment.commentId}
                         onDelete={() => onDeleteComment(comment.commentId)}
                         onEdit={() => {
                           onEditRequest(comment.commentId, comment.content);
@@ -178,6 +179,7 @@ const CommunityCommentList = ({
                       <div className="absolute right-0 top-8 z-50">
                         <CommunityHamburger
                           type="myComment"
+                          commentId={reply.commentId}
                           onDelete={() => onDeleteComment(reply.commentId)}
                           onEdit={() => {
                             onEditRequest(reply.commentId, reply.content);

@@ -1,25 +1,43 @@
-import CloseIcon from "@/icons/CloseIcon";
-import useBaseModal from "@/stores/modals/baseModal";
-import { useState } from "react";
+import {
+  REPORT_REASON,
+  type ReportReason,
+  type ReportTargetType,
+} from '@/constants/report';
+import CloseIcon from '@/icons/CloseIcon';
+import { report } from '@/services/posts/report';
+import useBaseModal from '@/stores/modals/baseModal';
+import { useState } from 'react';
 
-const REPORT_REASONS = [
-  "욕설, 혐오 표현 사용",
-  "음란, 부적절한 콘텐츠",
-  "상업성, 홍보성 내용",
-  "도배 및 장난성 글",
-  "개인정보 침해",
-  "저작권 침해",
-  "범죄 행위 유도 및 범죄 관련 내용",
-  "기타",
-];
+type ReportModalProps = {
+  targetType: ReportTargetType;
+  targetId: number;
+};
 
 const ReportPostModal = () => {
-  const { closeModal } = useBaseModal();
+  const { closeModal, modalProps } = useBaseModal();
 
-  const [selectReason, setSelectReason] = useState<string | null>(null);
-  const [detail, setDetail] = useState("");
+  const { targetType, targetId } = modalProps as ReportModalProps;
 
-  const isSubmit = selectReason !== null;
+  const [selectReason, setSelectReason] = useState<ReportReason | null>(null);
+  const [detail, setDetail] = useState('');
+
+  const isValid = selectReason !== null;
+
+  const handleSubmit = async () => {
+    if (!selectReason) return;
+
+    try {
+      await report({
+        targetType,
+        targetId,
+        reason: selectReason,
+        detail: detail || null,
+      });
+      closeModal();
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return (
     <div className="bg-screen-0 p-6 rounded-t-xl">
@@ -29,24 +47,26 @@ const ReportPostModal = () => {
       </div>
       {/*신고 사유 리스트*/}
       <div className="flex flex-col gap-4 my-2 text-gray-900 text-body_16">
-        {REPORT_REASONS.map((reason) => {
-          const select = selectReason === reason;
+        {REPORT_REASON.map(({ id, type, content }) => {
+          const select = selectReason === type;
 
           return (
             <button
-              key={reason}
+              key={id}
               type="button"
               className="flex items-center gap-2"
-              onClick={() => setSelectReason(reason)}
+              onClick={() => setSelectReason(type)}
             >
               <span
                 className={`w-5 h-5 rounded-full border flex items-center justify-center
-                  ${select ? "border-black" : "border-gray-300"}
+                  ${select ? 'border-black' : 'border-gray-300'}
                   `}
               >
-                {select && <span className="w-2.5 h-2.5 rounded-full bg-black" />}
+                {select && (
+                  <span className="w-2.5 h-2.5 rounded-full bg-black" />
+                )}
               </span>
-              <span>{reason}</span>
+              <span>{content}</span>
             </button>
           );
         })}
@@ -61,9 +81,9 @@ const ReportPostModal = () => {
         />
       )}
       <button
-        disabled={!isSubmit}
-        onClick={closeModal}
-        className={`w-full py-3 mt-4 text-[18px] font-bold rounded-full ${isSubmit ? "bg-black text-screen-0" : "bg-gray-100 text-gray-400"}`}
+        disabled={!isValid}
+        onClick={handleSubmit}
+        className={`w-full py-3 mt-4 text-[18px] font-bold rounded-full ${isValid ? 'bg-black text-screen-0' : 'bg-gray-100 text-gray-400'}`}
       >
         신고하기
       </button>

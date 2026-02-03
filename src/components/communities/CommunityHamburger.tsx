@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 interface CommunityHamburgerProps {
   type: 'myPost' | 'post' | 'myComment' | 'comment';
   postId?: number;
+  commentId?: number;
   onDelete?: () => Promise<void> | void;
   onEdit?: () => void;
 }
@@ -11,6 +12,7 @@ interface CommunityHamburgerProps {
 const CommunityHamburger = ({
   type,
   postId,
+  commentId,
   onDelete,
   onEdit,
 }: CommunityHamburgerProps) => {
@@ -32,7 +34,12 @@ const CommunityHamburger = ({
       {type === 'post' && (
         <div
           className="flex items-center justify-center w-full h-1/2 rounded-sm border-[0.5px] border-gray-300 px-3 py-2 bg-screen-0 text-[11px] text-gray-900 text-center"
-          onClick={() => openModal('reportPostModal', { position: 'bottom' })}
+          onClick={() =>
+            openModal('reportPostModal', {
+              position: 'bottom',
+              props: { targetType: 'POST', targetId: postId },
+            })
+          }
         >
           글 신고하기
         </div>
@@ -63,7 +70,12 @@ const CommunityHamburger = ({
           </div>
           <div
             className="flex items-center justify-center w-full h-1/2 rounded-b-sm border-[0.5px] border-gray-300 px-3 py-2 bg-screen-0 text-[11px] text-gray-900 text-center"
-            onClick={() => openModal('reportPostModal', { position: 'bottom' })}
+            onClick={() =>
+              openModal('reportPostModal', {
+                position: 'bottom',
+                props: { targetType: 'COMMENT', targetId: commentId },
+              })
+            }
           >
             댓글 신고하기
           </div>

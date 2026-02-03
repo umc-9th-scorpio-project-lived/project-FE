@@ -30,9 +30,8 @@ type CommentType = 'create' | 'reply' | 'edit';
 
 const PostDetailPage = () => {
   const navigate = useNavigate();
-  {
-    /* postId */
-  }
+
+  // postId
   const { postId } = useParams<{ postId: string }>();
   const [post, setPost] = useState<PostDetail | null>(null);
 
@@ -51,9 +50,7 @@ const PostDetailPage = () => {
     fetchPostDetail();
   }, [postId]);
 
-  {
-    /* 모달 */
-  }
+  // 모달
   const { isModalOpen } = useBaseModal();
   const [open, setOpen] = useState(false);
 
@@ -63,9 +60,7 @@ const PostDetailPage = () => {
     }
   }, [isModalOpen]);
 
-  {
-    /* 스크랩 */
-  }
+  // 스크랩
   const [scrapped, setScrapped] = useState(false);
 
   useEffect(() => {
@@ -85,9 +80,7 @@ const PostDetailPage = () => {
     }
   };
 
-  {
-    /* 좋아요 */
-  }
+  // 좋아요
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
 
@@ -110,9 +103,7 @@ const PostDetailPage = () => {
     }
   };
 
-  {
-    /* 게시글 삭제 */
-  }
+  // 게시글 삭제
   const handleDeletePost = async () => {
     if (!postId) return;
 
@@ -120,9 +111,7 @@ const PostDetailPage = () => {
     navigate('/lived/community');
   };
 
-  {
-    /* 댓글 */
-  }
+  // 댓글
   const [comments, setComments] = useState<Comment[]>([]);
   const [editingCommentId, setEditingCommentId] = useState<number | null>(null);
   const [editingContent, setEditingContent] = useState('');
@@ -231,7 +220,7 @@ const PostDetailPage = () => {
           {open && !isModalOpen && (
             <div className="absolute top-8 right-0 z-50">
               <CommunityHamburger
-                type="myPost"
+                type="post"
                 postId={post?.postId}
                 onDelete={handleDeletePost}
               />
