@@ -30,96 +30,113 @@ import BlockedPage from './pages/users/BlockedPage';
 import CallbackPage from './pages/commons/CallbackPage';
 import HomeRoutinePage from './pages/homes/HomeRoutinePage';
 import RoutinePage from './pages/onboardings/RoutinePage';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <BrowserRouter>
-      <ModalPage />
-      <Routes>
-        <Route path="/login/callback" element={<CallbackPage />} />
-        <Route path="/signup/callback" element={<CallbackPage />} />
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <ModalPage />
+        <Routes>
+          <Route path="/login/callback" element={<CallbackPage />} />
+          <Route path="/signup/callback" element={<CallbackPage />} />
 
-        <Route element={<SubLayout />}>
-          {/* 로그인 */}
-          <Route path="/" element={<LoginPage />} />
+          <Route element={<SubLayout />}>
+            {/* 로그인 */}
+            <Route path="/" element={<LoginPage />} />
 
-          {/* 루틴 생성/수정 페이지 */}
-          <Route
-            path="/lived/create"
-            element={<HomeRoutinePage mode="create" />}
-          />
-          {/* 추후 루틴 아이디 별로 관리 */}
-          <Route path="/lived/edit" element={<HomeRoutinePage mode="edit" />} />
-          {/* 알림 페이지 */}
-          <Route path="/lived/alarm" element={<AlarmPage />} />
-          {/* 루틴 추천 페이지 */}
-          <Route path="/lived/recommend" element={<RecommendPage />} />
-          {/* 온보딩 기본 정보 */}
-          <Route path="/onboardings/basic-info" element={<BasicInfoPage />} />
+            {/* 루틴 생성/수정 페이지 */}
+            <Route
+              path="/lived/create"
+              element={<HomeRoutinePage mode="create" />}
+            />
+            {/* 추후 루틴 아이디 별로 관리 */}
+            <Route
+              path="/lived/edit"
+              element={<HomeRoutinePage mode="edit" />}
+            />
+            {/* 알림 페이지 */}
+            <Route path="/lived/alarm" element={<AlarmPage />} />
+            {/* 루틴 추천 페이지 */}
+            <Route path="/lived/recommend" element={<RecommendPage />} />
+            {/* 온보딩 기본 정보 */}
+            <Route path="/onboardings/basic-info" element={<BasicInfoPage />} />
 
-          {/* 온보딩 자취 고민 */}
-          <Route path="/onboardings/concern" element={<ConcernPage />} />
+            {/* 온보딩 자취 고민 */}
+            <Route path="/onboardings/concern" element={<ConcernPage />} />
 
-          {/* 온보딩 맞춤 루틴 */}
-          <Route path="/onboardings/routine" element={<RoutinePage />} />
+            {/* 온보딩 맞춤 루틴 */}
+            <Route path="/onboardings/routine" element={<RoutinePage />} />
 
-          {/* 온보딩 알림 설정 */}
-          <Route path="/onboardings/push-guide" element={<PushGuidePage />} />
-          <Route path="/lived/community/:postId" element={<PostDetailPage />} />
-          <Route path="/lived/community/write" element={<PostWritingPage />} />
-          <Route
-            path="/lived/community/profile/:userid"
-            element={<CommunityProfilePage />}
-          />
-          <Route path="/lived/community/search" element={<PostSearchPage />} />
-        </Route>
+            {/* 온보딩 알림 설정 */}
+            <Route path="/onboardings/push-guide" element={<PushGuidePage />} />
+            <Route
+              path="/lived/community/:postId"
+              element={<PostDetailPage />}
+            />
+            <Route
+              path="/lived/community/write"
+              element={<PostWritingPage />}
+            />
+            <Route
+              path="/lived/community/profile/:userid"
+              element={<CommunityProfilePage />}
+            />
+            <Route
+              path="/lived/community/search"
+              element={<PostSearchPage />}
+            />
+          </Route>
 
-        <Route path="/lived" element={<MainLayout />}>
-          {/* 홈 */}
-          <Route index element={<HomePage />} />
+          <Route path="/lived" element={<MainLayout />}>
+            {/* 홈 */}
+            <Route index element={<HomePage />} />
 
-          {/* 루틴 나무 */}
-          <Route path="tree" element={<TreePage />} />
+            {/* 루틴 나무 */}
+            <Route path="tree" element={<TreePage />} />
 
-          {/* 커뮤니티 */}
-          <Route path="community" element={<CommunityPage />} />
+            {/* 커뮤니티 */}
+            <Route path="community" element={<CommunityPage />} />
 
-          {/* 마이 */}
-          <Route path="my" element={<UserPage />} />
-        </Route>
+            {/* 마이 */}
+            <Route path="my" element={<UserPage />} />
+          </Route>
 
-        {/* 루틴나무 페이지의 상세페이지 */}
-        <Route path="/lived/tree" element={<SubLayout />}>
-          <Route path="tracker" element={<RoutineTrackerPage />} />
-          <Route path="friend" element={<FriendTreePage />} />
-          <Route path="statistics" element={<StatisticsPage />} />
-          <Route path="archive" element={<TreeArchivePage />} />
-        </Route>
-        {/* 마이페이지의 상세페이지 */}
-        <Route path="/lived/my" element={<SubLayout />}>
-          {/* 공지사항 */}
-          <Route path="notice" element={<NoticePage />} />
+          {/* 루틴나무 페이지의 상세페이지 */}
+          <Route path="/lived/tree" element={<SubLayout />}>
+            <Route path="tracker" element={<RoutineTrackerPage />} />
+            <Route path="friend" element={<FriendTreePage />} />
+            <Route path="statistics" element={<StatisticsPage />} />
+            <Route path="archive" element={<TreeArchivePage />} />
+          </Route>
+          {/* 마이페이지의 상세페이지 */}
+          <Route path="/lived/my" element={<SubLayout />}>
+            {/* 공지사항 */}
+            <Route path="notice" element={<NoticePage />} />
 
-          {/* 문의하기 */}
-          <Route path="inquiry" element={<InquiryPage />} />
+            {/* 문의하기 */}
+            <Route path="inquiry" element={<InquiryPage />} />
 
-          {/* 정보 */}
-          <Route path="info" element={<InfoPage />} />
+            {/* 정보 */}
+            <Route path="info" element={<InfoPage />} />
 
-          {/* 계정관리 */}
-          <Route path="account" element={<AccountPage />} />
+            {/* 계정관리 */}
+            <Route path="account" element={<AccountPage />} />
 
-          {/* 알림 설정 */}
-          <Route path="notifications" element={<NotificationsPage />} />
+            {/* 알림 설정 */}
+            <Route path="notifications" element={<NotificationsPage />} />
 
-          {/* 개인정보보호 */}
-          <Route path="privacy" element={<PrivacyPage />} />
+            {/* 개인정보보호 */}
+            <Route path="privacy" element={<PrivacyPage />} />
 
-          {/* 차단 목록 */}
-          <Route path="privacy/blocked" element={<BlockedPage />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+            {/* 차단 목록 */}
+            <Route path="privacy/blocked" element={<BlockedPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 

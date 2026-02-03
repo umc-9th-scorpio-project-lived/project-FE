@@ -1,43 +1,49 @@
-import GoldenFruitIcon from "@/icons/GoldenFruitIcon";
-import GrowingFruitIcon from "@/icons/GrowingFruitIcon";
-import NormalFruitIcon from "@/icons/NormalFruitIcon";
-import RoutineTreeLogIcon from "@/icons/RoutineTreeLogIcon";
-import RoutineTreeMiddleIcon from "@/icons/RoutineTreeMiddleIcon";
-import RoutineTreeTopIcon from "@/icons/RoutineTreeTopIcon";
-import useBaseModal from "@/stores/modals/baseModal";
+import GoldenFruitIcon from '@/icons/GoldenFruitIcon';
+import GrowingFruitIcon from '@/icons/GrowingFruitIcon';
+import NormalFruitIcon from '@/icons/NormalFruitIcon';
+import RoutineTreeLogIcon from '@/icons/RoutineTreeLogIcon';
+import RoutineTreeMiddleIcon from '@/icons/RoutineTreeMiddleIcon';
+import RoutineTreeTopIcon from '@/icons/RoutineTreeTopIcon';
+import useBaseModal from '@/stores/modals/baseModal';
+import type {
+  FruitInfo,
+  FruitType,
+  FruitsStatistics,
+} from '@/types/statistics/Statistics.types';
+
+interface FruitInfoWithPosition extends FruitInfo {
+  top: number;
+  left: number;
+  middleIconIndex: number;
+}
 
 interface RoutineTreeProps {
   isFruitClickable?: boolean;
   width?: number; // px 단위
+  fruitsData?: FruitsStatistics;
 }
 
-// 임시 루틴 타입
-type Routine = {
-  title: string;
-  achievement: number;
-};
-
-// 임시 열매 타입
-type Fruit = {
-  top: number;
-  left: number;
-  type: "golden" | "normal" | "growing";
-  middleIconIndex: number;
-};
-
-const RoutineTree = ({ isFruitClickable = true, width }: RoutineTreeProps) => {
-  // 임시 루틴 배열 (추후 API로 불러오기)
-  const routines: Routine[] = [
-    { title: "일어나자마자 이불 정리하기", achievement: 20 },
-    { title: "정해진 시간에 일어나기", achievement: 90 },
-    { title: "정해진 시간에 일어나기", achievement: 90 },
-  ];
-
-  // 열매가 맺히는 루틴의 개수 (달성률 30% 이상)
-  const fruitCount = routines.filter((routine) => routine.achievement >= 30).length;
+const RoutineTree = ({
+  isFruitClickable = true,
+  width,
+  fruitsData = {
+    summary: {
+      goldCount: 0,
+      normalCount: 0,
+      growingCount: 0,
+    },
+    fruitList: [],
+  },
+}: RoutineTreeProps) => {
+  // 종류별 열매 개수 총합
+  const fruitCount =
+    fruitsData.summary.goldCount +
+    fruitsData.summary.growingCount +
+    fruitsData.summary.normalCount;
 
   // 열매가 맺히는 부분(RoutineTreeMiddleIcon.tsx) 개수 계산
-  const middleIconCount = fruitCount <= 5 ? 2 : 2 + Math.ceil((fruitCount - 5) / 3);
+  const middleIconCount =
+    fruitCount <= 5 ? 2 : 2 + Math.ceil((fruitCount - 5) / 3);
 
   // 기본 크기 (px 단위)
   const BASE_WIDTH = 280.73; // RoutineTreeMiddleIcon의 너비
@@ -70,129 +76,130 @@ const RoutineTree = ({ isFruitClickable = true, width }: RoutineTreeProps) => {
     return toScaledRem(baseTop + additionalHeight);
   };
 
-  /** 열매 종류(황금, 일반, 성장 중)를 구분해주는 함수 */
-  const getFruitType = (achievement: number): "golden" | "normal" | "growing" => {
-    if (achievement >= 90) return "golden";
-    if (achievement >= 60) return "normal";
-    return "growing";
-  };
+  /** 열매 위치를 계산해주는 함수 */
+  const getFruits = (fruitsData: FruitsStatistics): FruitInfoWithPosition[] => {
+    const fruits: FruitInfoWithPosition[] = [];
 
-  /** 열매 위치와 종류를 계산해주는 함수 */
-  const getFruits = (): Fruit[] => {
-    const fruits: Fruit[] = [];
+    fruitsData.fruitList.map((fruit, index) => {
+      // 1번째 열매: 2번째 RoutineTreeMiddleIcon 좌측
+      if (index === 0) {
+        fruits.push({
+          ...fruit,
+          top: toScaledRem(84.82),
+          left: toScaledRem(36.25),
+          middleIconIndex: middleIconCount - 2, // 2번째 RoutineTreeMiddleIcon
+        });
+      }
 
-    routines
-      .filter((routine) => routine.achievement >= 30)
-      .forEach((routine, index) => {
-        const fruitType = getFruitType(routine.achievement);
+      // 2번째 열매: 1번째 RoutineTreeMiddleIcon 우측
+      if (index === 1) {
+        fruits.push({
+          ...fruit,
+          top: toScaledRem(79.94),
+          left: toScaledRem(166),
+          middleIconIndex: middleIconCount - 1, // 1번째 RoutineTreeMiddleIcon
+        });
+      }
 
-        // 1번째 열매: 2번째 RoutineTreeMiddleIcon 좌측
-        if (index === 0) {
+      // 3번째 열매: 2번째 RoutineTreeMiddleIcon 우측
+      if (index === 2) {
+        fruits.push({
+          ...fruit,
+          top: toScaledRem(84.82),
+          left: toScaledRem(191),
+          middleIconIndex: middleIconCount - 2, // 2번째 RoutineTreeMiddleIcon
+        });
+      }
+
+      // 4번째 열매: 2번째 RoutineTreeMiddleIcon 중앙
+      if (index === 3) {
+        fruits.push({
+          ...fruit,
+          top: toScaledRem(90.82),
+          left: toScaledRem(117),
+          middleIconIndex: middleIconCount - 2, // 2번째 RoutineTreeMiddleIcon
+        });
+      }
+
+      // 5번째 열매: 1번째 RoutineTreeMiddleIcon 좌측
+      if (index === 4) {
+        fruits.push({
+          ...fruit,
+          top: toScaledRem(75.94),
+          left: toScaledRem(63),
+          middleIconIndex: middleIconCount - 1, // 1번째 RoutineTreeMiddleIcon
+        });
+      }
+
+      // 6번째 열매부터는 중앙 -> 좌측 -> 우측 순서로 배치하는 것을 반복
+      if (index >= 5) {
+        const middleIconIndex =
+          middleIconCount - (Math.floor((index + 1) / 3) + 1);
+        const position = (index - 5) % 3; // 0: 중앙, 1: 좌측, 2: 우측
+
+        if (position === 0) {
+          // 중앙
           fruits.push({
-            top: toScaledRem(84.82),
-            left: toScaledRem(36.25),
-            type: fruitType,
-            middleIconIndex: middleIconCount - 2, // 2번째 RoutineTreeMiddleIcon
-          });
-        }
-
-        // 2번째 열매: 1번째 RoutineTreeMiddleIcon 우측
-        if (index === 1) {
-          fruits.push({
-            top: toScaledRem(79.94),
-            left: toScaledRem(166),
-            type: fruitType,
-            middleIconIndex: middleIconCount - 1, // 1번째 RoutineTreeMiddleIcon
-          });
-        }
-
-        // 3번째 열매: 2번째 RoutineTreeMiddleIcon 우측
-        if (index === 2) {
-          fruits.push({
-            top: toScaledRem(84.82),
-            left: toScaledRem(191),
-            type: fruitType,
-            middleIconIndex: middleIconCount - 2, // 2번째 RoutineTreeMiddleIcon
-          });
-        }
-
-        // 4번째 열매: 2번째 RoutineTreeMiddleIcon 중앙
-        if (index === 3) {
-          fruits.push({
+            ...fruit,
             top: toScaledRem(90.82),
             left: toScaledRem(117),
-            type: fruitType,
-            middleIconIndex: middleIconCount - 2, // 2번째 RoutineTreeMiddleIcon
+            middleIconIndex,
           });
-        }
-
-        // 5번째 열매: 1번째 RoutineTreeMiddleIcon 좌측
-        if (index === 4) {
+        } else if (position === 1) {
+          // 좌측
           fruits.push({
-            top: toScaledRem(75.94),
-            left: toScaledRem(63),
-            type: fruitType,
-            middleIconIndex: middleIconCount - 1, // 1번째 RoutineTreeMiddleIcon
+            ...fruit,
+            top: toScaledRem(84.82),
+            left: toScaledRem(36.25),
+            middleIconIndex,
+          });
+        } else {
+          // 우측
+          fruits.push({
+            ...fruit,
+            top: toScaledRem(84.82),
+            left: toScaledRem(191),
+            middleIconIndex,
           });
         }
-
-        // 6번째 열매부터는 중앙 -> 좌측 -> 우측 순서로 배치하는 것을 반복
-        if (index >= 5) {
-          const middleIconIndex = middleIconCount - (Math.floor((index + 1) / 3) + 1);
-          const position = (index - 5) % 3; // 0: 중앙, 1: 좌측, 2: 우측
-
-          if (position === 0) {
-            // 중앙
-            fruits.push({
-              top: toScaledRem(90.82),
-              left: toScaledRem(117),
-              type: fruitType,
-              middleIconIndex,
-            });
-          } else if (position === 1) {
-            // 좌측
-            fruits.push({
-              top: toScaledRem(84.82),
-              left: toScaledRem(36.25),
-              type: fruitType,
-              middleIconIndex,
-            });
-          } else {
-            // 우측
-            fruits.push({
-              top: toScaledRem(84.82),
-              left: toScaledRem(191),
-              type: fruitType,
-              middleIconIndex,
-            });
-          }
-        }
-      });
+      }
+    });
 
     return fruits;
   };
 
-  const fruits = getFruits();
+  const fruits = getFruits(fruitsData);
 
   /** 문자열로 열매 종류를 입력하면 아이콘을 반환해주는 함수 */
-  const getFruitIcon = (fruitType: "golden" | "normal" | "growing") => {
+  const getFruitIcon = (fruitType: FruitType) => {
     switch (fruitType) {
-      case "golden":
+      case 'GOLD':
         return (
           <GoldenFruitIcon
-            style={{ width: `${toScaledRem(49)}rem`, height: `${toScaledRem(50.66)}rem` }}
+            style={{
+              width: `${toScaledRem(49)}rem`,
+              height: `${toScaledRem(50.66)}rem`,
+            }}
           />
         );
-      case "normal":
+
+      case 'NORMAL':
         return (
           <NormalFruitIcon
-            style={{ width: `${toScaledRem(49)}rem`, height: `${toScaledRem(50.66)}rem` }}
+            style={{
+              width: `${toScaledRem(49)}rem`,
+              height: `${toScaledRem(50.66)}rem`,
+            }}
           />
         );
-      case "growing":
+
+      case 'GROWING':
         return (
           <GrowingFruitIcon
-            style={{ width: `${toScaledRem(49)}rem`, height: `${toScaledRem(50.66)}rem` }}
+            style={{
+              width: `${toScaledRem(49)}rem`,
+              height: `${toScaledRem(50.66)}rem`,
+            }}
           />
         );
     }
@@ -203,13 +210,16 @@ const RoutineTree = ({ isFruitClickable = true, width }: RoutineTreeProps) => {
 
   const { openModal } = useBaseModal();
   const handleFruitClick = () => {
-    openModal("fruitModal", { position: "center" });
+    openModal('fruitModal', { position: 'center' });
   };
 
   return (
     // 상단 나뭇잎 / 중단 나뭇잎 / 줄기로 나뉜 루틴 나무 아이콘과 열매들을 위치에 맞게 배치하는 div
     // tailwind css는 동적으로 계산한 클래스명을 인식하지 못하므로 style을 사용해 배치
-    <div className="flex flex-col items-center relative" style={{ minHeight: `${treeHeight}rem` }}>
+    <div
+      className="flex flex-col items-center relative"
+      style={{ minHeight: `${treeHeight}rem` }}
+    >
       {/* 나무 줄기 부분 */}
       <RoutineTreeLogIcon
         className="relative"
@@ -229,7 +239,10 @@ const RoutineTree = ({ isFruitClickable = true, width }: RoutineTreeProps) => {
         >
           <div className="relative">
             <RoutineTreeMiddleIcon
-              style={{ width: `${toScaledRem(280.73)}rem`, height: `${toScaledRem(170.12)}rem` }}
+              style={{
+                width: `${toScaledRem(280.73)}rem`,
+                height: `${toScaledRem(170.12)}rem`,
+              }}
             />
 
             {/* 열매 */}
@@ -240,7 +253,7 @@ const RoutineTree = ({ isFruitClickable = true, width }: RoutineTreeProps) => {
                   key={fruitIndex}
                   onClick={handleFruitClick}
                   disabled={!isFruitClickable}
-                  className={`absolute ${isFruitClickable ? "cursor-pointer" : "cursor-default"}`}
+                  className={`absolute ${isFruitClickable ? 'cursor-pointer' : 'cursor-default'}`}
                   style={{ top: `${fruit.top}rem`, left: `${fruit.left}rem` }}
                 >
                   {getFruitIcon(fruit.type)}
@@ -253,7 +266,10 @@ const RoutineTree = ({ isFruitClickable = true, width }: RoutineTreeProps) => {
       {/* 열매가 맺히지 않는 부분(나무 상단부) */}
       <RoutineTreeTopIcon
         className="absolute"
-        style={{ width: `${toScaledRem(218.36)}rem`, height: `${toScaledRem(151.64)}rem` }}
+        style={{
+          width: `${toScaledRem(218.36)}rem`,
+          height: `${toScaledRem(151.64)}rem`,
+        }}
       />
     </div>
   );

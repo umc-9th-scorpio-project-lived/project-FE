@@ -5,13 +5,29 @@ import GrowingFruitIcon from '@/icons/GrowingFruitIcon';
 import InfoIcon from '@/icons/InfoIcon';
 import MiniRightChevronIcon from '@/icons/MiniRightChevronIcon';
 import NormalFruitIcon from '@/icons/NormalFruitIcon';
+import { getRoutineTree } from '@/services/statistics/getRoutineTree';
 import useBaseModal from '@/stores/modals/baseModal';
+import type { YearMonth } from '@/types/statistics/Statistics.types';
+import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 const TreePage = () => {
   const navigate = useNavigate();
 
   const { openModal } = useBaseModal();
+
+  const yearMonth: YearMonth = {
+    year: new Date().getFullYear(),
+    month: new Date().getMonth(),
+  };
+
+  const { data, isPending, isError } = useQuery({
+    queryKey: [yearMonth.year, yearMonth.month, 'routineTree'],
+    queryFn: () => getRoutineTree(yearMonth),
+    staleTime: 30 * 1000,
+    gcTime: 5 * 60 * 1000,
+    retry: 1,
+  });
 
   return (
     // 친구 목록 바텀시트가 루틴 나무를 가리는 걸 방지하기 위해 pb-[180px] 추가
@@ -73,7 +89,11 @@ const TreePage = () => {
         </div>
       </div>
 
-      <RoutineTree />
+      {isPending || isError ? (
+        <RoutineTree />
+      ) : (
+        <RoutineTree fruitsData={data} />
+      )}
 
       <FriendsSheet />
     </div>
