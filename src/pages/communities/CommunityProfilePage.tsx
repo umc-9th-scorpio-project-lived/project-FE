@@ -6,7 +6,6 @@ import {
   getCommunityProfile,
 } from '@/services/posts/profile';
 import type { ProfileFruites } from '@/types/communities/Profile.types';
-import { isAxiosError } from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
@@ -21,17 +20,21 @@ const CommunityProfilePage = () => {
 
   useEffect(() => {
     const fetchProfile = async () => {
-      try {
-        const res = await getCommunityProfile();
-        setNickname(res.nickname);
-        setProfileImageUrl(res.profileImageUrl ?? null);
-        setImagePreview(res.profileImageUrl ?? null);
-        setLivingPeriod(res.livingPeriod);
-        setFruits(res.fruits);
-      } catch (e) {
-        console.error(e);
-      }
+      const res = await getCommunityProfile();
+
+      setNickname(res.nickname);
+      setLivingPeriod(res.livingPeriod);
+      setFruits(res.fruits);
+
+      const imageUrl =
+        res.profileImageUrl && res.profileImageUrl.trim() !== ''
+          ? res.profileImageUrl
+          : null;
+
+      setProfileImageUrl(imageUrl);
+      setImagePreview(imageUrl);
     };
+
     fetchProfile();
   }, []);
 
@@ -54,45 +57,27 @@ const CommunityProfilePage = () => {
   };
 
   const handleSubmitProfile = async () => {
+    if (!nickname.trim()) {
+      console.warn('닉네임이 비어 있습니다.');
+      return;
+    }
+
     try {
       const body = {
-        request: { nickname },
+        request: {
+          nickname: nickname.trim(),
+        },
         image: imageFile ?? undefined,
       };
 
-      const formData = new FormData();
-      formData.append('request', JSON.stringify(body.request));
-      if (body.image) {
-        formData.append('image', body.image);
-      }
-
-      // 🔥 FormData 내용 출력
-      console.group('📦 EditCommunityProfile FormData');
-      for (const [key, value] of formData.entries()) {
-        console.log(key, value);
-      }
-      console.groupEnd();
-
       const res = await EditCommunityProfile(body);
-      console.log('✅ PATCH success response:', res);
-
       setNickname(res.nickname);
       setProfileImageUrl(res.profileImageUrl ?? null);
       setImagePreview(res.profileImageUrl ?? null);
       setImageFile(null);
       setEditMode(false);
-    } catch (e: unknown) {
-      console.error('❌ PATCH error');
-
-      if (isAxiosError(e)) {
-        console.error('status:', e.response?.status);
-        console.error('data:', e.response?.data);
-        console.error('headers:', e.response?.headers);
-      } else if (e instanceof Error) {
-        console.error('message:', e.message);
-      } else {
-        console.error('unknown error:', e);
-      }
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -124,14 +109,16 @@ const CommunityProfilePage = () => {
       {/*프로필창*/}
       <div className="flex flex-col border-b border-gray-100 px-4 py-5 gap-3.75">
         <div className="flex gap-2.5">
-          <div
-            className={`relative w-20 h-20 rounded-full bg-gray-50 bg-no-repeat bg-center bg-cover ${!imagePreview ? 'bg-user' : ''}`}
-            style={{
-              backgroundImage: imagePreview
-                ? `url(${imagePreview})`
-                : undefined,
-            }}
-          >
+          <div className="relative w-20 h-20 rounded-full bg-gray-50">
+            {imagePreview ? (
+              <img
+                src={imagePreview}
+                alt={profileImageUrl || 'profile'}
+                className="w-20 h-20 rounded-full object-cover"
+              />
+            ) : (
+              <div className="w-20 h-20 rounded-full bg-user" />
+            )}
             {editMode && (
               <button
                 className="flex absolute items-center justify-center w-5 h-5 rounded-full bg-gray-200 top-0 right-0"
