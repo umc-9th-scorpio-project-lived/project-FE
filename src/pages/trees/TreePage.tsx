@@ -18,7 +18,7 @@ const TreePage = () => {
 
   const yearMonth: YearMonth = {
     year: new Date().getFullYear(),
-    month: new Date().getMonth(),
+    month: new Date().getMonth() + 1, // getMonth()는 0월부터 시작하므로 1 더하기
   };
 
   const { data, isPending, isError } = useQuery({
