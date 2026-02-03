@@ -1,22 +1,20 @@
-import type { ApiResponse } from '../Api.types';
-
 export type FruitType = 'NONE' | 'GROWING' | 'NORMAL' | 'GOLD';
 
-export type Fruit = {
+export type FruitInfo = {
   memberRoutineId: number;
   type: FruitType;
 };
 
-type FruitSummary = {
+type FruitsSummary = {
   goldCount: number;
   normalCount: number;
   growingCount: number;
 };
 
-export type RoutineTreeResponse = ApiResponse<{
-  summary: FruitSummary;
-  fruitList: Fruit[];
-}>;
+export type FruitsStatistics = {
+  summary: FruitsSummary;
+  fruitList: FruitInfo[];
+};
 
 export type YearMonth = {
   year: number;
