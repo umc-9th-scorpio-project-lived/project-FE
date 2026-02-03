@@ -5,7 +5,7 @@ import GrowingFruitIcon from '@/icons/GrowingFruitIcon';
 import InfoIcon from '@/icons/InfoIcon';
 import MiniRightChevronIcon from '@/icons/MiniRightChevronIcon';
 import NormalFruitIcon from '@/icons/NormalFruitIcon';
-import { getRoutineTree } from '@/services/statistics/getRoutineTree';
+import { getFruitsStatistics } from '@/services/statistics/getFruitsStatistics';
 import useBaseModal from '@/stores/modals/baseModal';
 import type { YearMonth } from '@/types/statistics/Statistics.types';
 import { useQuery } from '@tanstack/react-query';
@@ -23,7 +23,7 @@ const TreePage = () => {
 
   const { data, isPending, isError } = useQuery({
     queryKey: [yearMonth.year, yearMonth.month, 'routineTree'],
-    queryFn: () => getRoutineTree(yearMonth),
+    queryFn: () => getFruitsStatistics(yearMonth),
     staleTime: 30 * 1000,
     gcTime: 5 * 60 * 1000,
     retry: 1,

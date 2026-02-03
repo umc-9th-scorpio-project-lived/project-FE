@@ -4,7 +4,7 @@ import type {
   YearMonth,
 } from '@/types/statistics/Statistics.types';
 
-export const getRoutineTree = async (
+export const getFruitsStatistics = async (
   yearMonth: YearMonth
 ): Promise<FruitsStatistics> => {
   return await authApi.get('/statistics/tree', {
