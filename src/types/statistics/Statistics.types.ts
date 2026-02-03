@@ -1,6 +1,6 @@
 export type FruitType = 'NONE' | 'GROWING' | 'NORMAL' | 'GOLD';
 
-export type FruitInfo = {
+export type Fruit = {
   memberRoutineId: number;
   type: FruitType;
 };
@@ -13,7 +13,7 @@ type FruitsSummary = {
 
 export type FruitsStatistics = {
   summary: FruitsSummary;
-  fruitList: FruitInfo[];
+  fruitList: Fruit[];
 };
 
 export type YearMonth = {

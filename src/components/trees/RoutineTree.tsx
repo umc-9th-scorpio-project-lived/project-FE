@@ -6,12 +6,12 @@ import RoutineTreeMiddleIcon from '@/icons/RoutineTreeMiddleIcon';
 import RoutineTreeTopIcon from '@/icons/RoutineTreeTopIcon';
 import useBaseModal from '@/stores/modals/baseModal';
 import type {
-  FruitInfo,
+  Fruit,
   FruitType,
   FruitsStatistics,
 } from '@/types/statistics/Statistics.types';
 
-interface FruitInfoWithPosition extends FruitInfo {
+interface FruitWithPosition extends Fruit {
   top: number;
   left: number;
   middleIconIndex: number;
@@ -77,8 +77,8 @@ const RoutineTree = ({
   };
 
   /** 열매 위치를 계산해주는 함수 */
-  const getFruits = (fruitsData: FruitsStatistics): FruitInfoWithPosition[] => {
-    const fruits: FruitInfoWithPosition[] = [];
+  const getFruits = (fruitsData: FruitsStatistics): FruitWithPosition[] => {
+    const fruits: FruitWithPosition[] = [];
 
     fruitsData.fruitList.map((fruit, index) => {
       // 1번째 열매: 2번째 RoutineTreeMiddleIcon 좌측
