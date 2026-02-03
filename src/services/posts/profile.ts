@@ -15,11 +15,19 @@ export const EditCommunityProfile = async (
 ): Promise<CommunityProfileResult> => {
   const formdata = new FormData();
 
-  formdata.append('request', JSON.stringify(body.request));
+  const requestBlob = new Blob([JSON.stringify(body.request)], {
+    type: 'application/json',
+  });
+
+  formdata.append('request', requestBlob);
 
   if (body.image) {
     formdata.append('image', body.image);
   }
 
-  return authApi.patch(`/members/me/community`, formdata);
+  return authApi.patch(`/members/me/community`, formdata, {
+    headers: {
+      'Content-Type': undefined,
+    },
+  });
 };
