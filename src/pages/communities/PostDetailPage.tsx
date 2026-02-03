@@ -242,7 +242,10 @@ const PostDetailPage = () => {
       {/*게시글 본문*/}
       <div className="flex flex-col px-4 py-3 gap-2 border-b-2 border-gray-100">
         <div className="flex items-center gap-2.5">
-          <div className="w-13.5 h-13.5 rounded-full bg-gray-500" />
+          <img
+            className="w-13.5 h-13.5 rounded-full bg-gray-500"
+            src={post?.author.profileImageUrl || undefined}
+          />
           <div className="flex flex-col gap-0.5">
             <span className="typo-body_reg16 text-gray-900">
               {post?.author.nickname}
