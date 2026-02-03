@@ -23,9 +23,8 @@ const CommunityCommentList = ({
   onLikeToggle,
 }: CommentProps) => {
   const [openCommentId, setOpenCommentId] = useState<number | null>(null);
-  {
-    /* 모달 */
-  }
+
+  // 모달
   const { isModalOpen } = useBaseModal();
   useEffect(() => {
     if (isModalOpen) {
@@ -33,14 +32,13 @@ const CommunityCommentList = ({
     }
   }, [isModalOpen]);
 
-  {
-    /* 조건 검사 */
-  }
+  // 조건 검사
   const getValidReplies = (replies?: (Comment | null)[]) => {
     if (!Array.isArray(replies)) return [];
 
     return replies.filter((r): r is Comment => r !== null && r.author !== null);
   };
+
   const safeComments = comments.filter((c): c is Comment => {
     if (!c) return false;
 
@@ -51,8 +49,18 @@ const CommunityCommentList = ({
       return false;
     return true;
   });
-  const safeReplies = (replies?: (Comment | null)[]) =>
-    replies?.filter((r): r is Comment => r !== null && r.author !== null);
+
+  const sortedComments = [...safeComments].sort(
+    (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+  );
+
+  const sortedReplies = (replies?: (Comment | null)[]) =>
+    replies
+      ?.filter((r): r is Comment => r !== null && r.author !== null)
+      .sort(
+        (a, b) =>
+          new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+      );
 
   if (safeComments.length === 0) {
     return (
@@ -65,13 +73,16 @@ const CommunityCommentList = ({
   return (
     <div>
       <div className="flex flex-col py-4 px-4 gap-8">
-        {safeComments.map((comment) => (
+        {sortedComments.map((comment) => (
           <div key={comment.commentId} className="flex flex-col gap-4">
             <div className="flex flex-col gap-2.5">
               <div className="gap-1">
                 <div className="relative flex w-full justify-between">
                   <div className="flex gap-1.5">
-                    <div className="w-10 h-10 bg-gray-500 rounded-full" />
+                    <img
+                      className="w-13.5 h-13.5 rounded-full bg-gray-500"
+                      src={comment?.author.profileImageUrl || undefined}
+                    />
                     <div className="flex flex-col gap-1">
                       <span className="typo-body_bold16 text-gray-900">
                         {comment.author
@@ -134,12 +145,15 @@ const CommunityCommentList = ({
                 </div>
               </div>
             </div>
-            {safeReplies(comment.replies)?.map((reply) => (
+            {sortedReplies(comment.replies)?.map((reply) => (
               <div key={reply.commentId} className="flex flex-col pl-5 gap-2.5">
                 <div className="gap-1">
                   <div className="flex relative w-full justify-between">
                     <div className="flex gap-1.5">
-                      <div className="w-10 h-10 bg-gray-500 rounded-full" />
+                      <img
+                        className="w-13.5 h-13.5 rounded-full bg-gray-500"
+                        src={reply?.author.profileImageUrl || undefined}
+                      />
                       <div className="flex flex-col gap-1">
                         <span className="typo-body_bold16 text-gray-900">
                           {reply.author.nickname}
