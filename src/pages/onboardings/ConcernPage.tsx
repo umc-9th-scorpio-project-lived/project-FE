@@ -1,18 +1,18 @@
-import LeftChevronIcon from "@/icons/LeftChevronIcon";
-import useOnboardingStore from "@/stores/onboarding/onboardingStore";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import LeftChevronIcon from '@/icons/LeftChevronIcon';
+import useOnboardingStore from '@/stores/onboarding/onboardingStore';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const CHIPS = [
-  "집안일 미룸",
-  "정신없는 아침",
-  "할 일 까먹음",
-  "생활비 관리",
-  "외로움",
-  "불규칙한 식습관",
-  "건강 관리",
-  "식사 준비",
-  "늦은 취침 시간",
+  { id: 1, label: '집안일 미룸' },
+  { id: 2, label: '정신없는 아침' },
+  { id: 3, label: '할 일 까먹음' },
+  { id: 4, label: '생활비 관리' },
+  { id: 5, label: '외로움' },
+  { id: 6, label: '불규칙한 식습관' },
+  { id: 7, label: '건강 관리' },
+  { id: 8, label: '식사 준비' },
+  { id: 9, label: '늦은 취침 시간' },
 ] as const;
 
 const ConcernPage = () => {
@@ -20,26 +20,23 @@ const ConcernPage = () => {
   const { concerns, setConcerns } = useOnboardingStore();
 
   // store에 값이 있으면 초기 선택값으로 반영
-  const [selected, setSelected] = useState<string[]>(concerns ?? []);
+  const [selected, setSelected] = useState<number[]>(concerns ?? []);
 
   const selectedCount = selected.length;
   const isOverSelected = selectedCount > 5;
   // 다음 버튼 활성화 조건
   const isButtonEnabled = selectedCount > 0 && !isOverSelected;
 
-  const toggleChip = (chip: string) => {
-    setSelected((prev) => {
-      // 선택 해제
-      if (prev.includes(chip)) return prev.filter((v) => v !== chip);
-
-      return [...prev, chip];
-    });
+  const toggleChip = (id: number) => {
+    setSelected((prev) =>
+      prev.includes(id) ? prev.filter((v) => v !== id) : [...prev, id]
+    );
   };
 
   const handleNext = () => {
     if (!isButtonEnabled) return;
     setConcerns(selected);
-    navigate("/onboardings/routine");
+    navigate('/onboardings/routine');
   };
 
   return (
@@ -49,7 +46,7 @@ const ConcernPage = () => {
         <div className="h-11 w-full py-1.25">
           <button
             type="button"
-            onClick={() => navigate("/onboardings/basic-info")}
+            onClick={() => navigate('/onboardings/basic-info')}
             className="h-8.5 w-8.5 text-gray-900"
             aria-label="뒤로가기"
           >
@@ -77,19 +74,17 @@ const ConcernPage = () => {
 
         {/* 칩 영역 */}
         <div className="pt-8 px-0.5 flex flex-wrap gap-3">
-          {CHIPS.map((chip) => {
-            const isActive = selected.includes(chip);
-
+          {CHIPS.map(({ id, label }) => {
+            const isActive = selected.includes(id);
             return (
               <button
-                key={chip}
+                key={id}
                 type="button"
-                onClick={() => toggleChip(chip)}
+                onClick={() => toggleChip(id)}
                 className={`h-11.5 rounded-lg px-4 typo-body_reg16 transition
-          ${isActive ? "bg-primary-50 text-screen-0" : "bg-gray-50 text-gray-600"}
-        `}
+              ${isActive ? 'bg-primary-50 text-screen-0' : 'bg-gray-50 text-gray-600'}`}
               >
-                {chip}
+                {label}
               </button>
             );
           })}
@@ -110,7 +105,7 @@ const ConcernPage = () => {
             onClick={() => isButtonEnabled && handleNext()}
             onKeyDown={(e) => {
               if (!isButtonEnabled) return;
-              if (e.key === "Enter" || e.key === " ") {
+              if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 handleNext();
               }
@@ -119,8 +114,8 @@ const ConcernPage = () => {
               flex items-center justify-center typo-body_bold18
               ${
                 isButtonEnabled
-                  ? "bg-primary-50 text-screen-0"
-                  : "bg-gray-100 text-gray-400 pointer-events-none"
+                  ? 'bg-primary-50 text-screen-0'
+                  : 'bg-gray-100 text-gray-400 pointer-events-none'
               }
 `}
           >

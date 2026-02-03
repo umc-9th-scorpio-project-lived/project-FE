@@ -1,6 +1,6 @@
-import { ICON_URL_MAP } from "@/constants";
-import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { ICON_URL_MAP } from '@/constants';
+import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ const Footer = () => {
 
   return (
     <>
-      <div className="w-full h-[100px] bg-white flex items-center fixed bottom-0 justify-between limit-width px-5 pb-5 shadow-footer-shadow rounded-t-2xl gap-[40px]">
+      <div className="w-full h-25 bg-white flex items-center fixed bottom-0 justify-between limit-width px-5 pb-5 shadow-footer-shadow rounded-t-2xl gap-10">
         {ICON_URL_MAP.map((item, index) => {
           const IconComponent = item.component;
           const isActive = index === selectedFooterIndex;
@@ -38,7 +38,7 @@ const Footer = () => {
             >
               <IconComponent isActive={isActive} />
               <div
-                className={`typo-body_reg12 font-semibold ${isActive ? "text-[#8FC600]" : "text-gray-200"}`}
+                className={`typo-body_reg12 font-semibold ${isActive ? 'text-[#8FC600]' : 'text-gray-200'}`}
               >
                 {item.name}
               </div>

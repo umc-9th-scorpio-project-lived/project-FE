@@ -1,13 +1,13 @@
-import CameraIcon from "@/icons/CameraIcon";
-import LeftChevronIcon from "@/icons/LeftChevronIcon";
-import WriteIcon from "@/icons/WriteIcon";
-import { useEffect, useRef, useState } from "react";
-import { NavLink } from "react-router-dom";
+import CameraIcon from '@/icons/CameraIcon';
+import LeftChevronIcon from '@/icons/LeftChevronIcon';
+import WriteIcon from '@/icons/WriteIcon';
+import React, { useEffect, useRef, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 const CommunityProfilePage = () => {
-  const [selectedTab, setSelectedTab] = useState("작성한 글");
+  const [selectedTab, setSelectedTab] = useState('작성한 글');
   const [editMode, setEditMode] = useState(false);
-  const [communityName, setCommunityName] = useState("미지근하고 현실적 전기");
+  const [communityName, setCommunityName] = useState('미지근하고 현실적 전기');
   const [image, setImage] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const spanRef = useRef<HTMLSpanElement>(null);
@@ -45,7 +45,10 @@ const CommunityProfilePage = () => {
       {/*네브바*/}
       <div className="flex justify-between items-center text-gray-900 mx-4 my-2">
         <div className="flex gap-3">
-          <NavLink to="/lived/community" className="flex items-center justify-center">
+          <NavLink
+            to="/lived/community"
+            className="flex items-center justify-center"
+          >
             <LeftChevronIcon className="w-6 h-6 text-gray-900 pt-0.5" />
           </NavLink>
           <span className="typo-h2_bold20">커뮤니티 프로필</span>
@@ -55,7 +58,7 @@ const CommunityProfilePage = () => {
       <div className="flex flex-col border-b border-gray-100 px-4 py-5 gap-3.75">
         <div className="flex gap-2.5">
           <div
-            className={`relative w-20 h-20 rounded-full bg-gray-50 bg-no-repeat bg-center bg-cover ${!image ? "bg-user" : ""}`}
+            className={`relative w-20 h-20 rounded-full bg-gray-50 bg-no-repeat bg-center bg-cover ${!image ? 'bg-user' : ''}`}
             style={{ backgroundImage: image ? `url(${image})` : undefined }}
           >
             {editMode && (
@@ -88,14 +91,18 @@ const CommunityProfilePage = () => {
                         value={communityName}
                         onChange={(e) => setCommunityName(e.target.value)}
                         style={{
-                          minWidth: "40px",
-                          boxSizing: "content-box",
+                          minWidth: '40px',
+                          boxSizing: 'content-box',
                         }}
                       />
                       <span
                         ref={spanRef}
                         className="typo-body_bold16"
-                        style={{ position: "absolute", visibility: "hidden", whiteSpace: "pre" }}
+                        style={{
+                          position: 'absolute',
+                          visibility: 'hidden',
+                          whiteSpace: 'pre',
+                        }}
                       ></span>
                     </div>
                   </div>
@@ -116,29 +123,29 @@ const CommunityProfilePage = () => {
           </div>
         </div>
         <button
-          className={`p-2.5 rounded-lg text-center text-body_12 text-gray-900 ${editMode ? "bg-primary-30" : "bg-gray-100 "}`}
+          className={`p-2.5 rounded-lg text-center text-body_12 text-gray-900 ${editMode ? 'bg-primary-30' : 'bg-gray-100 '}`}
           onClick={handleEditProfile}
         >
-          {editMode ? "프로필 수정 완료" : "프로필 수정"}
+          {editMode ? '프로필 수정 완료' : '프로필 수정'}
         </button>
       </div>
       {/*게시글 구분. 후에 게시글 구분하며 컴포넌트로 뺄지도*/}
       <div className="flex justify-between w-full typo-body_reg14">
         <button
-          className={`w-full p-2.5 border-b ${selectedTab === "작성한 글" ? "border-black" : "border-[#D9D9D9]"}`}
-          onClick={() => setSelectedTab("작성한 글")}
+          className={`w-full p-2.5 border-b ${selectedTab === '작성한 글' ? 'border-black' : 'border-[#D9D9D9]'}`}
+          onClick={() => setSelectedTab('작성한 글')}
         >
           작성한 글
         </button>
         <button
-          className={`w-full p-2.5 border-b ${selectedTab === "댓글단 글" ? "border-black" : "border-[#D9D9D9]"}`}
-          onClick={() => setSelectedTab("댓글단 글")}
+          className={`w-full p-2.5 border-b ${selectedTab === '댓글단 글' ? 'border-black' : 'border-[#D9D9D9]'}`}
+          onClick={() => setSelectedTab('댓글단 글')}
         >
           댓글단 글
         </button>
         <button
-          className={`w-full p-2.5 border-b ${selectedTab === "저장한 글" ? "border-black" : "border-[#D9D9D9]"}`}
-          onClick={() => setSelectedTab("저장한 글")}
+          className={`w-full p-2.5 border-b ${selectedTab === '저장한 글' ? 'border-black' : 'border-[#D9D9D9]'}`}
+          onClick={() => setSelectedTab('저장한 글')}
         >
           저장한 글
         </button>

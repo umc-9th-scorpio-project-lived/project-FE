@@ -1,23 +1,28 @@
-import { AI_RECOMMENDS, CATEGORY_RECOMMENDS } from "@/components/homes/mockRoutines";
-import CheckCircleIcon from "@/icons/CheckCircleIcon";
-import LeftChevronIcon from "@/icons/LeftChevronIcon";
-import RefreshIcon from "@/icons/RefreshIcon";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import {
+  AI_RECOMMENDS,
+  CATEGORY_RECOMMENDS,
+} from '@/components/homes/mockRoutines';
+import CheckCircleIcon from '@/icons/CheckCircleIcon';
+import LeftChevronIcon from '@/icons/LeftChevronIcon';
+import RefreshIcon from '@/icons/RefreshIcon';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-type RecommendTab = "AI" | "CATEGORY";
+type RecommendTab = 'AI' | 'CATEGORY';
 
 const RecommendPage = () => {
   const navigate = useNavigate();
 
   // 루틴 추천 페이지 탭 상태
-  const [tab, setTab] = useState<RecommendTab>("AI");
+  const [tab, setTab] = useState<RecommendTab>('AI');
 
-  const isAI = tab === "AI";
-  const isCategory = tab === "CATEGORY";
+  const isAI = tab === 'AI';
+  const isCategory = tab === 'CATEGORY';
 
   // 탭별 선택 상태
-  const [selectedByTab, setSelectedByTab] = useState<Record<RecommendTab, Set<string>>>({
+  const [selectedByTab, setSelectedByTab] = useState<
+    Record<RecommendTab, Set<string>>
+  >({
     AI: new Set(),
     CATEGORY: new Set(),
   });
@@ -64,16 +69,16 @@ const RecommendPage = () => {
       <div className="w-full flex items-center justify-start p-4 gap-4">
         <div
           role="button"
-          onClick={() => changeTab("AI")}
-          className={`${isAI ? "typo-body_bold16 text-screen-0" : "typo-body_reg16 text-gray-100"}`}
+          onClick={() => changeTab('AI')}
+          className={`${isAI ? 'typo-body_bold16 text-screen-0' : 'typo-body_reg16 text-gray-100'}`}
         >
           AI 맞춤 추천
         </div>
 
         <div
           role="button"
-          onClick={() => changeTab("CATEGORY")}
-          className={`${isCategory ? "typo-body_bold16 text-screen-0" : "typo-body_reg16 text-gray-100"}`}
+          onClick={() => changeTab('CATEGORY')}
+          className={`${isCategory ? 'typo-body_bold16 text-screen-0' : 'typo-body_reg16 text-gray-100'}`}
         >
           카테고리 별 추천
         </div>
@@ -81,7 +86,7 @@ const RecommendPage = () => {
 
       {/* 콘텐츠 영역 */}
       <div
-        className={`relative w-full flex flex-col flex-1 overflow-y-auto rounded-t-2xl px-4 pt-6 bg-screen-0 ${isAI ? "pb-[166px]" : "pb-[100px]"}`}
+        className={`relative w-full flex flex-col flex-1 overflow-y-auto rounded-t-2xl px-4 pt-6 bg-screen-0 ${isAI ? 'pb-41.5' : 'pb-25'}`}
       >
         {isAI && (
           <div className="flex flex-col gap-4 overflow-y-auto">
@@ -96,11 +101,13 @@ const RecommendPage = () => {
                   className={`relative w-full flex flex-col px-2.5 py-5 gap-2 rounded-lg transition-colors bg-gray-50`}
                 >
                   <div className="typo-body_reg16 text-gray-900">
-                    {item.emoji ? `${item.emoji} ` : ""}
+                    {item.emoji ? `${item.emoji} ` : ''}
                     {item.title}
                   </div>
                   {item.subText && (
-                    <div className="typo-body_reg12 text-gray-700">{item.subText}</div>
+                    <div className="typo-body_reg12 text-gray-700">
+                      {item.subText}
+                    </div>
                   )}
 
                   {selected && (
@@ -131,7 +138,7 @@ const RecommendPage = () => {
                         key={r.id}
                         role="button"
                         onClick={() => toggleSelect(r.id)}
-                        className={`relative shrink-0 w-[106px] h-[106px] p-2 flex justify-center items-center text-center rounded-lg typo-body_reg14 transition-colors bg-gray-50 text-gray-900`}
+                        className={`relative shrink-0 w-26.5 h-26.5 p-2 flex justify-center items-center text-center rounded-lg typo-body_reg14 transition-colors bg-gray-50 text-gray-900`}
                       >
                         {r.title}
 
@@ -154,14 +161,16 @@ const RecommendPage = () => {
           {isAI && (
             <div className="flex gap-1.5 justify-center items-center px-6 py-3 bg-screen-0 border border-primary-50 rounded-4xl shadow-mini">
               <RefreshIcon className="w-4 h-4 text-primary-50" />
-              <span className="typo-body_reg14 text-gray-900">새로운 추천 받기</span>
+              <span className="typo-body_reg14 text-gray-900">
+                새로운 추천 받기
+              </span>
             </div>
           )}
           <div
-            className={`w-full text-center py-3 rounded-4xl typo-body_bold16 transition-colors ${selectedCount === 0 ? "bg-gray-100 text-gray-400" : "bg-primary-50 text-screen-0"}`}
+            className={`w-full text-center py-3 rounded-4xl typo-body_bold16 transition-colors ${selectedCount === 0 ? 'bg-gray-100 text-gray-400' : 'bg-primary-50 text-screen-0'}`}
             onClick={() => {
               if (selectedCount > 0) {
-                navigate("/lived");
+                navigate('/lived');
               }
             }}
           >

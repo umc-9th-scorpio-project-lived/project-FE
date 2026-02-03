@@ -1,5 +1,7 @@
-import { useEffect, useMemo, useRef } from "react";
-import { useDebouncedSnap } from "@/hooks/useDebounceSnap";
+import React, { useEffect, useMemo, useRef } from 'react';
+import { useDebouncedSnap } from '@/hooks/useDebounceSnap';
+
+type ScrollBehavior = 'auto' | 'smooth';
 
 type WheelProps<T> = {
   items: T[];
@@ -40,7 +42,7 @@ export default function Wheel<T>({
     return [...items, ...items, ...items];
   }, [items, loop]);
 
-  const scrollToIndex = (idx: number, behavior: ScrollBehavior = "auto") => {
+  const scrollToIndex = (idx: number, behavior: ScrollBehavior = 'auto') => {
     const el = ref.current;
     if (!el) return;
     el.scrollTo({ top: idx * itemHeight, behavior });
@@ -51,7 +53,7 @@ export default function Wheel<T>({
     if (idx < 0) return;
 
     const targetIdx = loop ? idx + baseSize : idx;
-    scrollToIndex(targetIdx, "auto");
+    scrollToIndex(targetIdx, 'auto');
   };
 
   useEffect(() => {
@@ -67,10 +69,10 @@ export default function Wheel<T>({
     if (loop) {
       if (idx < baseSize) {
         idx += baseSize;
-        scrollToIndex(idx, "auto");
+        scrollToIndex(idx, 'auto');
       } else if (idx >= baseSize * 2) {
         idx -= baseSize;
-        scrollToIndex(idx, "auto");
+        scrollToIndex(idx, 'auto');
       }
     } else if (isTwoOptionWheel) {
       idx = clamp(idx, 0, 1);
@@ -89,13 +91,16 @@ export default function Wheel<T>({
     if (!el) return;
 
     const idx = Math.round(el.scrollTop / itemHeight);
-    scrollToIndex(idx, "smooth");
+    scrollToIndex(idx, 'smooth');
   };
 
   const { schedule: scheduleSnap } = useDebouncedSnap(snapToNearest, snapDelay);
 
   return (
-    <div className="relative overflow-hidden" style={{ height: itemHeight * visibleRows, width }}>
+    <div
+      className="relative overflow-hidden"
+      style={{ height: itemHeight * visibleRows, width }}
+    >
       <div
         ref={ref}
         onScroll={() => {
@@ -106,8 +111,8 @@ export default function Wheel<T>({
         style={{
           paddingTop: itemHeight,
           paddingBottom: itemHeight,
-          msOverflowStyle: "none",
-          scrollbarWidth: "none",
+          msOverflowStyle: 'none',
+          scrollbarWidth: 'none',
         }}
       >
         {extendedItems.map((item, i) => {
@@ -125,7 +130,9 @@ export default function Wheel<T>({
               ) : (
                 <span
                   className={`transition-all duration-200 ${
-                    selected ? "typo-body_bold16 text-gray-900" : "typo-body_reg16 text-gray-600"
+                    selected
+                      ? 'typo-body_bold16 text-gray-900'
+                      : 'typo-body_reg16 text-gray-600'
                   }`}
                 >
                   {String(item)}

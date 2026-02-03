@@ -1,41 +1,42 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import MainLayout from "./layouts/MainLayout";
-import HomePage from "./pages/homes/HomePage";
-import TreePage from "./pages/trees/TreePage";
-import CommunityPage from "./pages/communities/CommunityPage";
-import UserPage from "./pages/users/UserPage";
-import ModalPage from "./pages/commons/ModalPage";
-import SubLayout from "./layouts/SubLayout";
-import LoginPage from "./pages/onboardings/LoginPage";
-import AlarmPage from "./pages/alarms/AlarmPage";
-import RecommendPage from "./pages/homes/RecommendPage";
-import BasicInfoPage from "./pages/onboardings/BasicInfoPage";
-import ConcernPage from "./pages/onboardings/ConcernPage";
-import PushGuidePage from "./pages/onboardings/PushGuidePage";
-import RoutineTrackerPage from "./pages/trees/RoutineTrackerPage";
-import FriendTreePage from "./pages/trees/FriendTreePage";
-import StatisticsPage from "./pages/trees/StatisticsPage";
-import TreeArchivePage from "./pages/trees/TreeArchivePage";
-import PostWritingPage from "./pages/communities/PostWritingPage";
-import CommunityProfilePage from "./pages/communities/CommunityProfilePage";
-import PostSearchPage from "./pages/communities/PostSearchPage";
-import PostDetailPage from "./pages/communities/PostDetailPage";
-import PrivacyPage from "./pages/users/PrivacyPage";
-import NoticePage from "./pages/users/NoticePage";
-import InquiryPage from "./pages/users/InquiryPage";
-import InfoPage from "./pages/users/InfoPage";
-import AccountPage from "./pages/users/AccountPage";
-import NotificationsPage from "./pages/users/NotificationsPage";
-import BlockedPage from "./pages/users/BlockedPage";
-import CallbackPage from "./pages/commons/CallbackPage";
-import HomeRoutinePage from "./pages/homes/HomeRoutinePage";
-import RoutinePage from "./pages/onboardings/RoutinePage";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import MainLayout from './layouts/MainLayout';
+import HomePage from './pages/homes/HomePage';
+import TreePage from './pages/trees/TreePage';
+import CommunityPage from './pages/communities/CommunityPage';
+import UserPage from './pages/users/UserPage';
+import ModalPage from './pages/commons/ModalPage';
+import SubLayout from './layouts/SubLayout';
+import LoginPage from './pages/onboardings/LoginPage';
+import AlarmPage from './pages/alarms/AlarmPage';
+import RecommendPage from './pages/homes/RecommendPage';
+import BasicInfoPage from './pages/onboardings/BasicInfoPage';
+import ConcernPage from './pages/onboardings/ConcernPage';
+import PushGuidePage from './pages/onboardings/PushGuidePage';
+import RoutineTrackerPage from './pages/trees/RoutineTrackerPage';
+import FriendTreePage from './pages/trees/FriendTreePage';
+import StatisticsPage from './pages/trees/StatisticsPage';
+import TreeArchivePage from './pages/trees/TreeArchivePage';
+import PostWritingPage from './pages/communities/PostWritingPage';
+import CommunityProfilePage from './pages/communities/CommunityProfilePage';
+import PostSearchPage from './pages/communities/PostSearchPage';
+import PostDetailPage from './pages/communities/PostDetailPage';
+import PrivacyPage from './pages/users/PrivacyPage';
+import NoticePage from './pages/users/NoticePage';
+import InquiryPage from './pages/users/InquiryPage';
+import InfoPage from './pages/users/InfoPage';
+import AccountPage from './pages/users/AccountPage';
+import NotificationsPage from './pages/users/NotificationsPage';
+import BlockedPage from './pages/users/BlockedPage';
+import CallbackPage from './pages/commons/CallbackPage';
+import HomeRoutinePage from './pages/homes/HomeRoutinePage';
+import RoutinePage from './pages/onboardings/RoutinePage';
 
 function App() {
   return (
     <BrowserRouter>
       <ModalPage />
       <Routes>
+        <Route path="/login/callback" element={<CallbackPage />} />
         <Route path="/signup/callback" element={<CallbackPage />} />
 
         <Route element={<SubLayout />}>
@@ -43,7 +44,10 @@ function App() {
           <Route path="/" element={<LoginPage />} />
 
           {/* 루틴 생성/수정 페이지 */}
-          <Route path="/lived/create" element={<HomeRoutinePage mode="create" />} />
+          <Route
+            path="/lived/create"
+            element={<HomeRoutinePage mode="create" />}
+          />
           {/* 추후 루틴 아이디 별로 관리 */}
           <Route path="/lived/edit" element={<HomeRoutinePage mode="edit" />} />
           {/* 알림 페이지 */}
