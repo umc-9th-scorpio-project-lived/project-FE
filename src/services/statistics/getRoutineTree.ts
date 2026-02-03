@@ -7,9 +7,7 @@ import type {
 export const getRoutineTree = async (
   yearMonth: YearMonth
 ): Promise<RoutineTreeResponse> => {
-  const { data } = await authApi.get('/statistics/tree', {
+  return await authApi.get('/statistics/tree', {
     params: yearMonth,
   });
-
-  return data;
 };
