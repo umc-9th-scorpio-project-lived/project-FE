@@ -35,3 +35,23 @@ export type RoutineYearMonth = {
   year: number;
   month: number;
 };
+
+type DailyRoutineStatus = {
+  day: number;
+  status: 'SUCCESS' | 'FAIL' | 'UNACTIVE';
+};
+
+type RoutineTracker = {
+  memberRoutineId: number;
+  title: string;
+  achievementRate: number;
+  statusMessage: string;
+  days: DailyRoutineStatus[];
+};
+
+export type TrackersStatistics = {
+  fruitSummaryDTO: FruitsSummary;
+  routineTrackers: RoutineTracker[];
+  year: number;
+  month: number;
+};
