@@ -117,7 +117,7 @@ const CommunityProfilePage = () => {
                 className="w-20 h-20 rounded-full object-cover"
               />
             ) : (
-              <div className="w-20 h-20 rounded-full bg-user" />
+              <div className="w-20 h-20 rounded-full bg-user bg-top bg-size-[95px]" />
             )}
             {editMode && (
               <button
