@@ -9,6 +9,7 @@ import type {
   Fruit,
   FruitType,
   FruitsStatistics,
+  RoutineYearMonth,
 } from '@/types/statistics/Statistics.types';
 
 interface FruitWithPosition extends Fruit {
@@ -209,8 +210,12 @@ const RoutineTree = ({
   const treeHeight = getLogIconTop() + toScaledRem(90.33); // 90.33px은 RoutineTreeLogIcon 높이
 
   const { openModal } = useBaseModal();
-  const handleFruitClick = () => {
-    openModal('fruitModal', { position: 'center' });
+
+  const handleFruitClick = (routineYearMonth: RoutineYearMonth) => {
+    openModal('fruitModal', {
+      position: 'center',
+      props: { routineYearMonth: { routineYearMonth } },
+    });
   };
 
   return (
@@ -251,7 +256,13 @@ const RoutineTree = ({
               .map((fruit, fruitIndex) => (
                 <button
                   key={fruitIndex}
-                  onClick={handleFruitClick}
+                  onClick={() =>
+                    handleFruitClick({
+                      memberRoutineId: fruit.memberRoutineId,
+                      year: new Date().getFullYear(),
+                      month: new Date().getMonth(),
+                    })
+                  }
                   disabled={!isFruitClickable}
                   className={`absolute ${isFruitClickable ? 'cursor-pointer' : 'cursor-default'}`}
                   style={{ top: `${fruit.top}rem`, left: `${fruit.left}rem` }}
