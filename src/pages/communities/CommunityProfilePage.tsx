@@ -1,3 +1,4 @@
+import ProfilePostList from '@/components/communities/ProfilePostList';
 import CameraIcon from '@/icons/CameraIcon';
 import LeftChevronIcon from '@/icons/LeftChevronIcon';
 import WriteIcon from '@/icons/WriteIcon';
@@ -10,9 +11,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const CommunityProfilePage = () => {
-  const [selectedTab, setSelectedTab] = useState('작성한 글');
   const [editMode, setEditMode] = useState(false);
-
   const [nickname, setNickname] = useState('');
   const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
   const [livingPeriod, setLivingPeriod] = useState('');
@@ -200,27 +199,7 @@ const CommunityProfilePage = () => {
           {editMode ? '프로필 수정 완료' : '프로필 수정'}
         </button>
       </div>
-      {/*게시글 구분. 후에 게시글 구분하며 컴포넌트로 뺄지도*/}
-      <div className="flex justify-between w-full typo-body_reg14">
-        <button
-          className={`w-full p-2.5 border-b ${selectedTab === '작성한 글' ? 'border-black' : 'border-[#D9D9D9]'}`}
-          onClick={() => setSelectedTab('작성한 글')}
-        >
-          작성한 글
-        </button>
-        <button
-          className={`w-full p-2.5 border-b ${selectedTab === '댓글단 글' ? 'border-black' : 'border-[#D9D9D9]'}`}
-          onClick={() => setSelectedTab('댓글단 글')}
-        >
-          댓글단 글
-        </button>
-        <button
-          className={`w-full p-2.5 border-b ${selectedTab === '저장한 글' ? 'border-black' : 'border-[#D9D9D9]'}`}
-          onClick={() => setSelectedTab('저장한 글')}
-        >
-          저장한 글
-        </button>
-      </div>
+      <ProfilePostList />
     </div>
   );
 };

@@ -121,3 +121,42 @@ export const postLike = (postId: number): Promise<PostLikeResponse> => {
 export const postScrap = (postId: number): Promise<PostScrapResponse> => {
   return authApi.post(`/posts/${postId}/scrap`);
 };
+
+// 내가 작성한 게시글 목록 조회
+export const getMyPostList = ({
+  cursor,
+  size = 20,
+}: GetPostParams = {}): Promise<PostListResult> => {
+  return authApi.get('/posts/me', {
+    params: {
+      cursor,
+      size,
+    },
+  });
+};
+
+// 내가 스크랩한 게시글 목록 조회
+export const getMyScrapPostList = ({
+  cursor,
+  size = 20,
+}: GetPostParams = {}): Promise<PostListResult> => {
+  return authApi.get('/posts/me/scraps', {
+    params: {
+      cursor,
+      size,
+    },
+  });
+};
+
+// 내가 댓글 단 게시글 목록 조회
+export const getMyCommentPostList = ({
+  cursor,
+  size = 20,
+}: GetPostParams = {}): Promise<PostListResult> => {
+  return authApi.get('/posts/me/comments', {
+    params: {
+      cursor,
+      size,
+    },
+  });
+};
