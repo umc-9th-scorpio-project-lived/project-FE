@@ -1,6 +1,6 @@
-import { ICON_URL_MAP } from "@/constants";
-import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { ICON_URL_MAP } from '@/constants';
+import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -38,7 +38,7 @@ const Footer = () => {
             >
               <IconComponent isActive={isActive} />
               <div
-                className={`typo-body_reg12 font-semibold ${isActive ? "text-[#8FC600]" : "text-gray-200"}`}
+                className={`typo-body_reg12 font-semibold ${isActive ? 'text-[#8FC600]' : 'text-gray-200'}`}
               >
                 {item.name}
               </div>
