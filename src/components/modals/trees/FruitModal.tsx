@@ -23,7 +23,7 @@ const FruitModal = ({ routineYearMonth }: Props) => {
       routineYearMonth?.memberRoutineId,
       'routineAchievement',
     ],
-    queryFn: () => getRoutineAchievement(routineYearMonth),
+    queryFn: () => getRoutineAchievement(routineYearMonth as RoutineYearMonth),
     staleTime: 30 * 1000,
     gcTime: 5 * 60 * 1000,
     retry: 1,
