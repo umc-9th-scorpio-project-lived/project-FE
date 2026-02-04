@@ -65,17 +65,6 @@ function App() {
 
           {/* 온보딩 알림 설정 */}
           <Route path="/onboardings/push-guide" element={<PushGuidePage />} />
-          <Route path="/lived/community/:postId" element={<PostDetailPage />} />
-          <Route path="/lived/community/write" element={<PostWritingPage />} />
-          <Route
-            path="/lived/community/:postId/edit"
-            element={<PostWritingPage />}
-          />
-          <Route
-            path="/lived/community/profile/:userid"
-            element={<CommunityProfilePage />}
-          />
-          <Route path="/lived/community/search" element={<PostSearchPage />} />
         </Route>
 
         <Route path="/lived" element={<MainLayout />}>
@@ -99,6 +88,21 @@ function App() {
           <Route path="statistics" element={<StatisticsPage />} />
           <Route path="archive" element={<TreeArchivePage />} />
         </Route>
+
+        {/* 커뮤니티 페이지의 상세페이지 */}
+        <Route path="/lived/community" element={<SubLayout />}>
+          {/* 게시물 상세페이지 */}
+          <Route path=":postId" element={<PostDetailPage />} />
+          {/* 게시글 작성페이지 */}
+          <Route path="write" element={<PostWritingPage />} />
+          {/* 커뮤니티 프로필 페이지 */}
+          <Route path="profile/:userid" element={<CommunityProfilePage />} />
+          {/* 게시글 검색페이지 */}
+          <Route path="search" element={<PostSearchPage />} />
+          {/* 게시글 편집페이지*/}
+          <Route path=":postId/edit" element={<PostWritingPage />} />
+        </Route>
+
         {/* 마이페이지의 상세페이지 */}
         <Route path="/lived/my" element={<SubLayout />}>
           {/* 공지사항 */}
