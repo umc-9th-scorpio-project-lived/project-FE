@@ -22,7 +22,7 @@ const TreePage = () => {
   };
 
   const { data, isPending, isError } = useQuery({
-    queryKey: [yearMonth.year, yearMonth.month, 'routineTree'],
+    queryKey: [yearMonth.year, yearMonth.month, 'fruitsStatistics'],
     queryFn: () => getFruitsStatistics(yearMonth),
     staleTime: 30 * 1000,
     gcTime: 5 * 60 * 1000,
