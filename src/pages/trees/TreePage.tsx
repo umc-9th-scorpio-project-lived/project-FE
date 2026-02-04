@@ -39,7 +39,7 @@ const TreePage = () => {
           onClick={() => {
             navigate('/lived/tree/statistics');
           }}
-          className="border border-primary-50 rounded-2xl py-1.5 px-3.5 flex items-center cursor-pointer"
+          className="border border-primary-50 rounded-2xl bg-screen-0 py-1.5 px-3.5 flex items-center cursor-pointer"
         >
           <span className="typo-body_bold12 text-primary-50">통계 분석</span>
         </button>
