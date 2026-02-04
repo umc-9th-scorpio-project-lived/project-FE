@@ -71,23 +71,41 @@ const TreePage = () => {
         </button>
       </div>
 
-      {/* 열매 개수 계산 로직 필요 */}
-      <div className="pt-4 pb-15.5 px-4 flex items-center gap-5">
-        <div className="flex items-center gap-2">
-          <GoldenFruitIcon className="w-12.5" />
-          <span className="typo-body_bold14 text-gray-900">2개</span>
-        </div>
+      {isPending || isError ? (
+        <div className="pt-4 pb-15.5 px-4 flex items-center gap-5">
+          <div className="flex items-center gap-2">
+            <GoldenFruitIcon className="w-12.5" />
+            <span className="typo-body_bold14 text-gray-900">0개</span>
+          </div>
 
-        <div className="flex items-center gap-2">
-          <NormalFruitIcon className="w-12.5" />
-          <span className="typo-body_bold14 text-gray-900">3개</span>
-        </div>
+          <div className="flex items-center gap-2">
+            <NormalFruitIcon className="w-12.5" />
+            <span className="typo-body_bold14 text-gray-900">0개</span>
+          </div>
 
-        <div className="flex items-center gap-2">
-          <GrowingFruitIcon className="w-12.5" />
-          <span className="typo-body_bold14 text-gray-900">1개</span>
+          <div className="flex items-center gap-2">
+            <GrowingFruitIcon className="w-12.5" />
+            <span className="typo-body_bold14 text-gray-900">0개</span>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="pt-4 pb-15.5 px-4 flex items-center gap-5">
+          <div className="flex items-center gap-2">
+            <GoldenFruitIcon className="w-12.5" />
+            <span className="typo-body_bold14 text-gray-900">{`${data?.summary.goldCount}개`}</span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <NormalFruitIcon className="w-12.5" />
+            <span className="typo-body_bold14 text-gray-900">{`${data?.summary.normalCount}개`}</span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <GrowingFruitIcon className="w-12.5" />
+            <span className="typo-body_bold14 text-gray-900">{`${data?.summary.growingCount}개`}</span>
+          </div>
+        </div>
+      )}
 
       {isPending || isError ? (
         <RoutineTree />
