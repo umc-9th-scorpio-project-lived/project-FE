@@ -260,7 +260,7 @@ const RoutineTree = ({
                     handleFruitClick({
                       memberRoutineId: fruit.memberRoutineId,
                       year: new Date().getFullYear(),
-                      month: new Date().getMonth(),
+                      month: new Date().getMonth() + 1,
                     })
                   }
                   disabled={!isFruitClickable}
