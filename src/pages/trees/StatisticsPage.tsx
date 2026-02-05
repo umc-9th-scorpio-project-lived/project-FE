@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import RadialProgress from '@/components/trees/RadialProgress';
 import CheckCircleIcon from '@/icons/CheckCircleIcon';
 import DownChevronIcon from '@/icons/DownChevronIcon';
 import LeftChevronIcon from '@/icons/LeftChevronIcon';
 import { useNavigate } from 'react-router-dom';
 import useBaseModal from '@/stores/modals/baseModal';
+import type { YearMonth } from '@/types/statistics/Statistics.types';
 
 const StatisticsPage = () => {
   const navigate = useNavigate();
@@ -12,37 +13,66 @@ const StatisticsPage = () => {
 
   const { openModal } = useBaseModal();
 
-  // 해당 월의 첫 번째 날의 요일과 마지막 날짜 계산
-  const [year] = useState(2025);
-  const [month] = useState(10);
-  const firstDayOfMonth = new Date(year, month - 1, 1).getDay();
-  const daysInMonth = new Date(year, month, 0).getDate();
+  /** 해당 월의 첫 번째 날이 몇 번째 요일인지 알려주는 함수 */
+  const getFirstDayOfMonth = (year: number, month: number): number => {
+    return new Date(year, month - 1, 1).getDay();
+  };
 
-  // 임시로 루틴을 완료한 날짜를 기록할 배열
-  const [completedDays] = useState([10]);
+  /** 해당 월에 며칠까지 있는지 알려주는 함수 */
+  const getDaysInMonth = (year: number, month: number): number => {
+    return new Date(year, month, 0).getDate();
+  };
 
-  //
+  /** 입력한 날이 몇 주차인지 계산해주는 함수 */
+  const getWeek = (year: number, month: number, date: number): number => {
+    return Math.floor((date + getFirstDayOfMonth(year, month) - 1) / 7 + 1);
+  };
+
   const [weeklyPeriod, setWeeklyPeriod] = useState<{
     month: number;
     week: number;
   }>({
-    month: 10,
-    week: 2,
+    month: new Date().getMonth() + 1,
+    week: getWeek(
+      new Date().getFullYear(),
+      new Date().getMonth() + 1,
+      new Date().getDate()
+    ),
   });
 
-  const [monthlyPeriod, setMonthlyPeriod] = useState<{
-    year: number;
-    month: number;
-  }>({
-    year: 2025,
-    month: 10,
+  // 연/월, 달력 관리 로직
+  const [monthlyPeriod, setMonthlyPeriod] = useState<YearMonth>({
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1,
   });
 
-  // 달력 칸 생성을 위한 배열 (빈 칸 + 날짜)
-  const calendarDays = [
+  const [firstDayOfMonth, setFirstDayOfMonth] = useState(
+    getFirstDayOfMonth(new Date().getFullYear(), new Date().getMonth() + 1)
+  );
+
+  const [daysInMonth, setDaysInMonth] = useState(
+    getDaysInMonth(new Date().getFullYear(), new Date().getMonth() + 1)
+  );
+
+  const [calendarDays, setCalendarDays] = useState([
     ...Array(firstDayOfMonth).fill(null),
     ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
-  ];
+  ]); // 달력 칸 생성을 위한 배열 (빈 칸 + 날짜)
+
+  useEffect(() => {
+    setFirstDayOfMonth(
+      getFirstDayOfMonth(monthlyPeriod.year, monthlyPeriod.month)
+    );
+
+    setDaysInMonth(getDaysInMonth(monthlyPeriod.year, monthlyPeriod.month));
+  }, [monthlyPeriod]);
+
+  useEffect(() => {
+    setCalendarDays([
+      ...Array(firstDayOfMonth).fill(null),
+      ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
+    ]);
+  }, [firstDayOfMonth, daysInMonth]);
 
   return (
     <div className="bg-primary-50 h-dvh flex flex-col gap-4 overflow-y-auto overflow-x-hidden">
@@ -164,7 +194,7 @@ const StatisticsPage = () => {
                 </div>
                 <div className="flex flex-col items-center gap-1">
                   <div className="typo-body_bold14 text-gray-800">화</div>
-                  <div className="border-[0.5px] border-gray-100 w-9 h-9 rounded-full bg-[linear-gradient(0deg,theme(--color-primary-50)_0%,transparent_60%)] flex justify-center items-center">
+                  <div className="border-[0.5px] border-gray-100 w-9 h-9 rounded-full bg-[linear-gradient(0deg,theme(--color-primary-50)_0%,transparent_120%)] flex justify-center items-center">
                     <span className="typo-body_reg12 text-gray-800">7</span>
                   </div>
                 </div>
@@ -224,29 +254,18 @@ const StatisticsPage = () => {
                     토
                   </div>
                   {calendarDays.map((day, index) => {
-                    if (day === null)
+                    if (day === null) {
                       return (
                         <div className="w-10.5 h-10.5" key={`empty-${index}`} />
                       );
-
-                    const isCompleted = completedDays.includes(day);
-
-                    if (isCompleted) {
-                      // 완료된 날짜 (초록색 원형 강조)
-                      return (
-                        <div
-                          key={day}
-                          className="w-10.5 h-10.5 bg-primary-50 rounded-full flex justify-center items-center typo-body_bold14 text-screen-0"
-                        >
-                          {day}
-                        </div>
-                      );
                     } else {
-                      // 일반 날짜
                       return (
                         <div
                           key={day}
-                          className="w-10.5 h-10.5 flex justify-center items-center typo-body_bold14 text-gray-900"
+                          className="w-10.5 h-10.5 rounded-full flex justify-center items-center typo-body_bold14 text-gray-900"
+                          style={{
+                            background: `linear-gradient(0deg, #9FD416 0%, transparent ${50}%)`, // 완료율에 의한 그래디언트 비율 변경 로직 추가 필요
+                          }}
                         >
                           {day}
                         </div>
