@@ -29,9 +29,11 @@ const StatisticsPage = () => {
   };
 
   const [weeklyPeriod, setWeeklyPeriod] = useState<{
+    year: number;
     month: number;
     week: number;
   }>({
+    year: new Date().getFullYear(),
     month: new Date().getMonth() + 1,
     week: getWeek(
       new Date().getFullYear(),
@@ -112,7 +114,11 @@ const StatisticsPage = () => {
                 position: 'bottom',
                 props: {
                   initialValue: weeklyPeriod,
-                  onApply: (value: { month: number; week: number }) => {
+                  onApply: (value: {
+                    year: number;
+                    month: number;
+                    week: number;
+                  }) => {
                     setWeeklyPeriod(value);
                   },
                 },

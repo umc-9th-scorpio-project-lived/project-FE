@@ -5,10 +5,12 @@ import { useMemo, useState } from 'react';
 const ITEM_H = 74;
 
 // 휠 데이터 배열
+const YEAR_LIST = Array.from({ length: 2 }, (_, i) => i + 2025);
 const MONTH_LIST = Array.from({ length: 12 }, (_, i) => i + 1);
 const WEEK_LIST = Array.from({ length: 5 }, (_, i) => i + 1);
 
 type PeriodValue = {
+  year: number;
   month: number;
   week: number;
 };
@@ -24,17 +26,19 @@ const SetStatisticsWeekModal = ({ initialValue, onApply }: Props) => {
   // 초기 선택값
   const initial = useMemo(
     () => ({
+      year: initialValue?.year ?? 2026,
       month: initialValue?.month ?? 10,
       week: initialValue?.week ?? 2,
     }),
-    [initialValue?.month, initialValue?.week]
+    [initialValue?.year, initialValue?.month, initialValue?.week]
   );
 
+  const [year, setYear] = useState<number>(initial.year);
   const [month, setMonth] = useState<number>(initial.month);
   const [week, setWeek] = useState<number>(initial.week);
 
   const handleApply = () => {
-    onApply?.({ month, week });
+    onApply?.({ year, month, week });
     closeModal();
   };
 
@@ -61,6 +65,27 @@ const SetStatisticsWeekModal = ({ initialValue, onApply }: Props) => {
         </div>
 
         <div className="flex items-center gap-12">
+          {/* 년 */}
+          <div className="flex items-center">
+            <Wheel<number>
+              items={YEAR_LIST}
+              value={year}
+              onChange={setYear}
+              width="50px"
+              itemHeight={74}
+              visibleRows={3}
+              renderItem={(y, selected) => (
+                <span
+                  className={`transition-all duration-200 typo-body_bold18 ${
+                    selected ? 'text-gray-900' : 'text-gray-600'
+                  }`}
+                >
+                  {y}
+                </span>
+              )}
+            />
+          </div>
+
           {/* 월 */}
           <div className="flex items-center">
             <Wheel<number>
