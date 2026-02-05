@@ -12,9 +12,9 @@ import SearchDeleteModal from '@/components/modals/communities/SearchDeleteModal
 import TreeVisibilityModal from '@/components/modals/users/TreeVisibilityModal';
 import UnblockModal from '@/components/modals/users/UnblockModal';
 import useBaseModal from '@/stores/modals/baseModal';
-import SetStatisticsMonthModal from '@/components/modals/trees/SetStatisticsMonthModal';
-import { useEffect } from 'react';
 import SetStatisticsWeekModal from '@/components/modals/trees/SetStatisticsWeekModal';
+import { useEffect } from 'react';
+import SetStatisticsMonthModal from '@/components/modals/trees/SetStatisticsMonthModal';
 import SetTrackerMonthModal from '@/components/modals/trees/SetTrackerMonthModal';
 import SetBirthModal from '@/components/modals/onboardings/setBirthModal';
 import FruitInfoModal from '@/components/modals/trees/FruitInfoModal';

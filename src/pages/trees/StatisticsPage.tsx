@@ -108,7 +108,7 @@ const StatisticsPage = () => {
         {isWeekly ? (
           <button
             onClick={() => {
-              openModal('setStatisticsMonthModal', {
+              openModal('setStatisticsWeekModal', {
                 position: 'bottom',
                 props: {
                   initialValue: weeklyPeriod,
@@ -128,7 +128,7 @@ const StatisticsPage = () => {
         ) : (
           <button
             onClick={() => {
-              openModal('setStatisticsWeekModal', {
+              openModal('setStatisticsMonthModal', {
                 position: 'bottom',
                 props: {
                   initialValue: monthlyPeriod,
