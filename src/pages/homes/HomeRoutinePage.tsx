@@ -1,16 +1,16 @@
 import DownChevronIcon from '@/icons/DownChevronIcon';
 import LeftChevronIcon from '@/icons/LeftChevronIcon';
 import MiniCloseIcon from '@/icons/MiniCloseIcon';
-import { useRoutineStore } from '@/stores/homes/routineStore';
 import useBaseModal from '@/stores/modals/baseModal';
 import React, { useMemo, useRef, useState } from 'react';
-import type { AlarmValue, RepeatValue } from '@/types/homes/Routine.types';
 import DeleteIcon from '@/icons/DeleteIcon';
 import useCoachModal from '@/hooks/useCoachModal';
 import { formatRepeatLabel } from '@/utils/homes/routineUtils';
 import { useNavigate } from 'react-router-dom';
-import createRoutine from '@/services/routines/createRoutine';
-import type { CreateRoutineRequest } from '@/types/routines/Routine.types';
+import type { AlarmValue, RepeatValue } from '@/types/routines/Routine.types';
+import { useRoutineStore } from '@/stores/routines/routineStore';
+import { useHomeDateStore } from '@/stores/homes/homeStore';
+import { formatDate } from '@/utils/homes/homeUtils';
 
 // 루틴 제목 최대 길이
 const MAX_TITLE_LENGTH = 50;
@@ -32,7 +32,16 @@ const HomeRoutinePage = ({ mode = 'create' as Mode }) => {
   const repeat = useRoutineStore((s) => s.draft.repeat);
   const alarm = useRoutineStore((s) => s.draft.alarm);
 
-  const { setTitle, setRepeat, setAlarm, resetDraft } = useRoutineStore();
+  const {
+    setTitle,
+    setRepeat,
+    setAlarm,
+    resetDraft,
+    createRoutine,
+    isLoading,
+  } = useRoutineStore();
+
+  const { selectedDate } = useHomeDateStore();
 
   // 루틴 제목 입력 상태
   const [isTitleFocused, setIsTitleFocused] = useState(false);
@@ -103,6 +112,24 @@ const HomeRoutinePage = ({ mode = 'create' as Mode }) => {
     navigate('/lived');
   };
 
+  const handleSubmit = async () => {
+    if (!canSubmit || isLoading) return;
+
+    try {
+      const startDate = formatDate(selectedDate);
+      if (mode === 'create') {
+        await createRoutine(startDate);
+      } else {
+        // TODO: edit 모드 API 붙이면 여기로
+      }
+
+      resetDraft();
+      navigate('/lived');
+    } catch (e) {
+      console.error('루틴 처리 실패', e);
+    }
+  };
+
   // 반복 주기 모달 오픈 핸들러
   const openRepeatModal = () => {
     openModal('setRepeatCycleModal', {
@@ -123,27 +150,6 @@ const HomeRoutinePage = ({ mode = 'create' as Mode }) => {
         onApply: (value: AlarmValue) => setAlarm(value),
       },
     });
-  };
-
-  const dummyRoutine: CreateRoutineRequest = {
-    title: 'test routine',
-    emoji: '👍',
-    repeatType: 'WEEKLY',
-    repeatInterval: 1,
-    repeatValues: ['0', '2', '4'],
-    isAlarmon: true,
-    alarmTime: '13:30',
-    startDate: '2026-02-01',
-    repeatValueAsString: 'string',
-  };
-
-  const handleTestCreate = async () => {
-    try {
-      const res = await createRoutine(dummyRoutine);
-      console.log('✅ 루틴 생성 성공', res.data);
-    } catch (e) {
-      console.error('❌ 루틴 생성 실패', e);
-    }
   };
 
   // 페이지 타이틀 및 CTA 라벨
@@ -322,10 +328,7 @@ const HomeRoutinePage = ({ mode = 'create' as Mode }) => {
           }`}
           onClick={() => {
             if (!canSubmit) return;
-            console.log({ title, icon, repeat, alarm });
-            resetDraft();
-            handleTestCreate();
-            navigate('/lived');
+            handleSubmit();
           }}
         >
           {ctaLabel}

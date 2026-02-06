@@ -1,5 +1,3 @@
-import { WEEK_LABELS } from '@/constants';
-
 // 날짜를 00:00:00으로 정규화
 export const normalizeDate = (d: Date) => {
   const x = new Date(d);
@@ -62,22 +60,23 @@ export const getDayOffset = (a: Date, b: Date) => {
   return Math.round((A - B) / 86400000);
 };
 
-// "수요일, 1월 12일" 텍스트 포맷
-export const formatDateTitle = (d: Date) => {
-  const weekday = WEEK_LABELS[d.getDay()];
-  const month = d.getMonth() + 1;
-  const date = d.getDate();
-  return `${weekday}요일, ${month}월 ${date}일`;
-};
+// "오전/오후 h:mm" 또는 "HH:mm" 형식의 시간을 "HH:mm" 24시간 형식으로 정규화
+export const normalizeAlarmTime = (time?: string | null): string => {
+  if (!time) return '';
 
-// "오늘 / 내일 / 어제 / n일 후 / n일 전" 텍스트 포맷
-export const formatTopTitle = (selected: Date) => {
-  const today = normalizeDate(new Date());
-  const gap = getDayOffset(selected, today);
+  if (/^\d{2}:\d{2}$/.test(time)) {
+    return time;
+  }
 
-  if (gap === 0) return '오늘';
-  if (gap === 1) return '내일';
-  if (gap === -1) return '어제';
-  if (gap > 1) return `${gap}일 후`;
-  return `${Math.abs(gap)}일 전`;
+  // 오전/오후 hh:mm 형태 처리
+  const match = time.match(/(오전|오후)\s*(\d{1,2}):(\d{2})/);
+  if (!match) return '';
+
+  const [, meridiem, h, m] = match;
+  let hour = Number(h);
+
+  if (meridiem === '오후' && hour < 12) hour += 12;
+  if (meridiem === '오전' && hour === 12) hour = 0;
+
+  return `${hour.toString().padStart(2, '0')}:${m}`;
 };
