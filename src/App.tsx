@@ -31,6 +31,7 @@ import CallbackPage from './pages/commons/CallbackPage';
 import HomeRoutinePage from './pages/homes/HomeRoutinePage';
 import RoutinePage from './pages/onboardings/RoutinePage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import ArchivedTreePage from './pages/trees/ArchivedTreePage';
 
 const queryClient = new QueryClient();
 
@@ -96,6 +97,9 @@ function App() {
 
             {/* 루틴 나무 */}
             <Route path="tree" element={<TreePage />} />
+
+            {/* 특정 달의 루틴 나무 */}
+            <Route path="tree/archivedTree" element={<ArchivedTreePage />} />
 
             {/* 커뮤니티 */}
             <Route path="community" element={<CommunityPage />} />

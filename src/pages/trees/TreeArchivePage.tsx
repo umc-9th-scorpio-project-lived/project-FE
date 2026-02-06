@@ -7,7 +7,7 @@ import MiniNormalFruitIcon from '@/icons/MiniNormalFruitIcon';
 import { getTreeArchive } from '@/services/statistics/getTreeArchive';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const TreeArchivePage = () => {
   const navigate = useNavigate();
@@ -113,7 +113,8 @@ const TreeArchivePage = () => {
           .map((page) => page.trees)
           .flat()
           .map((tree) => (
-            <div
+            <Link
+              to={`/lived/tree/archivedTree?year=${tree.year}&month=${tree.month}`}
               key={`${tree.year}.${tree.month}`}
               className="w-full flex flex-col items-center gap-4"
             >
@@ -160,7 +161,7 @@ const TreeArchivePage = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
       </div>
       <div ref={sentinelRef} className="h-px"></div>
