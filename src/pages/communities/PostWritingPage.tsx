@@ -1,5 +1,4 @@
 import Category from '@/components/communities/Category';
-import ImageError from '@/components/communities/ImageError';
 import PostWriteFooter from '@/components/communities/PostWriteFooter';
 import {
   COMMUNITY_CATEGORIES,
@@ -9,6 +8,7 @@ import {
 import LeftChevronIcon from '@/icons/LeftChevronIcon';
 import MiniCloseIcon from '@/icons/MiniCloseIcon';
 import { createPost, EditPost, getPostDetail } from '@/services/posts/post';
+import useToast from '@/stores/toasts/baseToast';
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 
@@ -26,6 +26,7 @@ type ExistingImage = {
 };
 
 const PostWritingPage = () => {
+  const { showToast } = useToast();
   const { postId } = useParams<{ postId?: string }>();
   const navigate = useNavigate();
 
@@ -52,12 +53,13 @@ const PostWritingPage = () => {
   useEffect(() => {
     if (!imageLimitError) return;
 
+    showToast('사진은 최대 10장까지 첨부 가능해요.', 'alert');
     const timer = setTimeout(() => {
       setImageLimitError(false);
     }, 3000);
 
     return () => clearTimeout(timer);
-  }, [imageLimitError]);
+  }, [imageLimitError, showToast]);
 
   const handleAddImages = (files: FileList | null) => {
     if (!files) return;
@@ -115,6 +117,7 @@ const PostWritingPage = () => {
           imageOrders: buildImageOrders(),
         });
         navigate(`/lived/community/${postId}`);
+        showToast('수정 완료!', 'check');
       } else {
         const res = await createPost({
           category: CATEGORY_LABEL_TO_CODE[selectedCategory],
@@ -246,7 +249,6 @@ const PostWritingPage = () => {
       </div>
 
       <PostWriteFooter AddImage={handleAddImages} />
-      {imageLimitError && <ImageError />}
     </div>
   );
 };
