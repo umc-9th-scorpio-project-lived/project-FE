@@ -97,3 +97,23 @@ export type PeriodSelection = {
   week?: number;
   type: PeriodType;
 };
+
+type Tree = {
+  year: number;
+  month: number;
+  fruits: Fruit[];
+  goldCount: number;
+  normalCount: number;
+  growingCount: number;
+};
+
+export type TreeArchive = {
+  hasNext: boolean;
+  currentPage: number;
+  trees: Tree[];
+};
+
+export type TreeArchiveParams = {
+  page: number;
+  size: number;
+};
