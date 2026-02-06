@@ -55,3 +55,43 @@ export type TrackersStatistics = {
   year: number;
   month: number;
 };
+
+type PeriodType = 'WEEKLY' | 'MONTHLY';
+
+type PeriodCompletionRate = {
+  percentage: number;
+  totalCount: number;
+  doneCount: number;
+};
+
+type DailyCompletionRate = {
+  date: string;
+  dayOfWeek: string;
+  percentage: number;
+  done: boolean;
+};
+
+type BigFruit = {
+  id: number;
+  fruitType: string;
+  currentValue: number;
+  goalValue: number;
+  percentage: number;
+  description: string;
+};
+
+export type PeriodStatistics = {
+  type: PeriodType;
+  periodTitle: string;
+  aiAdvice: string;
+  completionRate: PeriodCompletionRate;
+  dailyGraph: DailyCompletionRate[];
+  bigFruits: BigFruit[];
+};
+
+export type PeriodSelection = {
+  year: number;
+  month: number;
+  week?: number;
+  type: PeriodType;
+};
