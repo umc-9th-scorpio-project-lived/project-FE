@@ -71,9 +71,11 @@ type DailyCompletionRate = {
   done: boolean;
 };
 
+type BigFruitType = 'STREAK' | 'TOTAL_COUNT';
+
 type BigFruit = {
   id: number;
-  fruitType: string;
+  fruitType: BigFruitType;
   currentValue: number;
   goalValue: number;
   percentage: number;
