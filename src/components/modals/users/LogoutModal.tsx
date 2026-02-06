@@ -23,7 +23,8 @@ const LogoutModal = () => {
           onClick={async () => {
             try {
               await logout();
-            } catch (e) {
+            } catch {
+              // 로그아웃 API 실패해도 클라이언트 상태는 정리
             } finally {
               localStorage.removeItem('accessToken');
               closeModal();
