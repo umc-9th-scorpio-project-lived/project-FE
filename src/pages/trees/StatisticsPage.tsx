@@ -361,48 +361,26 @@ const StatisticsPage = () => {
                 </div>
 
                 <div className="flex gap-4">
-                  {data.bigFruits.map((fruit) => {
-                    if (fruit.fruitType === 'TOTAL_COUNT') {
-                      return (
-                        <div
-                          key={fruit.id}
-                          className="flex-1 py-4 bg-primary-20 rounded-2xl flex justify-center items-center gap-3"
-                        >
-                          <div className="flex flex-col items-center">
-                            <div className="typo-body_bold14 text-gray-900">
-                              {fruit.description}
-                            </div>
-                          </div>
-                          <div className="w-14 h-14 rounded-full bg-screen-0 flex flex-col justify-center items-center">
-                            <div className="typo-body_bold14 text-gray-900">
-                              {fruit.currentValue}
-                            </div>
-                            <div className="typo-body_reg12 text-gray-700">
-                              /{fruit.goalValue}
-                            </div>
-                          </div>
+                  {data.bigFruits.map((fruit) => (
+                    <div
+                      key={fruit.id}
+                      className="flex-1 py-4 bg-primary-20 rounded-2xl flex justify-center items-center gap-3"
+                    >
+                      <div className="flex flex-col items-center">
+                        <div className="typo-body_bold14 text-gray-900">
+                          {fruit.description}
                         </div>
-                      );
-                    } else if (fruit.fruitType === 'STREAK') {
-                      return (
-                        <div className="flex-1 py-4 bg-primary-20 rounded-2xl flex justify-center items-center gap-3">
-                          <div className="flex flex-col items-center">
-                            <div className="typo-body_bold14 text-gray-900">
-                              {fruit.description}
-                            </div>
-                          </div>
-                          <div className="w-14 h-14 rounded-full bg-screen-0 flex flex-col justify-center items-center">
-                            <div className="typo-body_bold14 text-gray-900">
-                              {fruit.currentValue}
-                            </div>
-                            <div className="typo-body_reg12 text-gray-700">
-                              /{fruit.goalValue}
-                            </div>
-                          </div>
+                      </div>
+                      <div className="w-14 h-14 rounded-full bg-screen-0 flex flex-col justify-center items-center">
+                        <div className="typo-body_bold14 text-gray-900">
+                          {fruit.currentValue}
                         </div>
-                      );
-                    }
-                  })}
+                        <div className="typo-body_reg12 text-gray-700">
+                          /{fruit.goalValue}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
