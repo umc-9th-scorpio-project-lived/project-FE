@@ -367,7 +367,7 @@ const StatisticsPage = () => {
                       className="flex-1 py-4 bg-primary-20 rounded-2xl flex justify-center items-center gap-3"
                     >
                       <div className="flex flex-col items-center">
-                        <div className="typo-body_bold14 text-gray-900">
+                        <div className="typo-body_bold14 text-gray-900 whitespace-pre-line">
                           {fruit.description}
                         </div>
                       </div>
