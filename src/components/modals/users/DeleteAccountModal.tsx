@@ -34,8 +34,7 @@ const DeleteAccountModal = () => {
           onClick={async () => {
             try {
               await withdraw();
-            } catch (e) {
-              // 401/500 등이어도 아래 finally에서 동일 처리
+            } catch {
             } finally {
               localStorage.removeItem('accessToken');
               closeModal();
