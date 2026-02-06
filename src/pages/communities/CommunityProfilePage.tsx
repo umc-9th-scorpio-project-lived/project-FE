@@ -37,6 +37,7 @@ const CommunityProfilePage = () => {
     fetchProfile();
   }, []);
 
+  // 이미지
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -55,6 +56,7 @@ const CommunityProfilePage = () => {
     setImagePreview(URL.createObjectURL(file));
   };
 
+  // 수정 완료 버튼
   const handleSubmitProfile = async () => {
     if (!nickname.trim()) {
       console.warn('닉네임이 비어 있습니다.');
@@ -80,6 +82,9 @@ const CommunityProfilePage = () => {
     }
   };
 
+  // 닉네임
+  const [isNicknameLong, setIsNicknameLong] = useState(false);
+
   const resizeWidth = () => {
     if (!inputRef.current || !spanRef.current) return;
 
@@ -90,6 +95,14 @@ const CommunityProfilePage = () => {
   useEffect(() => {
     resizeWidth();
   }, [nickname, editMode]);
+
+  // 자취년차
+  const changeLivingPriod: Record<string, string> = {
+    PRE: '예비 자취인',
+    YEAR_1_3: '자취 1~3년차',
+    YEAR_3_5: '자취 3~5년차',
+    OVER_5Y: '자취 5년 이상',
+  };
 
   return (
     <div className="flex flex-col min-h-screen pt-10">
@@ -135,39 +148,53 @@ const CommunityProfilePage = () => {
             )}
           </div>
           <div className="flex flex-col gap-2 justify-center">
-            <div className="flex gap-2 items-center">
+            <div className="flex flex-col gap-2">
+              <div className="text-[12px] text-gray-600">
+                {changeLivingPriod[livingPeriod]}
+              </div>
               <div className="flex gap-1">
-                {editMode ? ( // 여기 editMode시에 닉네임 수정하는 곳과 옆쪽 자취년차 사이가 약간 뜸. 수정 완료 버튼을 누르면 문제 없긴함
-                  <div className="flex items-center gap-1">
-                    <WriteIcon className="w-4 h-4 text-gray-700" />
-                    <div className="relative inline-block">
-                      <input
-                        ref={inputRef}
-                        className="font-bold"
-                        maxLength={12}
-                        value={nickname}
-                        onChange={(e) => setNickname(e.target.value)}
-                        style={{
-                          minWidth: '40px',
-                          boxSizing: 'content-box',
-                        }}
-                      />
-                      <span
-                        ref={spanRef}
-                        className="typo-body_bold16"
-                        style={{
-                          position: 'absolute',
-                          visibility: 'hidden',
-                          whiteSpace: 'pre',
-                        }}
-                      ></span>
+                {editMode ? (
+                  <div className="flex relative flex-col gap-1">
+                    {isNicknameLong && (
+                      <div
+                        className={`absolute -top-5 left-5 typo-body_bold12 text-alert-50 bg-gray-100`}
+                      >
+                        12글자까지 입력 가능합니다.
+                      </div>
+                    )}
+                    <div className="flex items-center gap-1">
+                      <WriteIcon className="w-4 h-4 text-gray-700" />
+                      <div className="relative inline-block">
+                        <input
+                          ref={inputRef}
+                          className="font-bold"
+                          maxLength={12}
+                          value={nickname}
+                          onChange={(e) => {
+                            setNickname(e.target.value);
+                            setIsNicknameLong(e.target.value.length > 12);
+                          }}
+                          style={{
+                            minWidth: '40px',
+                            boxSizing: 'content-box',
+                          }}
+                        />
+                        <span
+                          ref={spanRef}
+                          className="typo-body_bold16"
+                          style={{
+                            position: 'absolute',
+                            visibility: 'hidden',
+                            whiteSpace: 'pre',
+                          }}
+                        ></span>
+                      </div>
                     </div>
                   </div>
                 ) : (
                   <div className="typo-body_bold16">{nickname}</div>
                 )}
               </div>
-              <div className="text-[12px] text-gray-600">{livingPeriod}</div>
             </div>
             {/*대형열매 5개*/}
             <div className="flex gap-2">
