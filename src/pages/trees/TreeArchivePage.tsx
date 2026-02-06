@@ -65,7 +65,7 @@ const TreeArchivePage = () => {
 
   const trees = data.pages.map((page) => page.trees).flat();
 
-  if (trees.length !== 0) {
+  if (trees.length === 0) {
     return (
       <div className="w-full flex flex-col items-center gap-30 overflow-y-auto">
         <div className="pt-10 px-4 w-full flex items-center gap-7">
