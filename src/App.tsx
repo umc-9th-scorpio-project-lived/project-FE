@@ -30,11 +30,13 @@ import BlockedPage from './pages/users/BlockedPage';
 import CallbackPage from './pages/commons/CallbackPage';
 import HomeRoutinePage from './pages/homes/HomeRoutinePage';
 import RoutinePage from './pages/onboardings/RoutinePage';
+import ToastPage from './pages/commons/ToastPage';
 
 function App() {
   return (
     <BrowserRouter>
       <ModalPage />
+      <ToastPage />
       <Routes>
         <Route path="/login/callback" element={<CallbackPage />} />
         <Route path="/signup/callback" element={<CallbackPage />} />
