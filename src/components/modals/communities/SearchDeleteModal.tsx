@@ -9,12 +9,12 @@ const SearchDeleteModal = () => {
   };
 
   return (
-    <div className="flex flex-col bg-screen-0 rounded-2xl text-center">
-      <div className="flex flex-col px-13 pt-10 pb-3">
-        <span className="typo-body_reg16 text-gray-900">
+    <div className="flex flex-col w-full bg-screen-0 rounded-2xl text-center">
+      <div className="flex flex-col px-12 pt-9 pb-3 gap-2.5">
+        <span className="typo-body_bold18 text-[#080808]">
           전체 검색어를 정말 삭제할까요?
         </span>
-        <span className="typo-body_reg16 text-gray-900">
+        <span className="typo-body_reg14 text-[#080808]">
           해당 작업은 되돌릴 수 없습니다.
         </span>
       </div>
