@@ -16,3 +16,13 @@ export type FriendTreeArchiveParams = {
   page: number;
   size: number;
 };
+
+type Member = {
+  memberId: number;
+  name: string;
+};
+
+export type FriendsData = {
+  friendList: Member[];
+  totalCount: number;
+};
