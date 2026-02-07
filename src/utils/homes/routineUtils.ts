@@ -1,5 +1,13 @@
 import { WEEK_LABELS } from '@/constants';
-import type { RepeatValue } from '@/types/routines/Routine.types';
+import type {
+  AlarmValue,
+  CreateRoutineRequest,
+  EditRoutineRequest,
+  RepeatValue,
+  RoutineInfoResult,
+  RoutineValue,
+} from '@/types/routines/Routine.types';
+import { normalizeAlarmTime } from './homeUtils';
 
 type Ampm = '오전' | '오후';
 
@@ -140,4 +148,165 @@ export const formatRepeatResult = (
     },
     isValid: true,
   };
+};
+
+// draft -> 루틴 생성 API 요청 변환
+export const toCreateRoutineRequest = (
+  draft: RoutineValue,
+  startDate: string
+): CreateRoutineRequest => {
+  const title = (draft.title ?? '').trim();
+  const emoji = draft.icon ?? '👍';
+
+  // repeat 변환
+  let repeatType = 'NONE';
+  let repeatInterval = 1;
+  let repeatValues: string[] = [];
+  let repeatValueAsString = '';
+
+  const r = draft.repeat;
+
+  if (r.type === 'INTERVAL') {
+    repeatType = 'WEEKLY';
+    repeatInterval = r.every ?? 1;
+    repeatValues = (r.days ?? []).map(String); // [0..6]
+    repeatValueAsString = r.isEveryday
+      ? '매일'
+      : `${repeatInterval}주마다 ${repeatValues.join(',')}`;
+  } else if (r.type === 'DATE') {
+    repeatType = 'MONTHLY';
+    repeatInterval = 1;
+
+    const dates = (r.dates ?? []).slice().sort((a, b) => a - b);
+    const hasLastDay = !!r.isLastDayOfMonth;
+
+    repeatValues = dates.map(String);
+    repeatValueAsString = hasLastDay
+      ? `${repeatValues.join(',')},LAST`
+      : repeatValues.join(',');
+  }
+
+  const isAlarmon = !!draft.alarm.enabled;
+  const alarmTime = isAlarmon ? normalizeAlarmTime(draft.alarm.time) : '';
+
+  return {
+    title,
+    emoji,
+    repeatType,
+    repeatInterval,
+    repeatValues,
+    isAlarmon,
+    alarmTime,
+    startDate,
+    repeatValueAsString,
+  };
+};
+
+// 서버 응답 -> draft 변환
+export const toDraftFromRoutineInfo = (
+  info: RoutineInfoResult
+): RoutineValue => {
+  const title = info.title ?? null;
+  const icon = info.emoji ?? null;
+
+  // alarm
+  const isAlarmOn = !!info.isAlarmOn;
+  const alarmTimeRaw = typeof info.alarmTime === 'string' ? info.alarmTime : '';
+  const alarmTime =
+    alarmTimeRaw.length >= 5 ? alarmTimeRaw.slice(0, 5) : '12:00';
+
+  const alarm: AlarmValue = isAlarmOn
+    ? { enabled: true, time: alarmTime }
+    : { enabled: false, time: '오후 12:00' };
+
+  // repeat
+  const repeatType = info.repeatType ?? 'NONE'; // WEEKLY / MONTHLY / NONE
+  const repeatInterval = Number(info.repeatInterval ?? 1);
+
+  const repeatValueRaw =
+    typeof info.repeatValue === 'string' ? info.repeatValue : '';
+  const tokens = repeatValueRaw
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  let repeat: RepeatValue = { type: 'NONE' };
+
+  if (repeatType === 'WEEKLY') {
+    const days = tokens
+      .map((v) => Number(v))
+      .filter((n) => Number.isFinite(n) && n >= 0 && n <= 6);
+
+    repeat =
+      days.length > 0
+        ? {
+            type: 'INTERVAL',
+            every: repeatInterval || 1,
+            unit: 'WEEK',
+            days,
+            isEveryday: days.length === 7,
+          }
+        : { type: 'NONE' };
+  }
+
+  if (repeatType === 'MONTHLY') {
+    const isLastDayOfMonth = tokens.includes('L');
+
+    const dates = tokens
+      .filter((v) => v !== 'L')
+      .map((v) => Number(v))
+      .filter((n) => Number.isFinite(n) && n >= 1 && n <= 31)
+      .sort((a, b) => a - b);
+
+    repeat =
+      dates.length > 0 || isLastDayOfMonth
+        ? { type: 'DATE', dates, isLastDayOfMonth }
+        : { type: 'NONE' };
+  }
+
+  return { title, icon, repeat, alarm };
+};
+
+// draft -> 루틴 수정 API 요청 변환
+export const toEditRoutineRequest = (
+  draft: RoutineValue
+): EditRoutineRequest => {
+  const title = (draft.title ?? '').trim();
+  const emoji = draft.icon ?? '👍';
+
+  let repeatType = 'NONE';
+  let repeatInterval = 1;
+  let repeatValues: string[] = [];
+
+  const r = draft.repeat;
+
+  if (r.type === 'INTERVAL') {
+    repeatType = 'WEEKLY';
+    repeatInterval = r.every ?? 1;
+    repeatValues = (r.days ?? []).map(String); // 0~6
+  } else if (r.type === 'DATE') {
+    repeatType = 'MONTHLY';
+    repeatInterval = 1;
+
+    const dates = (r.dates ?? [])
+      .slice()
+      .sort((a, b) => a - b)
+      .map(String);
+    const hasLastDay = !!r.isLastDayOfMonth;
+
+    repeatValues = hasLastDay ? [...dates, 'L'] : dates;
+  }
+
+  const isAlarmOn = !!draft.alarm.enabled;
+  const alarmTime = isAlarmOn ? normalizeAlarmTime(draft.alarm.time) : '';
+
+  return {
+    title,
+    emoji,
+    repeatType,
+    repeatInterval,
+    repeatValues,
+    alarmTime,
+    isAlarmOn,
+  } as EditRoutineRequest;
 };

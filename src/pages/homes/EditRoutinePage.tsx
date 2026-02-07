@@ -29,6 +29,7 @@ const EditRoutinePage = () => {
     setAlarm,
     resetDraft,
     fetchRoutineInfo,
+    updateRoutine,
     isLoading,
   } = useRoutineStore();
 
@@ -130,10 +131,7 @@ const EditRoutinePage = () => {
     if (!canSubmit || isLoading) return;
 
     try {
-      // TODO: updateRoutine API 붙이면 memberRoutineId로 수정 호출
-      // await updateRoutine(memberRoutineId)
-
-      resetDraft();
+      await updateRoutine(id);
       navigate('/lived');
     } catch (e) {
       console.error('루틴 수정 실패', e);
