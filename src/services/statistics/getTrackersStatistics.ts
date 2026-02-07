@@ -7,5 +7,5 @@ import type {
 export const getTrackersStatistics = async (
   yearMonth: YearMonth
 ): Promise<TrackersStatistics> => {
-  return await authApi.get('/statistics/calender', { params: yearMonth }); // calendar 오타 수정하기
+  return await authApi.get('/statistics/calendar', { params: yearMonth });
 };
