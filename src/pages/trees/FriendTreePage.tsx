@@ -5,6 +5,7 @@ import InfoIcon from '@/icons/InfoIcon';
 import KebabIcon from '@/icons/KebabIcon';
 import LeftChevronIcon from '@/icons/LeftChevronIcon';
 import NormalFruitIcon from '@/icons/NormalFruitIcon';
+import { deleteFriend } from '@/services/friends/deleteFriend';
 import { getFriendFruitsStatistics } from '@/services/friends/getFriendFruitsStatistics';
 import useBaseModal from '@/stores/modals/baseModal';
 import { useQuery } from '@tanstack/react-query';
@@ -61,7 +62,7 @@ const FriendTreePage = () => {
 
         <button
           onClick={() => {
-            /* 친구 삭제 로직 */
+            deleteFriend(Number(friendId));
           }}
           className={`absolute right-4 -bottom-10 rounded-sm border-[0.5px] border-gray-300 bg-screen-0 px-4 py-2 flex justify-center items-center ${
             isDeleteModalOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
