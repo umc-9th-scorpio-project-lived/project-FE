@@ -40,9 +40,26 @@ const CreateRoutinePage = () => {
 
   // 루틴 제목 입력 상태
   const [isTitleFocused, setIsTitleFocused] = useState(false);
+  const [localTitle, setLocalTitle] = useState(title ?? '');
   const titleRef = useRef<HTMLDivElement>(null);
 
-  const hasTitle = title !== null && title.trim().length > 0;
+  useEffect(() => {
+    if (isTitleFocused) return;
+    setLocalTitle(title ?? '');
+    if (titleRef.current) titleRef.current.innerText = title ?? '';
+  }, [title, isTitleFocused]);
+
+  const hasTitle = localTitle.trim().length > 0;
+
+  // 커서를 맨 뒤로 이동
+  const moveCursorToEnd = (el: HTMLDivElement) => {
+    const range = document.createRange();
+    const sel = window.getSelection();
+    range.selectNodeContents(el);
+    range.collapse(false);
+    sel?.removeAllRanges();
+    sel?.addRange(range);
+  };
 
   // 최초 진입 시 draft 초기화
   useEffect(() => {
@@ -69,45 +86,44 @@ const CreateRoutinePage = () => {
 
   // 적용 버튼 활성화 여부
   const canSubmit = useMemo(() => {
-    if (title !== null && !title.trim()) return false;
+    if (!localTitle.trim()) return false;
     if (repeat.type === 'NONE') return false;
     if (alarm.enabled && !alarm.time) return false;
     return true;
-  }, [title, repeat, alarm]);
+  }, [localTitle, repeat, alarm]);
 
   // 루틴 제목 입력 핸들러
   const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
-    const target = e.currentTarget;
-    if (target.innerText.length > MAX_TITLE_LENGTH) {
-      target.innerText = target.innerText.slice(0, MAX_TITLE_LENGTH);
-      const range = document.createRange();
-      const sel = window.getSelection();
-      range.selectNodeContents(target);
-      range.collapse(false);
-      sel?.removeAllRanges();
-      sel?.addRange(range);
+    const el = e.currentTarget;
+    let next = el.innerText;
+
+    if (next.length > MAX_TITLE_LENGTH) {
+      next = next.slice(0, MAX_TITLE_LENGTH);
+      el.innerText = next;
+      moveCursorToEnd(el);
     }
+
+    setLocalTitle(next);
   };
 
   // 루틴 제목 입력 포커스 핸들러
   const handleFocus = () => {
     setIsTitleFocused(true);
+
     setTimeout(() => {
-      if (!titleRef.current) return;
-      const range = document.createRange();
-      const sel = window.getSelection();
-      range.selectNodeContents(titleRef.current);
-      range.collapse(false);
-      sel?.removeAllRanges();
-      sel?.addRange(range);
+      const el = titleRef.current;
+      if (!el) return;
+      if (el.innerText.trim().length > 0) moveCursorToEnd(el);
     }, 0);
   };
 
   // 루틴 제목 입력 포커스 아웃 핸들러
   const handleBlur = () => {
     setIsTitleFocused(false);
-    if (!titleRef.current) return;
-    setTitle(titleRef.current.innerText);
+
+    const next = titleRef.current?.innerText ?? '';
+    setLocalTitle(next);
+    setTitle(next);
   };
 
   // 엔터 입력 방지
@@ -173,20 +189,31 @@ const CreateRoutinePage = () => {
             <div className="relative">
               {/* 루틴 제목 입력 */}
               <div
-                ref={titleRef}
-                contentEditable
-                suppressContentEditableWarning
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                onInput={handleInput}
-                onKeyDown={handleKeyDown}
-                className={`w-26.5 h-26.5 rounded-lg flex items-center justify-center px-2.5 py-2.5 outline-none typo-body_reg14 text-center whitespace-pre-wrap break-all overflow-y-auto transition-colors ${
-                  isTitleFocused || hasTitle
-                    ? 'bg-primary-20 text-gray-900'
-                    : 'bg-gray-100 text-gray-500'
-                }`}
+                className={`w-26.5 h-26.5 rounded-lg px-2.5 py-2.5 transition-colors flex
+      ${isTitleFocused ? 'items-center justify-start' : 'items-center justify-center'}
+      ${isTitleFocused || hasTitle ? 'bg-primary-20' : 'bg-gray-100'}`}
+                onClick={() => titleRef.current?.focus()}
               >
-                {!hasTitle && !isTitleFocused ? '루틴 제목' : title}
+                {!hasTitle && !isTitleFocused && (
+                  <div className="absolute inset-0 flex items-center justify-center px-2.5 py-2.5 pointer-events-none">
+                    <span className="typo-body_reg14 text-gray-500">
+                      루틴 제목
+                    </span>
+                  </div>
+                )}
+
+                <div
+                  ref={titleRef}
+                  contentEditable
+                  suppressContentEditableWarning
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  onInput={handleInput}
+                  onKeyDown={handleKeyDown}
+                  className={`w-full outline-none typo-body_reg14 whitespace-pre-wrap break-all
+        ${isTitleFocused ? 'text-left' : 'text-center'}
+        ${isTitleFocused || hasTitle ? 'text-gray-900' : 'text-gray-500'}`}
+                />
               </div>
 
               {/* 루틴 아이콘 선택 버튼 */}
