@@ -124,10 +124,6 @@ const StatisticsPage = () => {
     retry: 1,
   });
 
-  useEffect(() => {
-    if (data) console.log(data);
-  }, [data]);
-
   return (
     <div className="bg-primary-50 h-dvh flex flex-col gap-4 overflow-y-auto overflow-x-hidden">
       <div className="pt-10 flex justify-center items-center relative">
