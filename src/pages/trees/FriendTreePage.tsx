@@ -4,6 +4,7 @@ import GrowingFruitIcon from '@/icons/GrowingFruitIcon';
 import InfoIcon from '@/icons/InfoIcon';
 import KebabIcon from '@/icons/KebabIcon';
 import LeftChevronIcon from '@/icons/LeftChevronIcon';
+import MiniRightChevronIcon from '@/icons/MiniRightChevronIcon';
 import NormalFruitIcon from '@/icons/NormalFruitIcon';
 import { deleteFriend } from '@/services/friends/deleteFriend';
 import { getFriendFruitsStatistics } from '@/services/friends/getFriendFruitsStatistics';
@@ -75,7 +76,7 @@ const FriendTreePage = () => {
         </button>
       </div>
 
-      <div className="pt-6 px-4">
+      <div className="pt-6 px-4 flex justify-between items-center">
         <div className="flex items-center gap-1.5">
           <span className="typo-body_reg16 text-gray-900">
             이번 달에 맺힌 열매
@@ -87,6 +88,18 @@ const FriendTreePage = () => {
             <InfoIcon className="w-4 h-4 text-gray-600" />
           </button>
         </div>
+
+        <button
+          onClick={() => {
+            navigate(`/lived/tree/friendArchive/${friendId}`);
+          }}
+          className="flex items-center gap-0.5 cursor-pointer"
+        >
+          <span className="typo-body_reg12 text-gray-900">
+            루틴 나무 모아보기
+          </span>
+          <MiniRightChevronIcon className="w-3 h-3 text-gray-900" />
+        </button>
       </div>
 
       <div className="pt-4 pb-15.5 px-4 flex items-center gap-5">

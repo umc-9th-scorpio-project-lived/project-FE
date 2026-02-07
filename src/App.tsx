@@ -32,6 +32,7 @@ import HomeRoutinePage from './pages/homes/HomeRoutinePage';
 import RoutinePage from './pages/onboardings/RoutinePage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ArchivedTreePage from './pages/trees/ArchivedTreePage';
+import FriendTreeArchivePage from './pages/trees/FriendTreeArchivePage';
 
 const queryClient = new QueryClient();
 
@@ -114,6 +115,10 @@ function App() {
             <Route path="friend/:friendId" element={<FriendTreePage />} />
             <Route path="statistics" element={<StatisticsPage />} />
             <Route path="archive" element={<TreeArchivePage />} />
+            <Route
+              path="friendArchive/:friendId"
+              element={<FriendTreeArchivePage />}
+            />
           </Route>
           {/* 마이페이지의 상세페이지 */}
           <Route path="/lived/my" element={<SubLayout />}>
