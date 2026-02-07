@@ -96,7 +96,7 @@ const ArchivedTreePage = () => {
       {isPending || isError ? (
         <RoutineTree isFruitClickable={false} />
       ) : (
-        <RoutineTree isFruitClickable={false} fruitsData={data} />
+        <RoutineTree isFruitClickable={true} fruitsData={data} />
       )}
     </div>
   );
