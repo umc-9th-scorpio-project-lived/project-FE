@@ -1,10 +1,12 @@
 import toggleRoutineCheck from '@/services/routines/checkRoutine';
 import createRoutine from '@/services/routines/createRoutine';
+import deleteRoutine from '@/services/routines/deleteRoutine';
 import editRoutine from '@/services/routines/editRoutine';
 import getRoutineInfo from '@/services/routines/getRoutineInfo';
 import {
   EMPTY_HOME_ROUTINE,
   type AlarmValue,
+  type DeleteRoutineRequest,
   type HomeRoutineResult,
   type RepeatValue,
   type RoutineValue,
@@ -45,6 +47,11 @@ type HomeRoutineState = {
   fetchRoutineInfo: (memberRoutineId: number) => Promise<void>;
 
   updateRoutine: (memberRoutineId: number) => Promise<void>;
+
+  deleteRoutine: (
+    memberRoutineId: number,
+    body: DeleteRoutineRequest
+  ) => Promise<void>;
 };
 
 export const useRoutineStore = create<HomeRoutineState>((set, get) => ({
@@ -141,6 +148,29 @@ export const useRoutineStore = create<HomeRoutineState>((set, get) => ({
       get().resetDraft();
     } catch (e) {
       set({ isLoading: false });
+      throw e;
+    }
+  },
+
+  deleteRoutine: async (memberRoutineId, body) => {
+    const prev = get().data;
+
+    set({
+      isLoading: true,
+      data: {
+        ...prev,
+        routines: prev.routines.filter(
+          (r) => r.memberRoutineId !== memberRoutineId
+        ),
+      },
+    });
+
+    try {
+      await deleteRoutine(memberRoutineId, body);
+      set({ isLoading: false });
+      get().resetDraft();
+    } catch (e) {
+      set({ isLoading: false, data: prev });
       throw e;
     }
   },

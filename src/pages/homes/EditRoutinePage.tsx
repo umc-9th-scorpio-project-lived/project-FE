@@ -127,6 +127,7 @@ const EditRoutinePage = () => {
     navigate('/lived');
   };
 
+  // 루틴 수정 완료 핸들러
   const handleSubmit = async () => {
     if (!canSubmit || isLoading) return;
 
