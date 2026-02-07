@@ -32,10 +32,10 @@ const HomeContent = () => {
 
   const headerText =
     totalCount === 0
-      ? '오늘 루틴을 시작해볼까요?'
+      ? '루틴을 시작해볼까요?'
       : doneCount === 0
         ? '아직 완료하지 않은 루틴이 있어요!'
-        : `오늘 루틴 ${doneCount}/${totalCount} 진행 중!`;
+        : `루틴 ${doneCount}/${totalCount} 진행 중!`;
 
   const pressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const longPressTriggered = useRef(false);
@@ -55,7 +55,7 @@ const HomeContent = () => {
 
     pressTimer.current = setTimeout(() => {
       longPressTriggered.current = true;
-      navigate('/lived/edit', { state: { memberRoutineId } });
+      navigate(`/lived/edit/${memberRoutineId}`);
     }, LONG_PRESS_MS);
   };
 

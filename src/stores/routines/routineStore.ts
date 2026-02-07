@@ -1,11 +1,13 @@
 import toggleRoutineCheck from '@/services/routines/checkRoutine';
 import createRoutine from '@/services/routines/createRoutine';
+import getRoutineInfo from '@/services/routines/getRoutineInfo';
 import {
   EMPTY_HOME_ROUTINE,
   type AlarmValue,
   type CreateRoutineRequest,
   type HomeRoutineResult,
   type RepeatValue,
+  type RoutineInfoResult,
   type RoutineValue,
 } from '@/types/routines/Routine.types';
 import { normalizeAlarmTime } from '@/utils/homes/homeUtils';
@@ -75,6 +77,69 @@ const toCreateRoutineRequest = (
   };
 };
 
+const toDraftFromRoutineInfo = (info: RoutineInfoResult): RoutineValue => {
+  const title = info.title ?? null;
+  const icon = info.emoji ?? null;
+
+  // alarm
+  const isAlarmOn = !!info.isAlarmOn;
+  const alarmTimeRaw = typeof info.alarmTime === 'string' ? info.alarmTime : '';
+  const alarmTime =
+    alarmTimeRaw.length >= 5 ? alarmTimeRaw.slice(0, 5) : '12:00';
+
+  const alarm: AlarmValue = isAlarmOn
+    ? { enabled: true, time: alarmTime }
+    : { enabled: false, time: '오후 12:00' };
+
+  // repeat
+  const repeatType = info.repeatType ?? 'NONE'; // WEEKLY / MONTHLY / NONE
+  const repeatInterval = Number(info.repeatInterval ?? 1);
+
+  const repeatValueRaw =
+    typeof info.repeatValue === 'string' ? info.repeatValue : '';
+  const tokens = repeatValueRaw
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  let repeat: RepeatValue = { type: 'NONE' };
+
+  if (repeatType === 'WEEKLY') {
+    const days = tokens
+      .map((v) => Number(v))
+      .filter((n) => Number.isFinite(n) && n >= 0 && n <= 6);
+
+    repeat =
+      days.length > 0
+        ? {
+            type: 'INTERVAL',
+            every: repeatInterval || 1,
+            unit: 'WEEK',
+            days,
+            isEveryday: days.length === 7,
+          }
+        : { type: 'NONE' };
+  }
+
+  if (repeatType === 'MONTHLY') {
+    // 월간: "1,15,31" or "1,15,LAST" 같은 형태를 가정
+    const isLastDayOfMonth = tokens.includes('LAST');
+
+    const dates = tokens
+      .filter((v) => v !== 'LAST')
+      .map((v) => Number(v))
+      .filter((n) => Number.isFinite(n) && n >= 1 && n <= 31)
+      .sort((a, b) => a - b);
+
+    repeat =
+      dates.length > 0 || isLastDayOfMonth
+        ? { type: 'DATE', dates, isLastDayOfMonth }
+        : { type: 'NONE' };
+  }
+
+  return { title, icon, repeat, alarm };
+};
+
 type HomeRoutineState = {
   data: HomeRoutineResult;
   isLoading: boolean;
@@ -92,6 +157,8 @@ type HomeRoutineState = {
   resetDraft: () => void;
 
   createRoutine: (startDate: string) => Promise<void>;
+
+  fetchRoutineInfo: (memberRoutineId: number) => Promise<void>;
 };
 
 export const useRoutineStore = create<HomeRoutineState>((set, get) => ({
@@ -156,6 +223,26 @@ export const useRoutineStore = create<HomeRoutineState>((set, get) => ({
       // 여기서는 최소한으로 draft만 초기화 + 로딩 해제만.
       set({ isLoading: false, data });
       get().resetDraft();
+    } catch (e) {
+      set({ isLoading: false });
+      throw e;
+    }
+  },
+
+  fetchRoutineInfo: async (memberRoutineId) => {
+    set({ isLoading: true });
+
+    try {
+      const info = await getRoutineInfo(memberRoutineId);
+      const nextDraft = toDraftFromRoutineInfo(info);
+
+      // draft 프리필
+      get().setTitle(nextDraft.title ?? '제목 없음');
+      get().setIcon(nextDraft.icon);
+      get().setRepeat(nextDraft.repeat);
+      get().setAlarm(nextDraft.alarm);
+
+      set({ isLoading: false });
     } catch (e) {
       set({ isLoading: false });
       throw e;

@@ -54,6 +54,17 @@ export const EMPTY_HOME_ROUTINE: HomeRoutineResult = {
   routines: [],
 };
 
+export type RoutineInfoResult = {
+  memberRoutineId: number;
+  title: string;
+  emoji: string;
+  repeatType: string;
+  repeatInterval: number;
+  repeatValue: string;
+  alarmTime: string;
+  isAlarmOn: boolean;
+};
+
 // 루틴 주기 타입
 export type RepeatValue =
   | { type: 'DATE'; dates: number[]; isLastDayOfMonth?: boolean }

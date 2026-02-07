@@ -28,8 +28,9 @@ import AccountPage from './pages/users/AccountPage';
 import NotificationsPage from './pages/users/NotificationsPage';
 import BlockedPage from './pages/users/BlockedPage';
 import CallbackPage from './pages/commons/CallbackPage';
-import HomeRoutinePage from './pages/homes/HomeRoutinePage';
 import RoutinePage from './pages/onboardings/RoutinePage';
+import CreateRoutinePage from './pages/homes/CreateRoutinePage';
+import EditRoutinePage from './pages/homes/EditRoutinePage';
 
 function App() {
   return (
@@ -43,13 +44,13 @@ function App() {
           {/* 로그인 */}
           <Route path="/" element={<LoginPage />} />
 
-          {/* 루틴 생성/수정 페이지 */}
+          {/* 루틴 생성페이지 */}
+          <Route path="/lived/create" element={<CreateRoutinePage />} />
+          {/* 루틴 수정페이지 */}
           <Route
-            path="/lived/create"
-            element={<HomeRoutinePage mode="create" />}
+            path="/lived/edit/:memberRoutineId"
+            element={<EditRoutinePage />}
           />
-          {/* 추후 루틴 아이디 별로 관리 */}
-          <Route path="/lived/edit" element={<HomeRoutinePage mode="edit" />} />
           {/* 알림 페이지 */}
           <Route path="/lived/alarm" element={<AlarmPage />} />
           {/* 루틴 추천 페이지 */}
