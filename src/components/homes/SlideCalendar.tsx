@@ -2,6 +2,7 @@ import React, { useMemo, useRef, type PointerEvent } from 'react';
 import { useHomeDateStore } from '@/stores/homes/homeStore';
 import { WEEK_LABELS } from '@/constants';
 import { addDays, isSameDay } from '@/utils/homes/homeUtils';
+import { useRoutineStore } from '@/stores/routines/routineStore';
 
 const SWIPE_THRESHOLD_PX = 40; // 스와이프로 인정할 최소 가로 이동 거리
 const LOCK_THRESHOLD_PX = 8; // 축 잠금(가로/세로)을 결정하기 위한 최소 이동 거리
@@ -18,6 +19,8 @@ const SlideCalendar = ({ onChange }: Props) => {
     goPrevWeek,
     goNextWeek,
   } = useHomeDateStore();
+
+  const routines = useRoutineStore((s) => s.data?.routines ?? []);
 
   // 현재 주(weekStartDate) 기준 7일 배열
   const weekDates = useMemo(() => {
@@ -113,10 +116,26 @@ const SlideCalendar = ({ onChange }: Props) => {
         <div className="grid grid-cols-7 gap-4">
           {weekDates.map((d, idx) => {
             const isSelected = !!selectedDate && isSameDay(d, selectedDate);
+
             const isActiveDay =
               !!selectedDate &&
               isSelectedDateInWeek &&
               d.getDay() === selectedDate.getDay();
+
+            const total = isSelected ? routines.length : 0;
+            const done = isSelected
+              ? routines.filter((r) => r.isDone).length
+              : 0;
+
+            const ratio = total > 0 ? done / total : 0;
+            const isAllDone = total > 0 && done === total;
+
+            const showProgress = isSelected && total > 0;
+
+            const gradientCss =
+              'linear-gradient(180deg, #FFFFFF 0%, #CFE691 22%, #8FC600 100%)';
+
+            const fullColor = '#9FD416';
 
             return (
               <div
@@ -140,9 +159,35 @@ const SlideCalendar = ({ onChange }: Props) => {
 
                 <div className="py-1.25">
                   <span
-                    className={`typo-body_reg16 leading-none min-w-9 min-h-9 flex items-center justify-center ${isSelected ? 'text-primary-50' : 'text-gray-900'}`}
+                    className={[
+                      'typo-body_reg16 leading-none min-w-9 min-h-9',
+                      'flex items-center justify-center rounded-full',
+                      ' relative overflow-hidden',
+                      showProgress
+                        ? 'border border-primary-50'
+                        : 'border border-transparent',
+                    ].join(' ')}
                   >
-                    {d.getDate()}
+                    {showProgress && (
+                      <span
+                        aria-hidden
+                        className="absolute inset-0 overflow-hidden rounded-full"
+                      >
+                        <span
+                          className="absolute left-0 bottom-0 w-full"
+                          style={{
+                            height: `${ratio * 100}%`,
+                            background: isAllDone ? fullColor : gradientCss,
+                          }}
+                        />
+                      </span>
+                    )}
+
+                    <span
+                      className={`relative z-10 ${showProgress && isAllDone ? 'text-screen-0' : 'text-gray-900'}`}
+                    >
+                      {d.getDate()}
+                    </span>
                   </span>
                 </div>
               </div>
