@@ -111,7 +111,7 @@ function App() {
           {/* 루틴나무 페이지의 상세페이지 */}
           <Route path="/lived/tree" element={<SubLayout />}>
             <Route path="tracker" element={<RoutineTrackerPage />} />
-            <Route path="friend" element={<FriendTreePage />} />
+            <Route path="friend/:friendId" element={<FriendTreePage />} />
             <Route path="statistics" element={<StatisticsPage />} />
             <Route path="archive" element={<TreeArchivePage />} />
           </Route>
