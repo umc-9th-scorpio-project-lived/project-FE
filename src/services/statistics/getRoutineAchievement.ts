@@ -10,7 +10,7 @@ export const getRoutineAchievement = async (
   return await authApi.get(
     `/statistics/routines/${routineYearMonth.memberRoutineId}/popup`,
     {
-      params: routineYearMonth,
+      params: { year: routineYearMonth.year, month: routineYearMonth.month },
     }
   );
 };
