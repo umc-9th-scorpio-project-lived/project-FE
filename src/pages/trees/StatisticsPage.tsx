@@ -124,6 +124,10 @@ const StatisticsPage = () => {
     retry: 1,
   });
 
+  useEffect(() => {
+    if (data) console.log(data);
+  }, [data]);
+
   return (
     <div className="bg-primary-50 h-dvh flex flex-col gap-4 overflow-y-auto overflow-x-hidden">
       <div className="pt-10 flex justify-center items-center relative">
@@ -236,54 +240,55 @@ const StatisticsPage = () => {
 
             {isWeekly ? (
               <div className="w-full flex flex-col gap-4">
-                <div className="typo-body_reg16 text-gray-900">
-                  <div>월요일의 루틴 완료율이 줄어들었어요. 🥲</div>
-                  <div>루틴을 조정해보는 건 어때요?</div>
+                <div className="typo-body_reg16 text-gray-900 whitespace-pre-line">
+                  <div>{data.aiAdvice}</div>
                 </div>
 
                 <div className="w-full flex justify-between px-1">
-                  <div className="flex flex-col items-center gap-1">
-                    <div className="typo-body_bold14 text-gray-800">일</div>
-                    <div className="border-[0.5px] border-gray-100 w-9 h-9 rounded-full bg-[linear-gradient(0deg,theme(--color-primary-50)_0%,transparent_90%)] flex justify-center items-center">
-                      <span className="typo-body_reg12 text-gray-800">5</span>
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-center gap-1">
-                    <div className="typo-body_bold14 text-gray-800">월</div>
-                    <div className="border-[0.5px] border-gray-100 w-9 h-9 rounded-full bg-[linear-gradient(0deg,theme(--color-primary-50)_0%,transparent_40%)] flex justify-center items-center">
-                      <span className="typo-body_reg12 text-gray-800">6</span>
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-center gap-1">
-                    <div className="typo-body_bold14 text-gray-800">화</div>
-                    <div className="border-[0.5px] border-gray-100 w-9 h-9 rounded-full bg-[linear-gradient(0deg,theme(--color-primary-50)_0%,transparent_120%)] flex justify-center items-center">
-                      <span className="typo-body_reg12 text-gray-800">7</span>
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-center gap-1">
-                    <div className="typo-body_bold14 text-gray-800">수</div>
-                    <div className="border-[0.5px] border-gray-100 w-9 h-9 rounded-full bg-[linear-gradient(0deg,theme(--color-primary-50)_0%,transparent_80%)] flex justify-center items-center">
-                      <span className="typo-body_reg12 text-gray-800">8</span>
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-center gap-1">
-                    <div className="typo-body_bold14 text-gray-800">목</div>
-                    <div className="border-[0.5px] border-gray-100 w-9 h-9 rounded-full bg-[linear-gradient(0deg,theme(--color-primary-50)_0%,transparent_50%)] flex justify-center items-center">
-                      <span className="typo-body_reg12 text-gray-800">9</span>
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-center gap-1">
-                    <div className="typo-body_bold14 text-gray-800">금</div>
-                    <div className="border-[0.5px] border-gray-100 w-9 h-9 rounded-full bg-[linear-gradient(0deg,theme(--color-primary-50)_0%,transparent_50%)] flex justify-center items-center">
-                      <span className="typo-body_reg12 text-gray-800">10</span>
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-center gap-1">
-                    <div className="typo-body_bold14 text-gray-800">토</div>
-                    <div className="border-[0.5px] border-gray-100 w-9 h-9 rounded-full bg-[linear-gradient(0deg,theme(--color-primary-50)_0%,transparent_80%)] flex justify-center items-center">
-                      <span className="typo-body_reg12 text-gray-800">11</span>
-                    </div>
-                  </div>
+                  {['일', '월', '화', '수', '목', '금', '토'].map(
+                    (dayLabel) => {
+                      const dayData = data.dailyGraph.find(
+                        (day) => day.dayOfWeek === dayLabel
+                      );
+
+                      if (!dayData) {
+                        return (
+                          <div
+                            key={dayLabel}
+                            className="flex flex-col items-center gap-1"
+                          >
+                            <div className="typo-body_bold14 text-gray-800">
+                              {dayLabel}
+                            </div>
+                          </div>
+                        );
+                      }
+
+                      return (
+                        <div
+                          key={dayLabel}
+                          className="flex flex-col items-center gap-1"
+                        >
+                          <div className="typo-body_bold14 text-gray-800">
+                            {dayLabel}
+                          </div>
+                          <div
+                            className="border-[0.5px] border-gray-100 w-9 h-9 rounded-full flex justify-center items-center"
+                            style={{
+                              background:
+                                dayData.percentage === 100
+                                  ? '#9FD416'
+                                  : `linear-gradient(0deg, #9FD416 0%, transparent ${dayData.percentage}%)`,
+                            }}
+                          >
+                            <span className="typo-body_reg12 text-gray-800">
+                              {parseInt(dayData.date.split('-')[2])}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    }
+                  )}
                 </div>
               </div>
             ) : (
