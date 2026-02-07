@@ -10,3 +10,9 @@ export type FriendYearMonth = {
   year: number;
   month: number;
 };
+
+export type FriendTreeArchiveParams = {
+  friendId: number;
+  page: number;
+  size: number;
+};
