@@ -5,6 +5,7 @@ import {
   AnimatePresence,
   motion,
   useAnimation,
+  useDragControls,
   type PanInfo,
 } from 'framer-motion';
 import { useEffect, useState } from 'react';
@@ -20,6 +21,9 @@ const FriendsSheet = () => {
   // 애니메이션을 코드로 제어하기 위한 컨트롤러
   // controls.start(), controls.set() 등의 메서드로 애니메이션을 프로그래밍 방식으로 실행
   const controls = useAnimation();
+
+  // 드래그 제어를 위한 컨트롤러
+  const dragControls = useDragControls();
 
   const SHEET_HEIGHT = window.innerHeight * 0.85;
   const PEEK_HEIGHT = 184; // 초기 노출 높이
@@ -99,12 +103,18 @@ const FriendsSheet = () => {
       <motion.div
         className="w-full fixed bottom-0 limit-width p-4 bg-screen-0 rounded-t-2xl shadow-footer-shadow flex flex-col items-center gap-3.5"
         drag="y" // y축 방향으로만 드래그 가능하게 설정
+        dragControls={dragControls} // 드래그 컨트롤러 연결
+        dragListener={false} // 기본 드래그 리스너 비활성화
         dragConstraints={{ top: 0, bottom: closedY }} // 드래그 가능한 범위 제한 (위쪽: 0, 아래쪽: closedY)
         dragElastic={0.05} // 드래그 시 저항감 (0-1, 낮을수록 더 딱딱함)
         onDragEnd={onDragEnd} // 드래그 종료 시 실행될 함수
         animate={controls} // controls로 애니메이션을 제어
         style={{ height: SHEET_HEIGHT, bottom: -SHEET_HEIGHT + PEEK_HEIGHT }}
         onClick={handleSheetClick}
+        onPointerDown={(e) => {
+          // 모든 영역에서 드래그 가능하도록 설정
+          dragControls.start(e);
+        }}
       >
         {/* 검색 영역 */}
         <div className="w-full flex items-center gap-3">
