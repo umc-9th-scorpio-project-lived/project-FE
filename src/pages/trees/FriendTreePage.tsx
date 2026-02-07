@@ -23,6 +23,9 @@ const FriendTreePage = () => {
         year: new Date().getFullYear(),
         month: new Date().getMonth() + 1,
       }),
+    staleTime: 30 * 1000,
+    gcTime: 5 * 60 * 1000,
+    retry: 1,
   });
 
   const navigate = useNavigate();
