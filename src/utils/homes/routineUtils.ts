@@ -7,7 +7,7 @@ import type {
   RoutineInfoResult,
   RoutineValue,
 } from '@/types/routines/Routine.types';
-import { normalizeAlarmTime } from './homeUtils';
+import { formatAlarmTime, normalizeAlarmTime } from './homeUtils';
 
 type Ampm = '오전' | '오후';
 
@@ -211,12 +211,10 @@ export const toDraftFromRoutineInfo = (
 
   // alarm
   const isAlarmOn = !!info.isAlarmOn;
-  const alarmTimeRaw = typeof info.alarmTime === 'string' ? info.alarmTime : '';
-  const alarmTime =
-    alarmTimeRaw.length >= 5 ? alarmTimeRaw.slice(0, 5) : '12:00';
+  const alarmTimeLabel = formatAlarmTime(info.alarmTime); // "오전/오후 h:mm"
 
   const alarm: AlarmValue = isAlarmOn
-    ? { enabled: true, time: alarmTime }
+    ? { enabled: true, time: alarmTimeLabel }
     : { enabled: false, time: '오후 12:00' };
 
   // repeat

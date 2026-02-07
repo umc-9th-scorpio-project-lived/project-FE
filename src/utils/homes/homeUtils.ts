@@ -80,3 +80,25 @@ export const normalizeAlarmTime = (time?: string | null): string => {
 
   return `${hour.toString().padStart(2, '0')}:${m}`;
 };
+
+type Ampm = '오전' | '오후';
+
+// "HH:mm" 24시간 형식을 "오전/오후 h:mm" 형식으로 변환
+export const formatAlarmTime = (time?: string | null): string => {
+  if (!time) return '오후 12:00';
+
+  const hhmm = time.length >= 5 ? time.slice(0, 5) : time;
+
+  const m = hhmm.match(/^(\d{2}):(\d{2})$/);
+  if (!m) return '오후 12:00';
+
+  const hour24 = Number(m[1]);
+  const minute = m[2];
+
+  const ampm: Ampm = hour24 < 12 ? '오전' : '오후';
+
+  // 0시는 오전 12시, 12시는 오후 12시
+  const hour12 = hour24 % 12 === 0 ? 12 : hour24 % 12;
+
+  return `${ampm} ${hour12}:${minute}`;
+};
