@@ -35,6 +35,7 @@ const DeleteAccountModal = () => {
             try {
               await withdraw();
             } catch {
+              // 탈퇴 실패 여부와 관계없이 로그아웃 처리
             } finally {
               localStorage.removeItem('accessToken');
               closeModal();
