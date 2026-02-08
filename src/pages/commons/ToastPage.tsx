@@ -40,7 +40,20 @@ const ToastPage = () => {
       <div className="max-w-125 w-full p-4">
         <div className="flex items-center bg-gray-700 rounded-lg px-4 py-3 gap-2.5">
           {iconMap[type]}
-          <span className="typo-body-reg-14 text-screen-0">{message}</span>
+          <div className="flex flex-col text-screen-0">
+            {typeof message === 'string' ? (
+              <span className="typo-body-reg-14 whitespace-pre-line">
+                {message}
+              </span>
+            ) : (
+              <>
+                <span className="typo-body_reg14">{message.title}</span>
+                {message.description && (
+                  <span className="typo-body_reg12">{message.description}</span>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </div>
     </div>

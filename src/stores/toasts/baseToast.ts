@@ -1,12 +1,18 @@
 import { create } from 'zustand';
 
 type ToastType = 'check' | 'alert' | 'delete';
+type ToastMessage =
+  | string
+  | {
+      title: string;
+      description?: string;
+    };
 
 interface ToastState {
   isToastOpen: boolean;
-  message: string;
+  message: ToastMessage;
   type: ToastType;
-  showToast: (message: string, type?: ToastType) => void;
+  showToast: (message: ToastMessage, type?: ToastType) => void;
 }
 
 const useToast = create<ToastState>((set) => ({
