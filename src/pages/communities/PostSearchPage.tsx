@@ -109,7 +109,9 @@ const PostSearchPage = () => {
               <PostList
                 posts={posts}
                 onPostClick={(post) => {
-                  navigate(`/lived/community/${post.postId}`);
+                  navigate(`/lived/community/${post.postId}`, {
+                    state: { from: 'search' },
+                  });
                 }}
               />
             </>

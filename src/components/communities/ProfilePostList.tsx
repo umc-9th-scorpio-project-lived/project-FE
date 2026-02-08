@@ -7,6 +7,9 @@ import type { Post } from '@/types/communities/Post.types';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PostList from './PostList';
+import BookmarkIcon from '@/icons/BookmarkIcon';
+import CommentIcon from '@/icons/CommentIcon';
+import WriteIcon from '@/icons/WriteIcon';
 
 const ProfilePostList = () => {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -14,7 +17,7 @@ const ProfilePostList = () => {
   const [selectedTab, setSelectedTab] = useState('작성한 글');
 
   const handlePostClick = (post: Post) => {
-    navigate(`/lived/community/${post.postId}`);
+    navigate(`/lived/community/${post.postId}`, { state: { from: 'mypage' } });
   };
 
   const tab = selectedTab;
@@ -63,19 +66,28 @@ const ProfilePostList = () => {
         </button>
       </div>
       {posts.length === 0 && tab === '작성한 글' ? (
-        <div className="flex flex-col w-full items-center justify-center mt-6 typo-body_reg14 text-gray-900 gap-4">
-          <span>아직 작성하신 글이 없어요.</span>
-          <span>커뮤니티에 첫 글을 남겨보세요.</span>
+        <div className="flex flex-col items-center justify-center gap-7.5 pt-18">
+          <WriteIcon className="w-20 h-20 fill-current text-primary-20" />
+          <div className="flex flex-col w-full items-center justify-center typo-body_reg14 text-gray-900 gap-6">
+            <span>아직 작성하신 글이 없어요.</span>
+            <span>커뮤니티에 첫 글을 남겨보세요.</span>
+          </div>
         </div>
       ) : posts.length === 0 && tab === '댓글단 글' ? (
-        <div className="flex flex-col w-full items-center justify-center mt-6 typo-body_reg14 text-gray-900 gap-4">
-          <span>아직 댓글다신 글이 없어요.</span>
-          <span>커뮤니티에 첫 댓글을 남겨보세요.</span>
+        <div className="flex flex-col items-center justify-center gap-7.5 pt-18">
+          <CommentIcon className="w-20 h-20 fill-current text-primary-20" />
+          <div className="flex flex-col w-full items-center justify-center typo-body_reg14 text-gray-900 gap-6">
+            <span>아직 댓글다신 글이 없어요.</span>
+            <span>커뮤니티에 첫 댓글을 남겨보세요.</span>
+          </div>
         </div>
       ) : posts.length === 0 && tab === '저장한 글' ? (
-        <div className="flex flex-col w-full items-center justify-center mt-6 typo-body_reg14 text-gray-900 gap-4">
-          <span>아직 저장하신 글이 없어요.</span>
-          <span>나중에 다시 보고 싶은 글, 저장해둘 수 있어요!.</span>
+        <div className="flex flex-col items-center justify-center gap-7.5 pt-18">
+          <BookmarkIcon className="w-20 h-20 fill-current text-primary-20" />
+          <div className="flex flex-col w-full items-center justify-center typo-body_reg14 text-gray-900 gap-6">
+            <span>아직 저장하신 글이 없어요.</span>
+            <span>나중에 다시 보고 싶은 글, 저장해둘 수 있어요!.</span>
+          </div>
         </div>
       ) : (
         <PostList posts={posts} onPostClick={handlePostClick} />
