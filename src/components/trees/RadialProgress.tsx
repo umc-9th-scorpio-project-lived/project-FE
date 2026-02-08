@@ -12,7 +12,8 @@ const RadialProgress = ({ current, total }: RadialProgressProps) => {
   const totalTrackLength = circumference * gaugeRatio;
 
   // 입력된 값의 비율 계산
-  const progressRatio = Math.min(Math.max(current / total, 0), 1);
+  const progressRatio =
+    total === 0 ? 0 : Math.min(Math.max(current / total, 0), 1);
 
   // 전체 둘레에서 (실제 게이지 길이 * 진행률) 만큼을 뺀 값이 offset이 된다.
   const strokeDashoffset = circumference - totalTrackLength * progressRatio;
