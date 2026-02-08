@@ -1,8 +1,8 @@
 @config "../tailwind.config.js";
 
-@import "tailwindcss/preflight";
-@import "tailwindcss/utilities";
-@import "tailwindcss/theme";
+@import 'tailwindcss/preflight';
+@import 'tailwindcss/utilities';
+@import 'tailwindcss/theme';
 
 html {
   margin: 0px;
@@ -14,7 +14,7 @@ html {
 body {
   margin: 0px;
   padding: 0px;
-  font-family: "suite";
+  font-family: 'suite';
   min-width: 375px; /* iphone SE 기준 - 모바일 최소 너비 */
   max-width: 500px; /* 모바일 최대 너비 */
   min-height: 100vh;

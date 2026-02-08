@@ -7,8 +7,12 @@ import HomePage from './pages/homes/HomePage';
 import TreePage from './pages/trees/TreePage';
 import CommunityPage from './pages/communities/CommunityPage';
 import UserPage from './pages/users/UserPage';
+
+import CreateRoutinePage from './pages/homes/CreateRoutinePage';
+import EditRoutinePage from './pages/homes/EditRoutinePage';
 import AlarmPage from './pages/alarms/AlarmPage';
 import RecommendPage from './pages/homes/RecommendPage';
+
 import BasicInfoPage from './pages/onboardings/BasicInfoPage';
 import ConcernPage from './pages/onboardings/ConcernPage';
 import PushGuidePage from './pages/onboardings/PushGuidePage';
@@ -29,7 +33,6 @@ import AccountPage from './pages/users/AccountPage';
 import NotificationsPage from './pages/users/NotificationsPage';
 import BlockedPage from './pages/users/BlockedPage';
 import CallbackPage from './pages/commons/CallbackPage';
-import HomeRoutinePage from './pages/homes/HomeRoutinePage';
 import RoutinePage from './pages/onboardings/RoutinePage';
 import ToastPage from './pages/commons/ToastPage';
 import EditCommentPage from './pages/communities/EditCommentPage';
@@ -65,15 +68,12 @@ function App() {
             {/* 온보딩 알림 설정 */}
             <Route path="/onboardings/push-guide" element={<PushGuidePage />} />
 
-            {/* 루틴 생성 페이지 */}
+            {/* 루틴 생성페이지 */}
+            <Route path="/lived/create" element={<CreateRoutinePage />} />
+            {/* 루틴 수정페이지 */}
             <Route
-              path="/lived/create"
-              element={<HomeRoutinePage mode="create" />}
-            />
-            {/* 루틴 수정 페이지 */}
-            <Route
-              path="/lived/edit"
-              element={<HomeRoutinePage mode="edit" />}
+              path="/lived/edit/:memberRoutineId"
+              element={<EditRoutinePage />}
             />
             {/* 알림 페이지 */}
             <Route path="/lived/alarm" element={<AlarmPage />} />
