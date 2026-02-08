@@ -1,5 +1,5 @@
-import { useRoutineStore } from '@/stores/homes/routineStore';
 import useBaseModal from '@/stores/modals/baseModal';
+import { useRoutineStore } from '@/stores/routines/routineStore';
 
 type IconSection = {
   title: string;

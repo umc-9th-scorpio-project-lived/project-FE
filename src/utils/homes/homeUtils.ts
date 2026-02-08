@@ -1,5 +1,3 @@
-import { WEEK_LABELS } from "@/constants";
-
 // 날짜를 00:00:00으로 정규화
 export const normalizeDate = (d: Date) => {
   const x = new Date(d);
@@ -12,6 +10,14 @@ export const getWeekStartDate = (d: Date) => {
   const x = normalizeDate(d);
   x.setDate(x.getDate() - x.getDay());
   return x;
+};
+
+// 날짜 형식을 "YYYY-MM-DD" 문자열로 포맷
+export const formatDate = (date: Date) => {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
 };
 
 // 날짜(년/월/일) 동일 여부
@@ -35,7 +41,8 @@ export const addMonths = (d: Date, diff: number) => {
 };
 
 // 해당 달의 1일
-export const getMonthStartDate = (d: Date) => new Date(d.getFullYear(), d.getMonth(), 1);
+export const getMonthStartDate = (d: Date) =>
+  new Date(d.getFullYear(), d.getMonth(), 1);
 
 // 달력 그리드 시작일(해당 달 1일이 속한 주의 일요일)
 export const getCalendarGridStartDate = (monthDate: Date) => {
@@ -53,22 +60,45 @@ export const getDayOffset = (a: Date, b: Date) => {
   return Math.round((A - B) / 86400000);
 };
 
-// "수요일, 1월 12일" 텍스트 포맷
-export const formatDateTitle = (d: Date) => {
-  const weekday = WEEK_LABELS[d.getDay()];
-  const month = d.getMonth() + 1;
-  const date = d.getDate();
-  return `${weekday}요일, ${month}월 ${date}일`;
+// "오전/오후 h:mm" 또는 "HH:mm" 형식의 시간을 "HH:mm" 24시간 형식으로 정규화
+export const normalizeAlarmTime = (time?: string | null): string => {
+  if (!time) return '';
+
+  if (/^\d{2}:\d{2}$/.test(time)) {
+    return time;
+  }
+
+  // 오전/오후 hh:mm 형태 처리
+  const match = time.match(/(오전|오후)\s*(\d{1,2}):(\d{2})/);
+  if (!match) return '';
+
+  const [, meridiem, h, m] = match;
+  let hour = Number(h);
+
+  if (meridiem === '오후' && hour < 12) hour += 12;
+  if (meridiem === '오전' && hour === 12) hour = 0;
+
+  return `${hour.toString().padStart(2, '0')}:${m}`;
 };
 
-// "오늘 / 내일 / 어제 / n일 후 / n일 전" 텍스트 포맷
-export const formatTopTitle = (selected: Date) => {
-  const today = normalizeDate(new Date());
-  const gap = getDayOffset(selected, today);
+type Ampm = '오전' | '오후';
 
-  if (gap === 0) return "오늘";
-  if (gap === 1) return "내일";
-  if (gap === -1) return "어제";
-  if (gap > 1) return `${gap}일 후`;
-  return `${Math.abs(gap)}일 전`;
+// "HH:mm" 24시간 형식을 "오전/오후 h:mm" 형식으로 변환
+export const formatAlarmTime = (time?: string | null): string => {
+  if (!time) return '오후 12:00';
+
+  const hhmm = time.length >= 5 ? time.slice(0, 5) : time;
+
+  const m = hhmm.match(/^(\d{2}):(\d{2})$/);
+  if (!m) return '오후 12:00';
+
+  const hour24 = Number(m[1]);
+  const minute = m[2];
+
+  const ampm: Ampm = hour24 < 12 ? '오전' : '오후';
+
+  // 0시는 오전 12시, 12시는 오후 12시
+  const hour12 = hour24 % 12 === 0 ? 12 : hour24 % 12;
+
+  return `${ampm} ${hour12}:${minute}`;
 };

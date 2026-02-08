@@ -1,21 +1,26 @@
-import { useHomeDateStore } from "@/stores/homes/homeStore";
-import SlideCalendar from "./SlideCalendar";
-import useBaseModal from "@/stores/modals/baseModal";
+import { useHomeDateStore } from '@/stores/homes/homeStore';
+import SlideCalendar from './SlideCalendar';
+import useBaseModal from '@/stores/modals/baseModal';
 import {
-  formatDateTitle,
-  formatTopTitle,
+  formatDate,
   getWeekStartDate,
   isSameDay,
   normalizeDate,
-} from "@/utils/homes/homeUtils";
-import { useNavigate } from "react-router-dom";
+} from '@/utils/homes/homeUtils';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import getHomeRoutine from '@/services/routines/getHomeRoutine';
+import { useRoutineStore } from '@/stores/routines/routineStore';
+import { useNotificationStore } from '@/stores/notifications/notificationStore';
 
 const HomeHeader = () => {
   const { selectedDate, weekStartDate, resetToToday } = useHomeDateStore();
+  const { data, setHomeRoutine } = useRoutineStore();
+  const hasUnreadAlarm = useNotificationStore((s) =>
+    [...s.routine, ...s.community].some((n) => !n.isRead)
+  );
   const { openModal } = useBaseModal();
   const navigate = useNavigate();
-
-  const currentDate = selectedDate ?? normalizeDate(new Date());
 
   const todayDate = normalizeDate(new Date());
   const todayWeekStartDate = getWeekStartDate(todayDate);
@@ -23,12 +28,23 @@ const HomeHeader = () => {
   const isSelectedToday = isSameDay(selectedDate, todayDate);
   const isViewingCurrentWeek = isSameDay(weekStartDate, todayWeekStartDate);
 
+  useEffect(() => {
+    const date = formatDate(selectedDate);
+
+    getHomeRoutine(date).then((result) => {
+      setHomeRoutine(result);
+    });
+  }, [selectedDate, setHomeRoutine]);
+
   return (
     <div className="w-full flex flex-col gap-5 px-4 pt-10 rounded-b-lg shadow-soft bg-screen-0">
       <div className="flex flex-col gap-1.25">
         <div className="flex justify-between h-10 items-center">
-          <div className="text-[22px] font-normal">{formatTopTitle(currentDate)}</div>
-          <div className="bg-alarm h-6 w-6" onClick={() => navigate("/lived/alarm")} />
+          <div className="text-[22px] font-normal">{data?.dateTitle}</div>
+          <div
+            className={`h-6 w-6 ${hasUnreadAlarm ? 'bg-active-alarm' : 'bg-alarm'}`}
+            onClick={() => navigate('/lived/alarm')}
+          />
         </div>
 
         <div className="flex justify-between items-center h-10">
@@ -36,9 +52,11 @@ const HomeHeader = () => {
             <div
               className="bg-calender h-6 w-6"
               role="button"
-              onClick={() => openModal("selectDateModal", { position: "bottom" })}
+              onClick={() =>
+                openModal('selectDateModal', { position: 'bottom' })
+              }
             />
-            <div className="typo-body_reg16">{formatDateTitle(currentDate)}</div>
+            <div className="typo-body_reg16">{data?.fullDate}</div>
           </div>
 
           {!(isSelectedToday && isViewingCurrentWeek) && (
