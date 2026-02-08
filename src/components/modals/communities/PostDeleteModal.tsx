@@ -1,4 +1,4 @@
-import useBaseModal from "@/stores/modals/baseModal";
+import useBaseModal from '@/stores/modals/baseModal';
 
 const PostDeleteModal = () => {
   const { closeModal, options } = useBaseModal();
@@ -11,8 +11,12 @@ const PostDeleteModal = () => {
   return (
     <div className="flex flex-col bg-screen-0 rounded-2xl text-center">
       <div className="flex flex-col px-13 pt-10 pb-3">
-        <span className="typo-body_reg16 text-gray-900">게시글을 정말 삭제할까요?</span>
-        <span className="typo-body_reg16 text-gray-900">해당 작업은 되돌릴 수 없습니다.</span>
+        <span className="typo-body_reg16 text-gray-900">
+          게시글을 정말 삭제할까요?
+        </span>
+        <span className="typo-body_reg16 text-gray-900">
+          해당 작업은 되돌릴 수 없습니다.
+        </span>
       </div>
       <div className="flex items-center justify-center p-5 gap-2.5">
         <button
