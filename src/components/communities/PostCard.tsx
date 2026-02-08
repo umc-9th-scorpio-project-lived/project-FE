@@ -39,7 +39,7 @@ const PostCard = ({
         </div>
       )}
       <div className="flex justify-between gap-1.5">
-        <article className="flex flex-col gap-1.5">
+        <article className="flex flex-col gap-1.5 pr-2">
           <div className="text-gray-900 typo-body_bold14 line-clamp-1">
             {title}
           </div>
