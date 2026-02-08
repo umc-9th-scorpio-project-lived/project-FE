@@ -15,10 +15,10 @@ const DeleteAccountModal = () => {
 
         <div>
           <div className="typo-body_reg14 text-gray-900">
-            탈퇴 버튼 선택 시, 계정은 삭제되며 복구가 불가능합니다.
+            탈퇴 후 30일간은 계정이 보관됩니다.
           </div>
           <div className="typo-body_reg14 text-gray-900">
-            정말로 탈퇴하시겠어요?
+            이 기간 안에 다시 로그인하면 계정을 복구할 수 있어요.
           </div>
         </div>
       </div>
