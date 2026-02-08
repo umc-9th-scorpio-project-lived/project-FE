@@ -1,54 +1,52 @@
-import FriendsSheet from '@/components/trees/FriendsSheet';
 import RoutineTree from '@/components/trees/RoutineTree';
 import GoldenFruitIcon from '@/icons/GoldenFruitIcon';
 import GrowingFruitIcon from '@/icons/GrowingFruitIcon';
 import InfoIcon from '@/icons/InfoIcon';
-import MiniRightChevronIcon from '@/icons/MiniRightChevronIcon';
+import LeftChevronIcon from '@/icons/LeftChevronIcon';
 import NormalFruitIcon from '@/icons/NormalFruitIcon';
 import { getFruitsStatistics } from '@/services/statistics/getFruitsStatistics';
 import useBaseModal from '@/stores/modals/baseModal';
-import type { YearMonth } from '@/types/statistics/Statistics.types';
 import { useQuery } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
-const TreePage = () => {
-  const navigate = useNavigate();
-
-  const { openModal } = useBaseModal();
-
-  const yearMonth: YearMonth = {
-    year: new Date().getFullYear(),
-    month: new Date().getMonth() + 1, // getMonth()는 0월부터 시작하므로 1 더하기
-  };
+const ArchivedTreePage = () => {
+  const [searchParams] = useSearchParams();
+  const year = searchParams.get('year');
+  const month = searchParams.get('month');
 
   const { data, isPending, isError } = useQuery({
-    queryKey: [yearMonth.year, yearMonth.month, 'fruitsStatistics'],
-    queryFn: () => getFruitsStatistics(yearMonth),
+    queryKey: [year, month, 'fruitsStatistics'],
+    queryFn: () =>
+      getFruitsStatistics({ year: Number(year), month: Number(month) }),
     staleTime: 30 * 1000,
     gcTime: 5 * 60 * 1000,
     retry: 1,
   });
 
-  return (
-    // 친구 목록 바텀시트가 루틴 나무를 가리는 걸 방지하기 위해 pb-[180px] 추가
-    <div className="bg-gray-50 w-full h-screen overflow-y-auto pb-45">
-      <div className="pt-10 px-4 flex justify-between">
-        <span className="typo-h2_bold20 text-gray-900">루틴 나무</span>
+  const navigate = useNavigate();
 
+  const { openModal } = useBaseModal();
+
+  return (
+    // 늘어난 루틴나무 아이콘 아래 여백을 위해 pb-4 추가
+    <div className="bg-gray-50 w-full h-screen overflow-y-auto pb-4">
+      <div className="pt-10 px-4 flex items-center gap-2">
         <button
-          onClick={() => {
-            navigate('/lived/tree/statistics');
-          }}
-          className="border border-primary-50 rounded-2xl bg-screen-0 py-1.5 px-3.5 flex items-center cursor-pointer"
+          onClick={() => navigate('/lived/tree/archive')}
+          className="cursor-pointer"
         >
-          <span className="typo-body_bold12 text-primary-50">통계 분석</span>
+          <LeftChevronIcon className="w-7 h-7 text-gray-900" />
         </button>
+
+        <span className="typo-h2_bold20 text-gray-900">
+          {year}.{month}의 루틴나무
+        </span>
       </div>
 
-      <div className="pt-6 px-4 flex justify-between items-center">
+      <div className="pt-6 px-4">
         <div className="flex items-center gap-1.5">
           <span className="typo-body_reg16 text-gray-900">
-            이번 달에 맺힌 열매
+            이 달에 맺힌 열매
           </span>
           <button
             onClick={() => openModal('fruitInfoModal', { position: 'center' })}
@@ -57,18 +55,6 @@ const TreePage = () => {
             <InfoIcon className="w-4 h-4 text-gray-600" />
           </button>
         </div>
-
-        <button
-          onClick={() => {
-            navigate('/lived/tree/archive');
-          }}
-          className="flex items-center gap-0.5 cursor-pointer"
-        >
-          <span className="typo-body_reg12 text-gray-900">
-            루틴 나무 모아보기
-          </span>
-          <MiniRightChevronIcon className="w-3 h-3 text-gray-900" />
-        </button>
       </div>
 
       {isPending || isError ? (
@@ -108,14 +94,12 @@ const TreePage = () => {
       )}
 
       {isPending || isError ? (
-        <RoutineTree />
+        <RoutineTree isFruitClickable={false} />
       ) : (
-        <RoutineTree fruitsData={data} />
+        <RoutineTree isFruitClickable={true} fruitsData={data} />
       )}
-
-      <FriendsSheet />
     </div>
   );
 };
 
-export default TreePage;
+export default ArchivedTreePage;

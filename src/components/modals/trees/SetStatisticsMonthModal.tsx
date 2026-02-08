@@ -1,16 +1,16 @@
-import Wheel from "@/components/commons/Wheel";
-import useBaseModal from "@/stores/modals/baseModal";
-import { useMemo, useState } from "react";
+import Wheel from '@/components/commons/Wheel';
+import useBaseModal from '@/stores/modals/baseModal';
+import { useMemo, useState } from 'react';
 
 const ITEM_H = 74;
 
 // 휠 데이터 배열
+const YEAR_LIST = Array.from({ length: 2 }, (_, i) => i + 2025);
 const MONTH_LIST = Array.from({ length: 12 }, (_, i) => i + 1);
-const WEEK_LIST = Array.from({ length: 5 }, (_, i) => i + 1);
 
 type PeriodValue = {
+  year: number;
   month: number;
-  week: number;
 };
 
 type Props = {
@@ -24,37 +24,64 @@ const SetStatisticsMonthModal = ({ initialValue, onApply }: Props) => {
   // 초기 선택값
   const initial = useMemo(
     () => ({
-      month: initialValue?.month ?? 10,
-      week: initialValue?.week ?? 2,
+      year: initialValue?.year ?? 2025,
+      month: initialValue?.month ?? 1,
     }),
-    [initialValue?.month, initialValue?.week],
+    [initialValue?.year, initialValue?.month]
   );
 
+  const [year, setYear] = useState<number>(initial.year);
   const [month, setMonth] = useState<number>(initial.month);
-  const [week, setWeek] = useState<number>(initial.week);
 
   const handleApply = () => {
-    onApply?.({ month, week });
+    onApply?.({ year, month });
     closeModal();
   };
 
   return (
     <div className="bg-white rounded-t-2xl px-4 pt-4 pb-14">
       {/* 헤더 */}
-      <div className="flex justify-start items-center py-3 typo-h2_reg20 text-gray-900">
+      <div className="flex justify-start items-center py-3 typo-h2_reg20 text-gray-900 px-1">
         기간을 선택해주세요.
       </div>
 
       {/* 휠 영역 */}
       <div className="relative flex items-center justify-center">
-        <div className="pointer-events-none absolute w-full" style={{ top: ITEM_H }}>
+        <div
+          className="pointer-events-none absolute w-full"
+          style={{ top: ITEM_H }}
+        >
           <div className="border-t-[0.5px] border-gray-600" />
         </div>
-        <div className="pointer-events-none absolute w-full" style={{ bottom: ITEM_H }}>
+        <div
+          className="pointer-events-none absolute w-full"
+          style={{ bottom: ITEM_H }}
+        >
           <div className="border-b-[0.5px] border-gray-600" />
         </div>
 
         <div className="flex items-center gap-12">
+          {/* 년 */}
+          <div className="flex items-center">
+            <Wheel<number>
+              items={YEAR_LIST}
+              value={year}
+              onChange={setYear}
+              width="50px"
+              itemHeight={74}
+              visibleRows={3}
+              renderItem={(y, selected) => (
+                <span
+                  className={`transition-all duration-200 typo-body_bold18 ${
+                    selected ? 'text-gray-900' : 'text-gray-600'
+                  }`}
+                >
+                  {y}
+                </span>
+              )}
+            />
+          </div>
+
           {/* 월 */}
           <div className="flex items-center">
             <Wheel<number>
@@ -68,32 +95,10 @@ const SetStatisticsMonthModal = ({ initialValue, onApply }: Props) => {
               renderItem={(m, selected) => (
                 <span
                   className={`transition-all duration-200 typo-body_bold18 ${
-                    selected ? "text-gray-900" : "text-gray-600"
+                    selected ? 'text-gray-900' : 'text-gray-600'
                   }`}
                 >
                   {m}월
-                </span>
-              )}
-            />
-          </div>
-
-          {/* 주차 */}
-          <div className="flex items-center">
-            <Wheel<number>
-              items={WEEK_LIST}
-              value={week}
-              onChange={setWeek}
-              width="50px"
-              loop
-              itemHeight={74}
-              visibleRows={3}
-              renderItem={(w, selected) => (
-                <span
-                  className={`transition-all duration-200 typo-body_bold18 ${
-                    selected ? "text-gray-900" : "text-gray-600"
-                  }`}
-                >
-                  {w}주차
                 </span>
               )}
             />

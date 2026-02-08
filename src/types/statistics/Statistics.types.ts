@@ -1,0 +1,119 @@
+export type FruitType = 'NONE' | 'GROWING' | 'NORMAL' | 'GOLD';
+
+export type Fruit = {
+  memberRoutineId: number;
+  type: FruitType;
+};
+
+type FruitsSummary = {
+  goldCount: number;
+  normalCount: number;
+  growingCount: number;
+};
+
+export type FruitsStatistics = {
+  summary: FruitsSummary;
+  fruitList: Fruit[];
+};
+
+export type RoutineAchievement = {
+  title: string;
+  achievementRate: number;
+  memberId: number;
+  year: number;
+  month: number;
+  memberRoutineId: number;
+};
+
+export type YearMonth = {
+  year: number;
+  month: number;
+};
+
+export type RoutineYearMonth = {
+  memberRoutineId: number;
+  year: number;
+  month: number;
+};
+
+type DailyRoutineStatus = {
+  day: number;
+  status: 'SUCCESS' | 'FAIL' | 'UNACTIVE';
+};
+
+type RoutineTracker = {
+  memberRoutineId: number;
+  title: string;
+  achievementRate: number;
+  statusMessage: string;
+  days: DailyRoutineStatus[];
+};
+
+export type TrackersStatistics = {
+  fruitSummaryDTO: FruitsSummary;
+  routineTrackers: RoutineTracker[];
+  year: number;
+  month: number;
+};
+
+type PeriodType = 'WEEKLY' | 'MONTHLY';
+
+type PeriodCompletionRate = {
+  percentage: number;
+  totalCount: number;
+  doneCount: number;
+};
+
+type DailyCompletionRate = {
+  date: string;
+  dayOfWeek: string;
+  percentage: number;
+  done: boolean;
+};
+
+type BigFruitType = 'STREAK' | 'TOTAL_COUNT';
+
+type BigFruit = {
+  id: number;
+  fruitType: BigFruitType;
+  currentValue: number;
+  goalValue: number;
+  percentage: number;
+  description: string;
+};
+
+export type PeriodStatistics = {
+  type: PeriodType;
+  periodTitle: string;
+  aiAdvice: string;
+  completionRate: PeriodCompletionRate;
+  dailyGraph: DailyCompletionRate[];
+  bigFruits: BigFruit[];
+};
+
+export type PeriodSelection = {
+  year: number;
+  month: number;
+  week?: number;
+  type: PeriodType;
+};
+
+type Tree = {
+  year: number;
+  month: number;
+  fruits: Fruit[];
+  goldCount: number;
+  normalCount: number;
+  growingCount: number;
+};
+
+export type TreeArchive = {
+  hasNext: boolean;
+  currentPage: number;
+  trees: Tree[];
+};
+
+export type TreeArchiveParams = {
+  page: number;
+  size: number;
+};
