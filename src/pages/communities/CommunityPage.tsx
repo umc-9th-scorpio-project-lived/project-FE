@@ -14,6 +14,7 @@ import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 const CommunityPage = () => {
+  // 카테고리 상태
   const categories: CommunityCategoryLabel[] = Object.values(
     COMMUNITY_CATEGORIES
   ).map((c) => c.label);
@@ -28,6 +29,7 @@ const CommunityPage = () => {
     return found?.code ?? undefined;
   };
 
+  // 게시글 상태
   const [posts, setPosts] = useState<Post[]>([]);
   const navigate = useNavigate();
 
@@ -67,7 +69,7 @@ const CommunityPage = () => {
           </NavLink>
           <div className="w-6 h-6 bg-alarm bg-center" />
           <NavLink
-            to={`/lived/community/profile/:userid`}
+            to={`/lived/community/profile`}
             className="w-6 h-6 bg-user bg-center"
           ></NavLink>
         </div>

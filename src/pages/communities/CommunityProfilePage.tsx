@@ -20,7 +20,6 @@ const CommunityProfilePage = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       const res = await getCommunityProfile();
-
       setNickname(res.nickname);
       setLivingPeriod(res.livingPeriod);
       setFruits(res.fruits);
