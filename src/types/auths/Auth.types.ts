@@ -26,3 +26,7 @@ export type SignupResult = {
 export type LogoutResult = {
   message: string;
 };
+
+export type WithdrawResult = {
+  message: string;
+};
