@@ -1,6 +1,6 @@
-import Wheel from "@/components/commons/Wheel";
-import useBaseModal from "@/stores/modals/baseModal";
-import { useMemo, useState } from "react";
+import Wheel from '@/components/commons/Wheel';
+import useBaseModal from '@/stores/modals/baseModal';
+import { useMemo, useState } from 'react';
 
 const ITEM_H = 74;
 
@@ -27,7 +27,7 @@ const SetTrackerMonthModal = ({ initialValue, onApply }: Props) => {
       year: initialValue?.year ?? 2025,
       month: initialValue?.month ?? 1,
     }),
-    [initialValue?.year, initialValue?.month],
+    [initialValue?.year, initialValue?.month]
   );
 
   const [year, setYear] = useState<number>(initial.year);
@@ -41,16 +41,22 @@ const SetTrackerMonthModal = ({ initialValue, onApply }: Props) => {
   return (
     <div className="bg-white rounded-t-2xl px-4 pt-4 pb-14">
       {/* 헤더 */}
-      <div className="flex justify-start items-center py-3 typo-h2_reg20 text-gray-900">
+      <div className="flex justify-start items-center py-3 typo-h2_reg20 text-gray-900 px-1">
         날짜를 선택해주세요.
       </div>
 
       {/* 휠 영역 */}
       <div className="relative flex items-center justify-center">
-        <div className="pointer-events-none absolute w-full" style={{ top: ITEM_H }}>
+        <div
+          className="pointer-events-none absolute w-full"
+          style={{ top: ITEM_H }}
+        >
           <div className="border-t-[0.5px] border-gray-600" />
         </div>
-        <div className="pointer-events-none absolute w-full" style={{ bottom: ITEM_H }}>
+        <div
+          className="pointer-events-none absolute w-full"
+          style={{ bottom: ITEM_H }}
+        >
           <div className="border-b-[0.5px] border-gray-600" />
         </div>
 
@@ -67,7 +73,7 @@ const SetTrackerMonthModal = ({ initialValue, onApply }: Props) => {
               renderItem={(y, selected) => (
                 <span
                   className={`transition-all duration-200 typo-body_bold18 ${
-                    selected ? "text-gray-900" : "text-gray-600"
+                    selected ? 'text-gray-900' : 'text-gray-600'
                   }`}
                 >
                   {y}
@@ -89,7 +95,7 @@ const SetTrackerMonthModal = ({ initialValue, onApply }: Props) => {
               renderItem={(m, selected) => (
                 <span
                   className={`transition-all duration-200 typo-body_bold18 ${
-                    selected ? "text-gray-900" : "text-gray-600"
+                    selected ? 'text-gray-900' : 'text-gray-600'
                   }`}
                 >
                   {m}월

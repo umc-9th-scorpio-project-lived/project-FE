@@ -41,7 +41,7 @@ const SetStatisticsMonthModal = ({ initialValue, onApply }: Props) => {
   return (
     <div className="bg-white rounded-t-2xl px-4 pt-4 pb-14">
       {/* 헤더 */}
-      <div className="flex justify-start items-center py-3 typo-h2_reg20 text-gray-900">
+      <div className="flex justify-start items-center py-3 typo-h2_reg20 text-gray-900 px-1">
         기간을 선택해주세요.
       </div>
 
