@@ -53,7 +53,10 @@ const ModalPage = () => {
           <SelectIconModal {...(modalProps ?? {})} />
         )}
         {modalType === 'deleteRoutineModal' && (
-          <DeleteRoutineModal {...(modalProps ?? {})} />
+          <DeleteRoutineModal
+            memberRoutineId={modalProps?.memberRoutineId as number}
+            {...(modalProps ?? {})}
+          />
         )}
         {modalType === 'livingYearModal' && <LivingYearModal />}
         {modalType === 'pushAlarmModal' && <PushAlarmModal />}
