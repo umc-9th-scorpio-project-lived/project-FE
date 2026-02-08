@@ -11,10 +11,14 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import getHomeRoutine from '@/services/routines/getHomeRoutine';
 import { useRoutineStore } from '@/stores/routines/routineStore';
+import { useNotificationStore } from '@/stores/notifications/notificationStore';
 
 const HomeHeader = () => {
   const { selectedDate, weekStartDate, resetToToday } = useHomeDateStore();
   const { data, setHomeRoutine } = useRoutineStore();
+  const hasUnreadAlarm = useNotificationStore((s) =>
+    [...s.routine, ...s.community].some((n) => !n.isRead)
+  );
   const { openModal } = useBaseModal();
   const navigate = useNavigate();
 
@@ -38,7 +42,7 @@ const HomeHeader = () => {
         <div className="flex justify-between h-10 items-center">
           <div className="text-[22px] font-normal">{data?.dateTitle}</div>
           <div
-            className="bg-alarm h-6 w-6"
+            className={`h-6 w-6 ${hasUnreadAlarm ? 'bg-active-alarm' : 'bg-alarm'}`}
             onClick={() => navigate('/lived/alarm')}
           />
         </div>
