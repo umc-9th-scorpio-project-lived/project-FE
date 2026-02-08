@@ -16,10 +16,11 @@ const PopularPostList = () => {
     fetch();
   }, []);
 
-  if (posts.length === 0) return null;
-
   return (
     <div className="flex py-3 px-4 overflow-x-auto gap-5 flex-nowrap -mr-4">
+      {posts.length === 0 && (
+        <PopularPostCard title="" content="" likeCount={0} commentCount={0} />
+      )}
       {posts.map((post) => (
         <PopularPostCard
           key={post.postId}
