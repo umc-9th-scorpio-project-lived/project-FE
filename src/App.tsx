@@ -89,6 +89,8 @@ function App() {
               path="/lived/community/search"
               element={<PostSearchPage />}
             />
+            {/* 온보딩 알림 설정 */}
+            <Route path="/onboardings/push-guide" element={<PushGuidePage />} />
           </Route>
 
           <Route path="/lived" element={<MainLayout />}>
@@ -107,7 +109,6 @@ function App() {
             {/* 마이 */}
             <Route path="my" element={<UserPage />} />
           </Route>
-
           {/* 루틴나무 페이지의 상세페이지 */}
           <Route path="/lived/tree" element={<SubLayout />}>
             <Route path="tracker" element={<RoutineTrackerPage />} />
@@ -115,28 +116,54 @@ function App() {
             <Route path="statistics" element={<StatisticsPage />} />
             <Route path="archive" element={<TreeArchivePage />} />
           </Route>
+
+          {/* 커뮤니티 페이지의 상세페이지 */}
+          <Route path="/lived/community" element={<SubLayout />}>
+            {/* 게시물 상세페이지 */}
+            <Route path=":postId" element={<PostDetailPage />} />
+            {/* 게시글 작성페이지 */}
+            <Route path="write" element={<PostWritingPage />} />
+            {/* 커뮤니티 프로필 페이지 */}
+            <Route path="profile/:userid" element={<CommunityProfilePage />} />
+            {/* 게시글 검색페이지 */}
+            <Route path="search" element={<PostSearchPage />} />
+          </Route>
+
           {/* 마이페이지의 상세페이지 */}
           <Route path="/lived/my" element={<SubLayout />}>
             {/* 공지사항 */}
             <Route path="notice" element={<NoticePage />} />
 
-            {/* 문의하기 */}
-            <Route path="inquiry" element={<InquiryPage />} />
+            {/* 루틴나무 페이지의 상세페이지 */}
+            <Route path="/lived/tree" element={<SubLayout />}>
+              <Route path="tracker" element={<RoutineTrackerPage />} />
+              <Route path="friend" element={<FriendTreePage />} />
+              <Route path="statistics" element={<StatisticsPage />} />
+              <Route path="archive" element={<TreeArchivePage />} />
+            </Route>
+            {/* 마이페이지의 상세페이지 */}
+            <Route path="/lived/my" element={<SubLayout />}>
+              {/* 공지사항 */}
+              <Route path="notice" element={<NoticePage />} />
 
-            {/* 정보 */}
-            <Route path="info" element={<InfoPage />} />
+              {/* 문의하기 */}
+              <Route path="inquiry" element={<InquiryPage />} />
 
-            {/* 계정관리 */}
-            <Route path="account" element={<AccountPage />} />
+              {/* 정보 */}
+              <Route path="info" element={<InfoPage />} />
 
-            {/* 알림 설정 */}
-            <Route path="notifications" element={<NotificationsPage />} />
+              {/* 계정관리 */}
+              <Route path="account" element={<AccountPage />} />
 
-            {/* 개인정보보호 */}
-            <Route path="privacy" element={<PrivacyPage />} />
+              {/* 알림 설정 */}
+              <Route path="notifications" element={<NotificationsPage />} />
 
-            {/* 차단 목록 */}
-            <Route path="privacy/blocked" element={<BlockedPage />} />
+              {/* 개인정보보호 */}
+              <Route path="privacy" element={<PrivacyPage />} />
+
+              {/* 차단 목록 */}
+              <Route path="privacy/blocked" element={<BlockedPage />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

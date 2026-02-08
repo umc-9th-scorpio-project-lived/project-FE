@@ -22,3 +22,11 @@ export type SignupResult = {
   accessToken: string;
   refreshToken: string;
 };
+
+export type LogoutResult = {
+  message: string;
+};
+
+export type WithdrawResult = {
+  message: string;
+};
