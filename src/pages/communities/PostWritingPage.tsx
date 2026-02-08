@@ -45,29 +45,17 @@ const PostWritingPage = () => {
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [existingImages, setExistingImages] = useState<ExistingImage[]>([]);
   const [deleteImageIds, setDeleteImageIds] = useState<number[]>([]);
-  const [imageLimitError, setImageLimitError] = useState(false);
 
   const isFormValid = title.trim().length > 0 && content.trim().length > 0;
 
-  // 이미지 관련 함수
-  useEffect(() => {
-    if (!imageLimitError) return;
-
-    showToast('사진은 최대 10장까지 첨부 가능해요.', 'alert');
-    const timer = setTimeout(() => {
-      setImageLimitError(false);
-    }, 3000);
-
-    return () => clearTimeout(timer);
-  }, [imageLimitError, showToast]);
-
+  // 이미지
   const handleAddImages = (files: FileList | null) => {
     if (!files) return;
 
     const newFiles = Array.from(files);
 
     if (imagePreviews.length + newFiles.length > 10) {
-      setImageLimitError(true);
+      showToast('사진은 최대 10장까지 첨부 가능해요.', 'alert');
       return;
     }
 
