@@ -159,14 +159,8 @@ const SlideCalendar = ({ onChange }: Props) => {
 
                 <div className="py-1.25">
                   <span
-                    className={[
-                      'typo-body_reg16 leading-none min-w-9 min-h-9',
-                      'flex items-center justify-center rounded-full',
-                      ' relative overflow-hidden',
-                      showProgress
-                        ? 'border border-primary-50'
-                        : 'border border-transparent',
-                    ].join(' ')}
+                    className={`typo-body_reg16 leading-none min-w-9 min-h-9 flex items-center justify-center rounded-full relative overflow-hidden
+                      ${showProgress ? 'border border-primary-50' : 'border border-transparent'}`}
                   >
                     {showProgress && (
                       <span

@@ -1,12 +1,14 @@
 import { create } from 'zustand';
 import type {
+  AiBatchItem,
   AiRecommendItem,
   CategoryRecommendCategory,
 } from '@/types/recommendations/Recommend.types';
 import type { ApiError } from '@/types/Api.types';
 import getRoutinesByAi from '@/services/recommendations/getRoutinesByAi';
 import getRoutineByCategory from '@/services/recommendations/getRoutinesByCategory';
-import addRecommendBatch from '@/services/recommendations/addBatchRoutine';
+import addCategoryRoutine from '@/services/recommendations/addCategoryRoutine';
+import addAiRoutine from '@/services/recommendations/addAiRoutine';
 
 type RecommendState = {
   ai: AiRecommendItem[];
@@ -17,9 +19,11 @@ type RecommendState = {
   hasFetchedAi: boolean;
   hasFetchedCategories: boolean;
 
-  fetchAi: () => Promise<void>;
+  fetchAi: (force?: boolean) => Promise<void>;
   fetchCategories: () => Promise<void>;
-  addSelectedRoutine: (routineIds: number[]) => Promise<void>;
+
+  addSelectedAiRoutines: (routines: AiBatchItem[]) => Promise<void>;
+  addSelectedCategroyRoutine: (routineIds: number[]) => Promise<void>;
 };
 
 export const useRecommendStore = create<RecommendState>((set, get) => ({
@@ -31,9 +35,9 @@ export const useRecommendStore = create<RecommendState>((set, get) => ({
   hasFetchedAi: false,
   hasFetchedCategories: false,
 
-  fetchAi: async () => {
+  fetchAi: async (force = false) => {
     const { hasFetchedAi, isLoading } = get();
-    if (hasFetchedAi || isLoading) return;
+    if (!force && (hasFetchedAi || isLoading)) return;
 
     set({ isLoading: true });
     try {
@@ -63,12 +67,25 @@ export const useRecommendStore = create<RecommendState>((set, get) => ({
     }
   },
 
-  addSelectedRoutine: async (routineIds) => {
+  addSelectedAiRoutines: async (routines) => {
+    if (routines.length === 0) return;
+
+    set({ isLoading: true });
+    try {
+      await addAiRoutine({ routines });
+    } catch (e) {
+      console.error(e as ApiError);
+    } finally {
+      set({ isLoading: false });
+    }
+  },
+
+  addSelectedCategroyRoutine: async (routineIds) => {
     if (routineIds.length === 0) return;
 
     set({ isLoading: true });
     try {
-      await addRecommendBatch({ routinIds: routineIds });
+      await addCategoryRoutine({ routinIds: routineIds });
     } catch (e) {
       const err = e as ApiError;
       console.error(err);

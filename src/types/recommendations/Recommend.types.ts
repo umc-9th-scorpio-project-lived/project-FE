@@ -25,7 +25,18 @@ export type CategoryRecommendResult = {
   categories: CategoryRecommendCategory[];
 };
 
-// 추천 루틴 일괄 등록 API 요청
-export type RecommendBatchRequest = {
+// 카테고리 별 추천 루틴 일괄 등록 API 요청
+export type CategoryBatchRequest = {
   routinIds: number[];
+};
+
+// AI 추천 루틴 일괄 등록 API 요청
+export type AiBatchRequest = {
+  routines: AiBatchItem[];
+};
+
+// AI 추천 루틴 일괄 등록 API 아이템
+export type AiBatchItem = {
+  title: string;
+  emoji: string;
 };

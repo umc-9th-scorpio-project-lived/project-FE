@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 type RecommendTab = 'AI' | 'CATEGORY';
 
-const makeAiKey = (routineId: number) => `AI::${routineId}`;
+const makeAiKey = (index: number) => `AI::${index}`;
 const makeCatKey = (routineId: number) => `CATEGORY::${routineId}`;
 
 const RecommendPage = () => {
@@ -25,7 +25,8 @@ const RecommendPage = () => {
     isLoading,
     fetchAi,
     fetchCategories,
-    addSelectedRoutine,
+    addSelectedCategroyRoutine,
+    addSelectedAiRoutines,
   } = useRecommendStore();
 
   // 탭별 선택 상태
@@ -69,11 +70,40 @@ const RecommendPage = () => {
     fetchCategories();
   }, [isCategory]);
 
-  const parseRoutineId = (key: string): number | null => {
+  const parseNumberKey = (key: string): number | null => {
     const parts = key.split('::');
-    const maybeId = parts[1];
-    const n = Number(maybeId);
+    const n = Number(parts[1]);
     return Number.isFinite(n) ? n : null;
+  };
+
+  const handleSubmit = async () => {
+    if (selectedCount === 0) return;
+
+    if (isAI) {
+      const indexes = Array.from(selectedIds)
+        .map(parseNumberKey)
+        .filter((v): v is number => v !== null);
+
+      const routines = indexes
+        .map((i) => ai[i])
+        .filter(Boolean)
+        .map((item) => ({ title: item.title, emoji: item.emoji }));
+
+      if (routines.length === 0) return;
+
+      await addSelectedAiRoutines(routines);
+      navigate('/lived');
+      return;
+    }
+
+    const routineIds = Array.from(selectedIds)
+      .map(parseNumberKey)
+      .filter((v): v is number => v !== null);
+
+    if (routineIds.length === 0) return;
+
+    await addSelectedCategroyRoutine(routineIds);
+    navigate('/lived');
   };
 
   const emptyText = useMemo(() => {
@@ -132,8 +162,8 @@ const RecommendPage = () => {
                 {emptyText}
               </div>
             ) : (
-              ai.map((item) => {
-                const id = makeAiKey(item.routineId);
+              ai.map((item, index) => {
+                const id = makeAiKey(index);
                 const selected = selectedIds.has(id);
 
                 return (
@@ -217,7 +247,7 @@ const RecommendPage = () => {
           {isAI && (
             <div
               className="flex gap-1.5 justify-center items-center px-6 py-3 bg-screen-0 border border-primary-50 rounded-4xl shadow-mini"
-              onClick={fetchAi}
+              onClick={() => fetchAi(true)}
             >
               <RefreshIcon className="w-4 h-4 text-primary-50" />
               <span className="typo-body_reg14 text-gray-900">
@@ -227,18 +257,7 @@ const RecommendPage = () => {
           )}
           <div
             className={`w-full text-center py-3 rounded-4xl typo-body_bold16 transition-colors ${selectedCount === 0 ? 'bg-gray-100 text-gray-400' : 'bg-primary-50 text-screen-0'}`}
-            onClick={async () => {
-              if (selectedCount === 0) return;
-
-              const routineIds = Array.from(selectedIds)
-                .map(parseRoutineId)
-                .filter((v): v is number => v !== null);
-
-              if (routineIds.length === 0) return;
-
-              await addSelectedRoutine(routineIds);
-              navigate('/lived');
-            }}
+            onClick={handleSubmit}
           >
             {selectedCount}개 선택하기
           </div>
