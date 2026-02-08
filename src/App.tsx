@@ -7,6 +7,7 @@ import HomePage from './pages/homes/HomePage';
 import TreePage from './pages/trees/TreePage';
 import CommunityPage from './pages/communities/CommunityPage';
 import UserPage from './pages/users/UserPage';
+
 import CreateRoutinePage from './pages/homes/CreateRoutinePage';
 import EditRoutinePage from './pages/homes/EditRoutinePage';
 import AlarmPage from './pages/alarms/AlarmPage';

@@ -42,7 +42,7 @@ const ToastPage = () => {
           {iconMap[type]}
           <div className="flex flex-col text-screen-0">
             {typeof message === 'string' ? (
-              <span className="typo-body-reg-14 whitespace-pre-line">
+              <span className="typo-body_reg14 whitespace-pre-line">
                 {message}
               </span>
             ) : (
