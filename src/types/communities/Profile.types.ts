@@ -4,6 +4,7 @@ export type ProfileFruites = {
 };
 
 export type CommunityProfileResult = {
+  memberId: number;
   nickname: string;
   profileImageUrl?: string | null;
   livingPeriod: string;
