@@ -30,3 +30,7 @@ export type LogoutResult = {
 export type WithdrawResult = {
   message: string;
 };
+
+export type ReissueResult = {
+  accessToken: string;
+};
