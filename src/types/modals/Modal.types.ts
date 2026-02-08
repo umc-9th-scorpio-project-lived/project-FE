@@ -1,6 +1,11 @@
-type ModalType = "livingYearModal" | "centerModal" | "bottomModal" | "pushAlarmModal" | string;
+type ModalType =
+  | 'livingYearModal'
+  | 'centerModal'
+  | 'bottomModal'
+  | 'pushAlarmModal'
+  | string;
 
-type ModalPosition = "center" | "bottom";
+type ModalPosition = 'center' | 'bottom';
 
 interface ModalOptions {
   position?: ModalPosition;
@@ -13,7 +18,7 @@ export interface BaseModal {
   modalType: ModalType | string;
   options: {
     position: ModalPosition;
-    onConfirm?: () => void;
+    onConfirm?: () => Promise<void> | void;
   };
   modalProps?: Record<string, unknown>;
 
