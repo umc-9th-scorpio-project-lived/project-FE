@@ -1,28 +1,25 @@
 import DownChevronIcon from '@/icons/DownChevronIcon';
 import LeftChevronIcon from '@/icons/LeftChevronIcon';
 import MiniCloseIcon from '@/icons/MiniCloseIcon';
-import { useRoutineStore } from '@/stores/homes/routineStore';
 import useBaseModal from '@/stores/modals/baseModal';
-import React, { useMemo, useRef, useState } from 'react';
-import type { AlarmValue, RepeatValue } from '@/types/homes/Routine.types';
-import DeleteIcon from '@/icons/DeleteIcon';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import useCoachModal from '@/hooks/useCoachModal';
 import { formatRepeatLabel } from '@/utils/homes/routineUtils';
 import { useNavigate } from 'react-router-dom';
+import type { AlarmValue, RepeatValue } from '@/types/routines/Routine.types';
+import { useRoutineStore } from '@/stores/routines/routineStore';
+import { useHomeDateStore } from '@/stores/homes/homeStore';
+import { formatDate } from '@/utils/homes/homeUtils';
 
 // 루틴 제목 최대 길이
 const MAX_TITLE_LENGTH = 50;
 
-// 루틴 생성/수정 페이지 통합 관리
-type Mode = 'create' | 'edit';
-
-const HomeRoutinePage = ({ mode = 'create' as Mode }) => {
+const CreateRoutinePage = () => {
   const { openModal } = useBaseModal();
   const navigate = useNavigate();
 
   // 아이콘 선택 코치 모달 - 계정당 1회 노출 설정
-  const { openCoach: openCoach, close: closeCoach } =
-    useCoachModal('coach:icon');
+  const { openCoach, close: closeCoach } = useCoachModal('coach:icon');
 
   // 루틴 상태 관리
   const title = useRoutineStore((s) => s.draft.title);
@@ -30,13 +27,53 @@ const HomeRoutinePage = ({ mode = 'create' as Mode }) => {
   const repeat = useRoutineStore((s) => s.draft.repeat);
   const alarm = useRoutineStore((s) => s.draft.alarm);
 
-  const { setTitle, setRepeat, setAlarm, resetDraft } = useRoutineStore();
+  const {
+    setTitle,
+    setRepeat,
+    setAlarm,
+    resetDraft,
+    createRoutine,
+    isLoading,
+  } = useRoutineStore();
+
+  const { selectedDate } = useHomeDateStore();
 
   // 루틴 제목 입력 상태
   const [isTitleFocused, setIsTitleFocused] = useState(false);
-
+  const [localTitle, setLocalTitle] = useState(title ?? '');
   const titleRef = useRef<HTMLDivElement>(null);
-  const hasTitle = title !== null && title.trim().length > 0;
+
+  useEffect(() => {
+    if (isTitleFocused) return;
+    setLocalTitle(title ?? '');
+    if (titleRef.current) titleRef.current.innerText = title ?? '';
+  }, [title, isTitleFocused]);
+
+  const hasTitle = localTitle.trim().length > 0;
+
+  // 커서를 맨 뒤로 이동
+  const moveCursorToEnd = (el: HTMLDivElement) => {
+    const range = document.createRange();
+    const sel = window.getSelection();
+    range.selectNodeContents(el);
+    range.collapse(false);
+    sel?.removeAllRanges();
+    sel?.addRange(range);
+  };
+
+  // 최초 진입 시 draft 초기화
+  useEffect(() => {
+    resetDraft();
+  }, []);
+
+  // store title이 바뀌었을 때 contentEditable DOM 동기화
+  useEffect(() => {
+    const el = titleRef.current;
+    if (!el) return;
+    if (isTitleFocused) return;
+    const next = title ?? '';
+    if (el.innerText !== next) el.innerText = next;
+  }, [title, isTitleFocused]);
 
   // 반복 주기 라벨
   const repeatLabel = useMemo(() => formatRepeatLabel(repeat), [repeat]);
@@ -49,45 +86,44 @@ const HomeRoutinePage = ({ mode = 'create' as Mode }) => {
 
   // 적용 버튼 활성화 여부
   const canSubmit = useMemo(() => {
-    if (title !== null && !title.trim()) return false;
+    if (!localTitle.trim()) return false;
     if (repeat.type === 'NONE') return false;
     if (alarm.enabled && !alarm.time) return false;
     return true;
-  }, [title, repeat, alarm]);
+  }, [localTitle, repeat, alarm]);
 
   // 루틴 제목 입력 핸들러
   const handleInput = (e: React.FormEvent<HTMLDivElement>) => {
-    const target = e.currentTarget;
-    if (target.innerText.length > MAX_TITLE_LENGTH) {
-      target.innerText = target.innerText.slice(0, MAX_TITLE_LENGTH);
-      const range = document.createRange();
-      const sel = window.getSelection();
-      range.selectNodeContents(target);
-      range.collapse(false);
-      sel?.removeAllRanges();
-      sel?.addRange(range);
+    const el = e.currentTarget;
+    let next = el.innerText;
+
+    if (next.length > MAX_TITLE_LENGTH) {
+      next = next.slice(0, MAX_TITLE_LENGTH);
+      el.innerText = next;
+      moveCursorToEnd(el);
     }
+
+    setLocalTitle(next);
   };
 
   // 루틴 제목 입력 포커스 핸들러
   const handleFocus = () => {
     setIsTitleFocused(true);
+
     setTimeout(() => {
-      if (!titleRef.current) return;
-      const range = document.createRange();
-      const sel = window.getSelection();
-      range.selectNodeContents(titleRef.current);
-      range.collapse(false);
-      sel?.removeAllRanges();
-      sel?.addRange(range);
+      const el = titleRef.current;
+      if (!el) return;
+      if (el.innerText.trim().length > 0) moveCursorToEnd(el);
     }, 0);
   };
 
   // 루틴 제목 입력 포커스 아웃 핸들러
   const handleBlur = () => {
     setIsTitleFocused(false);
-    if (!titleRef.current) return;
-    setTitle(titleRef.current.innerText);
+
+    const next = titleRef.current?.innerText ?? '';
+    setLocalTitle(next);
+    setTitle(next);
   };
 
   // 엔터 입력 방지
@@ -99,6 +135,20 @@ const HomeRoutinePage = ({ mode = 'create' as Mode }) => {
   const handleClickBack = () => {
     resetDraft();
     navigate('/lived');
+  };
+
+  const handleSubmit = async () => {
+    if (!canSubmit || isLoading) return;
+
+    try {
+      const startDate = formatDate(selectedDate);
+      await createRoutine(startDate);
+
+      resetDraft();
+      navigate('/lived');
+    } catch (e) {
+      console.error('루틴 생성 실패', e);
+    }
   };
 
   // 반복 주기 모달 오픈 핸들러
@@ -123,10 +173,6 @@ const HomeRoutinePage = ({ mode = 'create' as Mode }) => {
     });
   };
 
-  // 페이지 타이틀 및 CTA 라벨
-  const pageTitle = mode === 'edit' ? '루틴 수정' : '루틴 추가';
-  const ctaLabel = mode === 'edit' ? '수정 완료' : '루틴 추가하기';
-
   return (
     <div className="w-full min-h-dvh px-4 pt-10 flex flex-col">
       <div className="relative flex w-full py-2 items-center justify-center">
@@ -134,17 +180,7 @@ const HomeRoutinePage = ({ mode = 'create' as Mode }) => {
           className="absolute left-0 w-7 h-7 text-gray-900"
           onClick={handleClickBack}
         />
-        <span className="typo-h2_bold20 text-gray-900">{pageTitle}</span>
-
-        {/* 수정 모드일 경우 루틴 삭제 버튼 노출 */}
-        {mode === 'edit' && (
-          <DeleteIcon
-            className="absolute right-3 w-6 h-6 flex items-center justify-center"
-            onClick={() =>
-              openModal('deleteRoutineModal', { position: 'bottom' })
-            }
-          />
-        )}
+        <span className="typo-h2_bold20 text-gray-900">루틴 추가</span>
       </div>
 
       <div className="flex flex-col flex-1 justify-between py-11">
@@ -153,20 +189,30 @@ const HomeRoutinePage = ({ mode = 'create' as Mode }) => {
             <div className="relative">
               {/* 루틴 제목 입력 */}
               <div
-                ref={titleRef}
-                contentEditable
-                suppressContentEditableWarning
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                onInput={handleInput}
-                onKeyDown={handleKeyDown}
-                className={`w-26.5 h-26.5 rounded-lg flex items-center justify-center px-2.5 py-2.5 outline-none typo-body_reg14 text-center whitespace-pre-wrap break-all overflow-y-auto transition-colors ${
-                  isTitleFocused || hasTitle
-                    ? 'bg-primary-20 text-gray-900'
-                    : 'bg-gray-100 text-gray-500'
-                }`}
+                className={`w-26.5 h-26.5 rounded-lg px-2.5 py-2.5 transition-colors flex
+      ${isTitleFocused ? 'items-center justify-start' : 'items-center justify-center'}
+      ${isTitleFocused || hasTitle ? 'bg-primary-20' : 'bg-gray-100'}`}
+                onClick={() => titleRef.current?.focus()}
               >
-                {!hasTitle && !isTitleFocused ? '루틴 제목' : title}
+                {!hasTitle && !isTitleFocused && (
+                  <div className="absolute inset-0 flex items-center justify-center px-2.5 py-2.5 pointer-events-none">
+                    <span className="typo-body_reg14 text-gray-500">
+                      루틴 제목
+                    </span>
+                  </div>
+                )}
+
+                <div
+                  ref={titleRef}
+                  contentEditable
+                  suppressContentEditableWarning
+                  onFocus={handleFocus}
+                  onBlur={handleBlur}
+                  onInput={handleInput}
+                  onKeyDown={handleKeyDown}
+                  className={`w-full outline-none typo-body_reg14 whitespace-pre-wrap break-all text-center
+        ${isTitleFocused || hasTitle ? 'text-gray-900' : 'text-gray-500'}`}
+                />
               </div>
 
               {/* 루틴 아이콘 선택 버튼 */}
@@ -210,8 +256,9 @@ const HomeRoutinePage = ({ mode = 'create' as Mode }) => {
             </div>
           </div>
 
-          {/* 반복 주기 설정 */}
+          {/* 반복 주기/알람 설정 */}
           <div className="flex flex-col gap-3">
+            {/* 반복 주기 설정 */}
             <div className="flex flex-col gap-2.5">
               <div className="typo-body_reg16 text-gray-900">반복 주기</div>
               <button
@@ -246,15 +293,14 @@ const HomeRoutinePage = ({ mode = 'create' as Mode }) => {
                     onClick={() =>
                       setAlarm(
                         alarm.enabled
-                          ? { enabled: false, time: alarm.time ?? '오후 12:00' }
-                          : { enabled: true, time: alarm.time ?? '오후 12:00' }
+                          ? { enabled: false, time: alarm.time ?? '12:00' }
+                          : { enabled: true, time: alarm.time ?? '12:00' }
                       )
                     }
                     className={`w-6 h-3 rounded-full relative transition-colors ${
                       alarm.enabled ? 'bg-primary-50' : 'bg-gray-200'
                     }`}
                   >
-                    {/* 알람 토글 */}
                     <span
                       className={`absolute top-0.5 w-2 h-2 rounded-full bg-gray-50 transition-transform ${
                         alarm.enabled ? 'translate-x-0.5' : '-translate-x-2.5'
@@ -289,7 +335,7 @@ const HomeRoutinePage = ({ mode = 'create' as Mode }) => {
           </div>
         </div>
 
-        {/* CTA 버튼 */}
+        {/* CTA */}
         <div
           role="button"
           className={`w-full rounded-full typo-body_bold18 py-3 text-center ${
@@ -299,16 +345,14 @@ const HomeRoutinePage = ({ mode = 'create' as Mode }) => {
           }`}
           onClick={() => {
             if (!canSubmit) return;
-            console.log({ title, icon, repeat, alarm });
-            resetDraft();
-            navigate('/lived');
+            handleSubmit();
           }}
         >
-          {ctaLabel}
+          루틴 추가하기
         </div>
       </div>
     </div>
   );
 };
 
-export default HomeRoutinePage;
+export default CreateRoutinePage;

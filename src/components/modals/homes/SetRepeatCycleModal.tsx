@@ -3,7 +3,7 @@ import useBaseModal from '@/stores/modals/baseModal';
 import { WEEK_LABELS } from '@/constants';
 import { WeekWheel } from '../../homes/WeekWheel';
 import CheckCircleIcon from '@/icons/CheckCircleIcon';
-import type { RepeatValue } from '@/types/homes/Routine.types';
+import type { RepeatValue } from '@/types/routines/Routine.types';
 import { formatRepeatResult } from '@/utils/homes/routineUtils';
 
 type Props = {
