@@ -6,23 +6,32 @@ import CommunityHamburger from './CommunityHamburger';
 import useBaseModal from '@/stores/modals/baseModal';
 import type { Comment } from '@/types/communities/Comment.types';
 import { formatRelativeTime } from '@/utils/communites/timeUtils';
+import { useAuthStore } from '@/stores/auths/auth';
+import { useNavigate } from 'react-router-dom';
+import useToast from '@/stores/toasts/baseToast';
+import { blockMember } from '@/services/posts/member';
 
 interface CommentProps {
+  postId: number;
   comments: Comment[];
   onDeleteComment: (commentId: number) => void;
+  onReportComment: (commentId: number) => void;
   onEditRequest: (commentId: number, content: string) => void;
   onReplyRequest: (parentCommentId: number) => void;
   onLikeToggle: (commentId: number) => void;
 }
 
 const CommunityCommentList = ({
+  postId,
   comments,
   onDeleteComment,
+  onReportComment,
   onEditRequest,
   onReplyRequest,
   onLikeToggle,
 }: CommentProps) => {
   const [openCommentId, setOpenCommentId] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   // 모달
   const { isModalOpen } = useBaseModal();
@@ -31,6 +40,33 @@ const CommunityCommentList = ({
       setOpenCommentId(null);
     }
   }, [isModalOpen]);
+
+  // 내 댓글 조회
+  const myMemberId = useAuthStore((s) => s.memberId);
+  const isMyComment = (comment: Comment) =>
+    myMemberId !== null && comment.author.userId === myMemberId;
+  const isMyReply = (reply: Comment) =>
+    myMemberId !== null && reply.author.userId === myMemberId;
+
+  // 차단
+  const { showToast } = useToast();
+  const [blockedUserIds, setBlockedUserIds] = useState<number[]>([]);
+  const handleBlockedUsers = async (userId: number) => {
+    try {
+      await blockMember({ blockedMemberId: userId });
+      setBlockedUserIds((prev) => [...prev, userId]);
+      showToast(
+        {
+          title: '사용자가 차단되었습니다.',
+          description:
+            '마이페이지>개인정보보호에서 차단 목록을 관리할 수 있습니다.',
+        },
+        'check'
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   // 조건 검사
   const getValidReplies = (replies?: (Comment | null)[]) => {
@@ -50,13 +86,21 @@ const CommunityCommentList = ({
     return true;
   });
 
-  const sortedComments = [...safeComments].sort(
-    (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-  );
+  const visibleComments = safeComments
+    .filter((c) => !blockedUserIds.includes(c.author.userId))
+    .sort(
+      (a, b) =>
+        new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+    );
 
   const sortedReplies = (replies?: (Comment | null)[]) =>
     replies
-      ?.filter((r): r is Comment => r !== null && r.author !== null)
+      ?.filter(
+        (r): r is Comment =>
+          r !== null &&
+          r.author !== null &&
+          !blockedUserIds.includes(r.author.userId)
+      )
       .sort(
         (a, b) =>
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
@@ -73,7 +117,7 @@ const CommunityCommentList = ({
   return (
     <div>
       <div className="flex flex-col py-4 px-4 gap-8">
-        {sortedComments.map((comment) => (
+        {visibleComments.map((comment) => (
           <div key={comment.commentId} className="flex flex-col gap-4">
             <div className="flex flex-col gap-2.5">
               <div className="gap-1">
@@ -108,13 +152,26 @@ const CommunityCommentList = ({
                   {openCommentId === comment.commentId && !isModalOpen && (
                     <div className="absolute right-0 top-8 z-50">
                       <CommunityHamburger
-                        type="comment"
+                        type={isMyComment(comment) ? 'myComment' : 'comment'}
                         commentId={comment.commentId}
-                        onDelete={() => onDeleteComment(comment.commentId)}
+                        onDelete={
+                          isMyComment(comment)
+                            ? () => onDeleteComment(comment.commentId)
+                            : () => {
+                                onReportComment(comment.commentId);
+                                setOpenCommentId(null);
+                              }
+                        }
                         onEdit={() => {
-                          onEditRequest(comment.commentId, comment.content);
+                          navigate(
+                            `/lived/community/${postId}/comments/${comment.commentId}/edit`,
+                            { state: { content: comment.content } }
+                          );
                           setOpenCommentId(null);
                         }}
+                        onBlock={() =>
+                          handleBlockedUsers(comment.author.userId)
+                        }
                       />
                     </div>
                   )}
@@ -178,13 +235,23 @@ const CommunityCommentList = ({
                     {openCommentId === reply.commentId && !isModalOpen && (
                       <div className="absolute right-0 top-8 z-50">
                         <CommunityHamburger
-                          type="myComment"
+                          type={isMyReply(reply) ? 'myComment' : 'comment'}
                           commentId={reply.commentId}
-                          onDelete={() => onDeleteComment(reply.commentId)}
+                          onDelete={
+                            isMyReply(reply)
+                              ? () => onDeleteComment(reply.commentId)
+                              : () => {
+                                  onReportComment(reply.commentId);
+                                  setOpenCommentId(null);
+                                }
+                          }
                           onEdit={() => {
                             onEditRequest(reply.commentId, reply.content);
                             setOpenCommentId(null);
                           }}
+                          onBlock={() =>
+                            handleBlockedUsers(reply.author.userId)
+                          }
                         />
                       </div>
                     )}

@@ -7,6 +7,7 @@ interface CommunityHamburgerProps {
   commentId?: number;
   onDelete?: () => Promise<void> | void;
   onEdit?: () => void;
+  onBlock?: () => void;
 }
 
 const CommunityHamburger = ({
@@ -15,6 +16,7 @@ const CommunityHamburger = ({
   commentId,
   onDelete,
   onEdit,
+  onBlock,
 }: CommunityHamburgerProps) => {
   const { openModal } = useBaseModal();
   const navigate = useNavigate();
@@ -22,7 +24,8 @@ const CommunityHamburger = ({
   const openDeleteClick = () => {
     if (!onDelete) return;
 
-    const modalId = type === 'myPost' ? 'postDeleteModal' : '';
+    const modalId =
+      type === 'myPost' ? 'postDeleteModal' : 'commentDeleteModal';
     openModal(modalId, {
       position: 'center',
       onConfirm: onDelete,
@@ -65,7 +68,10 @@ const CommunityHamburger = ({
       )}
       {type === 'comment' && (
         <div>
-          <div className="flex items-center justify-center w-full h-1/2 rounded-t-sm border-[0.5px] border-b-0 border-gray-300 px-3 py-2 bg-screen-0 text-[11px] text-gray-900 text-center">
+          <div
+            className="flex items-center justify-center w-full h-1/2 rounded-t-sm border-[0.5px] border-b-0 border-gray-300 px-3 py-2 bg-screen-0 text-[11px] text-gray-900 text-center"
+            onClick={onBlock}
+          >
             차단하기
           </div>
           <div
@@ -73,7 +79,13 @@ const CommunityHamburger = ({
             onClick={() =>
               openModal('reportPostModal', {
                 position: 'bottom',
-                props: { targetType: 'COMMENT', targetId: commentId },
+                props: {
+                  targetType: 'COMMENT',
+                  targetId: commentId,
+                  onSuccess: () => {
+                    onDelete?.();
+                  },
+                },
               })
             }
           >
@@ -91,7 +103,7 @@ const CommunityHamburger = ({
           </div>
           <div
             className="flex items-center justify-center w-full h-1/2 rounded-b-sm border-[0.5px] border-gray-300 px-3 py-2 bg-screen-0 text-[11px] text-gray-900 text-center"
-            onClick={onDelete}
+            onClick={openDeleteClick}
           >
             삭제하기
           </div>

@@ -31,6 +31,8 @@ import CallbackPage from './pages/commons/CallbackPage';
 import HomeRoutinePage from './pages/homes/HomeRoutinePage';
 import RoutinePage from './pages/onboardings/RoutinePage';
 import ToastPage from './pages/commons/ToastPage';
+import EditCommentPage from './pages/communities/EditCommentPage';
+import CommunityLayout from './layouts/CommunityLayout';
 
 function App() {
   return (
@@ -93,16 +95,23 @@ function App() {
 
         {/* 커뮤니티 페이지의 상세페이지 */}
         <Route path="/lived/community" element={<SubLayout />}>
-          {/* 게시물 상세페이지 */}
-          <Route path=":postId" element={<PostDetailPage />} />
-          {/* 게시글 작성페이지 */}
-          <Route path="write" element={<PostWritingPage />} />
-          {/* 커뮤니티 프로필 페이지 */}
-          <Route path="profile/:userid" element={<CommunityProfilePage />} />
-          {/* 게시글 검색페이지 */}
-          <Route path="search" element={<PostSearchPage />} />
-          {/* 게시글 편집페이지*/}
-          <Route path=":postId/edit" element={<PostWritingPage />} />
+          <Route element={<CommunityLayout />}>
+            {/* 게시물 상세페이지 */}
+            <Route path=":postId" element={<PostDetailPage />} />
+            {/* 게시글 작성페이지 */}
+            <Route path="write" element={<PostWritingPage />} />
+            {/* 커뮤니티 프로필 페이지 */}
+            <Route path="profile" element={<CommunityProfilePage />} />
+            {/* 게시글 검색페이지 */}
+            <Route path="search" element={<PostSearchPage />} />
+            {/* 게시글 편집페이지 */}
+            <Route path=":postId/edit" element={<PostWritingPage />} />
+            {/* 댓글 수정페이지 */}
+            <Route
+              path=":postId/comments/:commentId/edit"
+              element={<EditCommentPage />}
+            />
+          </Route>
         </Route>
 
         {/* 마이페이지의 상세페이지 */}

@@ -2,10 +2,12 @@ import CommunityCommentList from '@/components/communities/CommunityCommentList'
 import CommunityHamburger from '@/components/communities/CommunityHamburger';
 import PostFooter from '@/components/communities/PostFooter';
 import BookmarkIcon from '@/icons/BookmarkIcon';
+import CloseIcon from '@/icons/CloseIcon';
 import CommentIcon from '@/icons/CommentIcon';
 import KebabIcon from '@/icons/KebabIcon';
 import LeftChevronIcon from '@/icons/LeftChevronIcon';
 import LikeIcon from '@/icons/LikeIcon';
+import RightChevronIcon from '@/icons/RightChevronIcon';
 import {
   commentLike,
   createComment,
@@ -19,21 +21,39 @@ import {
   postLike,
   postScrap,
 } from '@/services/posts/post';
+import { useAuthStore } from '@/stores/auths/auth';
 import useBaseModal from '@/stores/modals/baseModal';
+import useToast from '@/stores/toasts/baseToast';
 import type { Comment } from '@/types/communities/Comment.types';
 import type { PostDetail } from '@/types/communities/PostDetail.types';
 import { formatRelativeTime } from '@/utils/communites/timeUtils';
-import { useEffect, useState } from 'react';
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 type CommentType = 'create' | 'reply' | 'edit';
 
 const PostDetailPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // 뒤로가기
+  const handleBack = () => {
+    if (location.state?.from === 'mypage') {
+      navigate(`/lived/community/profile`);
+      return;
+    } else if (location.state?.from === 'search') {
+      navigate(`/lived/community/search`);
+      return;
+    } else {
+      navigate('/lived/community');
+    }
+  };
 
   // postId
   const { postId } = useParams<{ postId: string }>();
   const [post, setPost] = useState<PostDetail | null>(null);
+  const myMemberId = useAuthStore((s) => s.memberId);
+  const isMyPost = myMemberId !== null && post?.author.userId === myMemberId;
 
   useEffect(() => {
     if (!postId) return;
@@ -52,6 +72,7 @@ const PostDetailPage = () => {
 
   // 모달
   const { isModalOpen } = useBaseModal();
+  const { showToast } = useToast();
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -108,6 +129,7 @@ const PostDetailPage = () => {
     if (!postId) return;
 
     await deletePost(Number(postId));
+    showToast('작성하신 글을 삭제했어요.', 'delete');
     navigate('/lived/community');
   };
 
@@ -143,12 +165,27 @@ const PostDetailPage = () => {
     try {
       await deleteComment(Number(postId), commentId);
       await fetchComments();
+      showToast('해당 댓글을 삭제했어요.', 'delete');
     } catch (e) {
       console.error(e);
     }
   };
 
+  const handleRemoveCommentUI = (commentId: number) => {
+    setComments((prev) =>
+      prev
+        .filter((c): c is Comment => c !== null && c.commentId !== commentId)
+        .map((c) => ({
+          ...c,
+          replies: c.replies?.filter(
+            (r): r is Comment => r !== null && r?.commentId !== commentId
+          ),
+        }))
+    );
+  };
+
   const handleEditComment = (commentId: number, content: string) => {
+    setCommentMode('edit');
     setEditingCommentId(commentId);
     setEditingContent(content);
   };
@@ -198,16 +235,50 @@ const PostDetailPage = () => {
     }
   };
 
+  // 이미지
+  const [selectedImage, setSelectedImage] = useState<number | null>(null);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+
+  const showPrevImage = () => {
+    if (!post || setSelectedImage === null) return;
+    setSelectedImage((prev) => {
+      if (prev === null || prev === 0) return prev;
+      return prev - 1;
+    });
+  };
+
+  const showNextImage = () => {
+    if (!post || setSelectedImage === null) return;
+    setSelectedImage((prev) => {
+      if (!post || prev === null) return prev;
+      if (prev === post.images.length - 1) return prev;
+      return prev + 1;
+    });
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+
+    const diff = touchStartX - e.changedTouches[0].clientX;
+
+    if (diff > 50) showNextImage();
+    if (diff < -50) showPrevImage();
+
+    setTouchStartX(null);
+  };
+
   return (
     <div className="flex flex-col w-full min-h-screen pt-10 pb-25">
       {/*네브바*/}
       <div className="flex px-4 justify-between">
-        <NavLink
-          to="/lived/community"
-          className="w-6 h-6 flex items-center justify-center"
-        >
-          <LeftChevronIcon className="w-7 h-7 text-gray-900 pt-0.5" />
-        </NavLink>
+        <LeftChevronIcon
+          className="w-7 h-7 text-gray-900 pt-0.5"
+          onClick={handleBack}
+        />
         <div className="relative flex gap-2">
           <BookmarkIcon
             className={`w-7 h-7 transition-colors ${scrapped ? 'fill-current text-primary-40' : 'fill-none text-gray-700'}`}
@@ -220,7 +291,7 @@ const PostDetailPage = () => {
           {open && !isModalOpen && (
             <div className="absolute top-8 right-0 z-50">
               <CommunityHamburger
-                type="post"
+                type={isMyPost ? 'myPost' : 'post'}
                 postId={post?.postId}
                 onDelete={handleDeletePost}
               />
@@ -262,11 +333,12 @@ const PostDetailPage = () => {
         </div>
         {post && post?.images.length > 0 && (
           <div className="flex gap-3 overflow-x-auto">
-            {post?.images.map((image) => (
+            {post?.images.map((image, index) => (
               <img
                 key={image.imageId}
                 src={image.imageUrl}
                 className="w-26 h-26 rounded-lg bg-gray-500"
+                onClick={() => setSelectedImage(index)}
               ></img>
             ))}
           </div>
@@ -288,8 +360,10 @@ const PostDetailPage = () => {
         </div>
       </div>
       <CommunityCommentList
+        postId={Number(postId)}
         comments={comments}
         onDeleteComment={handleDeleteComment}
+        onReportComment={handleRemoveCommentUI}
         onEditRequest={handleEditComment}
         onReplyRequest={handleReplyRequest}
         onLikeToggle={handleCommentLikeToggle}
@@ -324,6 +398,37 @@ const PostDetailPage = () => {
             await fetchComments();
           }}
         />
+      )}
+      {selectedImage !== null && post && (
+        <div className="fixed inset-0 bg-gray-900 flex items-center justify-center z-50">
+          <CloseIcon
+            className="absolute w-5 h-5 top-4 right-4 text-screen-0"
+            onClick={() => setSelectedImage(null)}
+          />
+          <LeftChevronIcon
+            className="absolute w-5 h-5 left-4 text-screen-0"
+            onClick={showPrevImage}
+          />
+          <img
+            src={post.images[selectedImage].imageUrl}
+            className="max-w-full max-h-full"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            draggable={false}
+          />
+          <RightChevronIcon
+            className="absolute w-5 h-5 right-4 text-screen-0"
+            onClick={showNextImage}
+          />
+          <div className="absolute bottom-6 flex gap-4">
+            {post.images.map((_, index) => (
+              <div
+                key={index}
+                className={`w-2 h-2 rounded-full transition-all ${selectedImage === index ? 'bg-gray-100' : 'bg-gray-600'}`}
+              />
+            ))}
+          </div>
+        </div>
       )}
     </div>
   );
