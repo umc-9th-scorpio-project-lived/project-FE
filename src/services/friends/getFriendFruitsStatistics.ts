@@ -2,7 +2,7 @@ import { authApi } from '@/api';
 import type {
   FriendFruitsStatistics,
   FriendYearMonth,
-} from '@/types/friends/Friend.types';
+} from '@/types/friends/Friends.types';
 
 export const getFriendFruitsStatistics = async (
   friendYearMonth: FriendYearMonth

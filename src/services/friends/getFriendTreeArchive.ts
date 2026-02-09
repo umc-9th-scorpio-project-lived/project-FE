@@ -1,5 +1,5 @@
 import { authApi } from '@/api';
-import type { FriendTreeArchiveParams } from '@/types/friends/Friend.types';
+import type { FriendTreeArchiveParams } from '@/types/friends/Friends.types';
 import type { TreeArchive } from '@/types/statistics/Statistics.types';
 
 export const getFriendTreeArchive = async (
