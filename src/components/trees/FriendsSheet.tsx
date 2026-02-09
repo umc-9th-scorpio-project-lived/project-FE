@@ -131,7 +131,7 @@ const FriendsSheet = () => {
     setIsInvitationModalOpen(false);
     setIsCopySuccessModalOpen(true);
 
-    // 2초 후 모달 자동으로 닫기
+    // 3초 후 모달 자동으로 닫기
     setTimeout(() => {
       setIsCopySuccessModalOpen(false);
     }, 3000);
@@ -194,7 +194,7 @@ const FriendsSheet = () => {
             <input
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
-              className="w-full py-3 pl-4 pr-12 bg-gray-50 rounded-3xl text-gray-600 typo-body_reg14"
+              className="w-full py-3 pl-4 pr-12 bg-gray-50 rounded-3xl text-gray-600 font-normal text-sm"
               type="text"
               placeholder="친구 이름 검색하기"
               onFocus={handleFocus}
