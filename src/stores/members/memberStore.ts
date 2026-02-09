@@ -4,11 +4,13 @@ import type {
   AnnouncementItem,
   BlockMember,
   VisibilityTreeResult,
+  PatchVisibilityTreeRequest,
 } from '@/types/members/Member.types';
 import getAnnouncements from '@/services/members/getAnnouncements';
 import unblockMember from '@/services/members/unblockMember';
 import getBlockMembers from '@/services/members/getBlockMembers';
 import getVisibilityTree from '@/services/members/getVisibilityTree';
+import patchVisibilityTree from '@/services/members/patchVisibilityTree';
 
 type MemberState = {
   announcementList: AnnouncementItem[];
@@ -28,6 +30,7 @@ type MemberState = {
   unblock: (blockedMemberId: number) => Promise<void>;
 
   fetchTreeVisibility: () => Promise<void>;
+  updateTreeVisibility: (body: PatchVisibilityTreeRequest) => Promise<void>;
 
   clear: () => void;
 };
@@ -101,6 +104,18 @@ export const useMemberStore = create<MemberState>((set, get) => ({
       set({ treeVisibility: res, isLoading: false });
     } catch (err) {
       set({ error: err as ApiError, isLoading: false });
+    }
+  },
+
+  updateTreeVisibility: async (body) => {
+    set({ isLoading: true, error: null });
+
+    try {
+      const res = await patchVisibilityTree(body);
+      set({ treeVisibility: res, isLoading: false });
+    } catch (err) {
+      set({ error: err as ApiError, isLoading: false });
+      throw err;
     }
   },
 

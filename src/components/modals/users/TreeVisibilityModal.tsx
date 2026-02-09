@@ -2,11 +2,12 @@ import CheckCircleIcon from '@/icons/CheckCircleIcon';
 import CheckIcon from '@/icons/CheckIcon';
 import { useMemberStore } from '@/stores/members/memberStore';
 import useBaseModal from '@/stores/modals/baseModal';
+import type { RoutineTreeVisibility } from '@/types/members/Member.types';
 import { useEffect, useState } from 'react';
 
 const TreeVisibilityModal = () => {
   const { closeModal } = useBaseModal();
-  const { treeVisibility } = useMemberStore();
+  const { treeVisibility, updateTreeVisibility } = useMemberStore();
 
   // 루틴 나무 공개 범위별 선택 상태를 관리하는 상태 변수들
   const [isFriendsOnly, setIsFriendsOnly] = useState(false);
@@ -29,6 +30,23 @@ const TreeVisibilityModal = () => {
     else if (v === 'PARTIAL') setIsSomeoneSelected(true);
     else if (v === 'PRIVATE') setIsPrivate(true);
   }, [treeVisibility?.visibility]);
+
+  const getSelectedVisibility = (): RoutineTreeVisibility => {
+    if (isFriendsOnly) return 'FRIENDS';
+    if (isPrivate) return 'PRIVATE';
+    return 'PARTIAL';
+  };
+
+  const handleSubmit = async () => {
+    const visibility = getSelectedVisibility();
+
+    await updateTreeVisibility({
+      visibility,
+      targetMemberIds: [],
+    });
+
+    closeModal();
+  };
 
   return (
     <div className="min-h-105 bg-screen-0 p-4 pb-12 rounded-t-2xl flex flex-col justify-center items-center gap-0.5 overflow-y-auto overflow-x-hidden">
@@ -91,13 +109,13 @@ const TreeVisibilityModal = () => {
                   </button>
                 </div>
                 <div className="w-full flex justify-between">
-                  <span className="typo-body_reg12 text-gray-900">친구6</span>
+                  <span className="typo-body_reg12 text-gray-900">친구5</span>
                   <button>
                     <CheckIcon className="w-6 h-6 text-gray-900" />
                   </button>
                 </div>
                 <div className="w-full flex justify-between">
-                  <span className="typo-body_reg12 text-gray-900">친구5</span>
+                  <span className="typo-body_reg12 text-gray-900">친구6</span>
                   <button>
                     <CheckIcon className="w-6 h-6 text-gray-900" />
                   </button>
@@ -129,7 +147,7 @@ const TreeVisibilityModal = () => {
         </div>
 
         <button
-          onClick={closeModal}
+          onClick={handleSubmit}
           className="w-full py-3 bg-primary-50 rounded-lg cursor-pointer"
         >
           <span className="typo-body_bold18 text-screen-0">수정 완료</span>
