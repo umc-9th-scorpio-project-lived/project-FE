@@ -1,7 +1,9 @@
 import AddFriendIcon from '@/icons/AddFriendIcon';
+import CopyIcon from '@/icons/CopyIcon';
 import MiniRightChevronIcon from '@/icons/MiniRightChevronIcon';
 import SearchIcon from '@/icons/SearchIcon';
 import { getFriendsData } from '@/services/friends/getFriendsData';
+import { getInvitationData } from '@/services/friends/getInvitationData';
 import { useQuery } from '@tanstack/react-query';
 import {
   AnimatePresence,
@@ -77,15 +79,46 @@ const FriendsSheet = () => {
 
   const isSheetOpen = state === 'halfOpen' || state === 'open';
 
+  // 친구 조회 및 검색
   const [searchInput, setSearchInput] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
-  const { data, isPending, isError } = useQuery({
+  const {
+    data: friendsData,
+    isPending: isFriendsDataPending,
+    isError: isFriendsDataError,
+  } = useQuery({
     queryKey: [searchQuery, 'friendsData'],
     queryFn: () => getFriendsData(searchQuery),
     staleTime: 30 * 1000,
     gcTime: 5 * 60 * 1000,
     retry: 1,
   });
+
+  // 친구 초대
+  const [isInvitationModalOpen, setIsInvitationModalOpen] = useState(false);
+  const [isCopySuccessModalOpen, setIsCopySuccessModalOpen] = useState(false);
+  const { data: invitationData } = useQuery({
+    queryKey: ['invitationData'],
+    queryFn: getInvitationData,
+    staleTime: 30 * 1000,
+    gcTime: 5 * 60 * 1000,
+    retry: 1,
+  });
+
+  const handleCopyInvitationUrl = async () => {
+    if (!invitationData?.invitationUrl) {
+      return;
+    }
+
+    await navigator.clipboard.writeText(invitationData.invitationUrl);
+    setIsInvitationModalOpen(false);
+    setIsCopySuccessModalOpen(true);
+
+    // 2초 후 모달 자동으로 닫기
+    setTimeout(() => {
+      setIsCopySuccessModalOpen(false);
+    }, 2000);
+  };
 
   return (
     <>
@@ -127,7 +160,7 @@ const FriendsSheet = () => {
         }}
       >
         {/* 검색 영역 */}
-        <div className="w-full flex items-center gap-3">
+        <div className="w-full flex items-center gap-3 relative">
           <div className="relative flex-1">
             {/* input에는 typo-body_reg14가 적용되지 않음 */}
             <input
@@ -149,15 +182,57 @@ const FriendsSheet = () => {
             </button>
           </div>
 
-          <AddFriendIcon className="w-8 h-8 text-gray-500" />
+          <button
+            onClick={() => {
+              setIsInvitationModalOpen((prev) => !prev);
+            }}
+            className="flex items-center justify-center cursor-pointer"
+          >
+            <AddFriendIcon className="w-8 h-8 text-gray-500" />
+          </button>
+
+          <div
+            className={`absolute right-0 -top-25 rounded-sm border-[0.5px] border-gray-300 divide-y-[0.5px] divide-gray-300 bg-screen-0 flex flex-col justify-center items-center ${
+              isInvitationModalOpen
+                ? 'opacity-100'
+                : 'opacity-0 pointer-events-none'
+            }`}
+          >
+            <button
+              onClick={handleCopyInvitationUrl}
+              className="py-2.5 px-7 flex justify-center items-center w-full"
+            >
+              <span className="typo-body_reg12 text-gray-900">
+                초대 링크 복사하기
+              </span>
+            </button>
+            <button className="py-2.5 px-7 flex justify-center items-center w-full">
+              <span className="typo-body_reg12 text-gray-900">
+                카카오톡으로 초대하기
+              </span>
+            </button>
+          </div>
+
+          <div
+            className={`absolute right-0 -top-18 rounded-sm p-3.5 w-full bg-gray-700 flex items-center gap-2.5 ${
+              isCopySuccessModalOpen
+                ? 'opacity-100'
+                : 'opacity-0 pointer-events-none'
+            }`}
+          >
+            <CopyIcon />
+            <div className="typo-body_reg14 text-screen-0">
+              초대 링크가 성공적으로 복사되었어요!
+            </div>
+          </div>
         </div>
 
-        {isPending || isError ? (
+        {isFriendsDataPending || isFriendsDataError ? (
           <></>
         ) : (
           // 친구 목록 영역
           <div className="w-full flex flex-col">
-            {data.friendList.map((friend) => (
+            {friendsData.friendList.map((friend) => (
               <Link
                 key={friend.memberId}
                 to={`/lived/tree/friend/${friend.memberId}`}

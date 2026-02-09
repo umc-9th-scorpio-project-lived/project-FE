@@ -33,6 +33,7 @@ import RoutinePage from './pages/onboardings/RoutinePage';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ArchivedTreePage from './pages/trees/ArchivedTreePage';
 import FriendTreeArchivePage from './pages/trees/FriendTreeArchivePage';
+import AcceptInvitePage from './pages/commons/AcceptInvitePage';
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ function App() {
         <Routes>
           <Route path="/login/callback" element={<CallbackPage />} />
           <Route path="/signup/callback" element={<CallbackPage />} />
+          <Route path="/accept-invite" element={<AcceptInvitePage />} />
 
           <Route element={<SubLayout />}>
             {/* 로그인 */}
