@@ -217,7 +217,13 @@ const FriendsSheet = () => {
             }`}
           >
             <button
-              onClick={handleCopyInvitationUrl}
+              onClick={(event) => {
+                event.stopPropagation();
+                handleCopyInvitationUrl();
+              }}
+              onPointerDown={(event) => {
+                event.stopPropagation();
+              }}
               className="py-2.5 px-7 flex justify-center items-center w-full"
             >
               <span className="typo-body_reg12 text-gray-900">
@@ -225,7 +231,13 @@ const FriendsSheet = () => {
               </span>
             </button>
             <button
-              onClick={handleInviteViaKakao}
+              onClick={(event) => {
+                event.stopPropagation();
+                handleInviteViaKakao();
+              }}
+              onPointerDown={(event) => {
+                event.stopPropagation();
+              }}
               className="py-2.5 px-7 flex justify-center items-center w-full"
             >
               <span className="typo-body_reg12 text-gray-900">
