@@ -12,15 +12,16 @@ import SearchDeleteModal from '@/components/modals/communities/SearchDeleteModal
 import TreeVisibilityModal from '@/components/modals/users/TreeVisibilityModal';
 import UnblockModal from '@/components/modals/users/UnblockModal';
 import useBaseModal from '@/stores/modals/baseModal';
-import SetStatisticsWeekModal from '@/components/modals/trees/SetStatisticsWeekModal';
-import { useEffect } from 'react';
 import SetStatisticsMonthModal from '@/components/modals/trees/SetStatisticsMonthModal';
+import { useEffect } from 'react';
+import SetStatisticsWeekModal from '@/components/modals/trees/SetStatisticsWeekModal';
 import SetTrackerMonthModal from '@/components/modals/trees/SetTrackerMonthModal';
 import SetBirthModal from '@/components/modals/onboardings/setBirthModal';
 import FruitInfoModal from '@/components/modals/trees/FruitInfoModal';
 import FruitModal from '@/components/modals/trees/FruitModal';
 import LogoutModal from '@/components/modals/users/LogoutModal';
 import DeleteAccountModal from '@/components/modals/users/DeleteAccountModal';
+import CommentDeleteModal from '@/components/modals/communities/CommentDeleteModal';
 
 const ModalPage = () => {
   const { isModalOpen, modalType, modalProps } = useBaseModal();
@@ -53,15 +54,19 @@ const ModalPage = () => {
           <SelectIconModal {...(modalProps ?? {})} />
         )}
         {modalType === 'deleteRoutineModal' && (
-          <DeleteRoutineModal {...(modalProps ?? {})} />
+          <DeleteRoutineModal
+            memberRoutineId={modalProps?.memberRoutineId as number}
+            {...(modalProps ?? {})}
+          />
         )}
         {modalType === 'livingYearModal' && <LivingYearModal />}
         {modalType === 'pushAlarmModal' && <PushAlarmModal />}
         {modalType === 'fruitInfoModal' && <FruitInfoModal />}
-        {modalType === 'fruitModal' && <FruitModal {...(modalProps ?? {})} />}
+        {modalType === 'fruitModal' && <FruitModal />}
         {modalType === 'searchDeleteModal' && <SearchDeleteModal />}
         {modalType === 'reportPostModal' && <ReportPostModal />}
         {modalType === 'postDeleteModal' && <PostDeleteModal />}
+        {modalType === 'commentDeleteModal' && <CommentDeleteModal />}
         {modalType === 'logoutModal' && <LogoutModal />}
         {modalType === 'deleteAccountModal' && <DeleteAccountModal />}
         {modalType === 'treeVisibilityModal' && <TreeVisibilityModal />}

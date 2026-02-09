@@ -1,9 +1,11 @@
 import MiniCloseIcon from '@/icons/MiniCloseIcon';
 import PlusIcon from '@/icons/PlusIcon';
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MOCK_ROUTINES } from './mockRoutines';
 import useCoachModal from '@/hooks/useCoachModal';
+import { useRoutineStore } from '@/stores/routines/routineStore';
+import { useHomeDateStore } from '@/stores/homes/homeStore';
+import { formatDate } from '@/utils/homes/homeUtils';
 
 const LONG_PRESS_MS = 500;
 const MOVE_CANCEL_PX = 8;
@@ -11,38 +13,33 @@ const MOVE_CANCEL_PX = 8;
 const HomeContent = () => {
   const navigate = useNavigate();
 
-  const [completed, setCompleted] = useState<Set<number>>(new Set());
+  const { toggleRoutine } = useRoutineStore();
+  const routines = useRoutineStore((s) => s.data?.routines);
+
+  const { selectedDate } = useHomeDateStore();
+
+  const date = formatDate(selectedDate);
 
   const { openCoach: openCoach, close: closeCoach } =
     useCoachModal('coach:home');
 
-  const totalCount = MOCK_ROUTINES.length;
+  const totalCount = routines.length;
 
-  const doneCount = completed.size;
+  const doneCount = useMemo(
+    () => routines.filter((r) => r.isDone).length,
+    [routines]
+  );
 
   const headerText =
     totalCount === 0
-      ? '오늘 루틴을 시작해볼까요?'
+      ? '루틴을 시작해볼까요?'
       : doneCount === 0
         ? '아직 완료하지 않은 루틴이 있어요!'
-        : `오늘 루틴 ${doneCount}/${totalCount} 진행 중!`;
+        : `루틴 ${doneCount}/${totalCount} 진행 중!`;
 
   const pressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const longPressTriggered = useRef(false);
-
   const startPt = useRef<{ x: number; y: number } | null>(null);
-
-  const toggleComplete = (idx: number) => {
-    setCompleted((prev) => {
-      const next = new Set(prev);
-      if (next.has(idx)) {
-        next.delete(idx);
-      } else {
-        next.add(idx);
-      }
-      return next;
-    });
-  };
 
   const clearPress = () => {
     if (pressTimer.current) {
@@ -52,13 +49,13 @@ const HomeContent = () => {
     startPt.current = null;
   };
 
-  const handlePressStart = (e: React.PointerEvent) => {
+  const handlePressStart = (e: React.PointerEvent, memberRoutineId: number) => {
     longPressTriggered.current = false;
     startPt.current = { x: e.clientX, y: e.clientY };
 
     pressTimer.current = setTimeout(() => {
       longPressTriggered.current = true;
-      navigate('/lived/edit');
+      navigate(`/lived/edit/${memberRoutineId}`);
     }, LONG_PRESS_MS);
   };
 
@@ -67,16 +64,14 @@ const HomeContent = () => {
     const dx = Math.abs(e.clientX - startPt.current.x);
     const dy = Math.abs(e.clientY - startPt.current.y);
     if (dx > MOVE_CANCEL_PX || dy > MOVE_CANCEL_PX) {
-      // 스크롤/드래그로 판단 → 롱프레스 취소
       clearPress();
     }
   };
 
-  const handlePressEnd = (idx: number) => {
+  const handlePressEnd = (memberRoutineId: number) => {
     if (pressTimer.current) clearTimeout(pressTimer.current);
 
-    // 롱프레스가 아니면 탭으로 처리
-    if (!longPressTriggered.current) toggleComplete(idx);
+    if (!longPressTriggered.current) toggleRoutine(memberRoutineId, date);
 
     clearPress();
   };
@@ -91,28 +86,28 @@ const HomeContent = () => {
 
       <div className="relative flex-1 min-h-0 overflow-y-auto pb-6">
         <div className="grid grid-cols-3 gap-5 justify-items-center">
-          {MOCK_ROUTINES.map((r, idx) => {
-            const isDone = completed.has(idx);
+          {routines.map((r) => {
+            const isDone = r.isDone;
 
             return (
               <div
-                key={`${r.customTitle}-${idx}`}
+                key={r.memberRoutineId}
                 className={`relative w-26.5 h-26.5 rounded-lg flex items-center justify-center select-none
                   ${isDone ? 'bg-primary-30' : 'bg-primary-20'}`}
                 style={{ touchAction: 'manipulation' }}
-                onPointerDown={(e) => handlePressStart(e)}
+                onPointerDown={(e) => handlePressStart(e, r.memberRoutineId)}
                 onPointerMove={handlePressMove}
-                onPointerUp={() => handlePressEnd(idx)}
+                onPointerUp={() => handlePressEnd(r.memberRoutineId)}
                 onPointerCancel={handlePressCancel}
                 onPointerLeave={handlePressCancel}
               >
                 <span className="typo-body_reg14 px-3.5 text-center line-clamp-3">
-                  {r.customTitle}
+                  {r.title}
                 </span>
 
                 {isDone && (
                   <div className="absolute inset-0 bg-screen-0/80 flex items-center justify-center">
-                    <span className="text-3xl">{r.customIcon}</span>
+                    <span className="text-3xl">{r.emoji}</span>
                   </div>
                 )}
               </div>
