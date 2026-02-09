@@ -4,6 +4,7 @@ import MiniRightChevronIcon from '@/icons/MiniRightChevronIcon';
 import SearchIcon from '@/icons/SearchIcon';
 import { getFriendsData } from '@/services/friends/getFriendsData';
 import { getInvitationData } from '@/services/friends/getInvitationData';
+import { sendKakaoMessage } from '@/services/sendKakaoMessage';
 import { useQuery } from '@tanstack/react-query';
 import {
   AnimatePresence,
@@ -65,6 +66,8 @@ const FriendsSheet = () => {
   };
 
   const handleFocus = () => {
+    if (state !== 'closed') return;
+
     setState('halfOpen');
     // input 포커스 시 시트를 반 정도 열기 (y = halfOpenY)
     controls.start({ y: halfOpenY });
@@ -118,6 +121,17 @@ const FriendsSheet = () => {
     setTimeout(() => {
       setIsCopySuccessModalOpen(false);
     }, 2000);
+  };
+
+  const handleInviteViaKakao = () => {
+    if (!invitationData?.invitationUrl) {
+      return;
+    }
+
+    sendKakaoMessage(
+      String(invitationData.inviterId),
+      invitationData.inviterName
+    );
   };
 
   return (
@@ -183,8 +197,12 @@ const FriendsSheet = () => {
           </div>
 
           <button
-            onClick={() => {
+            onClick={(event) => {
+              event.stopPropagation();
               setIsInvitationModalOpen((prev) => !prev);
+            }}
+            onPointerDown={(event) => {
+              event.stopPropagation();
             }}
             className="flex items-center justify-center cursor-pointer"
           >
@@ -199,14 +217,29 @@ const FriendsSheet = () => {
             }`}
           >
             <button
-              onClick={handleCopyInvitationUrl}
+              onClick={(event) => {
+                event.stopPropagation();
+                handleCopyInvitationUrl();
+              }}
+              onPointerDown={(event) => {
+                event.stopPropagation();
+              }}
               className="py-2.5 px-7 flex justify-center items-center w-full"
             >
               <span className="typo-body_reg12 text-gray-900">
                 초대 링크 복사하기
               </span>
             </button>
-            <button className="py-2.5 px-7 flex justify-center items-center w-full">
+            <button
+              onClick={(event) => {
+                event.stopPropagation();
+                handleInviteViaKakao();
+              }}
+              onPointerDown={(event) => {
+                event.stopPropagation();
+              }}
+              className="py-2.5 px-7 flex justify-center items-center w-full"
+            >
               <span className="typo-body_reg12 text-gray-900">
                 카카오톡으로 초대하기
               </span>
@@ -229,6 +262,12 @@ const FriendsSheet = () => {
 
         {isFriendsDataPending || isFriendsDataError ? (
           <></>
+        ) : friendsData.totalCount === 0 ? (
+          <div className="w-full flex justify-center items-center pt-6">
+            <div className="typo-body_reg16 text-gray-600">
+              등록된 친구가 없습니다.
+            </div>
+          </div>
         ) : (
           // 친구 목록 영역
           <div className="w-full flex flex-col">
