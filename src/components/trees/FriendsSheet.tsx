@@ -100,6 +100,20 @@ const FriendsSheet = () => {
   // 친구 초대
   const [isInvitationModalOpen, setIsInvitationModalOpen] = useState(false);
   const [isCopySuccessModalOpen, setIsCopySuccessModalOpen] = useState(false);
+  const [copyFadeOut, setCopyFadeOut] = useState(false);
+
+  useEffect(() => {
+    if (!isCopySuccessModalOpen) return;
+
+    setCopyFadeOut(false);
+
+    const timer = setTimeout(() => {
+      setCopyFadeOut(true);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [isCopySuccessModalOpen]);
+
   const { data: invitationData } = useQuery({
     queryKey: ['invitationData'],
     queryFn: getInvitationData,
@@ -120,7 +134,7 @@ const FriendsSheet = () => {
     // 2초 후 모달 자동으로 닫기
     setTimeout(() => {
       setIsCopySuccessModalOpen(false);
-    }, 2000);
+    }, 3000);
   };
 
   const handleInviteViaKakao = () => {
@@ -247,9 +261,11 @@ const FriendsSheet = () => {
           </div>
 
           <div
-            className={`absolute right-0 -top-18 rounded-sm p-3.5 w-full bg-gray-700 flex items-center gap-2.5 ${
+            className={`absolute right-0 -top-18 rounded-lg px-4 py-3 w-full bg-gray-700 flex items-center gap-2.5 transition-opacity duration-300 ease-in-out ${
               isCopySuccessModalOpen
-                ? 'opacity-100'
+                ? copyFadeOut
+                  ? 'opacity-0'
+                  : 'opacity-100'
                 : 'opacity-0 pointer-events-none'
             }`}
           >
