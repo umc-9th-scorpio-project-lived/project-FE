@@ -17,7 +17,7 @@ const AcceptInvitePage = () => {
         // 비로그인: 현재 URL 저장 후 로그인 페이지로
         const currentUrl = window.location.href;
         localStorage.setItem('redirectAfterLogin', currentUrl);
-        navigate('/login');
+        navigate('/');
         return;
       }
 
