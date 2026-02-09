@@ -17,12 +17,12 @@ export type FriendTreeArchiveParams = {
   size: number;
 };
 
-type Member = {
+type Friend = {
   memberId: number;
   name: string;
 };
 
 export type FriendsData = {
-  friendList: Member[];
+  friendList: Friend[];
   totalCount: number;
 };
