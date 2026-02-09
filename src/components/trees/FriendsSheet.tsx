@@ -229,6 +229,12 @@ const FriendsSheet = () => {
 
         {isFriendsDataPending || isFriendsDataError ? (
           <></>
+        ) : friendsData.totalCount === 0 ? (
+          <div className="w-full flex justify-center items-center pt-6">
+            <div className="typo-body_reg16 text-gray-600">
+              등록된 친구가 없습니다.
+            </div>
+          </div>
         ) : (
           // 친구 목록 영역
           <div className="w-full flex flex-col">
