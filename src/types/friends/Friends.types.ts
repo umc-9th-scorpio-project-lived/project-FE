@@ -32,3 +32,9 @@ export type InvitationData = {
   inviterName: string;
   invitationUrl: string;
 };
+
+export type FriendshipData = {
+  friendshipId: number;
+  inviterName: string;
+  connectedAt: string;
+};
