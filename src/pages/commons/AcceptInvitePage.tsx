@@ -1,9 +1,8 @@
 import { acceptInvite } from '@/services/friends/acceptInvite';
 import { useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 const AcceptInvitePage = () => {
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const inviterId = searchParams.get('inviterId');
 
@@ -17,7 +16,7 @@ const AcceptInvitePage = () => {
         // 비로그인: 현재 URL 저장 후 로그인 페이지로
         const currentUrl = window.location.href;
         localStorage.setItem('redirectAfterLogin', currentUrl);
-        navigate('/');
+        window.location.href = '/';
         return;
       }
 
