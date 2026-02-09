@@ -31,11 +31,9 @@ const TreeVisibilityModal = () => {
   }, [treeVisibility?.visibility]);
 
   return (
-    <div className="h-[50vh] bg-screen-0 p-4 rounded-t-2xl flex flex-col justify-center items-center overflow-y-auto overflow-x-hidden">
+    <div className="min-h-105 bg-screen-0 p-4 pb-12 rounded-t-2xl flex flex-col justify-center items-center gap-0.5 overflow-y-auto overflow-x-hidden">
       <div className="w-full py-3 text-center">
-        <div className="typo-h2_reg20 text-gray-900 mb-2">
-          루틴 나무 공개 범위
-        </div>
+        <div className="typo-h2_reg20 text-gray-900">루틴 나무 공개 범위</div>
       </div>
 
       <div className="w-full flex flex-col flex-1 justify-between gap-5">
@@ -67,7 +65,7 @@ const TreeVisibilityModal = () => {
               <span className="typo-body_reg16 text-gray-900">일부 공개</span>
             </button>
             {isSomeoneSelected ? (
-              <div className="h-38 pl-4 pr-18 flex flex-col gap-2 overflow-y-auto overflow-x-hidden">
+              <div className="max-h-38 pl-4 pr-18 flex flex-col gap-2 overflow-y-auto overflow-x-hidden">
                 <div className="w-full flex justify-between items-center">
                   <span className="typo-body_reg12 text-gray-900">친구1</span>
                   <button>
@@ -93,13 +91,13 @@ const TreeVisibilityModal = () => {
                   </button>
                 </div>
                 <div className="w-full flex justify-between">
-                  <span className="typo-body_reg12 text-gray-900">친구5</span>
+                  <span className="typo-body_reg12 text-gray-900">친구6</span>
                   <button>
                     <CheckIcon className="w-6 h-6 text-gray-900" />
                   </button>
                 </div>
                 <div className="w-full flex justify-between">
-                  <span className="typo-body_reg12 text-gray-900">친구6</span>
+                  <span className="typo-body_reg12 text-gray-900">친구5</span>
                   <button>
                     <CheckIcon className="w-6 h-6 text-gray-900" />
                   </button>
