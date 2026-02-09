@@ -26,3 +26,9 @@ export type FriendsData = {
   friendList: Friend[];
   totalCount: number;
 };
+
+export type InvitationData = {
+  inviterId: number;
+  inviterName: string;
+  invitationUrl: string;
+};
