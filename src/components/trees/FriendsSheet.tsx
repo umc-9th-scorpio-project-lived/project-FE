@@ -1,6 +1,8 @@
 import AddFriendIcon from '@/icons/AddFriendIcon';
 import MiniRightChevronIcon from '@/icons/MiniRightChevronIcon';
 import SearchIcon from '@/icons/SearchIcon';
+import { getFriendsData } from '@/services/friends/getFriendsData';
+import { useQuery } from '@tanstack/react-query';
 import {
   AnimatePresence,
   motion,
@@ -9,13 +11,11 @@ import {
   type PanInfo,
 } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 type SheetState = 'closed' | 'halfOpen' | 'open';
 
 const FriendsSheet = () => {
-  const navigate = useNavigate();
-
   const [state, setState] = useState<SheetState>('closed');
 
   // 애니메이션을 코드로 제어하기 위한 컨트롤러
@@ -77,6 +77,16 @@ const FriendsSheet = () => {
 
   const isSheetOpen = state === 'halfOpen' || state === 'open';
 
+  const [searchInput, setSearchInput] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const { data, isPending, isError } = useQuery({
+    queryKey: [searchQuery, 'friendsData'],
+    queryFn: () => getFriendsData(searchQuery),
+    staleTime: 30 * 1000,
+    gcTime: 5 * 60 * 1000,
+    retry: 1,
+  });
+
   return (
     <>
       {/* 배경 Dim 처리 (시트가 열렸을 때만 나타남) */}
@@ -121,6 +131,8 @@ const FriendsSheet = () => {
           <div className="relative flex-1">
             {/* input에는 typo-body_reg14가 적용되지 않음 */}
             <input
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
               className="w-full py-3 pl-4 pr-12 bg-gray-50 rounded-3xl text-gray-600 typo-body_reg14"
               type="text"
               placeholder="친구 이름 검색하기"
@@ -129,7 +141,7 @@ const FriendsSheet = () => {
 
             <button
               onClick={() => {
-                /* 검색 로직 */
+                setSearchQuery(searchInput);
               }}
               className="absolute top-1/4 right-3"
             >
@@ -140,63 +152,26 @@ const FriendsSheet = () => {
           <AddFriendIcon className="w-8 h-8 text-gray-500" />
         </div>
 
-        {/* 친구 목록 영역 */}
-        <div className="w-full flex flex-col">
-          <button
-            onClick={() => {
-              navigate('/lived/tree/friend');
-            }}
-            className="p-4 pr-2.5 flex justify-between items-center border-b border-gray-200 cursor-pointer"
-          >
-            <div className="typo-body_reg16 text-gray-900">이수민</div>
+        {isPending || isError ? (
+          <></>
+        ) : (
+          // 친구 목록 영역
+          <div className="w-full flex flex-col">
+            {data.friendList.map((friend) => (
+              <Link
+                key={friend.memberId}
+                to={`/lived/tree/friend/${friend.memberId}`}
+                className="p-4 pr-2.5 flex justify-between items-center border-b border-gray-200 cursor-pointer"
+              >
+                <div className="typo-body_reg16 text-gray-900">
+                  {friend.name}
+                </div>
 
-            <MiniRightChevronIcon className="w-4 h-4 text-gray-500" />
-          </button>
-
-          <button
-            onClick={() => {
-              navigate('/lived/tree/friend');
-            }}
-            className="p-4 pr-2.5 flex justify-between items-center border-b border-gray-200 cursor-pointer"
-          >
-            <div className="typo-body_reg16 text-gray-900">홍재원</div>
-
-            <MiniRightChevronIcon className="w-4 h-4 text-gray-500" />
-          </button>
-
-          <button
-            onClick={() => {
-              navigate('/lived/tree/friend');
-            }}
-            className="p-4 pr-2.5 flex justify-between items-center border-b border-gray-200 cursor-pointer"
-          >
-            <div className="typo-body_reg16 text-gray-900">구유경</div>
-
-            <MiniRightChevronIcon className="w-4 h-4 text-gray-500" />
-          </button>
-
-          <button
-            onClick={() => {
-              navigate('/lived/tree/friend');
-            }}
-            className="p-4 pr-2.5 flex justify-between items-center border-b border-gray-200 cursor-pointer"
-          >
-            <div className="typo-body_reg16 text-gray-900">장연주</div>
-
-            <MiniRightChevronIcon className="w-4 h-4 text-gray-500" />
-          </button>
-
-          <button
-            onClick={() => {
-              navigate('/lived/tree/friend');
-            }}
-            className="p-4 pr-2.5 flex justify-between items-center border-b border-gray-200 cursor-pointer"
-          >
-            <div className="typo-body_reg16 text-gray-900">박경호</div>
-
-            <MiniRightChevronIcon className="w-4 h-4 text-gray-500" />
-          </button>
-        </div>
+                <MiniRightChevronIcon className="w-4 h-4 text-gray-500" />
+              </Link>
+            ))}
+          </div>
+        )}
       </motion.div>
     </>
   );
