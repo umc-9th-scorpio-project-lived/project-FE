@@ -5,13 +5,29 @@ import GrowingFruitIcon from '@/icons/GrowingFruitIcon';
 import InfoIcon from '@/icons/InfoIcon';
 import MiniRightChevronIcon from '@/icons/MiniRightChevronIcon';
 import NormalFruitIcon from '@/icons/NormalFruitIcon';
+import { getFruitsStatistics } from '@/services/statistics/getFruitsStatistics';
 import useBaseModal from '@/stores/modals/baseModal';
+import type { YearMonth } from '@/types/statistics/Statistics.types';
+import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 const TreePage = () => {
   const navigate = useNavigate();
 
   const { openModal } = useBaseModal();
+
+  const yearMonth: YearMonth = {
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1, // getMonth()는 0월부터 시작하므로 1 더하기
+  };
+
+  const { data, isPending, isError } = useQuery({
+    queryKey: [yearMonth.year, yearMonth.month, 'fruitsStatistics'],
+    queryFn: () => getFruitsStatistics(yearMonth),
+    staleTime: 30 * 1000,
+    gcTime: 5 * 60 * 1000,
+    retry: 1,
+  });
 
   return (
     // 친구 목록 바텀시트가 루틴 나무를 가리는 걸 방지하기 위해 pb-[180px] 추가
@@ -23,7 +39,7 @@ const TreePage = () => {
           onClick={() => {
             navigate('/lived/tree/statistics');
           }}
-          className="border border-primary-50 rounded-2xl py-1.5 px-3.5 flex items-center cursor-pointer"
+          className="border border-primary-50 rounded-2xl bg-screen-0 py-1.5 px-3.5 flex items-center cursor-pointer"
         >
           <span className="typo-body_bold12 text-primary-50">통계 분석</span>
         </button>
@@ -55,25 +71,47 @@ const TreePage = () => {
         </button>
       </div>
 
-      {/* 열매 개수 계산 로직 필요 */}
-      <div className="pt-4 pb-15.5 px-4 flex items-center gap-5">
-        <div className="flex items-center gap-2">
-          <GoldenFruitIcon className="w-12.5" />
-          <span className="typo-body_bold14 text-gray-900">2개</span>
-        </div>
+      {isPending || isError ? (
+        <div className="pt-4 pb-15.5 px-4 flex items-center gap-5">
+          <div className="flex items-center gap-2">
+            <GoldenFruitIcon className="w-12.5" />
+            <span className="typo-body_bold14 text-gray-900">0개</span>
+          </div>
 
-        <div className="flex items-center gap-2">
-          <NormalFruitIcon className="w-12.5" />
-          <span className="typo-body_bold14 text-gray-900">3개</span>
-        </div>
+          <div className="flex items-center gap-2">
+            <NormalFruitIcon className="w-12.5" />
+            <span className="typo-body_bold14 text-gray-900">0개</span>
+          </div>
 
-        <div className="flex items-center gap-2">
-          <GrowingFruitIcon className="w-12.5" />
-          <span className="typo-body_bold14 text-gray-900">1개</span>
+          <div className="flex items-center gap-2">
+            <GrowingFruitIcon className="w-12.5" />
+            <span className="typo-body_bold14 text-gray-900">0개</span>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="pt-4 pb-15.5 px-4 flex items-center gap-5">
+          <div className="flex items-center gap-2">
+            <GoldenFruitIcon className="w-12.5" />
+            <span className="typo-body_bold14 text-gray-900">{`${data?.summary.goldCount}개`}</span>
+          </div>
 
-      <RoutineTree />
+          <div className="flex items-center gap-2">
+            <NormalFruitIcon className="w-12.5" />
+            <span className="typo-body_bold14 text-gray-900">{`${data?.summary.normalCount}개`}</span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <GrowingFruitIcon className="w-12.5" />
+            <span className="typo-body_bold14 text-gray-900">{`${data?.summary.growingCount}개`}</span>
+          </div>
+        </div>
+      )}
+
+      {isPending || isError ? (
+        <RoutineTree />
+      ) : (
+        <RoutineTree fruitsData={data} />
+      )}
 
       <FriendsSheet />
     </div>
