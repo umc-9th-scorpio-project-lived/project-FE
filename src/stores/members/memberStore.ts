@@ -3,10 +3,12 @@ import type { ApiError } from '@/types/Api.types';
 import type {
   AnnouncementItem,
   BlockMember,
+  VisibilityTreeResult,
 } from '@/types/members/Member.types';
 import getAnnouncements from '@/services/members/getAnnouncements';
 import unblockMember from '@/services/members/unblockMember';
 import getBlockMembers from '@/services/members/getBlockMembers';
+import getVisibilityTree from '@/services/members/getVisibilityTree';
 
 type MemberState = {
   announcementList: AnnouncementItem[];
@@ -15,6 +17,8 @@ type MemberState = {
   blockedHasNext: boolean;
   blockedNextCursor: number | null;
 
+  treeVisibility: VisibilityTreeResult | null;
+
   isLoading: boolean;
   error: ApiError | null;
 
@@ -22,6 +26,8 @@ type MemberState = {
 
   fetchBlockedMembers: (cursor?: number | null) => Promise<void>;
   unblock: (blockedMemberId: number) => Promise<void>;
+
+  fetchTreeVisibility: () => Promise<void>;
 
   clear: () => void;
 };
@@ -32,6 +38,8 @@ export const useMemberStore = create<MemberState>((set, get) => ({
   blockedMembers: [],
   blockedHasNext: false,
   blockedNextCursor: null,
+
+  treeVisibility: null,
 
   isLoading: false,
   error: null,
@@ -83,6 +91,16 @@ export const useMemberStore = create<MemberState>((set, get) => ({
     } catch (err) {
       set({ blockedMembers: prev, error: err as ApiError });
       throw err;
+    }
+  },
+
+  fetchTreeVisibility: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      const res = await getVisibilityTree();
+      set({ treeVisibility: res, isLoading: false });
+    } catch (err) {
+      set({ error: err as ApiError, isLoading: false });
     }
   },
 

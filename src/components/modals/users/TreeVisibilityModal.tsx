@@ -1,10 +1,12 @@
-import CheckCircleIcon from "@/icons/CheckCircleIcon";
-import CheckIcon from "@/icons/CheckIcon";
-import useBaseModal from "@/stores/modals/baseModal";
-import { useState } from "react";
+import CheckCircleIcon from '@/icons/CheckCircleIcon';
+import CheckIcon from '@/icons/CheckIcon';
+import { useMemberStore } from '@/stores/members/memberStore';
+import useBaseModal from '@/stores/modals/baseModal';
+import { useEffect, useState } from 'react';
 
 const TreeVisibilityModal = () => {
   const { closeModal } = useBaseModal();
+  const { treeVisibility } = useMemberStore();
 
   // 루틴 나무 공개 범위별 선택 상태를 관리하는 상태 변수들
   const [isFriendsOnly, setIsFriendsOnly] = useState(false);
@@ -18,10 +20,22 @@ const TreeVisibilityModal = () => {
     setIsPrivate(false);
   };
 
+  useEffect(() => {
+    resetVisibility();
+
+    const v = treeVisibility?.visibility;
+
+    if (v === 'FRIENDS') setIsFriendsOnly(true);
+    else if (v === 'PARTIAL') setIsSomeoneSelected(true);
+    else if (v === 'PRIVATE') setIsPrivate(true);
+  }, [treeVisibility?.visibility]);
+
   return (
     <div className="h-[50vh] bg-screen-0 p-4 rounded-t-2xl flex flex-col justify-center items-center overflow-y-auto overflow-x-hidden">
       <div className="w-full py-3 text-center">
-        <div className="typo-h2_reg20 text-gray-900 mb-2">루틴 나무 공개 범위</div>
+        <div className="typo-h2_reg20 text-gray-900 mb-2">
+          루틴 나무 공개 범위
+        </div>
       </div>
 
       <div className="w-full flex flex-col flex-1 justify-between gap-5">
@@ -34,7 +48,7 @@ const TreeVisibilityModal = () => {
             className="flex items-center gap-2 cursor-pointer"
           >
             <CheckCircleIcon
-              className={`w-6 h-6 ${isFriendsOnly ? "text-primary-50" : "text-gray-300"}`}
+              className={`w-6 h-6 ${isFriendsOnly ? 'text-primary-50' : 'text-gray-300'}`}
             />
             <span className="typo-body_reg16 text-gray-900">친구 공개</span>
           </button>
@@ -48,7 +62,7 @@ const TreeVisibilityModal = () => {
               className="flex items-center gap-2 cursor-pointer"
             >
               <CheckCircleIcon
-                className={`w-6 h-6 ${isSomeoneSelected ? "text-primary-50" : "text-gray-300"}`}
+                className={`w-6 h-6 ${isSomeoneSelected ? 'text-primary-50' : 'text-gray-300'}`}
               />
               <span className="typo-body_reg16 text-gray-900">일부 공개</span>
             </button>
@@ -98,7 +112,7 @@ const TreeVisibilityModal = () => {
                 </div>
               </div>
             ) : (
-              ""
+              ''
             )}
           </div>
 
@@ -110,7 +124,7 @@ const TreeVisibilityModal = () => {
             className="flex items-center gap-2 cursor-pointer"
           >
             <CheckCircleIcon
-              className={`w-6 h-6 ${isPrivate ? "text-primary-50" : "text-gray-300"}`}
+              className={`w-6 h-6 ${isPrivate ? 'text-primary-50' : 'text-gray-300'}`}
             />
             <span className="typo-body_reg16 text-gray-900">나만 보기</span>
           </button>
