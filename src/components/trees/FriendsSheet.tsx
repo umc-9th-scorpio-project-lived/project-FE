@@ -66,6 +66,8 @@ const FriendsSheet = () => {
   };
 
   const handleFocus = () => {
+    if (state !== 'closed') return;
+
     setState('halfOpen');
     // input 포커스 시 시트를 반 정도 열기 (y = halfOpenY)
     controls.start({ y: halfOpenY });
@@ -195,8 +197,12 @@ const FriendsSheet = () => {
           </div>
 
           <button
-            onClick={() => {
+            onClick={(event) => {
+              event.stopPropagation();
               setIsInvitationModalOpen((prev) => !prev);
+            }}
+            onPointerDown={(event) => {
+              event.stopPropagation();
             }}
             className="flex items-center justify-center cursor-pointer"
           >
