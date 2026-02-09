@@ -20,7 +20,6 @@ import RoutineTrackerPage from './pages/trees/RoutineTrackerPage';
 import FriendTreePage from './pages/trees/FriendTreePage';
 import StatisticsPage from './pages/trees/StatisticsPage';
 import TreeArchivePage from './pages/trees/TreeArchivePage';
-import ArchivedTreePage from './pages/trees/ArchivedTreePage';
 import PostWritingPage from './pages/communities/PostWritingPage';
 import CommunityProfilePage from './pages/communities/CommunityProfilePage';
 import PostSearchPage from './pages/communities/PostSearchPage';
@@ -38,6 +37,9 @@ import ToastPage from './pages/commons/ToastPage';
 import EditCommentPage from './pages/communities/EditCommentPage';
 import CommunityLayout from './layouts/CommunityLayout';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import ArchivedTreePage from './pages/trees/ArchivedTreePage';
+import FriendTreeArchivePage from './pages/trees/FriendTreeArchivePage';
+import AcceptInvitePage from './pages/commons/AcceptInvitePage';
 
 const queryClient = new QueryClient();
 
@@ -52,6 +54,7 @@ function App() {
           {/* 콜백 페이지 */}
           <Route path="/login/callback" element={<CallbackPage />} />
           <Route path="/signup/callback" element={<CallbackPage />} />
+          <Route path="/accept-invite" element={<AcceptInvitePage />} />
 
           {/* 서브 레이아웃 영역 */}
           <Route element={<SubLayout />}>
@@ -94,9 +97,13 @@ function App() {
             {/* 특정 달의 루틴 나무 페이지 */}
             <Route path="archivedTree" element={<ArchivedTreePage />} />
             <Route path="tracker" element={<RoutineTrackerPage />} />
-            <Route path="friend" element={<FriendTreePage />} />
+            <Route path="friend/:friendId" element={<FriendTreePage />} />
             <Route path="statistics" element={<StatisticsPage />} />
             <Route path="archive" element={<TreeArchivePage />} />
+            <Route
+              path="friendArchive/:friendId"
+              element={<FriendTreeArchivePage />}
+            />
           </Route>
 
           {/* 커뮤니티 페이지의 상세페이지 */}

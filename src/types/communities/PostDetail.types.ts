@@ -1,4 +1,7 @@
-import type { CommunityCategory, CommunityCategoryLabel } from "@/constants/community";
+import type {
+  CommunityCategory,
+  CommunityCategoryLabel,
+} from '@/constants/community';
 
 export type PostAuthor = {
   userId: number;

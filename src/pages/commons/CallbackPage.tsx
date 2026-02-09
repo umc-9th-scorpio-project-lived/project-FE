@@ -51,7 +51,15 @@ const CallbackPage = () => {
     if (accessToken) {
       localStorage.setItem('accessToken', accessToken);
     }
-    navigate('/lived', { replace: true });
+
+    // redirectAfterLogin이 있으면 그곳으로, 없으면 홈으로
+    const redirectUrl = localStorage.getItem('redirectAfterLogin');
+    if (redirectUrl) {
+      localStorage.removeItem('redirectAfterLogin');
+      window.location.href = redirectUrl;
+    } else {
+      navigate('/lived', { replace: true });
+    }
   }, [navigate, params, setSocialAuth]);
 
   return <></>;
