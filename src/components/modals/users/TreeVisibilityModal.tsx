@@ -1,13 +1,18 @@
 import CheckCircleIcon from '@/icons/CheckCircleIcon';
 import CheckIcon from '@/icons/CheckIcon';
+import { useFriendsStore } from '@/stores/friends/friendStore';
 import { useMemberStore } from '@/stores/members/memberStore';
 import useBaseModal from '@/stores/modals/baseModal';
 import type { RoutineTreeVisibility } from '@/types/members/Member.types';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const TreeVisibilityModal = () => {
   const { closeModal } = useBaseModal();
   const { treeVisibility, updateTreeVisibility } = useMemberStore();
+  const { data, fetchFriends, selectedIds, toggleSelected, setSelectedIds } =
+    useFriendsStore();
+
+  const friendList = data?.friendList ?? [];
 
   // 루틴 나무 공개 범위별 선택 상태를 관리하는 상태 변수들
   const [isFriendsOnly, setIsFriendsOnly] = useState(false);
@@ -29,7 +34,17 @@ const TreeVisibilityModal = () => {
     if (v === 'FRIENDS') setIsFriendsOnly(true);
     else if (v === 'PARTIAL') setIsSomeoneSelected(true);
     else if (v === 'PRIVATE') setIsPrivate(true);
+
+    if (treeVisibility?.targetMemberIds) {
+      setSelectedIds(treeVisibility.targetMemberIds);
+    }
   }, [treeVisibility?.visibility]);
+
+  useEffect(() => {
+    if (!isSomeoneSelected) return;
+    if (friendList.length > 0) return;
+    fetchFriends();
+  }, [isSomeoneSelected]);
 
   const getSelectedVisibility = (): RoutineTreeVisibility => {
     if (isFriendsOnly) return 'FRIENDS';
@@ -42,11 +57,16 @@ const TreeVisibilityModal = () => {
 
     await updateTreeVisibility({
       visibility,
-      targetMemberIds: [],
+      targetMemberIds: visibility === 'PARTIAL' ? selectedIds : [],
     });
 
     closeModal();
   };
+
+  const isSubmitDisabled =
+    isSomeoneSelected && (friendList.length === 0 || selectedIds.length === 0);
+
+  const selectedSet = useMemo(() => new Set(selectedIds), [selectedIds]);
 
   return (
     <div className="min-h-112.5 bg-screen-0 p-4 pb-12 rounded-t-2xl flex flex-col justify-center items-center gap-0.5 overflow-y-auto overflow-x-hidden">
@@ -82,7 +102,7 @@ const TreeVisibilityModal = () => {
               />
               <span className="typo-body_reg16 text-gray-900">일부 공개</span>
             </button>
-            {isSomeoneSelected ? (
+            {/* {isSomeoneSelected ? (
               <div className="max-h-38 pl-4 pr-18 flex flex-col gap-2 overflow-y-auto overflow-x-hidden">
                 <div className="w-full flex justify-between items-center">
                   <span className="typo-body_reg12 text-gray-900">친구1</span>
@@ -129,6 +149,36 @@ const TreeVisibilityModal = () => {
               </div>
             ) : (
               ''
+            )} */}
+            {isSomeoneSelected ? (
+              <div className="max-h-38 pl-4 pr-18 flex flex-col gap-2 overflow-y-auto overflow-x-hidden">
+                {friendList.length === 0 ? (
+                  <div className="typo-body_reg12 text-gray-500 py-2">
+                    아직 추가한 친구가 없어요.
+                  </div>
+                ) : (
+                  friendList.map((f) => {
+                    const checked = selectedSet.has(f.memberId);
+                    return (
+                      <div
+                        key={f.memberId}
+                        className="w-full flex justify-between items-center"
+                      >
+                        <span className="typo-body_reg12 text-gray-900">
+                          {f.name}
+                        </span>
+                        <button onClick={() => toggleSelected(f.memberId)}>
+                          <CheckIcon
+                            className={`w-6 h-6 ${checked ? 'text-primary-50' : 'text-gray-300'}`}
+                          />
+                        </button>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
+            ) : (
+              ''
             )}
           </div>
 
@@ -148,9 +198,14 @@ const TreeVisibilityModal = () => {
 
         <button
           onClick={handleSubmit}
-          className="w-full py-3 bg-primary-50 rounded-lg cursor-pointer"
+          disabled={isSubmitDisabled}
+          className={`w-full py-3 rounded-lg cursor-pointer ${isSubmitDisabled ? 'bg-gray-100 cursor-not-allowed' : 'bg-primary-50'}`}
         >
-          <span className="typo-body_bold18 text-screen-0">수정 완료</span>
+          <span
+            className={`typo-body_bold18 ${isSubmitDisabled ? 'text-gray-400' : 'text-screen-0'}`}
+          >
+            수정 완료
+          </span>
         </button>
       </div>
     </div>
