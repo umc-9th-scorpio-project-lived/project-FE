@@ -117,6 +117,27 @@ const AlarmPage = () => {
     (n) => n.target === 'COMMUNITY_HOT'
   );
 
+  const handleClickNotification = (target: NotificationItem['target']) => {
+    if (target === 'ROUTINE_TREE') {
+      navigate('/lived/tree');
+      return;
+    }
+
+    if (target === 'ROUTINE_REPORT') {
+      navigate('/lived/tree/statistics');
+      return;
+    }
+
+    if (
+      target === 'COMMUNITY' ||
+      target === 'COMMENT' ||
+      target === 'COMMUNITY_HOT'
+    ) {
+      navigate('/lived/community/profile');
+      return;
+    }
+  };
+
   // 커뮤니티 카테고리 상태
   const [selectedCategory, setSelectedCategory] =
     useState<CommunityCategory>('ALL');
@@ -236,7 +257,8 @@ const AlarmPage = () => {
               }}
             >
               <div
-                className={`w-full flex p-4 gap-5 items-center ${item.isRead ? 'bg-none' : 'bg-primary-10'}`}
+                className={`w-full flex p-4 gap-5 items-center ${item.isRead ? 'bg-none' : 'bg-primary-10'} ${item.target === 'ROUTINE_TREE' || item.target === 'ROUTINE_REPORT' ? 'cursor-pointer' : ''}`}
+                onClick={() => handleClickNotification(item.target)}
               >
                 {/* 아이콘 */}
                 <div className="text-[28px]">{item.emoji}</div>
