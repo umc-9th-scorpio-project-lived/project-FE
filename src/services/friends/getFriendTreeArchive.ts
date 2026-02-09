@@ -6,7 +6,7 @@ export const getFriendTreeArchive = async (
   friendTreeArchiveParams: FriendTreeArchiveParams
 ): Promise<TreeArchive> => {
   return await authApi.get(
-    `friends/${friendTreeArchiveParams.friendId}}/trees`,
+    `friends/${friendTreeArchiveParams.friendId}/trees`,
     {
       params: {
         page: friendTreeArchiveParams.page,
