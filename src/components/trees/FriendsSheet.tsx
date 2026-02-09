@@ -4,6 +4,7 @@ import MiniRightChevronIcon from '@/icons/MiniRightChevronIcon';
 import SearchIcon from '@/icons/SearchIcon';
 import { getFriendsData } from '@/services/friends/getFriendsData';
 import { getInvitationData } from '@/services/friends/getInvitationData';
+import { sendKakaoMessage } from '@/services/sendKakaoMessage';
 import { useQuery } from '@tanstack/react-query';
 import {
   AnimatePresence,
@@ -120,6 +121,17 @@ const FriendsSheet = () => {
     }, 2000);
   };
 
+  const handleInviteViaKakao = () => {
+    if (!invitationData?.invitationUrl) {
+      return;
+    }
+
+    sendKakaoMessage(
+      String(invitationData.inviterId),
+      invitationData.inviterName
+    );
+  };
+
   return (
     <>
       {/* 배경 Dim 처리 (시트가 열렸을 때만 나타남) */}
@@ -206,7 +218,10 @@ const FriendsSheet = () => {
                 초대 링크 복사하기
               </span>
             </button>
-            <button className="py-2.5 px-7 flex justify-center items-center w-full">
+            <button
+              onClick={handleInviteViaKakao}
+              className="py-2.5 px-7 flex justify-center items-center w-full"
+            >
               <span className="typo-body_reg12 text-gray-900">
                 카카오톡으로 초대하기
               </span>
