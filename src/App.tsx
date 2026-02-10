@@ -40,6 +40,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ArchivedTreePage from './pages/trees/ArchivedTreePage';
 import FriendTreeArchivePage from './pages/trees/FriendTreeArchivePage';
 import AcceptInvitePage from './pages/commons/AcceptInvitePage';
+import ScrollToTop from './components/commons/ScrollToTop';
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
+        <ScrollToTop />
         <ModalPage />
         <ToastPage />
 
