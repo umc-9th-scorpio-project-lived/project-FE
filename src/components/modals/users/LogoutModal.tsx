@@ -1,6 +1,8 @@
 import useBaseModal from '@/stores/modals/baseModal';
 import { useNavigate } from 'react-router-dom';
 import logout from '@/services/auths/logout';
+import { deleteFcmToken } from '@/services/notifications/deleteFcmToken';
+import { getFcmToken } from '@/services/notifications/getFcmToken';
 
 const LogoutModal = () => {
   const { closeModal } = useBaseModal();
@@ -22,6 +24,14 @@ const LogoutModal = () => {
         <button
           onClick={async () => {
             try {
+              try {
+                const fcmToken = await getFcmToken();
+                if (fcmToken) {
+                  await deleteFcmToken(fcmToken);
+                }
+              } catch {
+                // 실패해도 로그아웃은 진행
+              }
               await logout();
             } catch {
               // 로그아웃 API 실패해도 클라이언트 상태는 정리
