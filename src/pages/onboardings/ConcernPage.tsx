@@ -40,58 +40,61 @@ const ConcernPage = () => {
   };
 
   return (
-    <main className="min-h-dvh font-suite">
-      <section className="mx-auto flex min-h-dvh w-full max-w-125 flex-col px-4 pt-10">
-        {/* 상단 뒤로가기 */}
-        <div className="h-11 w-full py-1.25">
-          <button
-            type="button"
-            onClick={() => navigate('/onboardings/basic-info')}
-            className="h-8.5 w-8.5 text-gray-900"
-            aria-label="뒤로가기"
-          >
-            <LeftChevronIcon className="size-6" />
-          </button>
-        </div>
-
-        {/* 진행바 */}
-        <div className="flex flex-col gap-7 pt-6">
-          <div className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary-30" />
-            <span className="h-1.5 w-8 rounded-full bg-primary-50" />
-            <span className="h-1.5 w-1.5 rounded-full bg-primary-30" />
-          </div>
-
-          {/* 타이틀 */}
-          <div className="flex flex-col gap-2">
-            <div className="typo-h2_bold20">
-              자취하면서 <br />
-              어떤 점이 가장 고민되시나요?
-            </div>
-            <p className="typo-body_reg14">최대 5개 선택 가능해요.</p>
-          </div>
-        </div>
-
-        {/* 칩 영역 */}
-        <div className="pt-8 px-0.5 flex flex-wrap gap-3">
-          {CHIPS.map(({ id, label }) => {
-            const isActive = selected.includes(id);
-            return (
+    <main className="h-dvh font-suite">
+      <section className="flex-1 flex h-full w-full max-w-125 flex-col px-4 pt-5 justify-between pb-8">
+        <div className="flex flex-col gap-10">
+          <div className="flex flex-col gap-6">
+            {/* 상단 뒤로가기 */}
+            <div className="h-11 w-full py-1.25">
               <button
-                key={id}
                 type="button"
-                onClick={() => toggleChip(id)}
-                className={`h-11.5 rounded-lg px-4 typo-body_reg16 transition
-              ${isActive ? 'bg-primary-50 text-screen-0' : 'bg-gray-50 text-gray-600'}`}
+                onClick={() => navigate('/onboardings/basic-info')}
+                className="h-8.5 w-8.5 text-gray-900"
+                aria-label="뒤로가기"
               >
-                {label}
+                <LeftChevronIcon className="size-6" />
               </button>
-            );
-          })}
+            </div>
+
+            {/* 진행바 */}
+
+            <div className="flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary-30" />
+              <span className="h-1.5 w-8 rounded-full bg-primary-50" />
+              <span className="h-1.5 w-1.5 rounded-full bg-primary-30" />
+            </div>
+
+            {/* 타이틀 */}
+            <div className="flex flex-col gap-1">
+              <div className="typo-h2_bold20">
+                자취하면서 <br />
+                어떤 점이 가장 고민되시나요?
+              </div>
+              <p className="typo-body_reg14">최대 5개 선택 가능해요.</p>
+            </div>
+          </div>
+
+          {/* 칩 영역 */}
+          <div className="px-0.5 flex flex-wrap gap-3">
+            {CHIPS.map(({ id, label }) => {
+              const isActive = selected.includes(id);
+              return (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => toggleChip(id)}
+                  className={`h-11.5 rounded-lg px-4 typo-body_reg16 transition
+              ${isActive ? 'bg-primary-50 text-screen-0' : 'bg-gray-50 text-gray-600'}`}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* 에러 멘트 */}
-        <div className="mt-auto pb-8 flex flex-col gap-2">
+        <div className="flex flex-col gap-2">
           {isOverSelected && (
             <p className="text-center typo-body_bold14 text-alert-50 ">
               최대 5개까지 선택 가능합니다.

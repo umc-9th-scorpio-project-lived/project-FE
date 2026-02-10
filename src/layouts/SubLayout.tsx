@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 
 const SubLayout = () => {
   return (
-    <div className="w-full h-dvh">
+    <div className="h-dvh w-full">
       <Outlet />
     </div>
   );
