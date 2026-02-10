@@ -104,126 +104,133 @@ const CommunityProfilePage = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen pt-10">
-      {/*네브바*/}
-      <div className="flex justify-between items-center text-gray-900 mx-4 my-2">
-        <div className="flex gap-3">
-          <NavLink
-            to="/lived/community"
-            className="flex items-center justify-center"
-          >
-            <LeftChevronIcon className="w-6 h-6 text-gray-900 pt-0.5" />
-          </NavLink>
-          <span className="typo-h2_bold20">커뮤니티 프로필</span>
-        </div>
-      </div>
-      {/*프로필창*/}
-      <div className="flex flex-col border-b border-gray-100 px-4 py-5 gap-3.75">
-        <div className="flex gap-2.5">
-          <div className="relative w-20 h-20 rounded-full bg-gray-50">
-            {imagePreview ? (
-              <img
-                src={imagePreview}
-                alt={profileImageUrl || 'profile'}
-                className="w-20 h-20 rounded-full object-cover"
-              />
-            ) : (
-              <div className="w-20 h-20 rounded-full bg-user bg-top bg-size-[95px]" />
-            )}
-            {editMode && (
-              <button
-                className="flex absolute items-center justify-center w-5 h-5 rounded-full bg-gray-200 top-0 right-0"
-                onClick={handleSvgClick}
-              >
-                <CameraIcon className="w-3.5 h-3.5 text-gray-600" />
-                <input
-                  type="file"
-                  accept="image/*"
-                  ref={ImageInputRef}
-                  onChange={handleFileChange}
-                  className="hidden"
-                />
-              </button>
-            )}
+    <div className="flex flex-col min-h-dvh pt-10">
+      <div className="flex flex-col gap-5.5">
+        {/*네브바*/}
+        <div className="flex justify-between items-center text-gray-900 px-4">
+          <div className="flex gap-3">
+            <NavLink
+              to="/lived/community"
+              className="flex items-center justify-center"
+            >
+              <LeftChevronIcon className="w-7 h-7 text-gray-900 pt-0.5" />
+            </NavLink>
+            <span className="typo-h2_bold20">커뮤니티 프로필</span>
           </div>
-          <div className="flex flex-col gap-2 justify-center">
-            <div className="flex flex-col gap-2">
-              <div className="text-[12px] text-gray-600">
-                {changeLivingPriod[livingPeriod]}
-              </div>
-              <div className="flex gap-1">
-                {editMode ? (
-                  <div className="flex relative flex-col gap-1">
-                    {isNicknameLong && (
-                      <div
-                        className={`absolute -top-5 left-5 typo-body_bold12 text-alert-50 bg-gray-100`}
-                      >
-                        12글자까지 입력 가능합니다.
-                      </div>
-                    )}
-                    <div className="flex items-center gap-1">
-                      <WriteIcon className="w-4 h-4 text-gray-700" />
-                      <div className="relative inline-block">
-                        <input
-                          ref={inputRef}
-                          className="font-bold"
-                          maxLength={12}
-                          value={nickname}
-                          onChange={(e) => {
-                            setNickname(e.target.value);
-                            setIsNicknameLong(e.target.value.length > 12);
-                          }}
-                          style={{
-                            minWidth: '40px',
-                            boxSizing: 'content-box',
-                          }}
-                        />
-                        <span
-                          ref={spanRef}
-                          className="typo-body_bold16"
-                          style={{
-                            position: 'absolute',
-                            visibility: 'hidden',
-                            whiteSpace: 'pre',
-                          }}
-                        ></span>
+        </div>
+
+        {/*프로필창*/}
+        <div className="flex flex-col border-b border-gray-100 px-4 pt-2.5 pb-5 gap-3.75">
+          <div className="flex gap-2.5">
+            {/* 이미지 */}
+            <div className="relative w-20 h-20 rounded-full bg-gray-50">
+              {imagePreview ? (
+                <img
+                  src={imagePreview}
+                  alt={profileImageUrl || 'profile'}
+                  className="w-20 h-20 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-20 h-20 rounded-full bg-user bg-top bg-size-[95px]" />
+              )}
+              {editMode && (
+                <button
+                  className="flex absolute items-center justify-center w-5 h-5 rounded-full bg-gray-200 top-0 right-0"
+                  onClick={handleSvgClick}
+                >
+                  <CameraIcon className="w-3.5 h-3.5 text-gray-600" />
+                  <input
+                    type="file"
+                    accept="image/*"
+                    ref={ImageInputRef}
+                    onChange={handleFileChange}
+                    className="hidden"
+                  />
+                </button>
+              )}
+            </div>
+
+            {/* 자취 정보 & 대형 열매 */}
+            <div className="flex flex-col gap-2 justify-center">
+              <div className="flex flex-col gap-2">
+                <div className="text-[12px] text-gray-600">
+                  {changeLivingPriod[livingPeriod]}
+                </div>
+                <div className="h-6 flex gap-1 items-center">
+                  {editMode ? (
+                    <div className="flex relative flex-col gap-1">
+                      {isNicknameLong && (
+                        <div
+                          className={`absolute -top-5 left-5 typo-body_bold12 text-alert-50 bg-gray-100`}
+                        >
+                          12글자까지 입력 가능합니다.
+                        </div>
+                      )}
+                      <div className="flex items-center gap-1">
+                        <WriteIcon className="w-4 h-4 text-gray-700" />
+                        <div className="relative inline-block">
+                          <input
+                            ref={inputRef}
+                            className="font-bold"
+                            maxLength={12}
+                            value={nickname}
+                            onChange={(e) => {
+                              setNickname(e.target.value);
+                              setIsNicknameLong(e.target.value.length > 12);
+                            }}
+                            style={{
+                              minWidth: '40px',
+                              boxSizing: 'content-box',
+                            }}
+                          />
+                          <span
+                            ref={spanRef}
+                            className="typo-body_bold16"
+                            style={{
+                              position: 'absolute',
+                              visibility: 'hidden',
+                              whiteSpace: 'pre',
+                            }}
+                          ></span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ) : (
-                  <div className="typo-body_bold16">{nickname}</div>
-                )}
+                  ) : (
+                    <div className="typo-body_bold16">{nickname}</div>
+                  )}
+                </div>
+              </div>
+              {/*대형열매 5개*/}
+              <div className="flex gap-2">
+                {fruits.slice(0, 5).map((fruit) => (
+                  <div
+                    key={fruit.fruitId}
+                    className="w-8 h-8 rounded-full bg-[#2E2E2E]"
+                  />
+                ))}
+                {Array.from({ length: 5 - fruits.length }).map((_, index) => (
+                  <div
+                    key={`empty-${index}`}
+                    className="w-8 h-8 rounded-full bg-gray-300/40"
+                  />
+                ))}
               </div>
             </div>
-            {/*대형열매 5개*/}
-            <div className="flex gap-2">
-              {fruits.slice(0, 5).map((fruit) => (
-                <div
-                  key={fruit.fruitId}
-                  className="w-8 h-8 rounded-full bg-[#2E2E2E]"
-                />
-              ))}
-              {Array.from({ length: 5 - fruits.length }).map((_, index) => (
-                <div
-                  key={`empty-${index}`}
-                  className="w-8 h-8 rounded-full bg-gray-300/40"
-                />
-              ))}
-            </div>
           </div>
+
+          <button
+            className={`p-2.5 rounded-lg text-center text-body_12 text-gray-900 ${editMode ? 'bg-primary-30' : 'bg-gray-100 '}`}
+            onClick={() => {
+              if (editMode) {
+                handleSubmitProfile();
+              } else {
+                setEditMode(true);
+              }
+            }}
+          >
+            {editMode ? '프로필 수정 완료' : '프로필 수정'}
+          </button>
         </div>
-        <button
-          className={`p-2.5 rounded-lg text-center text-body_12 text-gray-900 ${editMode ? 'bg-primary-30' : 'bg-gray-100 '}`}
-          onClick={() => {
-            if (editMode) {
-              handleSubmitProfile();
-            } else {
-              setEditMode(true);
-            }
-          }}
-        >
-          {editMode ? '프로필 수정 완료' : '프로필 수정'}
-        </button>
       </div>
       <ProfilePostList />
     </div>

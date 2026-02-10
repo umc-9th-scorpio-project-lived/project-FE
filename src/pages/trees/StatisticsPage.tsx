@@ -269,7 +269,7 @@ const StatisticsPage = () => {
                             {dayLabel}
                           </div>
                           <div
-                            className="border-[0.5px] border-gray-100 w-9 h-9 rounded-full flex justify-center items-center"
+                            className={`border-[0.5px] w-9 h-9 rounded-full flex justify-center items-center ${dayData.percentage === 0 ? 'border-primary-50' : 'border-gray-100'}`}
                             style={{
                               background:
                                 dayData.percentage === 100
@@ -277,7 +277,9 @@ const StatisticsPage = () => {
                                   : `linear-gradient(0deg, #9FD416 0%, transparent ${dayData.percentage}%)`,
                             }}
                           >
-                            <span className="typo-body_reg12 text-gray-800">
+                            <span
+                              className={`typo-body_reg12 ${dayData.percentage === 100 ? 'text-screen-0' : 'text-gray-800'}`}
+                            >
                               {parseInt(dayData.date.split('-')[2])}
                             </span>
                           </div>
@@ -335,7 +337,7 @@ const StatisticsPage = () => {
                         return (
                           <div
                             key={day}
-                            className="w-10.5 h-10.5 rounded-full flex justify-center items-center typo-body_bold14 text-gray-900"
+                            className={`w-10.5 h-10.5 rounded-full flex justify-center items-center typo-body_bold14 ${percentage === 100 ? 'text-screen-0' : 'text-gray-900'}`}
                             style={{
                               background:
                                 percentage === 100

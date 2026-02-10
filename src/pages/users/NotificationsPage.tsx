@@ -25,10 +25,10 @@ const NotificationsPage = () => {
 
   const allEnabled = settings?.allEnabled ?? false;
   const routineEnabled = settings?.routineEnabled ?? false;
-  const statisticsEnabled = settings?.routineReportEnabled ?? false;
+  const statisticsEnabled = settings?.statsEnabled ?? false;
   const communityEnabled = settings?.communityEnabled ?? false;
   const commentEnabled = settings?.commentEnabled ?? false;
-  const trendingPostEnabled = settings?.communityHotEnabled ?? false;
+  const trendingPostEnabled = settings?.hotPostEnabled ?? false;
   const marketingEnabled = settings?.marketingEnabled ?? false;
 
   return (

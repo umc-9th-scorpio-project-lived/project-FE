@@ -43,7 +43,9 @@ const HomeHeader = () => {
           <div className="text-[22px] font-normal">{data?.dateTitle}</div>
           <div
             className={`h-6 w-6 ${hasUnreadAlarm ? 'bg-active-alarm' : 'bg-alarm'}`}
-            onClick={() => navigate('/lived/alarm')}
+            onClick={() =>
+              navigate('/lived/alarm', { state: { initialTab: 'ROUTINE' } })
+            }
           />
         </div>
 

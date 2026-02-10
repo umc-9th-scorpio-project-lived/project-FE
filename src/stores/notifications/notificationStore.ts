@@ -156,9 +156,9 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
     await get().updateSettings({
       allEnabled: nextValue,
       routineEnabled: nextValue,
-      routineReportEnabled: nextValue,
+      statsEnabled: nextValue,
       communityEnabled: nextValue,
-      communityHotEnabled: nextValue,
+      hotPostEnabled: nextValue,
       commentEnabled: nextValue,
       marketingEnabled: nextValue,
     });
@@ -177,7 +177,7 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
 
     await get().updateSettings({
       ...s,
-      routineReportEnabled: !s.routineReportEnabled,
+      statsEnabled: !s.statsEnabled,
     });
   },
 
@@ -198,7 +198,7 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
       ...s,
       communityEnabled: nextValue,
       commentEnabled: nextValue,
-      communityHotEnabled: nextValue,
+      hotPostEnabled: nextValue,
     });
   },
 
@@ -215,7 +215,7 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
 
     await get().updateSettings({
       ...s,
-      communityHotEnabled: !s.communityHotEnabled,
+      hotPostEnabled: !s.hotPostEnabled,
     });
   },
 

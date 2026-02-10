@@ -1,10 +1,17 @@
 import MiniRightChevronIcon from '@/icons/MiniRightChevronIcon';
 import MiniRoutineTreeIcon from '@/icons/MiniRoutineTreeIcon';
+import { useMemberStore } from '@/stores/members/memberStore';
 import useBaseModal from '@/stores/modals/baseModal';
+import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const UserPage = () => {
   const { openModal } = useBaseModal();
+  const { fetchUserProfile, userProfile } = useMemberStore();
+
+  useEffect(() => {
+    fetchUserProfile();
+  }, [fetchUserProfile]);
 
   return (
     <div className="w-full h-full flex flex-col gap-4.5 overflow-y-auto overflow-x-hidden pb-25">
@@ -14,18 +21,22 @@ const UserPage = () => {
 
       <div className="flex flex-col gap-6">
         <div className="flex flex-col items-center gap-2">
-          <div>
-            <span className="typo-body_bold16 text-gray-800">홍길동</span>
-            <span className="typo-body_reg16 text-gray-800">의 루틴나무</span>
+          <div className="flex flex-col gap-3.5 justify-center items-center">
+            <div>
+              <span className="typo-body_bold16 text-gray-800">
+                {userProfile?.name}
+              </span>
+              <span className="typo-body_reg16 text-gray-800">의 루틴나무</span>
+            </div>
+
+            <MiniRoutineTreeIcon className="h-25" />
+
+            <button className="w-40.5 px-4 py-3 bg-gray-100 text-gray-800 rounded-3xl">
+              <span className="typo-body_bold14 text-gray-800">
+                루틴나무 변경하기
+              </span>
+            </button>
           </div>
-
-          <MiniRoutineTreeIcon className="h-27.5" />
-
-          <button className="px-8 py-3 bg-gray-100 text-gray-800 rounded-3xl">
-            <span className="typo-body_bold14 text-gray-800">
-              루틴나무 변경하기
-            </span>
-          </button>
         </div>
 
         <div>

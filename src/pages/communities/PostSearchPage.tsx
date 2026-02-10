@@ -40,13 +40,13 @@ const PostSearchPage = () => {
     <>
       <div className="border-b-[0.5px] border-gray-400 pt-10">
         {/*네브바*/}
-        <div className="flex items-center mx-4 my-3.5 gap-5">
+        <div className="flex items-center justify-between px-4 py-3.5 gap-4">
           <div className="flex w-8/9 gap-1.5">
             <NavLink
               to="/lived/community"
               className="flex items-center justify-center"
             >
-              <LeftChevronIcon className="w-6 h-6 text-gray-900 pt-0.5" />
+              <LeftChevronIcon className="w-7 h-7 text-gray-900" />
             </NavLink>
             {state !== 'activate' && (
               <input
@@ -92,7 +92,7 @@ const PostSearchPage = () => {
         <>
           {posts.length === 0 && (
             <div className="flex typo-body_reg12 px-4 pt-4">
-              <span className="flex text-gray-900">{searchWord}</span>
+              <span className="pl-2.5 flex text-gray-900">{searchWord}</span>
               <span className="flex text-gray-600">
                 에 대한 검색 결과가 존재하지 않습니다.
               </span>
@@ -101,7 +101,7 @@ const PostSearchPage = () => {
           {posts.length > 0 && (
             <>
               <div className="flex typo-body_reg12 px-4 pt-4">
-                <span className="flex text-gray-900">{searchWord}</span>
+                <span className="pl-2.5 flex text-gray-900">{searchWord}</span>
                 <span className="flex text-gray-600">
                   에 대한 검색 결과입니다.
                 </span>
