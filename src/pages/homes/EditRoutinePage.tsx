@@ -213,7 +213,7 @@ const EditRoutinePage = () => {
                   onBlur={handleBlur}
                   onInput={handleInput}
                   onKeyDown={handleKeyDown}
-                  className={`w-full outline-none typo-body_reg14 whitespace-pre-wrap break-all text-center ${isTitleFocused || hasTitle ? 'text-gray-900' : 'text-gray-500'}`}
+                  className={`w-full outline-none typo-body_reg14 whitespace-pre-wrap break-keep text-center wrap-normal ${isTitleFocused || hasTitle ? 'text-gray-900' : 'text-gray-500'}`}
                 />
               </div>
 
