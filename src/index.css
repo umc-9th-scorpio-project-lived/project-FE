@@ -17,7 +17,7 @@ body {
   font-family: 'suite';
   min-width: 375px; /* iphone SE 기준 - 모바일 최소 너비 */
   max-width: 500px; /* 모바일 최대 너비 */
-  min-height: 100vh;
+  min-height: 100dvh;
   height: auto;
   overflow-x: hidden;
   -ms-overflow-style: none;
