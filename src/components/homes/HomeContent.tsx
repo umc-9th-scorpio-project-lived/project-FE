@@ -125,69 +125,6 @@ const HomeContent = () => {
             <PlusIcon className="w-5 h-5 text-gray-700" />
             <span className="typo-body_reg14">루틴 추가하기</span>
           </div>
-          <div
-            className="w-26.5 h-26.5 flex flex-col gap-3.5 justify-center items-center bg-gray-50 rounded-lg"
-            onClick={() => navigate('/lived/create')}
-          >
-            <PlusIcon className="w-5 h-5 text-gray-700" />
-            <span className="typo-body_reg14">루틴 추가하기</span>
-          </div>
-          <div
-            className="w-26.5 h-26.5 flex flex-col gap-3.5 justify-center items-center bg-gray-50 rounded-lg"
-            onClick={() => navigate('/lived/create')}
-          >
-            <PlusIcon className="w-5 h-5 text-gray-700" />
-            <span className="typo-body_reg14">루틴 추가하기</span>
-          </div>
-          <div
-            className="w-26.5 h-26.5 flex flex-col gap-3.5 justify-center items-center bg-gray-50 rounded-lg"
-            onClick={() => navigate('/lived/create')}
-          >
-            <PlusIcon className="w-5 h-5 text-gray-700" />
-            <span className="typo-body_reg14">루틴 추가하기</span>
-          </div>{' '}
-          <div
-            className="w-26.5 h-26.5 flex flex-col gap-3.5 justify-center items-center bg-gray-50 rounded-lg"
-            onClick={() => navigate('/lived/create')}
-          >
-            <PlusIcon className="w-5 h-5 text-gray-700" />
-            <span className="typo-body_reg14">루틴 추가하기</span>
-          </div>{' '}
-          <div
-            className="w-26.5 h-26.5 flex flex-col gap-3.5 justify-center items-center bg-gray-50 rounded-lg"
-            onClick={() => navigate('/lived/create')}
-          >
-            <PlusIcon className="w-5 h-5 text-gray-700" />
-            <span className="typo-body_reg14">루틴 추가하기</span>
-          </div>{' '}
-          <div
-            className="w-26.5 h-26.5 flex flex-col gap-3.5 justify-center items-center bg-gray-50 rounded-lg"
-            onClick={() => navigate('/lived/create')}
-          >
-            <PlusIcon className="w-5 h-5 text-gray-700" />
-            <span className="typo-body_reg14">루틴 추가하기</span>
-          </div>{' '}
-          <div
-            className="w-26.5 h-26.5 flex flex-col gap-3.5 justify-center items-center bg-gray-50 rounded-lg"
-            onClick={() => navigate('/lived/create')}
-          >
-            <PlusIcon className="w-5 h-5 text-gray-700" />
-            <span className="typo-body_reg14">루틴 추가하기</span>
-          </div>{' '}
-          <div
-            className="w-26.5 h-26.5 flex flex-col gap-3.5 justify-center items-center bg-gray-50 rounded-lg"
-            onClick={() => navigate('/lived/create')}
-          >
-            <PlusIcon className="w-5 h-5 text-gray-700" />
-            <span className="typo-body_reg14">루틴 추가하기</span>
-          </div>{' '}
-          <div
-            className="w-26.5 h-26.5 flex flex-col gap-3.5 justify-center items-center bg-gray-50 rounded-lg"
-            onClick={() => navigate('/lived/create')}
-          >
-            <PlusIcon className="w-5 h-5 text-gray-700" />
-            <span className="typo-body_reg14">루틴 추가하기</span>
-          </div>
         </div>
 
         {totalCount > 0 && openCoach && (

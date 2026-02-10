@@ -145,18 +145,17 @@ const PushGuidePage = () => {
         </div>
 
         {/* 하단 영역 */}
-        <div className="">
-          {/* 완료 버튼 */}
-          <div
-            role="button"
-            tabIndex={hasSwiped ? 0 : -1}
-            aria-disabled={!hasSwiped}
-            onClick={() => hasSwiped && handleDone()}
-            onKeyDown={(e) => {
-              if (!hasSwiped) return;
-              handleKeyActivate(e, handleDone);
-            }}
-            className={`h-12.5 w-full rounded-4xl
+        {/* 완료 버튼 */}
+        <div
+          role="button"
+          tabIndex={hasSwiped ? 0 : -1}
+          aria-disabled={!hasSwiped}
+          onClick={() => hasSwiped && handleDone()}
+          onKeyDown={(e) => {
+            if (!hasSwiped) return;
+            handleKeyActivate(e, handleDone);
+          }}
+          className={`h-12.5 w-full rounded-4xl
               flex items-center justify-center typo-body_bold18
               ${
                 hasSwiped
@@ -164,9 +163,8 @@ const PushGuidePage = () => {
                   : 'bg-gray-100 text-gray-400 pointer-events-none'
               }
             `}
-          >
-            확인했어요!
-          </div>
+        >
+          확인했어요!
         </div>
       </section>
     </main>
