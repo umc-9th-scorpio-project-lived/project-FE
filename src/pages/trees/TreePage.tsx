@@ -31,7 +31,7 @@ const TreePage = () => {
 
   return (
     // 친구 목록 바텀시트가 루틴 나무를 가리는 걸 방지하기 위해 pb-[180px] 추가
-    <div className="bg-gray-50 w-full h-screen overflow-y-auto pb-45">
+    <div className="bg-gray-50 w-full h-full overflow-y-auto pb-45">
       <div className="pt-10 px-4 flex justify-between">
         <span className="typo-h2_bold20 text-gray-900">루틴 나무</span>
 

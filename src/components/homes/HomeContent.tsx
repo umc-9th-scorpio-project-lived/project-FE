@@ -6,6 +6,7 @@ import useCoachModal from '@/hooks/useCoachModal';
 import { useRoutineStore } from '@/stores/routines/routineStore';
 import { useHomeDateStore } from '@/stores/homes/homeStore';
 import { formatDate } from '@/utils/homes/homeUtils';
+import HomeFloatingButton from './HomeFloatingButton';
 
 const LONG_PRESS_MS = 500;
 const MOVE_CANCEL_PX = 8;
@@ -81,8 +82,12 @@ const HomeContent = () => {
   };
 
   return (
-    <div className="flex flex-col gap-3.5 px-4 pt-6 h-[calc(100%-200px)]">
+    <div className="relative flex flex-col gap-3.5 px-4 pt-6 h-[calc(100%-200px)]">
       <span className="typo-body_reg16 text-gray-900">{headerText}</span>
+
+      <div className="absolute bottom-4 right-4 z-10">
+        <HomeFloatingButton />
+      </div>
 
       <div className="relative flex-1 min-h-0 overflow-y-auto pb-6">
         <div className="grid grid-cols-3 gap-5 justify-items-center">
@@ -101,7 +106,7 @@ const HomeContent = () => {
                 onPointerCancel={handlePressCancel}
                 onPointerLeave={handlePressCancel}
               >
-                <span className="typo-body_reg14 px-3.5 text-center line-clamp-3">
+                <span className="typo-body_reg14 px-3.5 text-center line-clamp-3 whitespace-pre-wrap break-keep wrap-normal">
                   {r.title}
                 </span>
 
@@ -113,7 +118,6 @@ const HomeContent = () => {
               </div>
             );
           })}
-
           <div
             className="w-26.5 h-26.5 flex flex-col gap-3.5 justify-center items-center bg-gray-50 rounded-lg"
             onClick={() => navigate('/lived/create')}
