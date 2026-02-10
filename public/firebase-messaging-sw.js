@@ -1,3 +1,7 @@
+/* eslint-env serviceworker */
+/* global firebase */
+/* eslint-disable no-undef */
+
 importScripts(
   'https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js'
 );
