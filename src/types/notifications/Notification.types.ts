@@ -30,10 +30,10 @@ export type NotificationSettingsResult = {
   allEnabled: boolean;
 
   routineEnabled: boolean;
-  routineReportEnabled: boolean;
+  statsEnabled: boolean;
 
   communityEnabled: boolean;
-  communityHotEnabled: boolean;
+  hotPostEnabled: boolean;
   commentEnabled: boolean;
 
   marketingEnabled: boolean;
@@ -44,10 +44,10 @@ export type PatchNotificationSettingsRequest = {
   allEnabled: boolean;
 
   routineEnabled: boolean;
-  routineReportEnabled: boolean;
+  statsEnabled: boolean;
 
   communityEnabled: boolean;
-  communityHotEnabled: boolean;
+  hotPostEnabled: boolean;
   commentEnabled: boolean;
 
   marketingEnabled: boolean;

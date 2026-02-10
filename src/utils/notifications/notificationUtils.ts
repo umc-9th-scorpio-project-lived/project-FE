@@ -37,14 +37,14 @@ export const formatTimeAgo = (createdAt: string, now = new Date()): string => {
 export const normalizeSettings = (
   s: PatchNotificationSettingsRequest
 ): PatchNotificationSettingsRequest => {
-  const nextCommunityEnabled = s.commentEnabled && s.communityHotEnabled;
+  const nextCommunityEnabled = s.commentEnabled && s.hotPostEnabled;
 
   const nextAllEnabled =
     s.routineEnabled &&
-    s.routineReportEnabled &&
+    s.statsEnabled &&
     nextCommunityEnabled &&
     s.commentEnabled &&
-    s.communityHotEnabled &&
+    s.hotPostEnabled &&
     s.marketingEnabled;
 
   return {

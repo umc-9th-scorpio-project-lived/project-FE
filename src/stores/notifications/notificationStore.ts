@@ -7,9 +7,43 @@ import type {
   PatchNotificationSettingsRequest,
 } from '@/types/notifications/Notification.types';
 import patchNotificationSettings from '@/services/notifications/patchNotificationSettings';
-import { normalizeSettings } from '@/utils/notifications/notificationUtils';
+// import { normalizeSettings } from '@/utils/notifications/notificationUtils';
 import getNotificationSettings from '@/services/notifications/getNotificationSettings';
 import patchNotification from '@/services/notifications/patchNotifications';
+
+type LeafSettings = Pick<
+  PatchNotificationSettingsRequest,
+  | 'routineEnabled'
+  | 'statsEnabled'
+  | 'commentEnabled'
+  | 'hotPostEnabled'
+  | 'marketingEnabled'
+>;
+
+const pickLeaf = (s: NotificationSettingsResult): LeafSettings => ({
+  routineEnabled: s.routineEnabled,
+  statsEnabled: s.statsEnabled,
+  commentEnabled: s.commentEnabled,
+  hotPostEnabled: s.hotPostEnabled,
+  marketingEnabled: s.marketingEnabled,
+});
+
+const getDerived = (s: LeafSettings) => {
+  const communityEnabled = s.commentEnabled && s.hotPostEnabled;
+  const allEnabled =
+    s.routineEnabled &&
+    s.statsEnabled &&
+    s.marketingEnabled &&
+    s.commentEnabled &&
+    s.hotPostEnabled;
+
+  return { communityEnabled, allEnabled };
+};
+
+const toPatchPayload = (s: LeafSettings): PatchNotificationSettingsRequest => ({
+  ...s,
+  ...getDerived(s),
+});
 
 type NotificationState = {
   routine: NotificationItem[];
@@ -19,16 +53,19 @@ type NotificationState = {
   error: ApiError | null;
   hasFetched: boolean;
 
-  settings: NotificationSettingsResult | null;
+  settingsLeaf: LeafSettings | null;
   isSettingsLoading: boolean;
   settingsError: ApiError | null;
   hasFetchedSettings: boolean;
+
+  allEnabled: () => boolean;
+  communityEnabled: () => boolean;
 
   fetchNotifications: () => Promise<void>;
   clear: () => void;
 
   fetchSettings: () => Promise<void>;
-  updateSettings: (next: PatchNotificationSettingsRequest) => Promise<void>;
+  updateLeafSettings: (patch: Partial<LeafSettings>) => Promise<void>;
 
   toggleAll: () => Promise<void>;
   toggleRoutine: () => Promise<void>;
@@ -39,7 +76,7 @@ type NotificationState = {
   toggleTrendingPost: () => Promise<void>;
 
   markRead: (id: number) => Promise<void>;
-  markAllRead: () => Promise<void>; // 일단 로컬만 (API 나오면 교체)
+  markAllRead: () => Promise<void>;
 };
 
 export const useNotificationStore = create<NotificationState>((set, get) => ({
@@ -50,10 +87,19 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
   error: null,
   hasFetched: false,
 
-  settings: null,
+  settingsLeaf: null,
   isSettingsLoading: false,
   settingsError: null,
   hasFetchedSettings: false,
+
+  allEnabled: () => {
+    const s = get().settingsLeaf;
+    return s ? getDerived(s).allEnabled : false;
+  },
+  communityEnabled: () => {
+    const s = get().settingsLeaf;
+    return s ? getDerived(s).communityEnabled : false;
+  },
 
   // 알림 목록 조회
   fetchNotifications: async () => {
@@ -121,7 +167,7 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
     try {
       const res = await getNotificationSettings();
       set({
-        settings: res,
+        settingsLeaf: pickLeaf(res),
         hasFetchedSettings: true,
       });
     } catch (e) {
@@ -131,92 +177,94 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
     }
   },
 
-  updateSettings: async (next) => {
-    const prev = get().settings;
+  updateLeafSettings: async (patch) => {
+    const prev = get().settingsLeaf;
+    if (!prev) return;
 
-    const normalized = normalizeSettings(next);
-
-    set({ settings: normalized, settingsError: null });
+    const nextLeaf: LeafSettings = { ...prev, ...patch };
+    set({ settingsLeaf: nextLeaf, settingsError: null });
 
     try {
-      const res = await patchNotificationSettings(normalized);
-      set({ settings: res });
+      const payload = toPatchPayload(nextLeaf);
+      const res = await patchNotificationSettings(payload);
+      set({ settingsLeaf: pickLeaf(res) });
     } catch (e) {
-      set({ settings: prev ?? null, settingsError: e as ApiError });
+      set({ settingsLeaf: prev, settingsError: e as ApiError });
       throw e;
     }
   },
 
+  // updateSettings: async (next) => {
+  //   const prev = get().settings;
+
+  //   const normalized = normalizeSettings(next);
+
+  //   set({ settings: normalized, settingsError: null });
+
+  //   try {
+  //     const res = await patchNotificationSettings(normalized);
+  //     set({ settings: res });
+  //   } catch (e) {
+  //     set({ settings: prev ?? null, settingsError: e as ApiError });
+  //     throw e;
+  //   }
+  // },
+
   toggleAll: async () => {
-    const s = get().settings;
+    const s = get().settingsLeaf;
     if (!s) return;
 
-    const nextValue = !s.allEnabled;
+    const nextValue = !getDerived(s).allEnabled;
 
-    await get().updateSettings({
-      allEnabled: nextValue,
+    await get().updateLeafSettings({
       routineEnabled: nextValue,
-      routineReportEnabled: nextValue,
-      communityEnabled: nextValue,
-      communityHotEnabled: nextValue,
+      statsEnabled: nextValue,
       commentEnabled: nextValue,
+      hotPostEnabled: nextValue,
       marketingEnabled: nextValue,
     });
   },
 
   toggleRoutine: async () => {
-    const s = get().settings;
+    const s = get().settingsLeaf;
     if (!s) return;
-
-    await get().updateSettings({ ...s, routineEnabled: !s.routineEnabled });
+    await get().updateLeafSettings({ routineEnabled: !s.routineEnabled });
   },
 
   toggleStatistics: async () => {
-    const s = get().settings;
+    const s = get().settingsLeaf;
     if (!s) return;
-
-    await get().updateSettings({
-      ...s,
-      routineReportEnabled: !s.routineReportEnabled,
-    });
+    await get().updateLeafSettings({ statsEnabled: !s.statsEnabled });
   },
 
   toggleMarketing: async () => {
-    const s = get().settings;
+    const s = get().settingsLeaf;
     if (!s) return;
-
-    await get().updateSettings({ ...s, marketingEnabled: !s.marketingEnabled });
+    await get().updateLeafSettings({ marketingEnabled: !s.marketingEnabled });
   },
 
   toggleCommunity: async () => {
-    const s = get().settings;
+    const s = get().settingsLeaf;
     if (!s) return;
 
-    const nextValue = !s.communityEnabled;
+    const nextValue = !getDerived(s).communityEnabled;
 
-    await get().updateSettings({
-      ...s,
-      communityEnabled: nextValue,
+    await get().updateLeafSettings({
       commentEnabled: nextValue,
-      communityHotEnabled: nextValue,
+      hotPostEnabled: nextValue,
     });
   },
 
   toggleComment: async () => {
-    const s = get().settings;
+    const s = get().settingsLeaf;
     if (!s) return;
-
-    await get().updateSettings({ ...s, commentEnabled: !s.commentEnabled });
+    await get().updateLeafSettings({ commentEnabled: !s.commentEnabled });
   },
 
   toggleTrendingPost: async () => {
-    const s = get().settings;
+    const s = get().settingsLeaf;
     if (!s) return;
-
-    await get().updateSettings({
-      ...s,
-      communityHotEnabled: !s.communityHotEnabled,
-    });
+    await get().updateLeafSettings({ hotPostEnabled: !s.hotPostEnabled });
   },
 
   markRead: async (id) => {
