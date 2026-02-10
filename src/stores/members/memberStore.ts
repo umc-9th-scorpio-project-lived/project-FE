@@ -5,12 +5,14 @@ import type {
   BlockMember,
   VisibilityTreeResult,
   PatchVisibilityTreeRequest,
+  UserProfileResult,
 } from '@/types/members/Member.types';
 import getAnnouncements from '@/services/members/getAnnouncements';
 import unblockMember from '@/services/members/unblockMember';
 import getBlockMembers from '@/services/members/getBlockMembers';
 import getVisibilityTree from '@/services/members/getVisibilityTree';
 import patchVisibilityTree from '@/services/members/patchVisibilityTree';
+import getUserProfile from '@/services/members/getUserProfile';
 
 type MemberState = {
   announcementList: AnnouncementItem[];
@@ -20,6 +22,8 @@ type MemberState = {
   blockedNextCursor: number | null;
 
   treeVisibility: VisibilityTreeResult | null;
+
+  userProfile: UserProfileResult | null;
 
   isLoading: boolean;
   error: ApiError | null;
@@ -32,6 +36,8 @@ type MemberState = {
   fetchTreeVisibility: () => Promise<void>;
   updateTreeVisibility: (body: PatchVisibilityTreeRequest) => Promise<void>;
 
+  fetchUserProfile: () => Promise<void>;
+
   clear: () => void;
 };
 
@@ -43,6 +49,8 @@ export const useMemberStore = create<MemberState>((set, get) => ({
   blockedNextCursor: null,
 
   treeVisibility: null,
+
+  userProfile: null,
 
   isLoading: false,
   error: null,
@@ -116,6 +124,16 @@ export const useMemberStore = create<MemberState>((set, get) => ({
     } catch (err) {
       set({ error: err as ApiError, isLoading: false });
       throw err;
+    }
+  },
+
+  fetchUserProfile: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      const res = await getUserProfile();
+      set({ userProfile: res, isLoading: false });
+    } catch (err) {
+      set({ error: err as ApiError, isLoading: false });
     }
   },
 

@@ -1,10 +1,17 @@
 import MiniRightChevronIcon from '@/icons/MiniRightChevronIcon';
 import MiniRoutineTreeIcon from '@/icons/MiniRoutineTreeIcon';
+import { useMemberStore } from '@/stores/members/memberStore';
 import useBaseModal from '@/stores/modals/baseModal';
+import { useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const UserPage = () => {
   const { openModal } = useBaseModal();
+  const { fetchUserProfile, userProfile } = useMemberStore();
+
+  useEffect(() => {
+    fetchUserProfile();
+  }, [fetchUserProfile]);
 
   return (
     <div className="w-full h-full flex flex-col gap-4.5 overflow-y-auto overflow-x-hidden pb-25">
@@ -15,7 +22,9 @@ const UserPage = () => {
       <div className="flex flex-col gap-6">
         <div className="flex flex-col items-center gap-2">
           <div>
-            <span className="typo-body_bold16 text-gray-800">홍길동</span>
+            <span className="typo-body_bold16 text-gray-800">
+              {userProfile?.name}
+            </span>
             <span className="typo-body_reg16 text-gray-800">의 루틴나무</span>
           </div>
 
