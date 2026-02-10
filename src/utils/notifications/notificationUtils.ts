@@ -1,3 +1,8 @@
+import type {
+  NotificationTarget,
+  PatchNotificationSettingsRequest,
+} from '@/types/notifications/Notification.types';
+
 // "N분 전" | "N일 전" | "N주 전" 포맷 유틸
 export const formatTimeAgo = (createdAt: string, now = new Date()): string => {
   const created = new Date(createdAt);
@@ -27,4 +32,47 @@ export const formatTimeAgo = (createdAt: string, now = new Date()): string => {
   const weeks = Math.floor(safeMs / week);
   const clampedWeeks = Math.min(Math.max(1, weeks), 4);
   return `${clampedWeeks}주 전`;
+};
+
+export const normalizeSettings = (
+  s: PatchNotificationSettingsRequest
+): PatchNotificationSettingsRequest => {
+  const nextCommunityEnabled = s.commentEnabled && s.communityHotEnabled;
+
+  const nextAllEnabled =
+    s.routineEnabled &&
+    s.routineReportEnabled &&
+    nextCommunityEnabled &&
+    s.commentEnabled &&
+    s.communityHotEnabled &&
+    s.marketingEnabled;
+
+  return {
+    ...s,
+    communityEnabled: nextCommunityEnabled,
+    allEnabled: nextAllEnabled,
+  };
+};
+
+export const toNotificationTargetLabel = (target: NotificationTarget) => {
+  switch (target) {
+    case 'ROUTINE':
+      return '루틴';
+    case 'ROUTINE_ALARM':
+      return '루틴';
+    case 'ROUTINE_REPORT':
+      return '통계 분석';
+    case 'ROUTINE_TREE':
+      return '루틴 나무';
+
+    case 'COMMUNITY':
+      return '커뮤니티';
+    case 'COMMENT':
+      return '댓글';
+    case 'COMMUNITY_HOT':
+      return '실시간 인기글';
+
+    default:
+      return target;
+  }
 };
