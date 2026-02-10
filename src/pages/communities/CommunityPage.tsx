@@ -71,7 +71,11 @@ const CommunityPage = () => {
               >
                 <SearchIcon className="w-full h-full text-gray-600" />
               </NavLink>
-              <div className="w-6 h-6 bg-alarm bg-center" />
+              <NavLink
+                to="/lived/alarm"
+                state={{ initialTab: 'COMMUNITY' }}
+                className="w-6 h-6 bg-alarm bg-center"
+              ></NavLink>
               <NavLink
                 to={`/lived/community/profile`}
                 className="w-6 h-6 bg-user bg-center"
