@@ -30,9 +30,10 @@ const CallbackPage = () => {
       const socialId = params.get('socialId') ?? '';
       const name = params.get('name') ?? '';
       const provider = toProviderEnum(params.get('provider'));
+      const email = params.get('email') ?? '';
 
       // 신규 회원인데 필수 쿼리값이 누락되면, 이후 회원가입이 실패하므로 즉시 중단
-      if (!socialId || !name || !provider) {
+      if (!socialId || !name || !provider || !email) {
         // 팀 스타일에 맞춰 toast/모달로 대체 가능
         alert('소셜 로그인 정보가 올바르지 않습니다. 다시 시도해주세요.');
         navigate('/', { replace: true });
@@ -40,7 +41,7 @@ const CallbackPage = () => {
       }
 
       // 이후 온보딩에서 회원가입 요청에 사용할 소셜 정보를 스토어에 저장
-      setSocialAuth({ socialId, provider, name });
+      setSocialAuth({ socialId, provider, name, email });
 
       navigate('/onboardings/basic-info', { replace: true });
       return;
