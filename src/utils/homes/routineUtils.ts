@@ -308,3 +308,29 @@ export const toEditRoutineRequest = (
     isAlarmOn,
   } as EditRoutineRequest;
 };
+
+type WithCode = { code?: string };
+type WithRaw = { raw?: unknown };
+
+const hasCode = (v: unknown): v is WithCode =>
+  typeof v === 'object' && v !== null && 'code' in v;
+
+const hasRaw = (v: unknown): v is WithRaw =>
+  typeof v === 'object' && v !== null && 'raw' in v;
+
+export const getErrorCode = (err: unknown): string | undefined => {
+  if (hasCode(err) && typeof err.code === 'string') return err.code;
+
+  if (hasRaw(err)) {
+    const raw = err.raw;
+
+    if (hasCode(raw) && typeof raw.code === 'string') return raw.code;
+
+    if (hasRaw(raw)) {
+      const raw2 = raw.raw;
+      if (hasCode(raw2) && typeof raw2.code === 'string') return raw2.code;
+    }
+  }
+
+  return undefined;
+};
