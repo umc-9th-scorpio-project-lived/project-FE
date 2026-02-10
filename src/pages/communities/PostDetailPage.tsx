@@ -272,90 +272,96 @@ const PostDetailPage = () => {
   };
 
   return (
-    <div className="flex flex-col w-full min-h-screen pt-10 pb-25">
-      {/*네브바*/}
-      <div className="flex px-4 justify-between">
-        <LeftChevronIcon
-          className="w-7 h-7 text-gray-900 pt-0.5"
-          onClick={handleBack}
-        />
-        <div className="relative flex gap-2">
-          <BookmarkIcon
-            className={`w-7 h-7 transition-colors ${scrapped ? 'fill-current text-primary-40' : 'fill-none text-gray-700'}`}
-            onClick={handleScrapToggle}
+    <div className="flex flex-col w-full min-h-dvh pt-10 pb-25">
+      <div className="flex flex-col gap-2.5">
+        {/*네브바*/}
+        <div className="flex px-4 justify-between">
+          <LeftChevronIcon
+            className="w-7 h-7 text-gray-900 pt-0.5"
+            onClick={handleBack}
           />
-          <KebabIcon
-            className="w-7 h-7 text-gray-700 fill-none"
-            onClick={() => setOpen((prev) => !prev)}
-          />
-          {open && !isModalOpen && (
-            <div className="absolute top-8 right-0 z-50">
-              <CommunityHamburger
-                type={isMyPost ? 'myPost' : 'post'}
-                postId={post?.postId}
-                onDelete={handleDeletePost}
-              />
+          <div className="relative flex gap-2">
+            <BookmarkIcon
+              className={`w-7 h-7 transition-colors ${scrapped ? 'fill-current text-primary-40' : 'fill-none text-gray-700'}`}
+              onClick={handleScrapToggle}
+            />
+            <KebabIcon
+              className="w-7 h-7 text-gray-700 fill-none"
+              onClick={() => setOpen((prev) => !prev)}
+            />
+            {open && !isModalOpen && (
+              <div className="absolute top-8 right-0 z-50">
+                <CommunityHamburger
+                  type={isMyPost ? 'myPost' : 'post'}
+                  postId={post?.postId}
+                  onDelete={handleDeletePost}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+        {/*게시글 본문*/}
+        <div className="flex flex-col px-4 py-3 gap-2 border-b-2 border-gray-100">
+          <div className="flex items-center gap-2.5">
+            <img
+              className="w-13.5 h-13.5 rounded-full bg-gray-500"
+              src={post?.author.profileImageUrl || undefined}
+            />
+            <div className="flex flex-col gap-0.5">
+              <span className="typo-body_reg16 text-gray-900">
+                {post?.author.nickname}
+              </span>
+              <div className="flex items-center gap-1">
+                <span className="typo-body_reg12 text-gray-600">
+                  {post?.categoryLabel}
+                </span>
+                <div className="w-0.5 h-0.5 bg-[#9C9C9C]" />
+                <span className="typo-body_reg12 text-gray-400">
+                  조회 {post?.viewCount}
+                </span>
+                <div className="w-0.5 h-0.5 bg-[#9C9C9C]" />
+                <span className="typo-body_reg12 text-gray-400">
+                  {post?.createdAt && formatRelativeTime(post.createdAt)}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-1.5">
+            <span className="typo-body_reg16 text-gray-900">{post?.title}</span>
+            <span className="typo-body_reg12 text-gray-800 whitespace-pre-line">
+              {post?.content}
+            </span>
+          </div>
+
+          {/* 사진 리스트 */}
+          {post && post?.images.length > 0 && (
+            <div className="flex gap-3 overflow-x-auto">
+              {post?.images.map((image, index) => (
+                <img
+                  key={image.imageId}
+                  src={image.imageUrl}
+                  className="w-26 h-26 rounded-lg bg-gray-500"
+                  onClick={() => setSelectedImage(index)}
+                ></img>
+              ))}
             </div>
           )}
-        </div>
-      </div>
-      {/*게시글 본문*/}
-      <div className="flex flex-col px-4 py-3 gap-2 border-b-2 border-gray-100">
-        <div className="flex items-center gap-2.5">
-          <img
-            className="w-13.5 h-13.5 rounded-full bg-gray-500"
-            src={post?.author.profileImageUrl || undefined}
-          />
-          <div className="flex flex-col gap-0.5">
-            <span className="typo-body_reg16 text-gray-900">
-              {post?.author.nickname}
-            </span>
-            <div className="flex items-center gap-1">
-              <span className="typo-body_reg12 text-gray-600">
-                {post?.categoryLabel}
-              </span>
-              <div className="w-0.5 h-0.5 bg-[#9C9C9C]" />
-              <span className="typo-body_reg12 text-gray-400">
-                조회 {post?.viewCount}
-              </span>
-              <div className="w-0.5 h-0.5 bg-[#9C9C9C]" />
-              <span className="typo-body_reg12 text-gray-400">
-                {post?.createdAt && formatRelativeTime(post.createdAt)}
+
+          <div className="flex gap-2">
+            <div className="flex gap-1">
+              <LikeIcon
+                className={`w-4 h-4 ${isLiked ? 'text-primary-40' : 'text-gray-200'}`}
+                onClick={handleLikeToggle}
+              />
+              <span className="h-4 text-[11px] text-gray-900">{likeCount}</span>
+            </div>
+            <div className="flex gap-1">
+              <CommentIcon className="w-4 h-4 text-primary-40" />
+              <span className="h-4 text-[11px] text-gray-900">
+                {post?.commentCount}
               </span>
             </div>
-          </div>
-        </div>
-        <div className="flex flex-col gap-1.5">
-          <span className="typo-body_reg16 text-gray-900">{post?.title}</span>
-          <span className="typo-body_reg12 text-gray-800 whitespace-pre-line">
-            {post?.content}
-          </span>
-        </div>
-        {post && post?.images.length > 0 && (
-          <div className="flex gap-3 overflow-x-auto">
-            {post?.images.map((image, index) => (
-              <img
-                key={image.imageId}
-                src={image.imageUrl}
-                className="w-26 h-26 rounded-lg bg-gray-500"
-                onClick={() => setSelectedImage(index)}
-              ></img>
-            ))}
-          </div>
-        )}
-        <div className="flex gap-2">
-          <div className="flex gap-1">
-            <LikeIcon
-              className={`w-4 h-4 ${isLiked ? 'text-primary-40' : 'text-gray-200'}`}
-              onClick={handleLikeToggle}
-            />
-            <span className="h-4 text-[11px] text-gray-900">{likeCount}</span>
-          </div>
-          <div className="flex gap-1">
-            <CommentIcon className="w-4 h-4 text-primary-40" />
-            <span className="h-4 text-[11px] text-gray-900">
-              {post?.commentCount}
-            </span>
           </div>
         </div>
       </div>

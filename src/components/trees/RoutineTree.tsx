@@ -81,7 +81,9 @@ const RoutineTree = ({
   const getFruits = (fruitsData: FruitsStatistics): FruitWithPosition[] => {
     const fruits: FruitWithPosition[] = [];
 
-    fruitsData.fruitList.map((fruit, index) => {
+    const visibleList = fruitsData.fruitList.filter((f) => f.type !== 'NONE');
+
+    visibleList.map((fruit, index) => {
       // 1번째 열매: 2번째 RoutineTreeMiddleIcon 좌측
       if (index === 0) {
         fruits.push({
@@ -214,7 +216,7 @@ const RoutineTree = ({
   const handleFruitClick = (routineYearMonth: RoutineYearMonth) => {
     openModal('fruitModal', {
       position: 'center',
-      props: { routineYearMonth: { routineYearMonth } },
+      props: { routineYearMonth },
     });
   };
 

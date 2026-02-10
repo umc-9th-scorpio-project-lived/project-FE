@@ -35,6 +35,8 @@ export type AnnouncementListResult = {
 export type UserProfileResult = {
   memberId: number;
   name: string;
+  email: string;
+  createdAt: string;
 };
 
 // 루틴나무 공개 범위

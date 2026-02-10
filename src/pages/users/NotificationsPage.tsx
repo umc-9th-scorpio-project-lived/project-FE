@@ -8,9 +8,7 @@ const NotificationsPage = () => {
   const navigate = useNavigate();
 
   const {
-    settingsLeaf,
-    allEnabled,
-    communityEnabled,
+    settings,
     fetchSettings,
     toggleAll,
     toggleRoutine,
@@ -25,14 +23,13 @@ const NotificationsPage = () => {
     fetchSettings();
   }, [fetchSettings]);
 
-  const isAllEnabled = allEnabled();
-  const isCommunityEnabled = communityEnabled();
-
-  const routineEnabled = settingsLeaf?.routineEnabled ?? false;
-  const statisticsEnabled = settingsLeaf?.statsEnabled ?? false;
-  const commentEnabled = settingsLeaf?.commentEnabled ?? false;
-  const trendingPostEnabled = settingsLeaf?.hotPostEnabled ?? false;
-  const marketingEnabled = settingsLeaf?.marketingEnabled ?? false;
+  const allEnabled = settings?.allEnabled ?? false;
+  const routineEnabled = settings?.routineEnabled ?? false;
+  const statisticsEnabled = settings?.statsEnabled ?? false;
+  const communityEnabled = settings?.communityEnabled ?? false;
+  const commentEnabled = settings?.commentEnabled ?? false;
+  const trendingPostEnabled = settings?.hotPostEnabled ?? false;
+  const marketingEnabled = settings?.marketingEnabled ?? false;
 
   return (
     <div className="w-full h-full flex flex-col gap-5.5 overflow-y-auto overflow-x-hidden">
@@ -50,7 +47,7 @@ const NotificationsPage = () => {
         <div className="flex justify-between items-center py-1.5">
           <span className="typo-body_bold14 text-gray-900">전체 알림 설정</span>
           <div className="px-1">
-            <Toggle checked={isAllEnabled} handleToggle={toggleAll} />
+            <Toggle checked={allEnabled} handleToggle={toggleAll} />
           </div>
         </div>
 
@@ -78,7 +75,7 @@ const NotificationsPage = () => {
             </span>
             <div className="px-1">
               <Toggle
-                checked={isCommunityEnabled}
+                checked={communityEnabled}
                 handleToggle={toggleCommunity}
               />
             </div>
