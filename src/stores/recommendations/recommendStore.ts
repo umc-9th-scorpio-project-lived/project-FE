@@ -14,6 +14,7 @@ type RecommendState = {
   ai: AiRecommendItem[];
   categories: CategoryRecommendCategory[];
 
+  isAiLoading: boolean;
   isLoading: boolean;
 
   hasFetchedAi: boolean;
@@ -30,16 +31,17 @@ export const useRecommendStore = create<RecommendState>((set, get) => ({
   ai: [],
   categories: [],
 
+  isAiLoading: false,
   isLoading: false,
 
   hasFetchedAi: false,
   hasFetchedCategories: false,
 
   fetchAi: async (force = false) => {
-    const { hasFetchedAi, isLoading } = get();
-    if (!force && (hasFetchedAi || isLoading)) return;
+    const { hasFetchedAi, isAiLoading } = get();
+    if (!force && (hasFetchedAi || isAiLoading)) return;
 
-    set({ isLoading: true });
+    set({ isAiLoading: true });
     try {
       const result = await getRoutinesByAi();
       set({ ai: result, hasFetchedAi: true });
@@ -47,7 +49,7 @@ export const useRecommendStore = create<RecommendState>((set, get) => ({
       const err = e as ApiError;
       console.error(err);
     } finally {
-      set({ isLoading: false });
+      set({ isAiLoading: false });
     }
   },
 

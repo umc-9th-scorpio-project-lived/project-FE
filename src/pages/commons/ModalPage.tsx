@@ -62,7 +62,7 @@ const ModalPage = () => {
         {modalType === 'livingYearModal' && <LivingYearModal />}
         {modalType === 'pushAlarmModal' && <PushAlarmModal />}
         {modalType === 'fruitInfoModal' && <FruitInfoModal />}
-        {modalType === 'fruitModal' && <FruitModal />}
+        {modalType === 'fruitModal' && <FruitModal {...(modalProps ?? {})} />}
         {modalType === 'searchDeleteModal' && <SearchDeleteModal />}
         {modalType === 'reportPostModal' && <ReportPostModal />}
         {modalType === 'postDeleteModal' && <PostDeleteModal />}
