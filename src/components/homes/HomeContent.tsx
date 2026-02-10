@@ -101,7 +101,7 @@ const HomeContent = () => {
                 onPointerCancel={handlePressCancel}
                 onPointerLeave={handlePressCancel}
               >
-                <span className="typo-body_reg14 px-3.5 text-center line-clamp-3">
+                <span className="typo-body_reg14 px-3.5 text-center line-clamp-3 whitespace-pre-wrap break-keep wrap-normal">
                   {r.title}
                 </span>
 
