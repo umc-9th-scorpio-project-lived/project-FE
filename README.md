@@ -65,5 +65,5 @@
 ## 💁‍♂️ 프로젝트 팀원
 |FE-Web Reader|FE-Web|FE-Web|FE-Web|
 |:---:|:---:|:---:|:---:|
-| ![](https://github.com/yewon-Noh.png?size=120) | ![](https://github.com/SeongHo-C.png?size=120) | ![](https://github.com/SeongHo-C.png?size=120) | ![](https://github.com/SeongHo-C.png?size=120) |
-|[차니/진효찬](https://github.com/yewon-Noh)|[은/박다은](https://github.com/SeongHo-C)|[준오/오창준](https://github.com/SeongHo-C)|[유뎅/최유정](https://github.com/SeongHo-C)|
+| ![](https://github.com/Hyochan02.png) | ![](https://github.com/eun-04.png) | ![](https://github.com/OCJune.png) | ![](https://github.com/yuudengg.png) |
+|[차니/진효찬](https://github.com/Hyochan02)|[은/박다은](https://github.com/eun-04)|[준오/오창준](https://github.com/OCJune)|[유뎅/최유정](https://github.com/yuudengg)|
