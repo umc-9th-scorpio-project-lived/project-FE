@@ -83,8 +83,8 @@ const RoutinePage = () => {
           </div>
         </div>
 
-        <div className="min-h-0 flex-1 overflow-y-auto">
-          <div className="flex flex-col gap-4 pb-10 w-full">
+        <div className="min-h-0 flex-1 overflow-y-auto mt-6">
+          <div className="flex flex-col gap-4 w-full pt-4 pb-5">
             {!isLoading &&
               routines.map((r) => {
                 const active = selected.includes(r.routineId);

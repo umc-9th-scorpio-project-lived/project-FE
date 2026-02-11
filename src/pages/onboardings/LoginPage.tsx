@@ -1,5 +1,6 @@
 import GoogleGIcon from '@/icons/GoogleIcon';
 import KakaoIcon from '@/icons/KakaoIcon';
+import LogoIcon from '@/icons/LogoIcon';
 import { redirectToSocialLogin } from '@/services/auths/socialLogin';
 
 const LoginPage = () => {
@@ -8,7 +9,8 @@ const LoginPage = () => {
       <section className="flex-1 flex h-full w-full max-w-125 flex-col items-center pb-8 justify-between">
         {/* 로고 & 타이틀 영역 */}
         <div className="flex flex-col items-center gap-6 pt-33.75">
-          <div className="w-full h-25 bg-logo bg-center bg-no-repeat" />
+          {/* <div className="w-full h-25 bg-logo bg-center bg-no-repeat" /> */}
+          <LogoIcon />
           <div className="flex flex-col justify-center items-center">
             <div className="typo-h1_bold24 text-gray-900">살아보니,</div>
             <div className="typo-body_reg18 text-gray-900">열매가 맺히더라</div>

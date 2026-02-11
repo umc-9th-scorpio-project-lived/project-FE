@@ -12,6 +12,8 @@ import {
 } from '@/utils/homes/authUtils';
 import { useSocialAuthStore } from '@/stores/auths/socialAuthStore';
 import { useSignupStore } from '@/stores/auths/signupStore';
+import { getFcmToken } from '@/services/notifications/getFcmToken';
+import registerFcmToken from '@/services/notifications/registerFcmToken';
 
 export default function PushAlarmModal() {
   const navigate = useNavigate();
@@ -100,6 +102,18 @@ export default function PushAlarmModal() {
     localStorage.setItem('accessToken', result.accessToken);
     localStorage.setItem('refreshToken', result.refreshToken);
 
+    // 알림 받기 선택 시: FCM 토큰 발급 + 서버 등록
+    if (notificationStatus === 1) {
+      try {
+        const fcmToken = await getFcmToken();
+        if (fcmToken) {
+          await registerFcmToken(fcmToken);
+        }
+      } catch {
+        // 실패해도 온보딩 흐름은 진행
+      }
+    }
+
     closeModal();
 
     if (notificationStatus === 1) {
@@ -124,7 +138,7 @@ export default function PushAlarmModal() {
 
         {/* 타이틀 */}
         <div className="text-center typo-body_bold18 text-gray-900">
-          알림으로 하루의 리듬을 가볍게 맞춰보세요!
+          알림으로 하루의 리듬을 맞춰보세요!
         </div>
 
         {/* 설명 */}

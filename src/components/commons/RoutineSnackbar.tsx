@@ -74,7 +74,7 @@ const RoutineSnackbar = () => {
 
   return (
     <div
-      className={`fixed left-0 right-0 bottom-28.5 z-9999 px-4 transition-opacity duration-300 ease-in-out ${opacityClass}`}
+      className={`absolute w-full bottom-28 z-9999 px-4 transition-opacity duration-300 ease-in-out ${opacityClass}`}
     >
       <div className="flex justify-start items-center gap-2.5 rounded-xl bg-gray-700 text-screen-0 px-4 py-3">
         <AlarmIcon className="size-6" />
