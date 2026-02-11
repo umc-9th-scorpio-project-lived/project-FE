@@ -10,6 +10,7 @@ import type { AlarmValue, RepeatValue } from '@/types/routines/Routine.types';
 import { useRoutineStore } from '@/stores/routines/routineStore';
 import { useHomeDateStore } from '@/stores/homes/homeStore';
 import { formatDate } from '@/utils/homes/homeUtils';
+import RoutineSnackbar from '@/components/commons/RoutineSnackbar';
 
 // 루틴 제목 최대 길이
 const MAX_TITLE_LENGTH = 50;
@@ -335,20 +336,26 @@ const CreateRoutinePage = () => {
           </div>
         </div>
 
-        {/* CTA */}
-        <div
-          role="button"
-          className={`w-full rounded-full typo-body_bold18 py-3 text-center ${
-            canSubmit
-              ? 'bg-primary-50 text-screen-0'
-              : 'bg-gray-100 text-gray-400'
-          }`}
-          onClick={() => {
-            if (!canSubmit) return;
-            handleSubmit();
-          }}
-        >
-          루틴 추가하기
+        <div className="relative">
+          {/* CTA */}
+          <div
+            role="button"
+            className={`w-full rounded-full typo-body_bold18 py-3 text-center ${
+              canSubmit
+                ? 'bg-primary-50 text-screen-0'
+                : 'bg-gray-100 text-gray-400'
+            }`}
+            onClick={() => {
+              if (!canSubmit) return;
+              handleSubmit();
+            }}
+          >
+            루틴 추가하기
+          </div>
+
+          <div className="absolute w-full -top-20">
+            <RoutineSnackbar />
+          </div>
         </div>
       </div>
     </div>
