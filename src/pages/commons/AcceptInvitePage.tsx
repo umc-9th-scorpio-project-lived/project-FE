@@ -23,6 +23,7 @@ const AcceptInvitePage = () => {
       // 로그인 상태라면 친구 수락 API 호출
       if (inviterId) {
         await acceptInvite(Number(inviterId));
+        window.location.href = '/lived/tree';
       }
     };
 
