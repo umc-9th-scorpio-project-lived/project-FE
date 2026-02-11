@@ -7,7 +7,7 @@
 </div> 
 
 ## 🌳 소개
-> 살아보니, 열매가 맺히더라 - 자취생을 위한 커뮤니티 기반 루틴 서비스
+> 살아보니, 열매가 맺히더라 - 자취생을 위한 커뮤니티 기반 루틴 서비스 | 2025.12.19. ~ 2026.02.20.
 
 **살아보니**는 자취생을 위한 루틴 기록 및 커뮤니티 서비스입니다. </br>
 크지 않은 할 일, 사소한 생활도 루틴으로 남기며 하루를 천천히 쌓아갑니다. </br>
@@ -50,16 +50,16 @@
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white">
   <img alt="Vite" src="https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white">
   <img alt="TailwindCSS" src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white">
-  <!-- axios -->
-  <!-- zustand -->
+  <img alt="Axios" src="https://img.shields.io/badge/axios-5A29E4.svg?style=for-the-badge&logo=tailwind-css&logoColor=white">
+  <img alt="Zustand" src="https://img.shields.io/badge/zustand-f06611.svg?style=for-the-badge&logo=Zustand&logoColor=white">
 </div>
 
 ### 🌐 Service Infra
 <div>
-  <!-- <img alt="EC2" src="https://img.shields.io/badge/Amazon%20S3-FF9900?style=for-the-badge&logo=amazons3&logoColor=white"> -->
-  <img alt="Nginx" src="https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white">
+  <img alt="EC2" src="https://img.shields.io/badge/Amazon%20EC2-FF9900?style=for-the-badge&logo=Amazon%20EC2&logoColor=white">
   <img alt="S3" src="https://img.shields.io/badge/Amazon%20S3-FF9900?style=for-the-badge&logo=amazons3&logoColor=white">
-  <!-- RDS -->
+  <img alt="RDS" src="https://img.shields.io/badge/Amazon%20RDS-527FFF?style=for-the-badge&logo=amazon&logoColor=white">
+  <img alt="Nginx" src="https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white">
   <img alt="GithubActions" src="https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white">
   <img alt="Vercel" src="https://img.shields.io/badge/vercel-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white">
 </div>
@@ -75,7 +75,7 @@
 
 <br />
 
-## 💁‍♂️ 프로젝트 팀원
+## 💁‍♂️ UMC-9th Web - 살아보니's FE 팀원
 |FE-Web Reader|FE-Web|FE-Web|FE-Web|
 |:---:|:---:|:---:|:---:|
 | ![](https://github.com/Hyochan02.png) | ![](https://github.com/eun-04.png) | ![](https://github.com/OCJune.png) | ![](https://github.com/yuudengg.png) |
