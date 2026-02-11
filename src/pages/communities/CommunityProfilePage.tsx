@@ -1,16 +1,19 @@
 import ProfilePostList from '@/components/communities/ProfilePostList';
 import CameraIcon from '@/icons/CameraIcon';
+import GoldenFruitIcon from '@/icons/GoldenFruitIcon';
 import LeftChevronIcon from '@/icons/LeftChevronIcon';
 import WriteIcon from '@/icons/WriteIcon';
 import {
   EditCommunityProfile,
   getCommunityProfile,
 } from '@/services/posts/profile';
+import useToast from '@/stores/toasts/baseToast';
 import type { ProfileFruites } from '@/types/communities/Profile.types';
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const CommunityProfilePage = () => {
+  const { showToast } = useToast();
   const [editMode, setEditMode] = useState(false);
   const [nickname, setNickname] = useState('');
   const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
@@ -78,6 +81,7 @@ const CommunityProfilePage = () => {
       setEditMode(false);
     } catch (e) {
       console.error(e);
+      showToast('프로필 수정에 실패했습니다.', 'alert');
     }
   };
 
@@ -203,16 +207,22 @@ const CommunityProfilePage = () => {
               {/*대형열매 5개*/}
               <div className="flex gap-2">
                 {fruits.slice(0, 5).map((fruit) => (
-                  <div
-                    key={fruit.fruitId}
-                    className="w-8 h-8 rounded-full bg-[#2E2E2E]"
-                  />
+                  <GoldenFruitIcon key={fruit.fruitId} className="w-8 h-8" />
                 ))}
                 {Array.from({ length: 5 - fruits.length }).map((_, index) => (
                   <div
                     key={`empty-${index}`}
-                    className="w-8 h-8 rounded-full bg-gray-300/40"
-                  />
+                    className="flex w-8 h-8 bg-primary-40"
+                    style={{
+                      WebkitMask:
+                        'url(/icons/NormalFruitIcon.svg) no-repeat center / contain',
+                      mask: 'url(/icons/NormalFruitIcon.svg) no-repeat center / contain',
+                    }}
+                  >
+                    <span className="flex items-center justify-center w-full h-full text-screen-0">
+                      ?
+                    </span>
+                  </div>
                 ))}
               </div>
             </div>

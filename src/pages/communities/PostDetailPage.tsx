@@ -191,8 +191,12 @@ const PostDetailPage = () => {
   };
 
   const handleReplyRequest = (parentCommentId: number) => {
-    setCommentMode('reply');
-    setTargetCommentId(parentCommentId);
+    setCommentMode('create');
+
+    setTimeout(() => {
+      setTargetCommentId(parentCommentId);
+      setCommentMode('reply');
+    }, 0);
   };
 
   const handleCommentLikeToggle = async (commentId: number) => {
