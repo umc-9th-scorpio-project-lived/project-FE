@@ -7,7 +7,9 @@ const HomePage = () => {
     <div className="relative w-full h-full overflow-y-hidden pb-25">
       <HomeHeader />
       <HomeContent />
-      <RoutineSnackbar />
+      <div className="absolute bottom-28 ">
+        <RoutineSnackbar />
+      </div>
     </div>
   );
 };

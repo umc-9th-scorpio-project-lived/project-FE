@@ -97,7 +97,9 @@ export const useRoutineStore = create<HomeRoutineState>((set, get) => ({
       const code = getErrorCode(err);
 
       if (code === ROUTINE_ERROR_CODE.FUTURE_DATE_CHECK) {
-        useSnackbarStore.getState().show();
+        useSnackbarStore
+          .getState()
+          .show({ snackbarKey: 'ROUTINE_FUTURE_DATE' });
       }
     }
   },
@@ -121,9 +123,16 @@ export const useRoutineStore = create<HomeRoutineState>((set, get) => ({
 
       set({ isLoading: false, data });
       get().resetDraft();
-    } catch (e) {
+    } catch (err) {
       set({ isLoading: false });
-      throw e;
+      const code = getErrorCode(err);
+
+      if (code === ROUTINE_ERROR_CODE.DUPLICATE_ROUTINE_NAME) {
+        useSnackbarStore
+          .getState()
+          .show({ snackbarKey: 'ROUTINE_DUPLICATE_NAME' });
+      }
+      throw err;
     }
   },
 
@@ -156,9 +165,18 @@ export const useRoutineStore = create<HomeRoutineState>((set, get) => ({
 
       set({ isLoading: false });
       get().resetDraft();
-    } catch (e) {
+    } catch (err) {
       set({ isLoading: false });
-      throw e;
+
+      const code = getErrorCode(err);
+
+      if (code === ROUTINE_ERROR_CODE.DUPLICATE_ROUTINE_NAME) {
+        useSnackbarStore
+          .getState()
+          .show({ snackbarKey: 'ROUTINE_DUPLICATE_NAME' });
+      }
+
+      throw err;
     }
   },
 

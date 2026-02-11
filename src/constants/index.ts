@@ -29,4 +29,5 @@ export const WEEK_LABELS = ['일', '월', '화', '수', '목', '금', '토'];
 
 export const ROUTINE_ERROR_CODE = {
   FUTURE_DATE_CHECK: 'ROUTINE400_1',
+  DUPLICATE_ROUTINE_NAME: 'ROUTINE409_1',
 } as const;
