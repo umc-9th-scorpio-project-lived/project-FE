@@ -7,6 +7,8 @@
 </div> 
 
 ## 🌳 소개
+> 살아보니, 열매가 맺히더라 - 자취생을 위한 커뮤니티 기반 루틴 서비스
+
 **살아보니**는 자취생을 위한 루틴 기록 및 커뮤니티 서비스입니다. </br>
 크지 않은 할 일, 사소한 생활도 루틴으로 남기며 하루를 천천히 쌓아갑니다. </br>
 루틴을 수행할수록 내 루틴 나무에 열매가 열리고, 그 열매가 익어가는 과정을 통해 일상을 한눈에 돌아볼 수 있습니다. </br>
@@ -16,16 +18,27 @@
 <br />
 
 ## 📱 화면 구성
-|화면 명|
-|:---:|
-|<img src="https://user-images.githubusercontent.com/80824750/208456048-acbf44a8-cd71-4132-b35a-500047adbe1c.gif" width="450"/>|
-|화면에 대한 설명을 입력합니다.|
+> 서비스 진입 시
 
+|스플래시 페이지|로그인 페이지|
+|:---:|:---:|
+|<img src="https://user-images.githubusercontent.com/80824750/208456048-acbf44a8-cd71-4132-b35a-500047adbe1c.gif" width="200"/>|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|
+|서비스 진입 시, 렌더링 되는 스플래시 페이지입니다.|서비스 사용을 위해 로그인을 진행하는 페이지 입니다. </br> 로그인은 소셜(카카오, 구글)로그인 방식으로 진행됩니다.|
 
-|화면 명|
-|:---:|
-|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="450"/>|
-|화면에 대한 설명을 입력합니다.|
+> 회원가입 프로세스
+
+|온보딩 페이지①|온보딩 페이지②|온보딩 페이지③|알림 설정 가이드 페이지|
+|:---:|:---:|:---:|:---:|
+|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|
+|서비스 사용을 위해 로그인을 진행하는 페이지 입니다.|서비스 사용을 위해 로그인을 진행하는 페이지 입니다.|서비스 사용을 위해 로그인을 진행하는 페이지 입니다.|서비스 사용을 위해 로그인을 진행하는 페이지 입니다.|
+
+> 홈 페이지
+
+> 루틴 나무 페이지
+
+> 커뮤니티 페이지
+
+> 마이 페이지
 
 <br />
 
