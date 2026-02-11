@@ -169,11 +169,9 @@ const FriendsSheet = () => {
       return;
     }
 
-    // ✅ 뒤 스크롤 잠금 (대부분 해결)
     document.documentElement.style.overflow = 'hidden';
     document.body.style.overflow = 'hidden';
 
-    // ✅ iOS 사파리에서 터치 스크롤 방지 보정
     document.body.style.touchAction = 'none';
 
     return () => {
