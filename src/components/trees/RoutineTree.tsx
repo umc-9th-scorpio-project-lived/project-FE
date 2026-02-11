@@ -81,8 +81,10 @@ const RoutineTree = ({
   const getFruits = (fruitsData: FruitsStatistics): FruitWithPosition[] => {
     const fruits: FruitWithPosition[] = [];
 
-    const visibleList = fruitsData.fruitList.filter((f) => f.type !== 'NONE');
-
+    const visibleList = fruitsData.fruitList.filter(
+      (f): f is Fruit & { type: FruitType } =>
+        f.type !== undefined && f.type !== 'NONE'
+    );
     visibleList.map((fruit, index) => {
       // 1번째 열매: 2번째 RoutineTreeMiddleIcon 좌측
       if (index === 0) {
@@ -174,7 +176,9 @@ const RoutineTree = ({
   const fruits = getFruits(fruitsData);
 
   /** 문자열로 열매 종류를 입력하면 아이콘을 반환해주는 함수 */
-  const getFruitIcon = (fruitType: FruitType) => {
+  const getFruitIcon = (fruitType?: FruitType) => {
+    if (!fruitType || fruitType === 'NONE') return null;
+
     switch (fruitType) {
       case 'GOLD':
         return (
@@ -265,8 +269,11 @@ const RoutineTree = ({
                       month: new Date().getMonth() + 1,
                     })
                   }
-                  disabled={!isFruitClickable}
-                  className={`absolute ${isFruitClickable ? 'cursor-pointer' : 'cursor-default'}`}
+                  className={`absolute ${
+                    isFruitClickable
+                      ? 'cursor-pointer pointer-events-auto'
+                      : 'pointer-events-none cursor-default'
+                  }`}
                   style={{ top: `${fruit.top}rem`, left: `${fruit.left}rem` }}
                 >
                   {getFruitIcon(fruit.type)}

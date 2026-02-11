@@ -55,3 +55,7 @@ export type PatchNotificationSettingsRequest = {
 
 // 알림 읽음 처리 API result
 export type PatchNotificationResult = string;
+
+export type RegisterFcmTokenBody = {
+  token: string;
+};
