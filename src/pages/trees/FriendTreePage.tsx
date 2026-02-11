@@ -67,6 +67,7 @@ const FriendTreePage = () => {
         <button
           onClick={() => {
             deleteFriend(Number(friendId));
+            navigate('/lived/tree');
           }}
           className={`absolute right-4 -bottom-10 rounded-sm border-[0.5px] border-gray-300 bg-screen-0 px-4 py-2 flex justify-center items-center ${
             isDeleteModalOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'

@@ -20,9 +20,14 @@ const AcceptInvitePage = () => {
         return;
       }
 
-      // 로그인 상태라면 친구 수락 API 호출
-      if (inviterId) {
-        await acceptInvite(Number(inviterId));
+      try {
+        if (inviterId) {
+          await acceptInvite(Number(inviterId));
+        }
+      } catch (error) {
+        console.error('친구 수락 실패:', error);
+        // 실패해도 트리 페이지로 이동
+      } finally {
         window.location.href = '/lived/tree';
       }
     };
