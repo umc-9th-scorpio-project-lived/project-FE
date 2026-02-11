@@ -9,12 +9,13 @@ import NormalFruitIcon from '@/icons/NormalFruitIcon';
 import { deleteFriend } from '@/services/friends/deleteFriend';
 import { getFriendFruitsStatistics } from '@/services/friends/getFriendFruitsStatistics';
 import useBaseModal from '@/stores/modals/baseModal';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const FriendTreePage = () => {
   const { friendId } = useParams();
+  const queryClient = useQueryClient();
 
   const { data, isPending, isError } = useQuery({
     queryKey: [friendId, 'friendFruitsStatistics'],
@@ -34,6 +35,21 @@ const FriendTreePage = () => {
   const { openModal } = useBaseModal();
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  const handleDeleteFriend = async () => {
+    if (!friendId) return;
+
+    await deleteFriend(Number(friendId));
+
+    await queryClient.invalidateQueries({
+      predicate: (q) =>
+        Array.isArray(q.queryKey) && q.queryKey.includes('friendsData'),
+    });
+
+    await queryClient.invalidateQueries({ queryKey: ['invitationData'] });
+
+    navigate('/lived/tree');
+  };
 
   if (isPending || isError) {
     return <div className="bg-gray-50 w-full h-screen"></div>;
@@ -65,10 +81,7 @@ const FriendTreePage = () => {
         </button>
 
         <button
-          onClick={() => {
-            deleteFriend(Number(friendId));
-            navigate('/lived/tree');
-          }}
+          onClick={handleDeleteFriend}
           className={`absolute right-4 -bottom-10 rounded-sm border-[0.5px] border-gray-300 bg-screen-0 px-4 py-2 flex justify-center items-center ${
             isDeleteModalOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
