@@ -2,8 +2,15 @@ export type FruitType = 'NONE' | 'GROWING' | 'NORMAL' | 'GOLD';
 
 export type Fruit = {
   memberRoutineId: number;
-  type: FruitType;
+  type?: FruitType;
+  fruitType?: FruitType;
 };
+
+// TreeArchiveResponse.types.ts
+export interface ArchiveFruitDto {
+  memberRoutineId: number;
+  fruitType: FruitType;
+}
 
 type FruitsSummary = {
   goldCount: number;
