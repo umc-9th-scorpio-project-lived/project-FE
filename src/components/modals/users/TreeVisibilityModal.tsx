@@ -116,15 +116,14 @@ const TreeVisibilityModal = () => {
                       <div
                         key={f.memberId}
                         className="w-full flex justify-between items-center"
+                        onClick={() => toggleSelected(f.memberId)}
                       >
                         <span className="typo-body_reg12 text-gray-900">
                           {f.name}
                         </span>
-                        <button onClick={() => toggleSelected(f.memberId)}>
-                          <CheckIcon
-                            className={`w-6 h-6 ${checked ? 'text-primary-50' : 'text-gray-300'}`}
-                          />
-                        </button>
+                        <CheckIcon
+                          className={`w-6 h-6 ${checked ? 'text-primary-50' : 'text-gray-300'}`}
+                        />
                       </div>
                     );
                   })
