@@ -8,7 +8,7 @@ type PostListProps = {
 
 const PostList = ({ posts, onPostClick }: PostListProps) => {
   return (
-    <div className="flex flex-col px-4 gap-6 pt-2.5">
+    <div className="flex flex-col px-4 gap-6 pt-4.5 pb-25">
       {posts.map((post) => (
         <PostCard key={post.postId} post={post} onClick={onPostClick} />
       ))}

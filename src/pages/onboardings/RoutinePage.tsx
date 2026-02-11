@@ -48,41 +48,43 @@ const RoutinePage = () => {
   };
 
   return (
-    <main className="h-dvh bg-white font-suite overflow-hidden">
-      <section className="mx-auto flex h-dvh w-full flex-col px-4 overflow-hidden pt-10">
-        {/* 상단 */}
-        <div className="h-11 w-full py-1.25">
-          <button
-            type="button"
-            onClick={() => navigate('/onboardings/concern')}
-            className="h-8.5 w-8.5 text-gray-900"
-            aria-label="뒤로가기"
-          >
-            <LeftChevronIcon className="size-6" />
-          </button>
-        </div>
+    <main className="h-dvh font-suite overflow-hidden">
+      <section className="flex-1 flex h-full w-full max-w-125 flex-col px-4 pt-5 justify-between pb-8">
+        <div className="flex flex-col gap-6">
+          {/* 상단 */}
+          <div className="h-11 w-full py-1.25">
+            <button
+              type="button"
+              onClick={() => navigate('/onboardings/concern')}
+              className="h-8.5 w-8.5 text-gray-900"
+              aria-label="뒤로가기"
+            >
+              <LeftChevronIcon className="size-6" />
+            </button>
+          </div>
 
-        {/* 진행바 */}
-        <div className="flex flex-col gap-7 pt-6">
-          <div className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary-30" />
-            <span className="h-1.5 w-1.5 rounded-full bg-primary-30" />
-            <span className="h-1.5 w-8 rounded-full bg-primary-50" />
+          {/* 진행바 */}
+          <div className="flex flex-col gap-7">
+            <div className="flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary-30" />
+              <span className="h-1.5 w-1.5 rounded-full bg-primary-30" />
+              <span className="h-1.5 w-8 rounded-full bg-primary-50" />
+            </div>
+          </div>
+
+          {/* 타이틀 */}
+          <div className="flex flex-col gap-1">
+            <div className="typo-h2_bold20 text-gray-900">
+              고민에 맞는 루틴을 준비했어요!
+            </div>
+            <div className="typo-body_reg14 text-gray-900">
+              앞서 선택하신 고민에 맞춰 제안해 드릴게요.
+            </div>
           </div>
         </div>
 
-        {/* 타이틀 */}
-        <div className="pt-7 pb-10">
-          <div className="typo-h2_bold20 text-gray-900">
-            고민에 맞는 루틴을 준비했어요!
-          </div>
-          <div className="pt-1 typo-body_reg14 text-gray-900">
-            앞서 선택하신 고민에 맞춰 제안해 드릴게요.
-          </div>
-        </div>
-
-        <div className="min-h-0 flex-1 overflow-y-auto">
-          <div className="flex flex-col gap-4 pb-6 w-full">
+        <div className="min-h-0 flex-1 overflow-y-auto mt-6">
+          <div className="flex flex-col gap-4 w-full pt-4 pb-5">
             {!isLoading &&
               routines.map((r) => {
                 const active = selected.includes(r.routineId);
@@ -101,7 +103,7 @@ const RoutinePage = () => {
                       }
                     }}
                     className={`h-12.5 w-full rounded-lg px-4
-                      flex items-center gap-3 cursor-pointer select-none transition
+                      flex items-center gap-3.5 cursor-pointer select-none transition
                       ${active ? 'bg-primary-50 text-screen-0' : 'bg-gray-50 text-gray-600'}`}
                   >
                     <span className="typo-body_bold16">{r.title}</span>
@@ -112,7 +114,7 @@ const RoutinePage = () => {
         </div>
 
         {/* 하단 (고정) */}
-        <div className="pb-8 pt-2 flex flex-col gap-2">
+        <div className="pt-2 flex flex-col gap-2">
           <div
             role="button"
             tabIndex={0}

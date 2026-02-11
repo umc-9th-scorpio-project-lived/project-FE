@@ -119,12 +119,12 @@ const CommunityCommentList = ({
       <div className="flex flex-col py-4 px-4 gap-8">
         {visibleComments.map((comment) => (
           <div key={comment.commentId} className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2.5">
-              <div className="gap-1">
+            <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2.5">
                 <div className="relative flex w-full justify-between">
                   <div className="flex gap-1.5">
                     <img
-                      className="w-13.5 h-13.5 rounded-full bg-gray-500"
+                      className="w-10 h-10 rounded-full bg-gray-500"
                       src={comment?.author.profileImageUrl || undefined}
                     />
                     <div className="flex flex-col gap-1">
@@ -204,12 +204,12 @@ const CommunityCommentList = ({
               </div>
             </div>
             {sortedReplies(comment.replies)?.map((reply) => (
-              <div key={reply.commentId} className="flex flex-col pl-5 gap-2.5">
-                <div className="gap-1">
+              <div key={reply.commentId} className="flex flex-col pl-5 gap-2">
+                <div className="flex flex-col gap-2.5">
                   <div className="flex relative w-full justify-between">
                     <div className="flex gap-1.5">
                       <img
-                        className="w-13.5 h-13.5 rounded-full bg-gray-500"
+                        className="w-10 h-10 rounded-full bg-gray-500"
                         src={reply?.author.profileImageUrl || undefined}
                       />
                       <div className="flex flex-col gap-1">

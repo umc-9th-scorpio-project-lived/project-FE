@@ -23,6 +23,7 @@ const RecommendPage = () => {
     ai,
     categories,
     isLoading,
+    isAiLoading,
     fetchAi,
     fetchCategories,
     addSelectedCategroyRoutine,
@@ -61,14 +62,14 @@ const RecommendPage = () => {
   };
 
   useEffect(() => {
-    fetchAi();
-  }, []);
-
-  useEffect(() => {
-    if (!isCategory) return;
-    if (categories.length > 0) return;
-    fetchCategories();
-  }, [isCategory]);
+    void (async () => {
+      try {
+        await Promise.all([fetchAi(), fetchCategories()]);
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, [fetchAi, fetchCategories]);
 
   const parseNumberKey = (key: string): number | null => {
     const parts = key.split('::');
@@ -148,7 +149,7 @@ const RecommendPage = () => {
         className={`relative w-full flex flex-col flex-1 overflow-y-auto rounded-t-2xl px-4 pt-6 bg-screen-0 ${isAI ? 'pb-41.5' : 'pb-25'}`}
       >
         {/* 로딩 */}
-        {isLoading && (
+        {isAiLoading && (
           <div className="w-full py-10 text-center typo-body_reg14 text-gray-500">
             불러오는 중...
           </div>
@@ -223,7 +224,7 @@ const RecommendPage = () => {
                           key={id}
                           role="button"
                           onClick={() => toggleSelect(id)}
-                          className="relative shrink-0 w-26.5 h-26.5 p-2 flex justify-center items-center text-center rounded-lg typo-body_reg14 transition-colors bg-gray-50 text-gray-900"
+                          className="relative shrink-0 w-26.5 h-26.5 p-2 flex justify-center items-center rounded-lg typo-body_reg14 transition-colors bg-gray-50 text-gray-900 whitespace-pre-wrap break-keep text-center wrap-normal"
                         >
                           {r.title}
 

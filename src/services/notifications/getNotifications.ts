@@ -2,11 +2,11 @@ import { authApi } from '@/api';
 import type { ApiResponse } from '@/types/Api.types';
 import type {
   NotificationItem,
-  NotificationQueryTarget,
+  NotificationTarget,
 } from '@/types/notifications/Notification.types';
 
 // 알림 목록 조회 API
-const getNotifications = async (targetType: NotificationQueryTarget) => {
+const getNotifications = async (targetType: NotificationTarget) => {
   const res = await authApi.get<ApiResponse<NotificationItem[]>>(
     '/notifications',
     {

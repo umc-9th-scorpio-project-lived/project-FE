@@ -13,12 +13,13 @@ import {
   useDragControls,
   type PanInfo,
 } from 'framer-motion';
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useLayoutEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 type SheetState = 'closed' | 'halfOpen' | 'open';
 
 const FriendsSheet = () => {
+  const location = useLocation();
   const [state, setState] = useState<SheetState>('closed');
 
   // 애니메이션을 코드로 제어하기 위한 컨트롤러
@@ -39,6 +40,18 @@ const FriendsSheet = () => {
   useEffect(() => {
     controls.set({ y: closedY });
   }, [closedY, controls]);
+
+  useLayoutEffect(() => {
+    controls.set({ y: closedY });
+    setState('closed');
+  }, [closedY, controls]);
+
+  // 탭(라우트) 이동하면 닫기
+  useEffect(() => {
+    setState('closed');
+    controls.set({ y: closedY });
+    setIsInvitationModalOpen(false);
+  }, [location.pathname, closedY, controls]);
 
   // 드래그 종료 시 로직: 사용자가 시트를 드래그하고 손을 뗐을 때 호출
   // info.velocity: 드래그 속도, info.offset: 드래그한 거리
@@ -147,6 +160,28 @@ const FriendsSheet = () => {
       invitationData.inviterName
     );
   };
+
+  useEffect(() => {
+    if (!isSheetOpen) {
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+      return;
+    }
+
+    // ✅ 뒤 스크롤 잠금 (대부분 해결)
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+
+    // ✅ iOS 사파리에서 터치 스크롤 방지 보정
+    document.body.style.touchAction = 'none';
+
+    return () => {
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+      document.body.style.touchAction = '';
+    };
+  }, [isSheetOpen]);
 
   return (
     <>

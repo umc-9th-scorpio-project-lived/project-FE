@@ -12,6 +12,8 @@ import {
 } from '@/utils/homes/authUtils';
 import { useSocialAuthStore } from '@/stores/auths/socialAuthStore';
 import { useSignupStore } from '@/stores/auths/signupStore';
+import { getFcmToken } from '@/services/notifications/getFcmToken';
+import registerFcmToken from '@/services/notifications/registerFcmToken';
 
 export default function PushAlarmModal() {
   const navigate = useNavigate();
@@ -28,7 +30,7 @@ export default function PushAlarmModal() {
   } = useOnboardingStore();
 
   // 콜백에서 저장해둔 소셜 값들
-  const { socialId, provider, name } = useSocialAuthStore();
+  const { socialId, provider, name, email } = useSocialAuthStore();
 
   // signup API 호출 상태
   const { isSigningUp, signupAction } = useSignupStore();
@@ -41,6 +43,7 @@ export default function PushAlarmModal() {
       socialId,
       provider,
       name,
+      email,
 
       livingPeriod: toLivingPeriod(livingYear),
       gender: toGenderEnum(gender),
@@ -70,6 +73,7 @@ export default function PushAlarmModal() {
       socialId,
       provider,
       name,
+      email,
       concerns,
       birth,
       livingYear,
@@ -98,6 +102,18 @@ export default function PushAlarmModal() {
     localStorage.setItem('accessToken', result.accessToken);
     localStorage.setItem('refreshToken', result.refreshToken);
 
+    // 알림 받기 선택 시: FCM 토큰 발급 + 서버 등록
+    if (notificationStatus === 1) {
+      try {
+        const fcmToken = await getFcmToken();
+        if (fcmToken) {
+          await registerFcmToken(fcmToken);
+        }
+      } catch {
+        // 실패해도 온보딩 흐름은 진행
+      }
+    }
+
     closeModal();
 
     if (notificationStatus === 1) {
@@ -111,12 +127,7 @@ export default function PushAlarmModal() {
     <div
       role="dialog"
       aria-modal="true"
-      className="
-        relative w-full rounded-2xl bg-screen-0
-        flex flex-col items-center
-        gap-8.5
-        px-5 py-5
-      "
+      className="relative w-full rounded-2xl bg-screen-0 flex flex-col items-center gap-8.5 px-5 py-5"
     >
       {/* content */}
       <div className="flex flex-col items-center gap-3.75">
@@ -127,7 +138,7 @@ export default function PushAlarmModal() {
 
         {/* 타이틀 */}
         <div className="text-center typo-body_bold18 text-gray-900">
-          알림으로 하루의 리듬을 가볍게 맞춰보세요!
+          알림으로 하루의 리듬을 맞춰보세요!
         </div>
 
         {/* 설명 */}
@@ -139,15 +150,12 @@ export default function PushAlarmModal() {
       </div>
 
       {/* buttons */}
-      <div className="mt-auto flex w-full flex-col gap-[10px]">
+      <div className="mt-auto flex w-full flex-col gap-2.5">
         <div
           role="button"
           onClick={() => handleSelect(1)}
           aria-disabled={isSigningUp}
-          className={[
-            'flex justify-center items-center h-[51px] w-full rounded-[8px] typo-body_bold16 text-screen-0',
-            isSigningUp ? 'bg-primary-20' : 'bg-primary-50',
-          ].join(' ')}
+          className={`flex justify-center items-center h-12.75 w-full rounded-lg typo-body_bold16 text-screen-0 ${isSigningUp ? 'bg-primary-20' : 'bg-primary-50'}`}
         >
           알림 받기
         </div>
@@ -156,10 +164,7 @@ export default function PushAlarmModal() {
           role="button"
           onClick={() => handleSelect(2)}
           aria-disabled={isSigningUp}
-          className={[
-            'flex justify-center items-center h-[51px] w-full rounded-[8px] typo-body_bold16 text-gray-400',
-            isSigningUp ? 'bg-gray-50' : 'bg-gray-100',
-          ].join(' ')}
+          className={`flex justify-center items-center h-12.75 w-full rounded-lg typo-body_bold16 text-gray-400 ${isSigningUp ? 'bg-gray-50' : 'bg-gray-100'}`}
         >
           나중에 설정할게요
         </div>

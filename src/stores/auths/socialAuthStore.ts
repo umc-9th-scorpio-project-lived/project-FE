@@ -6,11 +6,13 @@ type SocialAuthState = {
   socialId: string;
   provider: SocialProvider | '';
   name: string;
+  email: string;
 
   setSocialAuth: (v: {
     socialId: string;
     provider: SocialProvider;
     name: string;
+    email: string;
   }) => void;
   resetSocialAuth: () => void;
 };
@@ -19,8 +21,10 @@ export const useSocialAuthStore = create<SocialAuthState>((set) => ({
   socialId: '',
   provider: '',
   name: '',
+  email: '',
 
-  setSocialAuth: ({ socialId, provider, name }) =>
-    set({ socialId, provider, name }),
-  resetSocialAuth: () => set({ socialId: '', provider: '', name: '' }),
+  setSocialAuth: ({ socialId, provider, name, email }) =>
+    set({ socialId, provider, name, email }),
+  resetSocialAuth: () =>
+    set({ socialId: '', provider: '', name: '', email: '' }),
 }));

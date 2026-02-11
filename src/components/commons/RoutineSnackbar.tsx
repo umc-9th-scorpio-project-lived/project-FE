@@ -1,90 +1,88 @@
 import AlarmIcon from '@/icons/AlarmIcon';
 import { useSnackbarStore } from '@/stores/homes/snackbarStore';
-import { useEffect, useRef } from 'react';
-import { motion, AnimatePresence, type Variants } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 
-const containerVariants: Variants = {
-  hidden: {
-    y: 0,
-    opacity: 0,
-    transition: {
-      type: 'tween',
-      duration: 0.2,
-      ease: 'easeIn',
-    },
-  },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: {
-      type: 'tween',
-      duration: 0.2,
-      ease: 'easeOut',
-    },
-  },
-};
-
-const contentVariants: Variants = {
-  hidden: {
-    scale: 0.98,
-    transition: {
-      type: 'tween',
-      duration: 0.2,
-      ease: 'easeIn',
-    },
-  },
-  visible: {
-    scale: 1,
-    transition: {
-      type: 'tween',
-      duration: 0.5,
-      ease: 'easeOut',
-    },
-  },
-};
+const FADE_OUT_DURATION_MS = 300;
 
 const RoutineSnackbar = () => {
   const { open, durationMs, hide } = useSnackbarStore();
-  const timerRef = useRef<number | null>(null);
+
+  const [visible, setVisible] = useState(false);
+  const [fadeOut, setFadeOut] = useState(false);
+
+  const hideTimerRef = useRef<number | null>(null);
+  const fadeTimerRef = useRef<number | null>(null);
+  const rafRef = useRef<number | null>(null);
 
   useEffect(() => {
-    if (!open) return;
+    if (!open) {
+      setVisible(false);
+      setFadeOut(false);
 
-    if (timerRef.current) window.clearTimeout(timerRef.current);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (fadeTimerRef.current) window.clearTimeout(fadeTimerRef.current);
+      if (hideTimerRef.current) window.clearTimeout(hideTimerRef.current);
 
-    timerRef.current = window.setTimeout(() => {
+      rafRef.current = null;
+      fadeTimerRef.current = null;
+      hideTimerRef.current = null;
+      return;
+    }
+
+    setFadeOut(false);
+    setVisible(false);
+
+    if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    rafRef.current = requestAnimationFrame(() => {
+      setVisible(true);
+      rafRef.current = null;
+    });
+
+    if (fadeTimerRef.current) window.clearTimeout(fadeTimerRef.current);
+    if (hideTimerRef.current) window.clearTimeout(hideTimerRef.current);
+
+    const fadeStartMs = Math.max(0, durationMs - FADE_OUT_DURATION_MS);
+
+    fadeTimerRef.current = window.setTimeout(() => {
+      setFadeOut(true);
+      fadeTimerRef.current = null;
+    }, fadeStartMs);
+
+    hideTimerRef.current = window.setTimeout(() => {
       hide();
-      timerRef.current = null;
+      hideTimerRef.current = null;
     }, durationMs);
 
     return () => {
-      if (timerRef.current) window.clearTimeout(timerRef.current);
-      timerRef.current = null;
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      if (fadeTimerRef.current) window.clearTimeout(fadeTimerRef.current);
+      if (hideTimerRef.current) window.clearTimeout(hideTimerRef.current);
+
+      rafRef.current = null;
+      fadeTimerRef.current = null;
+      hideTimerRef.current = null;
     };
   }, [open, durationMs, hide]);
 
+  if (!open) return null;
+
+  const opacityClass = fadeOut
+    ? 'opacity-0'
+    : visible
+      ? 'opacity-100'
+      : 'opacity-0';
+
   return (
-    <AnimatePresence>
-      {open && (
-        <motion.div
-          className="fixed left-0 right-0 bottom-28.5 z-9999 px-4"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          exit="hidden"
-        >
-          <motion.div
-            className="flex justify-start items-center gap-2.5 rounded-xl bg-gray-700 text-screen-0 px-4 py-3"
-            variants={contentVariants}
-          >
-            <AlarmIcon className="size-6" />
-            <span className="typo-body_reg14">
-              미래의 날짜의 루틴은 완료할 수 없어요.
-            </span>
-          </motion.div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <div
+      className={`absolute w-full bottom-28 z-9999 px-4 transition-opacity duration-300 ease-in-out ${opacityClass}`}
+    >
+      <div className="flex justify-start items-center gap-2.5 rounded-xl bg-gray-700 text-screen-0 px-4 py-3">
+        <AlarmIcon className="size-6" />
+        <span className="typo-body_reg14">
+          미래의 날짜의 루틴은 완료할 수 없어요.
+        </span>
+      </div>
+    </div>
   );
 };
 

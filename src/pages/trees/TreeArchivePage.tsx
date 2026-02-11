@@ -65,6 +65,8 @@ const TreeArchivePage = () => {
 
   const trees = data.pages.map((page) => page.trees).flat();
 
+  console.log('archive tree.fruits', data);
+
   if (trees.length === 0) {
     return (
       <div className="w-full flex flex-col items-center gap-30 overflow-y-auto">
@@ -133,7 +135,10 @@ const TreeArchivePage = () => {
                         normalCount: tree.normalCount,
                         growingCount: tree.growingCount,
                       },
-                      fruitList: tree.fruits,
+                      fruitList: tree.fruits.map((f) => ({
+                        memberRoutineId: f.memberRoutineId,
+                        type: f.fruitType,
+                      })),
                     }}
                   />
                 </div>
