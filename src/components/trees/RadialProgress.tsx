@@ -15,16 +15,16 @@ const RadialProgress = ({ current, total }: RadialProgressProps) => {
   const progressRatio =
     total === 0 ? 0 : Math.min(Math.max(current / total, 0), 1);
 
-  // 전체 둘레에서 (실제 게이지 길이 * 진행률) 만큼을 뺀 값이 offset이 된다.
+  // 전체 둘레에서 (실제 게이지 길이 * 진행률) 만큼을 뺀 값 = offset
   const strokeDashoffset = circumference - totalTrackLength * progressRatio;
 
   return (
     <div className="relative flex items-center justify-center w-42 h-42">
-      {/* 배경 원 (디자인상의 연두색 원) */}
+      {/* 배경 원 */}
       <div className="absolute w-29 h-29 rounded-full bg-primary-20" />
 
       <svg className="absolute transform -rotate-225 w-37.5 h-37.5 overflow-visible">
-        {/* Gray Track: 배경이 되는 회색 바 */}
+        {/* 배경이 되는 회색 바 */}
         <circle
           cx="75"
           cy="75"
@@ -36,7 +36,7 @@ const RadialProgress = ({ current, total }: RadialProgressProps) => {
           strokeLinecap="round"
           className="stroke-gray-200"
         />
-        {/* Active Track: 진행률이 표시되는 연두색 바 */}
+        {/* 진행률이 표시되는 연두색 바 */}
         <circle
           cx="75"
           cy="75"

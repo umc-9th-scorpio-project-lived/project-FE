@@ -1,7 +1,7 @@
 export const COMMUNITY_CATEGORIES = {
   ALL: {
     label: '전체',
-    code: null, // 또는 "ALL" (서버 정책에 맞게)
+    code: null,
   },
   SELF_LIFE: {
     label: '자취 일상',

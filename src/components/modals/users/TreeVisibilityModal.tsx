@@ -19,7 +19,7 @@ const TreeVisibilityModal = () => {
   const [isSomeoneSelected, setIsSomeoneSelected] = useState(true);
   const [isPrivate, setIsPrivate] = useState(false);
 
-  /** 모든 공개 범위 상태를 초기화(false)하고 새로운 선택지를 활성화하기 위한 헬퍼 함수 */
+  // 모든 공개 범위 상태를 초기화(false)하고 새로운 선택지를 활성화하기 위한 헬퍼 함수
   const resetVisibility = () => {
     setIsFriendsOnly(false);
     setIsSomeoneSelected(false);
@@ -102,54 +102,7 @@ const TreeVisibilityModal = () => {
               />
               <span className="typo-body_reg16 text-gray-900">일부 공개</span>
             </button>
-            {/* {isSomeoneSelected ? (
-              <div className="max-h-38 pl-4 pr-18 flex flex-col gap-2 overflow-y-auto overflow-x-hidden">
-                <div className="w-full flex justify-between items-center">
-                  <span className="typo-body_reg12 text-gray-900">친구1</span>
-                  <button>
-                    <CheckIcon className="w-6 h-6 text-primary-50" />
-                  </button>
-                </div>
-                <div className="w-full flex justify-between">
-                  <span className="typo-body_reg12 text-gray-900">친구2</span>
-                  <button>
-                    <CheckIcon className="w-6 h-6 text-gray-900" />
-                  </button>
-                </div>
-                <div className="w-full flex justify-between">
-                  <span className="typo-body_reg12 text-gray-900">친구3</span>
-                  <button>
-                    <CheckIcon className="w-6 h-6 text-gray-900" />
-                  </button>
-                </div>
-                <div className="w-full flex justify-between">
-                  <span className="typo-body_reg12 text-gray-900">친구4</span>
-                  <button>
-                    <CheckIcon className="w-6 h-6 text-gray-900" />
-                  </button>
-                </div>
-                <div className="w-full flex justify-between">
-                  <span className="typo-body_reg12 text-gray-900">친구5</span>
-                  <button>
-                    <CheckIcon className="w-6 h-6 text-gray-900" />
-                  </button>
-                </div>
-                <div className="w-full flex justify-between">
-                  <span className="typo-body_reg12 text-gray-900">친구6</span>
-                  <button>
-                    <CheckIcon className="w-6 h-6 text-gray-900" />
-                  </button>
-                </div>
-                <div className="w-full flex justify-between">
-                  <span className="typo-body_reg12 text-gray-900">친구7</span>
-                  <button>
-                    <CheckIcon className="w-6 h-6 text-gray-900" />
-                  </button>
-                </div>
-              </div>
-            ) : (
-              ''
-            )} */}
+
             {isSomeoneSelected ? (
               <div className="max-h-38 pl-4 pr-18 flex flex-col gap-2 overflow-y-auto overflow-x-hidden">
                 {friendList.length === 0 ? (

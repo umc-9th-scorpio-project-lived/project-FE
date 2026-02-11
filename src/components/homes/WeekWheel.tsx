@@ -38,7 +38,7 @@ export const WeekWheel = ({
 
   // idx -> scrollTop (TOP_PADDING 고려)
   const getScrollTopForIndex = (idx: number) =>
-    TOP_PADDING + idx * ROW_HEIGHT - SELECT_CENTER_Y; // = idx*ROW_HEIGHT
+    TOP_PADDING + idx * ROW_HEIGHT - SELECT_CENTER_Y;
 
   // scrollTop -> idx (TOP_PADDING 고려)
   const getIndexFromScrollTop = (top: number) =>
