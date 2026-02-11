@@ -14,6 +14,8 @@ import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 
 const CommunityPage = () => {
+  console.log('COMMUNITY_CATEGORIES', COMMUNITY_CATEGORIES);
+
   // 카테고리 상태
   const categories: CommunityCategoryLabel[] = Object.values(
     COMMUNITY_CATEGORIES
@@ -56,34 +58,47 @@ const CommunityPage = () => {
   }, [selectedCategory]);
 
   return (
-    <div className="flex flex-col pb-25 w-full min-h-screen pt-10">
-      {/*네브바*/}
-      <div className="flex justify-between items-center px-4">
-        <div className="my-2 typo-h2_bold20 text-gray-900">커뮤니티</div>
-        <div className="flex items-center justify-center gap-2">
-          <NavLink
-            to="/lived/community/search"
-            className="w-6 h-6 flex items-center justify-center"
-          >
-            <SearchIcon className="w-full h-full text-gray-600" />
-          </NavLink>
-          <div className="w-6 h-6 bg-alarm bg-center" />
-          <NavLink
-            to={`/lived/community/profile`}
-            className="w-6 h-6 bg-user bg-center"
-          ></NavLink>
+    <div className="flex flex-col pb-25 w-full h-full pt-10">
+      <div className="flex flex-col gap-2.5">
+        <div className="flex flex-col gap-3.5">
+          {/*네브바*/}
+          <div className="flex justify-between items-center px-4 min-h-8.25">
+            <div className="typo-h2_bold20 text-gray-900">커뮤니티</div>
+            <div className="flex items-center justify-center gap-2">
+              <NavLink
+                to="/lived/community/search"
+                className="w-6 h-6 flex items-center justify-center"
+              >
+                <SearchIcon className="w-full h-full text-gray-600" />
+              </NavLink>
+              <NavLink
+                to="/lived/alarm"
+                state={{ initialTab: 'COMMUNITY' }}
+                className="w-6 h-6 bg-alarm bg-center"
+              ></NavLink>
+              <NavLink
+                to={`/lived/community/profile`}
+                className="w-6 h-6 bg-user bg-center"
+              ></NavLink>
+            </div>
+          </div>
+
+          <Category
+            categories={categories}
+            selected={selectedCategory}
+            onSelect={setSelectedCategory}
+          />
         </div>
+
+        {/*인기글 게시글*/}
+        <section className="py-[5.5px] border-b border-b-gray-100">
+          <div className="px-4 typo-body_reg16 text-gray-900">
+            실시간 인기글
+          </div>
+          <PopularPostList />
+        </section>
       </div>
-      <Category
-        categories={categories}
-        selected={selectedCategory}
-        onSelect={setSelectedCategory}
-      />
-      {/*인기글 게시글*/}
-      <section className="my-2 py-1 border-b border-b-gray-100">
-        <div className="px-4 typo-body_reg16 text-gray-900">실시간 인기글</div>
-        <PopularPostList />
-      </section>
+
       {/*게시글*/}
       {posts.length === 0 ? (
         <div className="flex w-full items-center justify-center mt-6 typo-body_reg16 text-gray-400">
@@ -92,6 +107,7 @@ const CommunityPage = () => {
       ) : (
         <PostList posts={posts} onPostClick={handlePostClick} />
       )}
+
       <NavLink to="/lived/community/write">
         <WritingButton />
       </NavLink>

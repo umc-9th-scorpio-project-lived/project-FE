@@ -6,6 +6,7 @@ export type SignupRequest = {
   socialId: string;
   provider: SocialProvider;
   name: string;
+  email: string;
 
   livingPeriod: LivingPeriod;
   gender: GenderEnum;

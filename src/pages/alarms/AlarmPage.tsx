@@ -4,7 +4,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, useMotionValue, animate } from 'framer-motion';
 import { useNotificationStore } from '@/stores/notifications/notificationStore';
 import type { NotificationItem } from '@/types/notifications/Notification.types';
-import { formatTimeAgo } from '@/utils/notifications/notificationUtils';
+import {
+  formatTimeAgo,
+  toNotificationTargetLabel,
+} from '@/utils/notifications/notificationUtils';
 import AlarmIcon from '@/icons/AlarmIcon';
 
 type AlarmTab = 'ROUTINE' | 'COMMUNITY';
@@ -94,13 +97,8 @@ const AlarmPage = () => {
   const navigate = useNavigate();
   const location = useLocation() as { state?: AlarmLocationState };
 
-  const {
-    routine,
-    community,
-    fetchNotifications,
-    // markReadLocal,
-    // markAllReadLocal,
-  } = useNotificationStore();
+  const { routine, community, fetchNotifications, markRead, markAllRead } =
+    useNotificationStore();
 
   // 알람 페이지 탭 상태
   const [tab, setTab] = useState<AlarmTab>(
@@ -115,7 +113,30 @@ const AlarmPage = () => {
 
   const communityAll = community;
   const communityComments = community.filter((n) => n.target === 'COMMENT');
-  const communityTrending = community.filter((n) => n.target !== 'COMMENT');
+  const communityTrending = community.filter(
+    (n) => n.target === 'COMMUNITY_HOT'
+  );
+
+  const handleClickNotification = (target: NotificationItem['target']) => {
+    if (target === 'ROUTINE_TREE') {
+      navigate('/lived/tree');
+      return;
+    }
+
+    if (target === 'ROUTINE_REPORT') {
+      navigate('/lived/tree/statistics');
+      return;
+    }
+
+    if (
+      target === 'COMMUNITY' ||
+      target === 'COMMENT' ||
+      target === 'COMMUNITY_HOT'
+    ) {
+      navigate('/lived/community/profile');
+      return;
+    }
+  };
 
   // 커뮤니티 카테고리 상태
   const [selectedCategory, setSelectedCategory] =
@@ -149,8 +170,11 @@ const AlarmPage = () => {
             onClick={() => navigate(-1)}
           />
           <span className="typo-h2_bold20 text-gray-900">알림</span>
-          <span className="absolute right-0 typo-body_reg12 text-gray-900">
-            {/* 모두 읽음 기능 추가 예정 */}
+          <span
+            className="absolute right-0 typo-body_reg12 text-gray-900"
+            role="button"
+            onClick={() => markAllRead()}
+          >
             모두 읽음
           </span>
         </div>
@@ -227,26 +251,22 @@ const AlarmPage = () => {
           list.map((item) => (
             <SwipeRow
               key={item.id}
-              onRead={() => console.log('읽음 처리', item.id)}
-              // 읽음 관련 로직 추가 예정
+              disabled={item.isRead}
+              onRead={() => {
+                void markRead(item.id);
+              }}
             >
               <div
-                className={`w-full flex p-4 gap-5 items-center ${item.isRead ? 'bg-none' : 'bg-primary-10'}`}
+                className={`w-full flex p-4 gap-5 items-center ${item.isRead ? 'bg-none' : 'bg-primary-10'} ${item.target === 'ROUTINE_TREE' || item.target === 'ROUTINE_REPORT' ? 'cursor-pointer' : ''}`}
+                onClick={() => handleClickNotification(item.target)}
               >
                 {/* 아이콘 */}
-                {/* 아이콘 매핑 관련 로직 추가 예정 */}
-                <div className="text-[28px]">
-                  {item.target === 'COMMENT'
-                    ? '💬'
-                    : item.target === 'ROUTINE'
-                      ? '💊'
-                      : '📈'}
-                </div>
+                <div className="text-[28px]">{item.emoji}</div>
 
                 {/* 내용 */}
                 <div className="w-full flex flex-col gap-0.5">
                   <div className="w-full flex justify-between items-center typo-body_reg12 text-gray-300">
-                    <span>{item.target}</span>
+                    <span>{toNotificationTargetLabel(item.target)}</span>
                     <span>{formatTimeAgo(item.createdAt)}</span>
                   </div>
 

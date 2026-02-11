@@ -210,7 +210,7 @@ const CreateRoutinePage = () => {
                   onBlur={handleBlur}
                   onInput={handleInput}
                   onKeyDown={handleKeyDown}
-                  className={`w-full outline-none typo-body_reg14 whitespace-pre-wrap break-all text-center
+                  className={`w-full outline-none typo-body_reg14 whitespace-pre-wrap break-keep text-center wrap-normal
         ${isTitleFocused || hasTitle ? 'text-gray-900' : 'text-gray-500'}`}
                 />
               </div>
@@ -233,10 +233,10 @@ const CreateRoutinePage = () => {
                 <>
                   <div className="fixed inset-0 z-40" onClick={closeCoach} />
                   <div className="absolute left-26 top-34.5 -translate-x-1/2 z-50">
-                    <div className="relative bg-gray-700 text-screen-0 rounded-sm p-4 w-56">
+                    <div className="relative bg-gray-700 text-screen-0 rounded-sm p-3.75 inline-block min-w-56.25">
                       <div className="flex gap-3 justify-center items-center ">
-                        <div className="typo-body_reg12 text-screen-0 text-center z-10">
-                          루틴 완료 시 나타나는 아이콘입니다.
+                        <div className="typo-body_reg12 text-screen-0 text-center whitespace-pre-line">
+                          루틴 완료시 나타나는 아이콘입니다.
                           <br />
                           탭하여 변경 가능합니다.
                         </div>

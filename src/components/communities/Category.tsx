@@ -10,7 +10,7 @@ const Category = <T extends string>({
   onSelect,
 }: CategoryProps<T>) => {
   return (
-    <section className="flex px-4 my-2 gap-2 overflow-x-auto">
+    <section className="min-h-8.25 flex px-4 gap-2 overflow-x-auto">
       {categories.map((category) => {
         const isActive = selected === category;
         return (

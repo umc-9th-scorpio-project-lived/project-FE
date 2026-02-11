@@ -41,6 +41,8 @@ import ArchivedTreePage from './pages/trees/ArchivedTreePage';
 import FriendTreeArchivePage from './pages/trees/FriendTreeArchivePage';
 import AcceptInvitePage from './pages/commons/AcceptInvitePage';
 import SplashPage from './pages/commons/SplashPage';
+import ScrollToTop from './components/commons/ScrollToTop';
+import ProtectedRoute from './components/commons/ProtectedRoute';
 
 const queryClient = new QueryClient();
 
@@ -48,6 +50,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
+        <ScrollToTop />
         <ModalPage />
         <ToastPage />
 
@@ -74,79 +77,84 @@ function App() {
             <Route path="/onboardings/routine" element={<RoutinePage />} />
             {/* 온보딩 알림 설정 */}
             <Route path="/onboardings/push-guide" element={<PushGuidePage />} />
-
-            {/* 루틴 생성페이지 */}
-            <Route path="/lived/create" element={<CreateRoutinePage />} />
-            {/* 루틴 수정페이지 */}
-            <Route
-              path="/lived/edit/:memberRoutineId"
-              element={<EditRoutinePage />}
-            />
-            {/* 알림 페이지 */}
-            <Route path="/lived/alarm" element={<AlarmPage />} />
-            {/* 루틴 추천 페이지 */}
-            <Route path="/lived/recommend" element={<RecommendPage />} />
           </Route>
 
-          {/* 메인 레이아웃 영역 */}
-          <Route path="/lived" element={<MainLayout />}>
-            <Route index element={<HomePage />} />
-            <Route path="tree" element={<TreePage />} />
-            <Route path="community" element={<CommunityPage />} />
-            <Route path="my" element={<UserPage />} />
-          </Route>
+          <Route element={<ProtectedRoute />}>
+            {/* 메인 레이아웃 영역 */}
+            <Route path="/lived" element={<MainLayout />}>
+              <Route index element={<HomePage />} />
+              <Route path="tree" element={<TreePage />} />
+              <Route path="community" element={<CommunityPage />} />
+              <Route path="my" element={<UserPage />} />
+            </Route>
 
-          {/* 루틴 나무 페이지의 상세 페이지 */}
-          <Route path="/lived/tree" element={<SubLayout />}>
-            {/* 특정 달의 루틴 나무 페이지 */}
-            <Route path="archivedTree" element={<ArchivedTreePage />} />
-            <Route path="tracker" element={<RoutineTrackerPage />} />
-            <Route path="friend/:friendId" element={<FriendTreePage />} />
-            <Route path="statistics" element={<StatisticsPage />} />
-            <Route path="archive" element={<TreeArchivePage />} />
-            <Route
-              path="friendArchive/:friendId"
-              element={<FriendTreeArchivePage />}
-            />
-          </Route>
-
-          {/* 커뮤니티 페이지의 상세페이지 */}
-          <Route path="/lived/community" element={<SubLayout />}>
-            <Route element={<CommunityLayout />}>
-              {/* 게시물 상세페이지 */}
-              <Route path=":postId" element={<PostDetailPage />} />
-              {/* 게시글 작성페이지 */}
-              <Route path="write" element={<PostWritingPage />} />
-              {/* 커뮤니티 프로필 페이지 */}
-              <Route path="profile" element={<CommunityProfilePage />} />
-              {/* 게시글 검색페이지 */}
-              <Route path="search" element={<PostSearchPage />} />
-              {/* 게시글 편집페이지 */}
-              <Route path=":postId/edit" element={<PostWritingPage />} />
-              {/* 댓글 수정페이지 */}
+            {/* 홈 페이지의 상세 페이지 */}
+            <Route element={<SubLayout />}>
+              {/* 루틴 생성페이지 */}
+              <Route path="/lived/create" element={<CreateRoutinePage />} />
+              {/* 루틴 수정페이지 */}
               <Route
-                path=":postId/comments/:commentId/edit"
-                element={<EditCommentPage />}
+                path="/lived/edit/:memberRoutineId"
+                element={<EditRoutinePage />}
+              />
+              {/* 알림 페이지 */}
+              <Route path="/lived/alarm" element={<AlarmPage />} />
+              {/* 루틴 추천 페이지 */}
+              <Route path="/lived/recommend" element={<RecommendPage />} />
+            </Route>
+
+            {/* 루틴 나무 페이지의 상세 페이지 */}
+            <Route path="/lived/tree" element={<SubLayout />}>
+              {/* 특정 달의 루틴 나무 페이지 */}
+              <Route path="archivedTree" element={<ArchivedTreePage />} />
+              <Route path="tracker" element={<RoutineTrackerPage />} />
+              <Route path="friend/:friendId" element={<FriendTreePage />} />
+              <Route path="statistics" element={<StatisticsPage />} />
+              <Route path="archive" element={<TreeArchivePage />} />
+              <Route
+                path="friendArchive/:friendId"
+                element={<FriendTreeArchivePage />}
               />
             </Route>
-          </Route>
 
-          {/* 마이 페이지의 상세 페이지 */}
-          <Route path="/lived/my" element={<SubLayout />}>
-            {/* 공지사항 */}
-            <Route path="notice" element={<NoticePage />} />
-            {/* 문의하기 */}
-            <Route path="inquiry" element={<InquiryPage />} />
-            {/* 정보 */}
-            <Route path="info" element={<InfoPage />} />
-            {/* 계정 관리 */}
-            <Route path="account" element={<AccountPage />} />
-            {/* 알림 설정 */}
-            <Route path="notifications" element={<NotificationsPage />} />
-            {/* 개인정보보호 */}
-            <Route path="privacy" element={<PrivacyPage />} />
-            {/* 차단 목록 */}
-            <Route path="privacy/blocked" element={<BlockedPage />} />
+            {/* 커뮤니티 페이지의 상세페이지 */}
+            <Route path="/lived/community" element={<SubLayout />}>
+              <Route element={<CommunityLayout />}>
+                {/* 게시물 상세페이지 */}
+                <Route path=":postId" element={<PostDetailPage />} />
+                {/* 게시글 작성페이지 */}
+                <Route path="write" element={<PostWritingPage />} />
+                {/* 커뮤니티 프로필 페이지 */}
+                <Route path="profile" element={<CommunityProfilePage />} />
+                {/* 게시글 검색페이지 */}
+                <Route path="search" element={<PostSearchPage />} />
+                {/* 게시글 편집페이지 */}
+                <Route path=":postId/edit" element={<PostWritingPage />} />
+                {/* 댓글 수정페이지 */}
+                <Route
+                  path=":postId/comments/:commentId/edit"
+                  element={<EditCommentPage />}
+                />
+              </Route>
+            </Route>
+
+            {/* 마이 페이지의 상세 페이지 */}
+            <Route path="/lived/my" element={<SubLayout />}>
+              {/* 공지사항 */}
+              <Route path="notice" element={<NoticePage />} />
+              {/* 문의하기 */}
+              <Route path="inquiry" element={<InquiryPage />} />
+              {/* 정보 */}
+              <Route path="info" element={<InfoPage />} />
+              {/* 계정 관리 */}
+              <Route path="account" element={<AccountPage />} />
+              {/* 알림 설정 */}
+              <Route path="notifications" element={<NotificationsPage />} />
+              {/* 개인정보보호 */}
+              <Route path="privacy" element={<PrivacyPage />} />
+              {/* 차단 목록 */}
+              <Route path="privacy/blocked" element={<BlockedPage />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

@@ -89,74 +89,73 @@ const PushGuidePage = () => {
   };
 
   return (
-    <main className="min-h-dvh font-suite">
-      <section className="relative mx-auto flex min-h-dvh w-full max-w-125 flex-col px-4 pt-10">
-        {/* 상단 뒤로가기 */}
-        <div className="h-11 w-full py-1.25">
-          <button
-            type="button"
-            onClick={handleBack}
-            className="h-8.5 w-8.5 text-gray-900"
-            aria-label="뒤로가기"
+    <main className="h-dvh min-h-dvh font-suite">
+      <section className="flex-1 relative flex h-full w-full max-w-125 flex-col px-4 pt-5 pb-8 justify-between">
+        <div className="flex flex-col gap-7.5">
+          {/* 상단 뒤로가기 */}
+          <div className="h-11 w-full py-1.25">
+            <button
+              type="button"
+              onClick={handleBack}
+              className="h-8.5 w-8.5 text-gray-900"
+              aria-label="뒤로가기"
+            >
+              <LeftChevronIcon className="size-6" />
+            </button>
+          </div>
+
+          {/* 본문: 스와이프로 step 넘기기 */}
+          <div
+            className="flex flex-col gap-6 items-center justify-center"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
           >
-            <LeftChevronIcon className="size-6" />
-          </button>
-        </div>
-
-        {/* 본문: 스와이프로 step 넘기기 */}
-        <div
-          className="flex flex-col"
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        >
-          {/* 이미지 */}
-          <div className="pt-10 flex justify-center">
-            <img
-              src={current.img}
-              alt={`푸시 알림 가이드 ${step + 1}`}
-              className="h-90.25 w-42 object-contain"
-              draggable={false}
-            />
-          </div>
-
-          {/* 텍스트 */}
-          <div className="pt-9 text-center">
-            <div className="typo-h2_bold20 text-gray-900">{current.title}</div>
-            <p className="pt-4 pb-7.5 typo-body_reg18 text-gray-900 whitespace-pre-line">
-              {current.desc}
-            </p>
-          </div>
-        </div>
-
-        {/* 점 인디케이터 */}
-        <div className="absolute left-1/2 top-160.5 -translate-x-1/2">
-          <div className="flex items-center justify-center gap-3">
-            {STEPS.map((_, idx) => (
-              <span
-                key={idx}
-                className={`h-2.5 w-2.5 rounded-full ${
-                  idx === step ? 'bg-primary-50' : 'bg-gray-200'
-                }`}
+            {/* 이미지 */}
+            <div className="h-82.5 border border-gray-400 rounded-lg overflow-hidden">
+              <img
+                src={current.img}
+                alt={`푸시 알림 가이드 ${step + 1}`}
+                className="h-full object-cover"
+                draggable={false}
               />
-            ))}
+            </div>
+
+            {/* 텍스트 */}
+            <div className="flex flex-col items-center justify-center gap-4 h-23.75">
+              <div className="typo-h2_bold20 text-gray-900">
+                {current.title}
+              </div>
+              <p className="typo-body_reg18 text-gray-900 whitespace-pre-line text-center">
+                {current.desc}
+              </p>
+            </div>
+
+            {/* 점 인디케이터 */}
+            <div className="flex items-center justify-center gap-3">
+              {STEPS.map((_, idx) => (
+                <span
+                  key={idx}
+                  className={`h-2.5 w-2.5 rounded-full ${
+                    idx === step ? 'bg-primary-50' : 'bg-gray-200'
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
-
-        <div className="flex-1" />
 
         {/* 하단 영역 */}
-        <div className="pb-8">
-          {/* 완료 버튼 */}
-          <div
-            role="button"
-            tabIndex={hasSwiped ? 0 : -1}
-            aria-disabled={!hasSwiped}
-            onClick={() => hasSwiped && handleDone()}
-            onKeyDown={(e) => {
-              if (!hasSwiped) return;
-              handleKeyActivate(e, handleDone);
-            }}
-            className={`h-12.5 w-full rounded-4xl
+        {/* 완료 버튼 */}
+        <div
+          role="button"
+          tabIndex={hasSwiped ? 0 : -1}
+          aria-disabled={!hasSwiped}
+          onClick={() => hasSwiped && handleDone()}
+          onKeyDown={(e) => {
+            if (!hasSwiped) return;
+            handleKeyActivate(e, handleDone);
+          }}
+          className={`h-12.5 w-full rounded-4xl
               flex items-center justify-center typo-body_bold18
               ${
                 hasSwiped
@@ -164,9 +163,8 @@ const PushGuidePage = () => {
                   : 'bg-gray-100 text-gray-400 pointer-events-none'
               }
             `}
-          >
-            확인했어요!
-          </div>
+        >
+          확인했어요!
         </div>
       </section>
     </main>

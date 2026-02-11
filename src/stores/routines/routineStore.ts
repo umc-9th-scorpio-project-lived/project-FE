@@ -4,7 +4,7 @@ import createRoutine from '@/services/routines/createRoutine';
 import deleteRoutine from '@/services/routines/deleteRoutine';
 import editRoutine from '@/services/routines/editRoutine';
 import getRoutineInfo from '@/services/routines/getRoutineInfo';
-import type { ApiError } from '@/types/Api.types';
+
 import {
   EMPTY_HOME_ROUTINE,
   type AlarmValue,
@@ -14,6 +14,7 @@ import {
   type RoutineValue,
 } from '@/types/routines/Routine.types';
 import {
+  getErrorCode,
   toCreateRoutineRequest,
   toDraftFromRoutineInfo,
   toEditRoutineRequest,
@@ -93,8 +94,7 @@ export const useRoutineStore = create<HomeRoutineState>((set, get) => ({
     } catch (err) {
       set({ data: prev });
 
-      const e = err as ApiError;
-      const code = e.code;
+      const code = getErrorCode(err);
 
       if (code === ROUTINE_ERROR_CODE.FUTURE_DATE_CHECK) {
         useSnackbarStore.getState().show();
