@@ -7,7 +7,7 @@ const HomePage = () => {
     <div className="relative w-full h-full overflow-y-hidden pb-25">
       <HomeHeader />
       <HomeContent />
-      <div className="absolute bottom-28 ">
+      <div className="absolute bottom-28 w-full z-10 px-4">
         <RoutineSnackbar />
       </div>
     </div>
