@@ -35,7 +35,7 @@ const ToastPage = () => {
 
   return (
     <div
-      className={`flex fixed bottom-25 left-0 right-0 justify-center transition-opacity duration-300 ease-in-out ${fadeOut ? 'opacity-0' : 'opacity-100'}`}
+      className={`flex fixed bottom-25 left-0 right-0 z-500 justify-center transition-opacity duration-300 ease-in-out ${fadeOut ? 'opacity-0' : 'opacity-100'}`}
     >
       <div className="max-w-125 w-full p-4">
         <div className="flex items-center bg-gray-700 rounded-lg px-4 py-3 gap-2.5">
