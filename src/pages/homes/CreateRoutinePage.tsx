@@ -11,6 +11,7 @@ import { useRoutineStore } from '@/stores/routines/routineStore';
 import { useHomeDateStore } from '@/stores/homes/homeStore';
 import { formatDate } from '@/utils/homes/homeUtils';
 import RoutineSnackbar from '@/components/commons/RoutineSnackbar';
+import { useSnackbarStore } from '@/stores/homes/snackbarStore';
 
 // 루틴 제목 최대 길이
 const MAX_TITLE_LENGTH = 50;
@@ -43,6 +44,12 @@ const CreateRoutinePage = () => {
   const [isTitleFocused, setIsTitleFocused] = useState(false);
   const [localTitle, setLocalTitle] = useState(title ?? '');
   const titleRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    return () => {
+      useSnackbarStore.getState().hide();
+    };
+  }, []);
 
   useEffect(() => {
     if (isTitleFocused) return;
