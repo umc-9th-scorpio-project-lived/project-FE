@@ -4,6 +4,14 @@
 @import 'tailwindcss/utilities';
 @import 'tailwindcss/theme';
 
+@font-face {
+  font-family: 'SUITE Variable';
+  src: url('/fonts/SUITE-Variable.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
 html {
   margin: 0px;
   padding: 0px;
@@ -12,9 +20,9 @@ html {
 }
 
 body {
+  @apply font-suite;
   margin: 0px;
   padding: 0px;
-  font-family: 'suite';
   min-width: 375px; /* iphone SE 기준 - 모바일 최소 너비 */
   max-width: 500px; /* 모바일 최대 너비 */
   min-height: 100dvh;
