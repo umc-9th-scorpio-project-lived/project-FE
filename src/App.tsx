@@ -40,6 +40,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ArchivedTreePage from './pages/trees/ArchivedTreePage';
 import FriendTreeArchivePage from './pages/trees/FriendTreeArchivePage';
 import AcceptInvitePage from './pages/commons/AcceptInvitePage';
+import SplashPage from './pages/commons/SplashPage';
 import ScrollToTop from './components/commons/ScrollToTop';
 import ProtectedRoute from './components/commons/ProtectedRoute';
 
@@ -54,6 +55,9 @@ function App() {
         <ToastPage />
 
         <Routes>
+          {/* 스플래시 스크린 */}
+          <Route path="/" element={<SplashPage />} />
+
           {/* 콜백 페이지 */}
           <Route path="/login/callback" element={<CallbackPage />} />
           <Route path="/signup/callback" element={<CallbackPage />} />
@@ -62,7 +66,7 @@ function App() {
           {/* 서브 레이아웃 영역 */}
           <Route element={<SubLayout />}>
             {/* 로그인 */}
-            <Route path="/" element={<LoginPage />} />
+            <Route path="/login" element={<LoginPage />} />
 
             {/* 온보딩 관련 페이지 */}
             {/* 온보딩 기본 정보 */}
