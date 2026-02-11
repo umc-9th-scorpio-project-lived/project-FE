@@ -178,6 +178,8 @@ const EditRoutinePage = () => {
 
         <DeleteIcon
           className="absolute right-3 w-6 h-6 flex items-center justify-center"
+          primaryColor="#979B9F"
+          secondaryColor="#C9CDD1"
           onClick={() =>
             openModal('deleteRoutineModal', {
               position: 'bottom',
