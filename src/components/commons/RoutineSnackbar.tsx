@@ -1,11 +1,28 @@
 import AlarmIcon from '@/icons/AlarmIcon';
-import { useSnackbarStore } from '@/stores/homes/snackbarStore';
-import { useEffect, useRef, useState } from 'react';
+import {
+  useSnackbarStore,
+  type RoutineSnackbarKey,
+} from '@/stores/homes/snackbarStore';
+import React, { useEffect, useRef, useState } from 'react';
 
 const FADE_OUT_DURATION_MS = 300;
 
+const SNACKBAR_META: Record<
+  RoutineSnackbarKey,
+  { Icon: React.FC<{ className?: string }>; text: string }
+> = {
+  ROUTINE_FUTURE_DATE: {
+    Icon: AlarmIcon,
+    text: '미래의 날짜의 루틴은 완료할 수 없어요.',
+  },
+  ROUTINE_DUPLICATE_NAME: {
+    Icon: AlarmIcon,
+    text: '동일한 제목의 루틴은 추가할 수 없어요. \n새로운 루틴 제목을 입력해주세요',
+  },
+};
+
 const RoutineSnackbar = () => {
-  const { open, durationMs, hide } = useSnackbarStore();
+  const { open, snackbarKey, durationMs, hide } = useSnackbarStore();
 
   const [visible, setVisible] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
@@ -13,6 +30,9 @@ const RoutineSnackbar = () => {
   const hideTimerRef = useRef<number | null>(null);
   const fadeTimerRef = useRef<number | null>(null);
   const rafRef = useRef<number | null>(null);
+
+  const snackbarMeta = snackbarKey ? SNACKBAR_META[snackbarKey] : null;
+  const { Icon, text } = snackbarMeta || { Icon: AlarmIcon, text: '' };
 
   useEffect(() => {
     if (!open) {
@@ -72,15 +92,15 @@ const RoutineSnackbar = () => {
       ? 'opacity-100'
       : 'opacity-0';
 
+  if (!open || !snackbarKey) return null;
+
   return (
     <div
-      className={`absolute w-full bottom-28 z-9999 px-4 transition-opacity duration-300 ease-in-out ${opacityClass}`}
+      className={`w-full z-9999 transition-opacity duration-300 ease-in-out ${opacityClass}`}
     >
       <div className="flex justify-start items-center gap-2.5 rounded-xl bg-gray-700 text-screen-0 px-4 py-3">
-        <AlarmIcon className="size-6" />
-        <span className="typo-body_reg14">
-          미래의 날짜의 루틴은 완료할 수 없어요.
-        </span>
+        <Icon className="size-6" />
+        <span className="typo-body_reg14 whitespace-pre-line">{text} </span>
       </div>
     </div>
   );
