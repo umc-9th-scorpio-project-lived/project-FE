@@ -40,7 +40,7 @@ export type NotificationSettingsResult = {
 };
 
 // 알림 설정 수정 request body
-export type PatchNotificationSettingsRequest = {
+export type PatchNotificationSettingsRequest = Partial<{
   allEnabled: boolean;
 
   routineEnabled: boolean;
@@ -51,7 +51,7 @@ export type PatchNotificationSettingsRequest = {
   commentEnabled: boolean;
 
   marketingEnabled: boolean;
-};
+}>;
 
 // 알림 읽음 처리 API result
 export type PatchNotificationResult = string;
