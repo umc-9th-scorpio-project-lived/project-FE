@@ -2,7 +2,8 @@ import { create } from 'zustand';
 
 export type RoutineSnackbarKey =
   | 'ROUTINE_FUTURE_DATE'
-  | 'ROUTINE_DUPLICATE_NAME';
+  | 'ROUTINE_DUPLICATE_NAME'
+  | 'EDIT_DUPLICATE_NAME';
 
 type SnackbarState = {
   open: boolean;
