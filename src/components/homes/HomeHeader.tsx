@@ -12,6 +12,8 @@ import { useEffect } from 'react';
 import getHomeRoutine from '@/services/routines/getHomeRoutine';
 import { useRoutineStore } from '@/stores/routines/routineStore';
 import { useNotificationStore } from '@/stores/notifications/notificationStore';
+import ActiveAlarmIcon from '@/icons/ActiveAlarmIcon';
+import NoneAlarmIcon from '@/icons/NoneAlarmIcon';
 
 const HomeHeader = () => {
   const { selectedDate, weekStartDate, resetToToday } = useHomeDateStore();
@@ -51,11 +53,12 @@ const HomeHeader = () => {
         <div className="flex justify-between h-10 items-center">
           <div className="text-[22px] font-normal">{data?.dateTitle}</div>
           <div
-            className={`h-6 w-6 bg-center bg-no-repeat bg-contain ${hasUnreadAlarm ? 'bg-active' : 'bg-alarm'}`}
             onClick={() =>
               navigate('/lived/alarm', { state: { initialTab: 'ROUTINE' } })
             }
-          />
+          >
+            {hasUnreadAlarm ? <ActiveAlarmIcon /> : <NoneAlarmIcon />}
+          </div>
         </div>
 
         <div className="flex justify-between items-center h-10">
