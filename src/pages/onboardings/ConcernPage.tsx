@@ -75,7 +75,7 @@ const ConcernPage = () => {
           </div>
 
           {/* 칩 영역 */}
-          <div className="px-0.5 flex flex-wrap gap-3">
+          <div className="px-0.5 pr-4.5 flex flex-wrap gap-3">
             {CHIPS.map(({ id, label }) => {
               const isActive = selected.includes(id);
               return (
@@ -83,8 +83,8 @@ const ConcernPage = () => {
                   key={id}
                   type="button"
                   onClick={() => toggleChip(id)}
-                  className={`h-11.5 rounded-lg px-4 typo-body_reg16 transition
-              ${isActive ? 'bg-primary-50 text-screen-0' : 'bg-gray-50 text-gray-600'}`}
+                  className={`h-11.5 rounded-lg px-4.5 typo-body_reg16 transition
+                  ${isActive ? 'bg-primary-50 text-screen-0' : 'bg-gray-50 text-gray-600'}`}
                 >
                   {label}
                 </button>
