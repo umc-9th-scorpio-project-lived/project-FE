@@ -6,13 +6,13 @@ import { useNavigate } from 'react-router-dom';
 const CHIPS = [
   { id: 1, label: '집안일 미룸' },
   { id: 2, label: '정신없는 아침' },
-  { id: 3, label: '할 일 까먹음' },
-  { id: 4, label: '생활비 관리' },
-  { id: 5, label: '외로움' },
-  { id: 6, label: '불규칙한 식습관' },
-  { id: 7, label: '건강 관리' },
-  { id: 8, label: '식사 준비' },
-  { id: 9, label: '늦은 취침 시간' },
+  { id: 4, label: '할 일 까먹음' },
+  { id: 5, label: '생활비 관리' },
+  { id: 6, label: '외로움' },
+  { id: 7, label: '불규칙한 식습관' },
+  { id: 8, label: '건강 관리' },
+  { id: 9, label: '식사 준비' },
+  { id: 3, label: '늦은 취침 시간' },
 ] as const;
 
 const ConcernPage = () => {
@@ -37,6 +37,24 @@ const ConcernPage = () => {
     if (!isButtonEnabled) return;
     setConcerns(selected);
     navigate('/onboardings/routine');
+  };
+
+  const renderChip = ({ id, label }: (typeof CHIPS)[number]) => {
+    const isActive = selected.includes(id);
+
+    return (
+      <button
+        key={id}
+        type="button"
+        onClick={() => toggleChip(id)}
+        className={`h-11.5 rounded-lg px-4.5 typo-body_reg16 transition
+        ${
+          isActive ? 'bg-primary-50 text-screen-0' : 'bg-gray-50 text-gray-600'
+        }`}
+      >
+        {label}
+      </button>
+    );
   };
 
   return (
@@ -76,20 +94,23 @@ const ConcernPage = () => {
 
           {/* 칩 영역 */}
           <div className="px-0.5 flex flex-wrap gap-3">
-            {CHIPS.map(({ id, label }) => {
-              const isActive = selected.includes(id);
-              return (
-                <button
-                  key={id}
-                  type="button"
-                  onClick={() => toggleChip(id)}
-                  className={`h-11.5 rounded-lg px-4 typo-body_reg16 transition
-              ${isActive ? 'bg-primary-50 text-screen-0' : 'bg-gray-50 text-gray-600'}`}
-                >
-                  {label}
-                </button>
-              );
-            })}
+            <div className="flex flex-col gap-3">
+              <div className="flex gap-3">
+                {CHIPS.slice(0, 2).map(renderChip)}
+              </div>
+
+              <div className="flex gap-3">
+                {CHIPS.slice(2, 5).map(renderChip)}
+              </div>
+
+              <div className="flex gap-3">
+                {CHIPS.slice(5, 7).map(renderChip)}
+              </div>
+
+              <div className="flex gap-3">
+                {CHIPS.slice(7, 9).map(renderChip)}
+              </div>
+            </div>
           </div>
         </div>
 
