@@ -13,6 +13,14 @@ import { useQuery } from '@tanstack/react-query';
 import { getPeriodStatistics } from '@/services/statistics/getPeriodStatistics';
 
 const StatisticsPage = () => {
+  /* 루틴나무 페이지용 body 배경색 */
+  useEffect(() => {
+    document.body.classList.add('tree-page-body');
+    return () => {
+      document.body.classList.remove('tree-page-body');
+    };
+  }, []);
+
   const navigate = useNavigate();
   const [isWeekly, setIsWeekly] = useState(true);
 

@@ -37,6 +37,11 @@ body {
   background-color: #fcfdff;
 }
 
+/* 루틴나무 페이지용 body 배경색 */
+body.tree-page-body {
+  background-color: #f2f4f6;
+}
+
 body::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
 }
