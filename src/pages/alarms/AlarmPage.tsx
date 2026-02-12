@@ -207,7 +207,7 @@ const AlarmPage = () => {
       </div>
 
       {/* 커뮤니티 카테고리 chip */}
-      {isCommunity && list.length !== 0 && (
+      {isCommunity && communityAll.length > 0 && (
         <div className="w-full flex gap-2 px-4 py-2.5">
           {COMMUNITY_CATEGORIES.map(({ label, value }) => {
             const active = selectedCategory === value;
