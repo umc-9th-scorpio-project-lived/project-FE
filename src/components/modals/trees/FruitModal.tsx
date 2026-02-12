@@ -1,4 +1,4 @@
-import MiniCloseIcon from '@/icons/MiniCloseIcon';
+import CloseIcon from '@/icons/CloseIcon';
 import RightChevronIcon from '@/icons/RightChevronIcon';
 import { getRoutineAchievement } from '@/services/statistics/getRoutineAchievement';
 import useBaseModal from '@/stores/modals/baseModal';
@@ -32,9 +32,9 @@ const FruitModal = ({ routineYearMonth }: Props) => {
     <div className="w-full bg-screen-0 rounded-2xl pt-6.5 px-4 pb-7 flex flex-col gap-5.5 relative">
       <button
         onClick={closeModal}
-        className="absolute top-3 right-3 cursor-pointer"
+        className="absolute top-3 right-3.5 cursor-pointer"
       >
-        <MiniCloseIcon className="w-2.5 h-2.5 text-gray-900" />
+        <CloseIcon className="w-4 h-4 text-gray-900" />
       </button>
 
       <span className="typo-body_bold18 text-gray-900">{data?.title}</span>
