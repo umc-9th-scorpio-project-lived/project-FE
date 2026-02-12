@@ -6,15 +6,11 @@ import type {
 } from '@/types/notifications/Notification.types';
 
 // 알림 목록 조회 API
-const getNotifications = async (targetType: NotificationTarget) => {
-  const res = await authApi.get<ApiResponse<NotificationItem[]>>(
+const getNotifications = (targetType: NotificationTarget) => {
+  return authApi.get<ApiResponse<NotificationItem[]>, NotificationItem[]>(
     '/notifications',
-    {
-      params: { targetType },
-    }
+    { params: { targetType } }
   );
-
-  return res.data;
 };
 
 export default getNotifications;
