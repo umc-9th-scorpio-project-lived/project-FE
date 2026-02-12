@@ -6,13 +6,13 @@ import { useNavigate } from 'react-router-dom';
 const CHIPS = [
   { id: 1, label: '집안일 미룸' },
   { id: 2, label: '정신없는 아침' },
-  { id: 3, label: '할 일 까먹음' },
-  { id: 4, label: '생활비 관리' },
-  { id: 5, label: '외로움' },
-  { id: 6, label: '불규칙한 식습관' },
-  { id: 7, label: '건강 관리' },
-  { id: 8, label: '식사 준비' },
-  { id: 9, label: '늦은 취침 시간' },
+  { id: 4, label: '할 일 까먹음' },
+  { id: 5, label: '생활비 관리' },
+  { id: 6, label: '외로움' },
+  { id: 7, label: '불규칙한 식습관' },
+  { id: 8, label: '건강 관리' },
+  { id: 9, label: '식사 준비' },
+  { id: 3, label: '늦은 취침 시간' },
 ] as const;
 
 const ConcernPage = () => {
