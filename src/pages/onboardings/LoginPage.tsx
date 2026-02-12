@@ -33,7 +33,7 @@ const LoginPage = () => {
             className="flex items-center justify-center w-72.5 h-14.5 gap-2 rounded-full bg-[#FFEE50] py-6"
           >
             <KakaoIcon className="size-8" />
-            <span className="typo-body_reg14 font-semibold text-gray-400 whitespace-nowrap">
+            <span className="typo-body_reg14 font-semibold text-gray-900 whitespace-nowrap">
               카카오 계정으로 시작하기
             </span>
           </button>
@@ -45,7 +45,7 @@ const LoginPage = () => {
             onClick={() => redirectToSocialLogin('google')}
           >
             <GoogleGIcon className="size-6" />
-            <span className="typo-body_reg14 font-semibold text-gray-400 whitespace-nowrap">
+            <span className="typo-body_reg14 font-semibold text-gray-900 whitespace-nowrap">
               구글 계정으로 시작하기
             </span>
           </button>
