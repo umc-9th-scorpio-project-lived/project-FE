@@ -10,10 +10,18 @@ import { deleteFriend } from '@/services/friends/deleteFriend';
 import { getFriendFruitsStatistics } from '@/services/friends/getFriendFruitsStatistics';
 import useBaseModal from '@/stores/modals/baseModal';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const FriendTreePage = () => {
+  /* 루틴나무 페이지용 body 배경색 */
+  useEffect(() => {
+    document.body.classList.add('tree-page-body');
+    return () => {
+      document.body.classList.remove('tree-page-body');
+    };
+  }, []);
+
   const { friendId } = useParams();
   const queryClient = useQueryClient();
 

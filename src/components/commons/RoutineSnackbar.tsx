@@ -19,6 +19,10 @@ const SNACKBAR_META: Record<
     Icon: AlarmIcon,
     text: '동일한 제목의 루틴은 추가할 수 없어요. \n새로운 루틴 제목을 입력해주세요',
   },
+  EDIT_DUPLICATE_NAME: {
+    Icon: AlarmIcon,
+    text: '동일한 제목의 루틴으로는 수정할 수 없어요. \n새로운 루틴 제목을 입력해주세요',
+  },
 };
 
 const RoutineSnackbar = () => {

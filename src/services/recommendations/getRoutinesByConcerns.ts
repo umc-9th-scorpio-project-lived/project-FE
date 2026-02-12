@@ -9,9 +9,11 @@ export type RecommendedRoutine = {
 const getRoutinesByConcerns = async (
   concernIds: number[]
 ): Promise<RecommendedRoutine[]> => {
-  return await baseApi.get('/recommendations/concerns', {
-    params: { concernIds },
-  });
+  const { data } = await baseApi.get<RecommendedRoutine[]>(
+    '/recommendations/concerns',
+    { params: { concernIds } }
+  );
+  return data;
 };
 
 export default getRoutinesByConcerns;

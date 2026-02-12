@@ -1,5 +1,5 @@
-import useBaseModal from "@/stores/modals/baseModal";
-import React, { useEffect } from "react";
+import useBaseModal from '@/stores/modals/baseModal';
+import React, { useEffect } from 'react';
 
 interface ModalBackgroundProps {
   children: React.ReactNode;
@@ -7,14 +7,14 @@ interface ModalBackgroundProps {
 
 const ModalBackground = ({ children }: ModalBackgroundProps) => {
   const { closeModal, options } = useBaseModal();
-  const position = options.position ?? "center";
+  const position = options.position ?? 'center';
 
   const preventScroll = () => {
-    document.documentElement.style.overflow = "hidden";
+    document.documentElement.style.overflow = 'hidden';
   };
 
   const allowScroll = () => {
-    document.documentElement.style.overflow = "auto";
+    document.documentElement.style.overflow = 'auto';
   };
 
   useEffect(() => {
@@ -25,15 +25,19 @@ const ModalBackground = ({ children }: ModalBackgroundProps) => {
   }, []);
 
   const layoutClass =
-    position === "center" ? "grid place-items-center px-4" : "flex items-end px-0";
+    position === 'center'
+      ? 'grid place-items-center px-4'
+      : 'flex items-end px-0';
 
   const contentClass =
-    position === "center" ? "flex w-full max-w-[420px] items-center justify-center" : "w-full";
+    position === 'center'
+      ? 'flex w-full max-w-[420px] items-center justify-center'
+      : 'w-full';
 
   return (
     <div
       onClick={() => closeModal()}
-      className="max-w-[500px] min-w-[375px] w-full fixed inset-0 mx-auto bg-black/25 z-50 overflow-hidden"
+      className="max-w-125 min-w-93.75 w-full fixed inset-0 mx-auto bg-black/25 z-50 overflow-hidden"
     >
       <div className={`h-full w-full ${layoutClass}`}>
         <div className={contentClass} onClick={(e) => e.stopPropagation()}>

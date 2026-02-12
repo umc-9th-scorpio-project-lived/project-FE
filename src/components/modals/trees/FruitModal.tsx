@@ -16,7 +16,6 @@ const FruitModal = ({ routineYearMonth }: Props) => {
   const navigate = useNavigate();
 
   const { data } = useQuery({
-    // isPending, isError 처리 로직 추가 필요
     queryKey: [
       routineYearMonth?.year,
       routineYearMonth?.month,

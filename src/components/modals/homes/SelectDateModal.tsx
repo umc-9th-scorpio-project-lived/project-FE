@@ -1,23 +1,25 @@
-import { useEffect, useMemo, useState } from "react";
-import useBaseModal from "@/stores/modals/baseModal";
-import { useHomeDateStore } from "@/stores/homes/homeStore";
-import { WEEK_LABELS } from "@/constants";
+import { useEffect, useMemo, useState } from 'react';
+import useBaseModal from '@/stores/modals/baseModal';
+import { useHomeDateStore } from '@/stores/homes/homeStore';
+import { WEEK_LABELS } from '@/constants';
 import {
   addMonths,
   getCalendarGridStartDate,
   getMonthStartDate,
   isSameDay,
   normalizeDate,
-} from "@/utils/homes/homeUtils";
-import MiniLeftChevronIcon from "@/icons/MiniLeftChevronIcon";
-import MiniRightChevronIcon from "@/icons/MiniRightChevronIcon";
+} from '@/utils/homes/homeUtils';
+import MiniLeftChevronIcon from '@/icons/MiniLeftChevronIcon';
+import MiniRightChevronIcon from '@/icons/MiniRightChevronIcon';
 
 const SelectDateModal = () => {
   const { closeModal } = useBaseModal();
 
   const { selectedDate, setSelectedDate } = useHomeDateStore();
 
-  const [currentMonth, setCurrentMonth] = useState<Date>(() => getMonthStartDate(selectedDate));
+  const [currentMonth, setCurrentMonth] = useState<Date>(() =>
+    getMonthStartDate(selectedDate)
+  );
 
   useEffect(() => {
     setCurrentMonth(getMonthStartDate(selectedDate));
@@ -40,10 +42,13 @@ const SelectDateModal = () => {
   }, [currentMonth]);
 
   const isInCurrentMonth = (d: Date) =>
-    d.getFullYear() === currentMonth.getFullYear() && d.getMonth() === currentMonth.getMonth();
+    d.getFullYear() === currentMonth.getFullYear() &&
+    d.getMonth() === currentMonth.getMonth();
 
-  const handlePrevMonth = () => setCurrentMonth((prev) => getMonthStartDate(addMonths(prev, -1)));
-  const handleNextMonth = () => setCurrentMonth((prev) => getMonthStartDate(addMonths(prev, 1)));
+  const handlePrevMonth = () =>
+    setCurrentMonth((prev) => getMonthStartDate(addMonths(prev, -1)));
+  const handleNextMonth = () =>
+    setCurrentMonth((prev) => getMonthStartDate(addMonths(prev, 1)));
 
   const handleSelectDate = (d: Date) => {
     const picked = normalizeDate(d);
@@ -54,7 +59,7 @@ const SelectDateModal = () => {
   return (
     <div className="bg-white w-full rounded-t-2xl px-4 pt-4 pb-5 flex flex-col gap-4">
       <div className="flex flex-col gap-2.5">
-        {/* 헤더: 아이콘 + 타이틀 */}
+        {/* 헤더 */}
         <div className="flex items-center gap-2.5 justify-start py-3 px-1.5">
           <div className="bg-calender w-6 h-6" />
 
@@ -94,11 +99,11 @@ const SelectDateModal = () => {
               type="button"
               disabled={disabled}
               onClick={() => handleSelectDate(d)}
-              className={`${disabled ? "text-transparent" : "text-gray-900"}`}
+              className={`${disabled ? 'text-transparent' : 'text-gray-900'}`}
               aria-label={`${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`}
             >
               <span
-                className={`w-11 h-11 rounded-full flex items-center justify-center typo-body_bold14 ${isSelected ? "text-white bg-primary-50" : ""} ${disabled ? "text-transparent" : "text-gray-900"}`}
+                className={`w-11 h-11 rounded-full flex items-center justify-center typo-body_bold14 ${isSelected ? 'text-white bg-primary-50' : ''} ${disabled ? 'text-transparent' : 'text-gray-900'}`}
               >
                 {d.getDate()}
               </span>

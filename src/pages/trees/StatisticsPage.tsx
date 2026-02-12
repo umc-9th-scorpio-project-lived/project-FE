@@ -11,8 +11,17 @@ import type {
 } from '@/types/statistics/Statistics.types';
 import { useQuery } from '@tanstack/react-query';
 import { getPeriodStatistics } from '@/services/statistics/getPeriodStatistics';
+import LoadingIcon from '@/icons/LoadingIcon';
 
 const StatisticsPage = () => {
+  /* 통계 페이지용 body 배경색 */
+  useEffect(() => {
+    document.body.classList.add('statistics-page-body');
+    return () => {
+      document.body.classList.remove('statistics-page-body');
+    };
+  }, []);
+
   const navigate = useNavigate();
   const [isWeekly, setIsWeekly] = useState(true);
 
@@ -202,7 +211,15 @@ const StatisticsPage = () => {
         )}
 
         {isPending || isError ? (
-          <></>
+          <div className="pt-20.5 w-full flex flex-col justify-center items-center gap-7.5">
+            <LoadingIcon className="w-20 h-20" />
+            <div className="typo-body_reg16 text-gray-900">
+              루틴을 정리 중이에요
+            </div>
+            <div className="typo-body_reg16 text-gray-900">
+              잠시만 기다려 주세요!
+            </div>
+          </div>
         ) : (
           <div className="pt-7 flex flex-col gap-10">
             <div className="flex flex-col gap-4">
