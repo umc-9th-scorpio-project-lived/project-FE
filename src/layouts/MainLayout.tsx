@@ -5,13 +5,13 @@ import { Outlet, useLocation } from 'react-router-dom';
 const MainLayout = () => {
   const { pathname } = useLocation();
 
-  const showFloating = pathname.startsWith('/lived');
+  const showFloating = pathname === '/lived';
 
   return (
     <div className="w-full h-dvh">
       <Outlet />
       {showFloating && (
-        <div className="fixed right-4 bottom-29 z-50">
+        <div className="fixed right-4 bottom-29 z-10">
           <HomeFloatingButton />
         </div>
       )}

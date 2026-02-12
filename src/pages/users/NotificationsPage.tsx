@@ -7,17 +7,16 @@ import { useNotificationStore } from '@/stores/notifications/notificationStore';
 const NotificationsPage = () => {
   const navigate = useNavigate();
 
-  const {
-    settings,
-    fetchSettings,
-    toggleAll,
-    toggleRoutine,
-    toggleStatistics,
-    toggleCommunity,
-    toggleComment,
-    toggleTrendingPost,
-    toggleMarketing,
-  } = useNotificationStore();
+  const settings = useNotificationStore((s) => s.settings);
+  const fetchSettings = useNotificationStore((s) => s.fetchSettings);
+
+  const toggleAll = useNotificationStore((s) => s.toggleAll);
+  const toggleRoutine = useNotificationStore((s) => s.toggleRoutine);
+  const toggleStatistics = useNotificationStore((s) => s.toggleStatistics);
+  const toggleCommunity = useNotificationStore((s) => s.toggleCommunity);
+  const toggleComment = useNotificationStore((s) => s.toggleComment);
+  const toggleTrendingPost = useNotificationStore((s) => s.toggleTrendingPost);
+  const toggleMarketing = useNotificationStore((s) => s.toggleMarketing);
 
   useEffect(() => {
     fetchSettings();
