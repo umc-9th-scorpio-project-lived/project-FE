@@ -67,6 +67,9 @@ const SetRepeatModal = ({ initialValue, onApply }: Props) => {
       const has = prev.includes(w);
       const next = has ? prev.filter((x) => x !== w) : [...prev, w];
       next.sort((a, b) => a - b);
+
+      setIsEveryday(next.length === 7);
+
       return next;
     });
   };
