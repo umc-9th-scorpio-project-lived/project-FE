@@ -57,6 +57,8 @@
 |<img src="https://github.com/user-attachments/assets/9d502ef7-3720-462b-9006-150a2a9e4791" width="200"/>|<img src="https://github.com/user-attachments/assets/247f0f08-1470-47df-9b7f-233af97f9195" width="200"/>|<img src="https://github.com/user-attachments/assets/3500a85c-4808-4083-b0e8-4635f6da8e15" width="200"/>|
 |AI(Google Gemini)를 통한 루틴 추천 기능을</br>제공하는 페이지입니다.|서버에 저장되어 있는 루틴을<br>카테고리 별로 추천하는 페이지입니다.|루틴, 루틴 통계, 루틴 나무 알림을</br>제공하는 페이지입니다.|
 
+</br>
+
 > 루틴 나무 페이지
 
 |루틴 나무 페이지|루틴 나무-모아보기|루틴 나무-상세|
@@ -79,9 +81,31 @@
 |<img src="https://github.com/user-attachments/assets/6ce919df-0174-4fd9-b252-6bdac5ab1865" width="200"/>|<img src="https://github.com/user-attachments/assets/63320074-f7b7-4c9e-ac3c-1b92bc57cc4f" width="200"/>|
 |사용자의 루틴 통계를 주간 단위로 제공하는 페이지입니다.|사용자의 루틴 통계를 월간 단위로 제공하는 페이지입니다.|
 
+</br>
+
 > 커뮤니티 페이지
 
+|커뮤니티 페이지|커뮤니티-글쓰기|커뮤니티-게시글 상세|
+|:---:|:---:|:---:|
+|<img src="https://github.com/user-attachments/assets/0ab77c9f-c6e2-485a-be17-71821f5cba03" width="200"/>|<img src="https://github.com/user-attachments/assets/56afaf82-36c7-4e45-83c3-576b1be2af4c" width="200"/>|<img src="https://github.com/user-attachments/assets/fe26adc5-bff8-4c00-8244-ff4c5db42d41" width="200"/>|
+|사용자들 간의 소통이 이루어지는</br>커뮤니티 페이지입니다.|게시글을 작성하는 페이지입니다.</br>카테고리는 기본으로 제공합니다.|게시글 상세 정보를 조회하는 페이지입니다.</br>게시글 작성자에 따라 신고/삭제/수정이 가능합니다.</br>댓글 및 대댓글 작성이 가능하며, 사용자 차단 기능도 제공합니다.|
 
+|커뮤니티-게시글 수정|커뮤니티-댓글 수정|
+|:---:|:---:|
+|<img src="https://github.com/user-attachments/assets/fe727a09-9ef7-4e36-b1b6-9b41bdcf7ad7" width="200"/>|<img src="https://github.com/user-attachments/assets/0183cef5-0b3f-442d-b013-b284ff80755f" width="200"/>|
+|사용자가 작성한 게시글을 수정하는 페이지입니다.|사용자가 작성한 댓글을 수정하는 페이지입니다.|
+
+|커뮤니티-검색|커뮤니티-검색 완료|
+|:---:|:---:|
+|<img src="https://github.com/user-attachments/assets/8e62e6f3-c93f-4134-b94c-1dbeb61a4e96" width="200"/>|<img src="https://github.com/user-attachments/assets/d5b8e71c-1bc8-4bc2-b7d3-d61377387648" width="200"/>|
+|특정 검색어가 포함된 게시글을 조회하는 페이지입니다.</br>각 검색 기록은 개별/전체 삭제가 가능합니다.|검색어를 입력한 후 검색 결과를 제공하는 페이지입니다.</br>특정 단어가 포함된 게시글 리스트를 제공합니다.|
+
+|커뮤니티-프로필|
+|:---:|
+|<img src="https://github.com/user-attachments/assets/eb4750b5-99a7-4ac5-8843-17555582e0ee" width="200"/>|
+|커뮤니티 프로필을 조회하는 페이지입니다.</br>커뮤니티에서 사용할 닉네임은 수정이 가능합니다.|
+
+</br>
 
 > 마이 페이지
 
