@@ -17,10 +17,8 @@ const HomeHeader = () => {
   const { selectedDate, weekStartDate, resetToToday } = useHomeDateStore();
   const { data, setHomeRoutine } = useRoutineStore();
 
-  const { fetchNotifications, hasFetched } = useNotificationStore((s) => ({
-    fetchNotifications: s.fetchNotifications,
-    hasFetched: s.hasFetched,
-  }));
+  const fetchNotifications = useNotificationStore((s) => s.fetchNotifications);
+  const hasFetched = useNotificationStore((s) => s.hasFetched);
 
   const hasUnreadAlarm = useNotificationStore((s) =>
     [...s.routine, ...s.community].some((n) => !n.isRead)
@@ -36,9 +34,7 @@ const HomeHeader = () => {
   const isViewingCurrentWeek = isSameDay(weekStartDate, todayWeekStartDate);
 
   useEffect(() => {
-    if (!hasFetched) {
-      void fetchNotifications();
-    }
+    if (!hasFetched) void fetchNotifications();
   }, [hasFetched, fetchNotifications]);
 
   useEffect(() => {
@@ -55,7 +51,7 @@ const HomeHeader = () => {
         <div className="flex justify-between h-10 items-center">
           <div className="text-[22px] font-normal">{data?.dateTitle}</div>
           <div
-            className={`h-6 w-6 ${hasUnreadAlarm ? 'bg-active-alarm bg-center' : 'bg-alarm bg-center'}`}
+            className={`h-6 w-6 bg-center bg-no-repeat bg-contain ${hasUnreadAlarm ? 'bg-active' : 'bg-alarm'}`}
             onClick={() =>
               navigate('/lived/alarm', { state: { initialTab: 'ROUTINE' } })
             }
