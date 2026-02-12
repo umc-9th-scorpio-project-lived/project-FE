@@ -42,6 +42,11 @@ body.tree-page-body {
   background-color: #f2f4f6;
 }
 
+/* 통계 페이지용 body 배경색 */
+body.statistics-page-body {
+  background-color: #fcfdff;
+}
+
 body::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
 }
