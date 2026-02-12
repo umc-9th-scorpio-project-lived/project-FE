@@ -9,8 +9,16 @@ const SplashPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+
     const t = window.setTimeout(() => {
-      navigate('/login', { replace: true });
+      if (accessToken) {
+        // 토큰이 있을 경우 자동 로그인
+        navigate('/lived', { replace: true });
+      } else {
+        // 토큰이 없을 경우 로그인 페이지로 이동
+        navigate('/login', { replace: true });
+      }
     }, 2000);
 
     return () => window.clearTimeout(t);
