@@ -7,9 +7,18 @@ import NormalFruitIcon from '@/icons/NormalFruitIcon';
 import { getFruitsStatistics } from '@/services/statistics/getFruitsStatistics';
 import useBaseModal from '@/stores/modals/baseModal';
 import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 const ArchivedTreePage = () => {
+  /* 루틴나무 페이지용 body 배경색 */
+  useEffect(() => {
+    document.body.classList.add('tree-page-body');
+    return () => {
+      document.body.classList.remove('tree-page-body');
+    };
+  }, []);
+
   const [searchParams] = useSearchParams();
   const year = searchParams.get('year');
   const month = searchParams.get('month');

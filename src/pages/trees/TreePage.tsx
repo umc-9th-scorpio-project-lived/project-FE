@@ -9,9 +9,18 @@ import { getFruitsStatistics } from '@/services/statistics/getFruitsStatistics';
 import useBaseModal from '@/stores/modals/baseModal';
 import type { YearMonth } from '@/types/statistics/Statistics.types';
 import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const TreePage = () => {
+  /* 루틴나무 페이지용 body 배경색 */
+  useEffect(() => {
+    document.body.classList.add('tree-page-body');
+    return () => {
+      document.body.classList.remove('tree-page-body');
+    };
+  }, []);
+
   const navigate = useNavigate();
 
   const { openModal } = useBaseModal();

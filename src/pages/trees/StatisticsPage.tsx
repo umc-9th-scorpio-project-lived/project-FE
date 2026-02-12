@@ -14,6 +14,14 @@ import { getPeriodStatistics } from '@/services/statistics/getPeriodStatistics';
 import LoadingIcon from '@/icons/LoadingIcon';
 
 const StatisticsPage = () => {
+  /* 통계 페이지용 body 배경색 */
+  useEffect(() => {
+    document.body.classList.add('statistics-page-body');
+    return () => {
+      document.body.classList.remove('statistics-page-body');
+    };
+  }, []);
+
   const navigate = useNavigate();
   const [isWeekly, setIsWeekly] = useState(true);
 
