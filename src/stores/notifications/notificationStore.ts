@@ -64,6 +64,7 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
 
     try {
       const [
+        routine,
         routineAlarm,
         routineReport,
         routineTree,
@@ -71,6 +72,7 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
         comment,
         communityHot,
       ] = await Promise.all([
+        getNotifications('ROUTINE'),
         getNotifications('ROUTINE_ALARM'),
         getNotifications('ROUTINE_REPORT'),
         getNotifications('ROUTINE_TREE'),
@@ -80,15 +82,16 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
       ]);
 
       const routineList = [
-        ...(routineAlarm.result ?? []),
-        ...(routineReport.result ?? []),
-        ...(routineTree.result ?? []),
+        ...(routine ?? []),
+        ...(routineAlarm ?? []),
+        ...(routineReport ?? []),
+        ...(routineTree ?? []),
       ];
 
       const communityList = [
-        ...(community.result ?? []),
-        ...(comment.result ?? []),
-        ...(communityHot.result ?? []),
+        ...(community ?? []),
+        ...(comment ?? []),
+        ...(communityHot ?? []),
       ];
 
       set({
