@@ -27,10 +27,17 @@
 
 > 회원가입 프로세스
 
-|온보딩 페이지①|온보딩 페이지②|온보딩 페이지③|알림 설정 가이드 페이지|
-|:---:|:---:|:---:|:---:|
-|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|
-|서비스 사용을 위해 로그인을 진행하는 페이지 입니다.|서비스 사용을 위해 로그인을 진행하는 페이지 입니다.|서비스 사용을 위해 로그인을 진행하는 페이지 입니다.|서비스 사용을 위해 로그인을 진행하는 페이지 입니다.|
+|온보딩 페이지①|온보딩 페이지②|온보딩 페이지③|
+|:---:|:---:|:---:|
+|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|
+|사용자 정보를 입력하는 온보딩 페이지입니다. </br> 자취 연차, 성별, 생일을 입력합니다.|사용자의 일상 고민을 선택하는 온보딩 페이지입니다.</br>최대 5개까지 선택 가능합니다.|선택한 고민을 기반으로 루틴을 추천받는</br>온보딩 페이지입니다.|
+
+> 알림 설정 모달에서 '알림 받기'를 선택한 경우 렌더링
+
+|알림 설정 가이드 페이지|
+|:---:|
+|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|
+|'알림 받기' 선택할 경우 렌더링 되는 페이지입니다.</br>스와이프 형식으로 가이드를 제공합니다.|
 
 > 홈 페이지
 
@@ -39,6 +46,21 @@
 > 커뮤니티 페이지
 
 > 마이 페이지
+
+|마이 페이지|마이-공지사항|마이-문의하기|
+|:---:|:---:|:---:|
+|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|
+|서비스 관련 정보와 회원 정보를</br>확인 및 관리할 수 있는 마이 페이지입니다.|서비스 공지사항을 확인하는 페이지입니다.|서비스 관련 문의 이메일을 제공하는 페이지입니다.|
+
+|마이-정보|마이-계정 관리|마이-알림 설정|
+|:---:|:---:|:---:|
+|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|
+|서비스 이용약관 및 개인정보정책을</br>확인할 수 있는 페이지입니다.|사용자의 계정 및 루틴 시작일 조회와</br>로그아웃 및 계정삭제 기능을 제공하는 페이지입니다.|서비스 알림 설정 기능을 제공하는 페이지입니다.|
+
+|마이-개인정보보호|마이-차단 목록|
+|:---:|:---:|
+|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|
+|사용자 차단 목록 및 루틴 나무 공개 범위 설정 기능을</br>제공하는 페이지입니다.|사용자가 차단한 목록 조회 및 차단 해제 기능을</br>제공하는 페이지입니다.|
 
 <br />
 
