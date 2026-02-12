@@ -59,23 +59,45 @@
 
 > 루틴 나무 페이지
 
+|루틴 나무 페이지|루틴 나무-모아보기|루틴 나무-상세|
+|:---:|:---:|:---:|
+|<img src="https://github.com/user-attachments/assets/edab0cf1-8456-417b-9a47-8545e0e3c51e" width="200"/>|<img src="https://github.com/user-attachments/assets/f1145eae-e5b5-492e-83ee-8db00bbe2697" width="200"/>|<img src="https://github.com/user-attachments/assets/5aa58bfa-e59a-408c-9fa3-d1cb48f45cea" width="200"/>|
+|사용자의 루틴 나무를 보여주는 페이지입니다.</br>루틴 완료율에 따라 열매가 맺힙니다.|사용자의 이전 루틴 나무를</br>모아보는 페이지입니다.|이전 루틴 나무의 정보를</br>보여주는 페이지입니다.|
+
+|루틴 나무-루틴 트래커|
+|:---:|
+|<img src="https://github.com/user-attachments/assets/2d995d27-7bb3-4f2e-b29d-f207c576f494" width="200"/>|
+|사용자의 월간 루틴 달성률을 보여주는 페이지입니다.</br>루틴 완료 상태에 따라 캘린더 셀의 색상이 변경됩니다.|
+
+|루틴 나무-친구 목록|루틴 나무-친구 루틴 나무|
+|:---:|:---:|
+|<img src="https://github.com/user-attachments/assets/d94025c8-4fb9-409c-a78a-7dee35ab9b0f" width="200"/>|<img src="https://github.com/user-attachments/assets/ec10ee8b-4d31-4bc5-9cdf-92a8c378ada3" width="200"/>|
+|친구 초대 기능 및 친구 목록을 제공하는 바텀 시트입니다.</br>친구 초대는 초대 링크 또는 카카오톡 초대로 진행합니다.|친구의 루틴 나무를 보여주는 페이지입니다.</br>상단 케밥 버튼을 통해 친구 삭제가 가능합니다.|
+
+|루틴 나무-주간 통계|루틴 나무-월간 통계|
+|:---:|:---:|
+|<img src="https://github.com/user-attachments/assets/6ce919df-0174-4fd9-b252-6bdac5ab1865" width="200"/>|<img src="https://github.com/user-attachments/assets/63320074-f7b7-4c9e-ac3c-1b92bc57cc4f" width="200"/>|
+|사용자의 루틴 통계를 주간 단위로 제공하는 페이지입니다.|사용자의 루틴 통계를 월간 단위로 제공하는 페이지입니다.|
+
 > 커뮤니티 페이지
+
+
 
 > 마이 페이지
 
 |마이 페이지|마이-공지사항|마이-문의하기|
 |:---:|:---:|:---:|
-|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|
+|<img src="https://github.com/user-attachments/assets/fb39914e-bab0-4c2e-9bdb-96a077967efb" width="200"/>|<img src="https://github.com/user-attachments/assets/781eb5e7-0f79-42c5-83d3-140b6c9bb46e" width="200"/>|<img src="https://github.com/user-attachments/assets/09873c10-22fe-486b-8671-779c453373cc" width="200"/>|
 |서비스 관련 정보와 회원 정보를</br>확인 및 관리할 수 있는 마이 페이지입니다.|서비스 공지사항을 확인하는 페이지입니다.|서비스 관련 문의 이메일을 제공하는 페이지입니다.|
 
 |마이-정보|마이-계정 관리|마이-알림 설정|
 |:---:|:---:|:---:|
-|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|
+|<img src="https://github.com/user-attachments/assets/aec6fddc-7f20-4307-b912-7f648432bd17" width="200"/>|<img src="https://github.com/user-attachments/assets/aaf65340-11c5-4e50-8319-e93d14809bc1" width="200"/>|<img src="https://github.com/user-attachments/assets/aafefffa-710e-4a15-9335-62077570a3ca" width="200"/>|
 |서비스 이용약관 및 개인정보정책을</br>확인할 수 있는 페이지입니다.|사용자의 계정 및 루틴 시작일 조회와</br>로그아웃 및 계정삭제 기능을 제공하는 페이지입니다.|서비스 알림 설정 기능을 제공하는 페이지입니다.|
 
 |마이-개인정보보호|마이-차단 목록|
 |:---:|:---:|
-|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|<img src="https://user-images.githubusercontent.com/80824750/208456234-fb5fe434-aa65-4d7a-b955-89098d5bbe0b.gif" width="200"/>|
+|<img src="https://github.com/user-attachments/assets/31ebf1df-6086-46c0-8c26-221e26df267c" width="200"/>|<img src="https://github.com/user-attachments/assets/240ffe06-ca9b-4a0d-a67c-5f0e8675ba1f" width="200"/>|
 |사용자 차단 목록 및 루틴 나무 공개 범위 설정 기능을</br>제공하는 페이지입니다.|사용자가 차단한 목록 조회 및 차단 해제 기능을</br>제공하는 페이지입니다.|
 
 <br />
