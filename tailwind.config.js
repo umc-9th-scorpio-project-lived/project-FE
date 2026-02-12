@@ -60,7 +60,7 @@ export default {
         user: "url('/icons/user.svg')",
         timer: "url('/icons/timer.svg')",
         alarm: "url('/icons/alarm.svg')",
-        active_alarm: "url('icons/active_alarm.svg')",
+        active: "url('icons/active_alarm.svg')",
         calender: "url('/icons/calendar.svg')",
         delete: "url('icons/delete.svg')",
         logo: "url('icons/logo.svg')",
