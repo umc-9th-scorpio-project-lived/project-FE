@@ -1,4 +1,3 @@
-// TopSplashFruit.tsx
 import * as React from 'react';
 
 type Props = React.SVGProps<SVGSVGElement> & {
@@ -7,7 +6,6 @@ type Props = React.SVGProps<SVGSVGElement> & {
 };
 
 const TopSplashFruit = ({ width = 25, height = 25, ...props }: Props) => {
-  // ✅ SVG <defs> id 충돌 방지 (같은 아이콘 여러 개 렌더링해도 안전)
   const uid = React.useId();
 
   const id = {

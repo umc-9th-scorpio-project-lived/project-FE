@@ -1,4 +1,3 @@
-// MiddleSplashFruit.tsx
 import * as React from 'react';
 
 type Props = React.SVGProps<SVGSVGElement> & {
@@ -7,7 +6,6 @@ type Props = React.SVGProps<SVGSVGElement> & {
 };
 
 const MiddleSplashFruit = ({ width = 26, height = 27, ...props }: Props) => {
-  // ✅ SVG <defs> id 충돌 방지
   const uid = React.useId();
 
   const id = {

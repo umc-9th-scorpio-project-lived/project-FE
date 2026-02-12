@@ -183,7 +183,6 @@ const FriendsSheet = () => {
 
   return (
     <>
-      {/* 배경 Dim 처리 (시트가 열렸을 때만 나타남) */}
       {/* AnimatePresence는 컴포넌트가 사라질 때 exit 애니메이션을 실행 */}
       <AnimatePresence>
         {isSheetOpen && (
@@ -223,7 +222,6 @@ const FriendsSheet = () => {
         {/* 검색 영역 */}
         <div className="w-full flex items-center gap-3 relative">
           <div className="relative flex-1">
-            {/* input에는 typo-body_reg14가 적용되지 않음 */}
             <input
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}

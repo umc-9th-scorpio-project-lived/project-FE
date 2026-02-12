@@ -144,7 +144,7 @@ const RecommendPage = () => {
 
       {/* 콘텐츠 영역 */}
       <div
-        className={`relative w-full flex flex-col flex-1 overflow-y-auto rounded-t-2xl px-4 pt-6 bg-screen-0 ${isAI ? 'pb-41.5' : 'pb-25'}`}
+        className={`relative w-full flex flex-col flex-1 overflow-y-auto rounded-t-2xl px-4 pt-6 bg-screen-0 pb-25`}
       >
         {isAI && (
           <>
@@ -157,7 +157,7 @@ const RecommendPage = () => {
                 AI 추천 루틴이 없어요.
               </div>
             ) : (
-              <div className="flex flex-col gap-4 overflow-y-auto">
+              <div className="flex flex-col gap-4 overflow-y-auto pb-2.5">
                 {ai.map((item, index) => {
                   const id = makeAiKey(index);
                   const selected = selectedIds.has(id);

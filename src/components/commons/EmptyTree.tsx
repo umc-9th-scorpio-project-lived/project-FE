@@ -5,7 +5,6 @@ interface EmptyTreeProps extends React.SVGProps<SVGSVGElement> {
 }
 
 const EmptyTree: React.FC<EmptyTreeProps> = ({ size = 110, ...props }) => {
-  // 원래 비율 (width: 110, height: 167)을 유지하기 위한 계산
   const width = size;
   const height = typeof size === 'number' ? (size * 167) / 110 : size;
 

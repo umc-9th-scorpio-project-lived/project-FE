@@ -73,9 +73,11 @@ export const formatRepeatLabel = (repeat: RepeatValue): string => {
 
   // 특정 간격
   const isEveryday = repeat.isEveryday || repeat.days.length === 7;
-  if (isEveryday) return '매일';
-
   const every = repeat.every ?? 1;
+  if (isEveryday) {
+    return every === 1 ? '매일' : `${every}주마다-매일`;
+  }
+
   const dayText = repeat.days
     .map((d: string | number) => WEEK_LABELS[Number(d)])
     .join(', ');

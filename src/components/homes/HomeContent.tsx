@@ -36,7 +36,9 @@ const HomeContent = () => {
       ? '루틴을 시작해볼까요?'
       : doneCount === 0
         ? '아직 완료하지 않은 루틴이 있어요!'
-        : `루틴 ${doneCount}/${totalCount} 진행 중!`;
+        : doneCount === totalCount
+          ? '오늘 루틴이 모두 완료되었어요!'
+          : `루틴 ${doneCount}/${totalCount} 진행 중!`;
 
   const pressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const longPressTriggered = useRef(false);

@@ -1,6 +1,9 @@
+import BottomSplashFruit from '@/components/commons/BottomSplashFruit';
+import EmptyTree from '@/components/commons/EmptyTree';
+import MiddleSplashFruit from '@/components/commons/MiddleSplashFruit';
+import TopSplashFruit from '@/components/commons/TopSplashFruit';
 import GoogleGIcon from '@/icons/GoogleIcon';
 import KakaoIcon from '@/icons/KakaoIcon';
-import LogoIcon from '@/icons/LogoIcon';
 import { redirectToSocialLogin } from '@/services/auths/socialLogin';
 
 const LoginPage = () => {
@@ -9,8 +12,13 @@ const LoginPage = () => {
       <section className="flex-1 flex h-full w-full max-w-125 flex-col items-center pb-8 justify-between">
         {/* 로고 & 타이틀 영역 */}
         <div className="flex flex-col items-center gap-6 pt-33.75">
-          {/* <div className="w-full h-25 bg-logo bg-center bg-no-repeat" /> */}
-          <LogoIcon />
+          <div className="relative">
+            <EmptyTree />
+
+            <TopSplashFruit className="absolute top-8.75 left-10.5 -translate-x-1/2 " />
+            <MiddleSplashFruit className="absolute top-16.5 right-4.5" />
+            <BottomSplashFruit className="absolute top-24 left-5.5" />
+          </div>
           <div className="flex flex-col justify-center items-center">
             <div className="typo-h1_bold24 text-gray-900">살아보니,</div>
             <div className="typo-body_reg18 text-gray-900">열매가 맺히더라</div>
@@ -25,7 +33,7 @@ const LoginPage = () => {
             className="flex items-center justify-center w-72.5 h-14.5 gap-2 rounded-full bg-[#FFEE50] py-6"
           >
             <KakaoIcon className="size-8" />
-            <span className="typo-body_reg14 font-semibold text-gray-400 whitespace-nowrap">
+            <span className="typo-body_reg14 font-semibold text-gray-900 whitespace-nowrap">
               카카오 계정으로 시작하기
             </span>
           </button>
@@ -37,7 +45,7 @@ const LoginPage = () => {
             onClick={() => redirectToSocialLogin('google')}
           >
             <GoogleGIcon className="size-6" />
-            <span className="typo-body_reg14 font-semibold text-gray-400 whitespace-nowrap">
+            <span className="typo-body_reg14 font-semibold text-gray-900 whitespace-nowrap">
               구글 계정으로 시작하기
             </span>
           </button>

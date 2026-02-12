@@ -21,9 +21,9 @@ const SplashPage = () => {
       <div className="relative">
         <EmptyTree />
 
-        <TopSplashFruit className="absolute top-7.5 left-1/3 -translate-x-1/2 animate-fruitAppear" />
-        <MiddleSplashFruit className="absolute top-15 right-5 animate-fruitAppear" />
-        <BottomSplashFruit className="absolute top-22.5 left-5.5 animate-fruitAppear" />
+        <TopSplashFruit className="absolute top-8.75 left-10.5 -translate-x-1/2 animate-fruitAppear" />
+        <MiddleSplashFruit className="absolute top-16.5 right-4.5 animate-fruitAppear" />
+        <BottomSplashFruit className="absolute top-24 left-5.5 animate-fruitAppear" />
       </div>
 
       <div className="mt-6 flex flex-col items-center">
