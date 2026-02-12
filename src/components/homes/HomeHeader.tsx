@@ -53,6 +53,7 @@ const HomeHeader = () => {
         <div className="flex justify-between h-10 items-center">
           <div className="text-[22px] font-normal">{data?.dateTitle}</div>
           <div
+            className='w-6 h-6'
             onClick={() =>
               navigate('/lived/alarm', { state: { initialTab: 'ROUTINE' } })
             }

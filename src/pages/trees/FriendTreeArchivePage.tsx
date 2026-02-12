@@ -10,14 +10,6 @@ import { useEffect, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const FriendTreeArchivePage = () => {
-  /* 루틴나무 페이지용 body 배경색 */
-  useEffect(() => {
-    document.body.classList.add('tree-page-body');
-    return () => {
-      document.body.classList.remove('tree-page-body');
-    };
-  }, []);
-
   const { friendId } = useParams();
 
   const navigate = useNavigate();
