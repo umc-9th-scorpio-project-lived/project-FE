@@ -206,26 +206,28 @@ const CommunityProfilePage = () => {
                 </div>
               </div>
               {/*대형열매 5개*/}
-              <div className="flex gap-2">
-                {fruits.slice(0, 5).map((fruit) => (
-                  <GoldenFruitIcon key={fruit.fruitId} className="w-8 h-8" />
-                ))}
-                {Array.from({ length: 5 - fruits.length }).map((_, index) => (
-                  <div
-                    key={`empty-${index}`}
-                    className="flex w-8 h-8 bg-primary-40"
-                    style={{
-                      WebkitMask:
-                        'url(/icons/NormalFruitIcon.svg) no-repeat center / contain',
-                      mask: 'url(/icons/NormalFruitIcon.svg) no-repeat center / contain',
-                    }}
-                  >
-                    <span className="flex items-center justify-center w-full h-full text-screen-0">
-                      ?
-                    </span>
-                  </div>
-                ))}
-              </div>
+              {fruits.length != 0 && (
+                <div className="flex gap-2">
+                  {fruits.slice(0, 5).map((fruit) => (
+                    <GoldenFruitIcon key={fruit.fruitId} className="w-8 h-8" />
+                  ))}
+                  {Array.from({ length: 5 - fruits.length }).map((_, index) => (
+                    <div
+                      key={`empty-${index}`}
+                      className="flex w-8 h-8 bg-primary-40"
+                      style={{
+                        WebkitMask:
+                          'url(/icons/NormalFruitIcon.svg) no-repeat center / contain',
+                        mask: 'url(/icons/NormalFruitIcon.svg) no-repeat center / contain',
+                      }}
+                    >
+                      <span className="flex items-center justify-center w-full h-full text-screen-0">
+                        ?
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
