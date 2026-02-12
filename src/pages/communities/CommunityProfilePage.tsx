@@ -23,9 +23,10 @@ const CommunityProfilePage = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       const res = await getCommunityProfile();
+
       setNickname(res.nickname);
       setLivingPeriod(res.livingPeriod);
-      setFruits(res.fruits);
+      setFruits(Array.isArray(res.fruits) ? res.fruits : []);
 
       const imageUrl =
         res.profileImageUrl && res.profileImageUrl.trim() !== ''
