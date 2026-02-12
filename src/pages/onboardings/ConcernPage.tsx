@@ -39,6 +39,24 @@ const ConcernPage = () => {
     navigate('/onboardings/routine');
   };
 
+  const renderChip = ({ id, label }: (typeof CHIPS)[number]) => {
+    const isActive = selected.includes(id);
+
+    return (
+      <button
+        key={id}
+        type="button"
+        onClick={() => toggleChip(id)}
+        className={`h-11.5 rounded-lg px-4.5 typo-body_reg16 transition
+        ${
+          isActive ? 'bg-primary-50 text-screen-0' : 'bg-gray-50 text-gray-600'
+        }`}
+      >
+        {label}
+      </button>
+    );
+  };
+
   return (
     <main className="h-dvh font-suite">
       <section className="flex-1 flex h-full w-full max-w-125 flex-col px-4 pt-5 justify-between pb-8">
@@ -75,21 +93,24 @@ const ConcernPage = () => {
           </div>
 
           {/* 칩 영역 */}
-          <div className="px-0.5 pr-4.5 flex flex-wrap gap-3">
-            {CHIPS.map(({ id, label }) => {
-              const isActive = selected.includes(id);
-              return (
-                <button
-                  key={id}
-                  type="button"
-                  onClick={() => toggleChip(id)}
-                  className={`h-11.5 rounded-lg px-4.5 typo-body_reg16 transition
-                  ${isActive ? 'bg-primary-50 text-screen-0' : 'bg-gray-50 text-gray-600'}`}
-                >
-                  {label}
-                </button>
-              );
-            })}
+          <div className="px-0.5 flex flex-wrap gap-3">
+            <div className="flex flex-col gap-3">
+              <div className="flex gap-3">
+                {CHIPS.slice(0, 2).map(renderChip)}
+              </div>
+
+              <div className="flex gap-3">
+                {CHIPS.slice(2, 5).map(renderChip)}
+              </div>
+
+              <div className="flex gap-3">
+                {CHIPS.slice(5, 7).map(renderChip)}
+              </div>
+
+              <div className="flex gap-3">
+                {CHIPS.slice(7, 9).map(renderChip)}
+              </div>
+            </div>
           </div>
         </div>
 
