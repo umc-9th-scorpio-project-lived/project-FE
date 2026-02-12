@@ -6,10 +6,9 @@ import type {
   NotificationSettingsResult,
   PatchNotificationSettingsRequest,
 } from '@/types/notifications/Notification.types';
-import patchNotificationSettings from '@/services/notifications/patchNotificationSettings';
-import { normalizeSettings } from '@/utils/notifications/notificationUtils';
 import getNotificationSettings from '@/services/notifications/getNotificationSettings';
 import patchNotification from '@/services/notifications/patchNotifications';
+import patchNotificationSettings from '@/services/notifications/patchNotificationSettings';
 
 type NotificationState = {
   routine: NotificationItem[];
@@ -28,7 +27,8 @@ type NotificationState = {
   clear: () => void;
 
   fetchSettings: () => Promise<void>;
-  updateSettings: (next: PatchNotificationSettingsRequest) => Promise<void>;
+  refetchSettings: () => Promise<void>;
+  updateSettings: (patch: PatchNotificationSettingsRequest) => Promise<void>;
 
   toggleAll: () => Promise<void>;
   toggleRoutine: () => Promise<void>;
@@ -39,7 +39,7 @@ type NotificationState = {
   toggleTrendingPost: () => Promise<void>;
 
   markRead: (id: number) => Promise<void>;
-  markAllRead: () => Promise<void>; // 일단 로컬만 (API 나오면 교체)
+  markAllRead: () => Promise<void>;
 };
 
 export const useNotificationStore = create<NotificationState>((set, get) => ({
@@ -112,6 +112,7 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
       hasFetched: false,
     }),
 
+  // 알림 설정 조회
   fetchSettings: async () => {
     const { hasFetchedSettings, isSettingsLoading } = get();
     if (hasFetchedSettings || isSettingsLoading) return;
@@ -120,10 +121,8 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
 
     try {
       const res = await getNotificationSettings();
-      set({
-        settings: res,
-        hasFetchedSettings: true,
-      });
+      console.log(res);
+      set({ settings: res, hasFetchedSettings: true });
     } catch (e) {
       set({ settingsError: e as ApiError });
     } finally {
@@ -131,94 +130,110 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
     }
   },
 
-  updateSettings: async (next) => {
-    const prev = get().settings;
+  // 알림 설정 목록 재조회
+  refetchSettings: async () => {
+    const { isSettingsLoading } = get();
+    if (isSettingsLoading) return;
 
-    const normalized = normalizeSettings(next);
-
-    set({ settings: normalized, settingsError: null });
+    set({ isSettingsLoading: true, settingsError: null });
 
     try {
-      const res = await patchNotificationSettings(normalized);
-      set({ settings: res });
+      const res = await getNotificationSettings();
+      set({ settings: res, hasFetchedSettings: true });
     } catch (e) {
-      set({ settings: prev ?? null, settingsError: e as ApiError });
+      set({ settingsError: e as ApiError });
+    } finally {
+      set({ isSettingsLoading: false });
+    }
+  },
+
+  // 알림 설정 수정
+  updateSettings: async (patch) => {
+    const prev = get().settings;
+    if (!prev) return;
+
+    set({ settings: { ...prev, ...patch }, settingsError: null });
+
+    try {
+      await patchNotificationSettings(patch);
+      await get().refetchSettings();
+    } catch (e) {
+      set({ settings: prev, settingsError: e as ApiError });
       throw e;
     }
   },
 
+  // 알림 토글 관리
   toggleAll: async () => {
     const s = get().settings;
     if (!s) return;
-
-    const nextValue = !s.allEnabled;
-
-    await get().updateSettings({
-      allEnabled: nextValue,
-      routineEnabled: nextValue,
-      statsEnabled: nextValue,
-      communityEnabled: nextValue,
-      hotPostEnabled: nextValue,
-      commentEnabled: nextValue,
-      marketingEnabled: nextValue,
-    });
+    await get().updateSettings({ allEnabled: !s.allEnabled });
   },
-
   toggleRoutine: async () => {
     const s = get().settings;
     if (!s) return;
-
-    await get().updateSettings({ ...s, routineEnabled: !s.routineEnabled });
+    await get().updateSettings({ routineEnabled: !s.routineEnabled });
   },
-
   toggleStatistics: async () => {
     const s = get().settings;
     if (!s) return;
-
-    await get().updateSettings({
-      ...s,
-      statsEnabled: !s.statsEnabled,
-    });
+    await get().updateSettings({ statsEnabled: !s.statsEnabled });
   },
-
   toggleMarketing: async () => {
     const s = get().settings;
     if (!s) return;
-
-    await get().updateSettings({ ...s, marketingEnabled: !s.marketingEnabled });
+    await get().updateSettings({ marketingEnabled: !s.marketingEnabled });
   },
-
   toggleCommunity: async () => {
     const s = get().settings;
     if (!s) return;
 
-    const nextValue = !s.communityEnabled;
+    const next = !s.communityEnabled;
 
-    await get().updateSettings({
-      ...s,
-      communityEnabled: nextValue,
-      commentEnabled: nextValue,
-      hotPostEnabled: nextValue,
-    });
+    if (next) {
+      await get().updateSettings({
+        communityEnabled: true,
+        commentEnabled: true,
+        hotPostEnabled: true,
+      });
+    } else {
+      await get().updateSettings({
+        communityEnabled: false,
+        commentEnabled: false,
+        hotPostEnabled: false,
+      });
+    }
   },
-
   toggleComment: async () => {
     const s = get().settings;
     if (!s) return;
 
-    await get().updateSettings({ ...s, commentEnabled: !s.commentEnabled });
-  },
+    await get().updateSettings({ commentEnabled: !s.commentEnabled });
 
+    const after = get().settings;
+    if (!after) return;
+
+    const shouldBe = after.commentEnabled && after.hotPostEnabled;
+    if (after.communityEnabled !== shouldBe) {
+      await get().updateSettings({ communityEnabled: shouldBe });
+    }
+  },
   toggleTrendingPost: async () => {
     const s = get().settings;
     if (!s) return;
 
-    await get().updateSettings({
-      ...s,
-      hotPostEnabled: !s.hotPostEnabled,
-    });
+    await get().updateSettings({ hotPostEnabled: !s.hotPostEnabled });
+
+    const after = get().settings;
+    if (!after) return;
+
+    const shouldBe = after.commentEnabled && after.hotPostEnabled;
+    if (after.communityEnabled !== shouldBe) {
+      await get().updateSettings({ communityEnabled: shouldBe });
+    }
   },
 
+  // 알림 읽기
   markRead: async (id) => {
     const { routine, community } = get();
 
@@ -238,6 +253,7 @@ export const useNotificationStore = create<NotificationState>((set, get) => ({
     }
   },
 
+  // 모든 알림 읽기
   markAllRead: async () => {
     const prevRoutine = get().routine;
     const prevCommunity = get().community;
