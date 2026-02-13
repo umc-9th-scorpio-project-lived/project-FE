@@ -4,19 +4,25 @@
 <!-- logo -->
 <img src="https://github.com/user-attachments/assets/2478bd93-e198-4e98-8303-b65f53b16bc1" width="400"/>
 
-</div> 
+</div>
 
+---
+
+## 🌳 프로젝트 개요
+- **프로젝트명:** 살아보니
+- **프로젝트 기간:** 2025.12.19 ~ 2026.02.19
+- **프로젝트 형태:** UMC 9th 프로젝트 (PM + Design + Web + Spring)
+
+---
 ## 🌳 소개
-> 살아보니, 열매가 맺히더라 - 자취생을 위한 커뮤니티 기반 루틴 서비스</br>
-> 2025.12.19. ~ 2026.02.20.
 
-**살아보니**는 자취생을 위한 루틴 기록 및 커뮤니티 서비스입니다. </br>
+### **살아보니**는 자취생을 위한 루틴 기록 및 커뮤니티 서비스입니다. </br>
 크지 않은 할 일, 사소한 생활도 루틴으로 남기며 하루를 천천히 쌓아갑니다. </br>
 루틴을 수행할수록 내 루틴 나무에 열매가 열리고, 그 열매가 익어가는 과정을 통해 일상을 한눈에 돌아볼 수 있습니다. </br>
 이렇게 쌓인 하루의 기록은 커뮤니티로 이어져, 자취 생활과 일상에 대한 이야기로 공유됩니다. </br>
 살아보니는 꾸준한 기록과 공감이 쌓여 일상이 열매로 맺히는 경험을 제공합니다.
 
-<br />
+---
 
 ## 📱 화면 구성
 #### | 서비스 진입 시
@@ -125,7 +131,7 @@
 |<img src="https://github.com/user-attachments/assets/31ebf1df-6086-46c0-8c26-221e26df267c" width="200"/>|<img src="https://github.com/user-attachments/assets/240ffe06-ca9b-4a0d-a67c-5f0e8675ba1f" width="200"/>|
 |사용자 차단 목록 및 루틴 나무 공개 범위 설정 기능을</br>제공하는 페이지입니다.|사용자가 차단한 목록 조회 및 차단 해제 기능을</br>제공하는 페이지입니다.|
 
-<br />
+---
 
 ## ⚙ 기술 스택
 > 프로젝트 개발 전반에 사용된 기술 스택입니다.
@@ -158,7 +164,7 @@
   <img alt="Discord" src="https://img.shields.io/badge/Discord-%235865F2.svg?style=for-the-badge&logo=discord&logoColor=white">
 </div>
 
-<br />
+---
 
 ## 💁‍♂️ UMC-9th Web - 살아보니's FE 팀원
 |FE-Web Reader|FE-Web|FE-Web|FE-Web|
